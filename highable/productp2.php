@@ -10,7 +10,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory; //工廠保存接口
 use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper; // html 解析器
 
 $productp2 =  $_SESSION['productp2'];
-
+$output=  ($_GET['action'] == 'formprint' )? 1:0;
 
 //$spreadsheet = new Spreadsheet();
 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/productp2.xlsx');
@@ -56,8 +56,13 @@ $drawing->setImageResource($img);
 $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
 $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
+if($output) {
 
-$drawing->setHeight($height>320 ? 320:$height);
+    $drawing->setHeight($height > 320 ? 320 : $height);
+}else{
+    $drawing->setHeight($height > 270 ? 270 : $height);
+}
+
 //$drawing->setWidth(180);
 //$drawing->setHeight(150);
 $drawing->setCoordinates('A5');
@@ -91,7 +96,11 @@ $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing
 $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setHeight($height>320 ? 320:$height);
+if($output) {
+    $drawing->setHeight($height > 320 ? 320 : $height);
+}else{
+    $drawing->setHeight($height > 270 ? 270 : $height);
+}
 //$drawing->setWidth(180);
 //$drawing->setHeight(150);
 $drawing->setCoordinates('A27');

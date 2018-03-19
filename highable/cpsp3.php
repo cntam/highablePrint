@@ -129,7 +129,7 @@ for($lt = 0, $lan = 0; $lt<=$prnum; $lt++){
     $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-    $drawing->setHeight($height>120 ? 120:$height);
+    $drawing->setHeight($height>110 ? 110:$height);
 //$drawing->setWidth(180);
 //$drawing->setHeight(150);
     $drawing->setCoordinates($cola.'2');
