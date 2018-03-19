@@ -342,7 +342,7 @@ if($output){
     $writer = new Xlsx($spreadsheet);
     $writer->save('../output/'.$filenameout);
 	
-	 $FILEURL = 'http://office.jmwebseo.cn/highable/output/'.$filenameout;
+	 $FILEURL = 'http://allinone321.com/highable/output/'.$filenameout;
     $MSFILEURL = 'http://view.officeapps.live.com/op/view.aspx?src='. urlencode($FILEURL);
 
     Header("Location:{$MSFILEURL}");

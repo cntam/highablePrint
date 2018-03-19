@@ -20,12 +20,13 @@ $sheet = $spreadsheet->getActiveSheet();
 $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft YaHei');
 $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
 
+
 $sheet->setCellValue('A3',  $pdall['pdp1']["SPL_1_code"]);
 $sheet->setCellValue('B3',  $pdall['pdp1']["SPL_1_name"]);
 $sheet->setCellValue('C3',  $pdall['pdp1']["SPL_1_country"]);
 $sheet->setCellValue('D3',  $pdall['pdp1']["SPL_1_contact"]);
 $sheet->setCellValue('E3',  $pdall['pdp1']["SPL_1_address"]);
-$sheet->setCellValue('F3',  $pdall['pdp1']["SPL_1_email"].'/'.$pdall['pdp1']["SPL_1_tel"].'/'.$pdall['pdp1']["SPL_1_mobile"].'/'.$pdall['pdp1']["SPL_1_qq"]);
+$sheet->setCellValue('F3',  'EMAIL:'.$pdall['pdp1']["SPL_1_email"].' TEL:'.$pdall['pdp1']["SPL_1_tel"].'MOBILE'.$pdall['pdp1']["SPL_1_mobile"].'QQ:'.$pdall['pdp1']["SPL_1_qq"]);
 $sheet->setCellValue('G3',  $pdall['pdp1']["SPL_1_goods"]);
 
 $sheet->setCellValue('A4',  $pdall['pdp1']["SPL_2_code"]);
@@ -33,33 +34,66 @@ $sheet->setCellValue('B4',  $pdall['pdp1']["SPL_2_name"]);
 $sheet->setCellValue('C4',  $pdall['pdp1']["SPL_2_country"]);
 $sheet->setCellValue('D4',  $pdall['pdp1']["SPL_2_contact"]);
 $sheet->setCellValue('E4',  $pdall['pdp1']["SPL_2_address"]);
-$sheet->setCellValue('F4',  $pdall['pdp1']["SPL_2_email"].'/'.$pdall['pdp1']["SPL_2_tel"].'/'.$pdall['pdp1']["SPL_2_mobile"].'/'.$pdall['pdp1']["SPL_2_qq"]);
+$sheet->setCellValue('F4',  'EMAIL:'.$pdall['pdp1']["SPL_2_email"].' TEL:'.$pdall['pdp1']["SPL_2_tel"].'MOBILE:'.$pdall['pdp1']["SPL_2_mobile"].'QQ:'.$pdall['pdp1']["SPL_2_qq"]);
 $sheet->setCellValue('G4',  $pdall['pdp1']["SPL_2_goods"]);
 
-$sheet->setCellValue('F8',  $pdall['pdp1']["FR_date"]);
-$sheet->setCellValue('F10',  $pdall['pdp1']["FR_ihkno"]);
-$sheet->setCellValue('F12',  $pdall['pdp1']["FR_supplier"]);
-$sheet->setCellValue('F14',  $pdall['pdp1']["FR_suppliercode"]);
-$sheet->setCellValue('F16',  $pdall['pdp1']["FR_comp"]);
-$sheet->setCellValue('F18',  $pdall['pdp1']["FR_width"]);
-$sheet->setCellValue('F20',  $pdall['pdp1']["FR_weight"]);
-$sheet->setCellValue('F22',  $pdall['pdp1']["FR_remark"]);
+for($i = 5,$a = 0; $i<8  ;$i++){
+    $col = chr(97 + $a);
+    $sheet->setCellValue("A{$i}", $pdall['pdp1']['spli35'][$col.'0']);
 
-$sheet->setCellValue('F26',  $pdall['pdp1']["SO_date"]);
-$sheet->setCellValue('F28',  $pdall['pdp1']["SO_category"]);
-$sheet->setCellValue('F30',  $pdall['pdp1']["SO_styleno"]);
-$sheet->setCellValue('F32',  $pdall['pdp1']["SO_client"]);
-$sheet->setCellValue('F34',  $pdall['pdp1']["SO_fabric"]);
-$sheet->setCellValue('F36',  $pdall['pdp1']["SO_fabricinfo"]);
-$sheet->setCellValue('F38',  $pdall['pdp1']["SO_lining"]);
-$sheet->setCellValue('F40',  $pdall['pdp1']["SO_lininginfo"]);
-$sheet->setCellValue('F42',  $pdall['pdp1']["SO_trim"]);
-$sheet->setCellValue('F44',  $pdall['pdp1']["SO_triminfo"]);
-$sheet->setCellValue('F46',  $pdall['pdp1']["SO_remark"]);
+    $sheet->setCellValue("B{$i}", $pdall['pdp1']['spli35'][$col.'1']);
+
+    $sheet->setCellValue("C{$i}", $pdall['pdp1']['spli35'][$col.'2']);
+    $sheet->setCellValue("D{$i}", $pdall['pdp1']['spli35'][$col.'3']);
+    $sheet->setCellValue("E{$i}", $pdall['pdp1']['spli35'][$col.'4']);
+    $sheet->setCellValue("F{$i}", 'EMAIL:'.$pdall['pdp1']['spli35'][$col.'5'].' TEL:'.$pdall['pdp1']['spli35'][$col.'6'].' MOBILE:'.$pdall['pdp1']['spli35'][$col.'7'].' QQ:'.$pdall['pdp1']['spli35'][$col.'8']);
+    $sheet->setCellValue("G{$i}", $pdall['pdp1']['spli35'][$col.'9']);
+    $spreadsheet->getActiveSheet()->getStyle("F{$i}")->getAlignment()->setWrapText(true);
+    $a++;
+
+}
+
+$sheet->setCellValue('F10',  $pdall['pdp1']["FR_date"]);
+$sheet->setCellValue('F12',  $pdall['pdp1']["FR_ihkno"]);
+$sheet->setCellValue('F14',  $pdall['pdp1']["FR_supplier"]);
+$sheet->setCellValue('F16',  $pdall['pdp1']["FR_suppliercode"]);
+$sheet->setCellValue('F18',  $pdall['pdp1']["FR_comp"]);
+$sheet->setCellValue('F20',  $pdall['pdp1']["FR_width"]);
+$sheet->setCellValue('F22',  $pdall['pdp1']["FR_weight"]);
+$sheet->setCellValue('F24',  $pdall['pdp1']["FR_remark"]);
+
+$sheet->setCellValue('F28',  $pdall['pdp1']["SO_date"]);
+$sheet->setCellValue('F30',  $pdall['pdp1']["SO_category"]);
+$sheet->setCellValue('F32',  $pdall['pdp1']["SO_styleno"]);
+$sheet->setCellValue('F34',  $pdall['pdp1']["SO_client"]);
+$sheet->setCellValue('F36',  $pdall['pdp1']["SO_fabric"]);
+$sheet->setCellValue('F38',  $pdall['pdp1']["SO_fabricinfo"]);
+$sheet->setCellValue('F40',  $pdall['pdp1']["SO_lining"]);
+$sheet->setCellValue('F42',  $pdall['pdp1']["SO_lininginfo"]);
+$sheet->setCellValue('F44',  $pdall['pdp1']["SO_trim"]);
+$sheet->setCellValue('F46',  $pdall['pdp1']["SO_triminfo"]);
+$sheet->setCellValue('F48',  $pdall['pdp1']["SO_remark"]);
 
 
 $img = $pdall['pdp1']["FR_img"];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -82,7 +116,7 @@ $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYP
 //$drawing->setHeight($width>550 ? 550:$width);
 $drawing->setWidth(250);
 //$drawing->setHeight(150);
-$drawing->setCoordinates('A8');
+$drawing->setCoordinates('A10');
 $drawing->setOffsetX(5);
 $drawing->setOffsetY(5);
 $drawing->setWorksheet($spreadsheet->getActiveSheet());
@@ -124,7 +158,24 @@ $spreadsheet->getActiveSheet()->getStyle("A4:G4")->applyFromArray($styleArray1);
 
 
 $img = $pdall['pdp1']["SO_img"];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -146,7 +197,7 @@ $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYP
 //$drawing->setHeight($width>550 ? 550:$width);
 $drawing->setWidth(250);
 //$drawing->setHeight(150);
-$drawing->setCoordinates('A26');
+$drawing->setCoordinates('A28');
 $drawing->setOffsetX(5);
 $drawing->setOffsetY(5);
 $drawing->setWorksheet($spreadsheet->getActiveSheet());
@@ -259,7 +310,26 @@ $spreadsheet->getActiveSheet()->getStyle('D7')->getAlignment()->setShrinkToFit(t
 
 //$img = 'http://www.a.cn/wordpress/wp-content/uploads/2018/02/2506390415_532601864.220x220-20.jpg';
 
-$img = imagecreatefromjpeg($pdall['pdp2']["img"]);
+$img = $pdall['pdp2']["img"];
+
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 
 $width = imagesx($img);
 
@@ -469,7 +539,7 @@ if($output){
     $writer = new Xlsx($spreadsheet);
     $writer->save('../output/'.$filenameout);
 
-    $FILEURL = 'http://office.jmwebseo.cn/highable/output/'.$filenameout;
+    $FILEURL = 'http://allinone321.com/highable/output/'.$filenameout;
     $MSFILEURL = 'http://view.officeapps.live.com/op/view.aspx?src='. urlencode($FILEURL);
     //echo "<a href= 'http://view.officeapps.live.com/op/view.aspx?src=". urlencode($FILEURL)."' target='_blank' >跳轉--{$filename}</a>";
     Header("Location:{$MSFILEURL}");

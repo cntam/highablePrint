@@ -149,7 +149,24 @@ $spreadsheet->getActiveSheet()->getStyle('L4')->applyFromArray($styleArray1);
 $spreadsheet->getActiveSheet()->getStyle('L4')->getFont()->setSize(8);
 //$sheet->setCellValue("L7", $productp1['remarkimg2']); //款式图remarkimg2
 $img = $productp1['remarkimg2'];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 
 $width = imagesx($img);
 
@@ -268,7 +285,7 @@ if($output){
     $writer = new Xlsx($spreadsheet);
     $writer->save('../output/'.$filenameout);
 
-    $FILEURL = 'http://office.jmwebseo.cn/highable/output/'.$filenameout;
+    $FILEURL = 'http://allinone321.com/highable/output/'.$filenameout;
     $MSFILEURL = 'http://view.officeapps.live.com/op/view.aspx?src='. urlencode($FILEURL);
 
     Header("Location:{$MSFILEURL}");
