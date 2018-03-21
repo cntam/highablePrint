@@ -171,18 +171,35 @@ $spreadsheet->getActiveSheet()->setCellValue('B18', $samplep1["item"]);
 $spreadsheet->getActiveSheet()->setCellValue('B19', $samplep1["samexplain"]);
 
 
-$spreadsheet->getActiveSheet()->setCellValue('F11', $samplep1["transmode"]);
-$spreadsheet->getActiveSheet()->setCellValue('F12', $samplep1["refer"]);
+$spreadsheet->getActiveSheet()->setCellValue('H11', $samplep1["transmode"]);
+$spreadsheet->getActiveSheet()->setCellValue('H12', $samplep1["refer"]);
 
-$spreadsheet->getActiveSheet()->setCellValue('F14', $samplep1["num"]);
-$spreadsheet->getActiveSheet()->setCellValue('F15', $samplep1["transtime3"]);
-$spreadsheet->getActiveSheet()->setCellValue('F16', $samplep1["samtype"]);
-$spreadsheet->getActiveSheet()->setCellValue('F17', $samplep1["orderremark"]);
-$spreadsheet->getActiveSheet()->setCellValue('F18', $samplep1["material"]);
+$spreadsheet->getActiveSheet()->setCellValue('H14', $samplep1["num"]);
+$spreadsheet->getActiveSheet()->setCellValue('H15', $samplep1["transtime3"]);
+$spreadsheet->getActiveSheet()->setCellValue('H16', $samplep1["samtype"]);
+$spreadsheet->getActiveSheet()->setCellValue('H17', $samplep1["orderremark"]);
+$spreadsheet->getActiveSheet()->setCellValue('H18', $samplep1["material"]);
 
 /* 图片模块*/
 $img = $samplep1["remarkimg1"];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -202,7 +219,7 @@ $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing
 $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setHeight($width>170 ? 170:$width);
+$drawing->setHeight($height>130 ? 130:$height);
 //$drawing->setWidth(250);
 //$drawing->setHeight(150);
 $drawing->setCoordinates('A21');
@@ -222,7 +239,24 @@ $spreadsheet->getActiveSheet() ->setCellValue('F21', $richText);
 
 /* 图片模块*/
 $img = $samplep1["remarkimg3"];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -242,7 +276,7 @@ $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing
 $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setHeight($width>170 ? 170:$width);
+$drawing->setHeight($height>130 ? 130:$height);
 //$drawing->setWidth(250);
 //$drawing->setHeight(150);
 $drawing->setCoordinates('A31');

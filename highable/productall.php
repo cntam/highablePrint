@@ -78,12 +78,7 @@ $sheet->setCellValue("C".$listrow , $productall['productp1']['weight']);
 $sheet->setCellValue("D".++$listrow , $productall['productp1']['ctdate']);
 
 $spreadsheet->getActiveSheet()->getStyle("A".++$listrow)->getAlignment()->setWrapText(true);
-//$sheet->setCellValue("A".$listrow, '办布如下:'.str_replace('\"', "", htmlspecialchars_decode($productp1['fab1']))); //款式图
 
-/*
-$html1 = str_replace('\"', "", htmlspecialchars_decode($productp1['fab1'])) ;
-//$html1 = '办布如下:<b><font size=5>這可怎麼辦？</font></b><div><b><font size=5><strike>很尷尬是吧？</strike></font></b></div><div><b><font size=5><u>就這樣定吧</u></font></b></div>';
-*/
 
 $wizard = new HtmlHelper();
 $html1 = str_replace('\"', "", htmlspecialchars_decode($productall['productp1']['fab1'])) ;
@@ -113,7 +108,7 @@ $styleArray1 = [
         'ShrinkToFit'=>true,
     ],
     'font' => [
-        'Size' => '20',
+        'Size' => '10',
     ],
 
     'borders' => [
@@ -150,10 +145,26 @@ $spreadsheet->getActiveSheet()->getStyle('L4')->applyFromArray($styleArray1);
 $spreadsheet->getActiveSheet()->getStyle('L4')->getFont()->setSize(8);
 //$sheet->setCellValue("L7", $productp1['remarkimg2']); //款式图remarkimg2
 $img = $productall['productp1']['remarkimg2'];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 
 $width = imagesx($img);
-
 $height = imagesy($img);
 
 
@@ -173,7 +184,7 @@ $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYP
 //$drawing->setHeight($width);
 
 //$drawing->setHeight($width>550 ? 550:$width);
-$drawing->setWidth(180);
+$drawing->setWidth(170);
 //$drawing->setHeight(150);
 $drawing->setCoordinates('L7');
 $drawing->setOffsetX(5);
@@ -185,12 +196,23 @@ $sheet->setCellValue("L22", $productp1['fab4']); //针距如下
 $sheet->setCellValue("L25", $productp1['fab3']); //工艺说明及注意事项*/
 
 $listrow =  $listrow + 7;
-$sheet->setCellValue("H".$listrow, $productall['productp1']["large"]["o0"]);
+$sheet->setCellValue("G".$listrow, $productall['productp1']["large"]["o0"]);
 $sheet->setCellValue("J".$listrow, $productall['productp1']["large"]["o1"]);
+
+$formnumbrow = $productall['productp1']["formnumb"] > 15 ? ($productall['productp1']["formnumb"] - 15) : 0 ;
+$listrowmarker = $listrow + 17 + $formnumbrow ;
+$sheet->setCellValue("A".$listrowmarker, '制单人'); //制单人
+$sheet->setCellValue("B".$listrowmarker, $productall['productp1']['marker']); //制单人
+
+
 $listrow= 2 +$listrow;
 
 for($i = $listrow , $a=0; $i<($listrow + $productall['productp1']["formnumb"]) ;$i++){
+    if($productall['productp1']["formnumb"]>15 && $i>$listrowmarker-1 ){
+        $y = $i;
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($y, 1);
 
+    }
     $sheet->setCellValue("A{$i}", $productall['productp1']["large"]['p'.$a]);
     $sheet->setCellValue("B{$i}", $productall['productp1']["large"]['q'.$a]);
     $sheet->setCellValue("C{$i}", $productall['productp1']["large"]['r'.$a]);
@@ -202,48 +224,61 @@ for($i = $listrow , $a=0; $i<($listrow + $productall['productp1']["formnumb"]) ;
     $sheet->setCellValue("I{$i}", $productall['productp1']["large"]['x'.$a]);
     $sheet->setCellValue("J{$i}", $productall['productp1']["large"]['y'.$a]);
     $sheet->setCellValue("K{$i}", $productall['productp1']["large"]['z'.$a]);
+    $spreadsheet->getActiveSheet()->getStyle("A{$i}")->applyFromArray($styleArray1);
+    $spreadsheet->getActiveSheet()->getStyle("B{$i}")->applyFromArray($styleArray1);
+    $spreadsheet->getActiveSheet()->getStyle("C{$i}")->applyFromArray($styleArray1);
+    $spreadsheet->getActiveSheet()->getStyle("D{$i}")->applyFromArray($styleArray1);
+    $spreadsheet->getActiveSheet()->getStyle("E{$i}")->applyFromArray($styleArray1);
+    $spreadsheet->getActiveSheet()->getStyle("F{$i}")->applyFromArray($styleArray1);
+    $spreadsheet->getActiveSheet()->getStyle("G{$i}")->applyFromArray($styleArray1);
+    $spreadsheet->getActiveSheet()->getStyle("H{$i}")->applyFromArray($styleArray1);
+    $spreadsheet->getActiveSheet()->getStyle("I{$i}")->applyFromArray($styleArray1);
+    $spreadsheet->getActiveSheet()->getStyle("J{$i}")->applyFromArray($styleArray1);
+    $spreadsheet->getActiveSheet()->getStyle("K{$i}")->applyFromArray($styleArray1);
     $a++;
 }
+
 //$sheet->setCellValue("L".$listrow, '工艺说明及注意事项:  '.$productp1['fab3']); //款式图
 $wizard = new HtmlHelper();
 $html1 = str_replace('\"', "", htmlspecialchars_decode($productall['productp1']['fab3'])) ;
 $richText = $wizard->toRichTextObject($html1);
 
+$listrowmarker = $listrowmarker-1; //制单人 行 減1
+$spreadsheet->getActiveSheet()->mergeCells("L{$listrow}:N{$listrowmarker}");
+
 $spreadsheet->getActiveSheet() ->setCellValue("L".$listrow, '工艺说明及注意事项:  '.$richText);
-$spreadsheet->getActiveSheet()->getStyle("L".$listrow)->applyFromArray($styleArray1);
+//$spreadsheet->getActiveSheet()->getStyle("L".$listrow)->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("L{$listrow}:N{$listrowmarker}")->applyFromArray($styleArray1);
 
 $spreadsheet->getActiveSheet()->getStyle("L".$listrow)->getFont()->setSize(8);
 
 
 
-//$sheet->setCellValue("L".($listrow-3), $productp1['fab5']); //裁法
+//$sheet->setCellValue("L".($listrow-3), $productp1['fab5']); //针距如下
 $wizard = new HtmlHelper();
 $html1 = str_replace('\"', "", htmlspecialchars_decode($productall['productp1']['fab5'])) ;
 $richText = $wizard->toRichTextObject($html1);
 
 $spreadsheet->getActiveSheet() ->setCellValue("L".($listrow-3), $richText);
-$spreadsheet->getActiveSheet()->getStyle("L".($listrow-3))->applyFromArray($styleArray1);
+$cfrow = $listrow - 3;
+$spreadsheet->getActiveSheet()->getStyle("L{$cfrow}:N{$listrow}")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("L{$cfrow}:N{$listrow}")->getFont()->setSize(8);
 
-$spreadsheet->getActiveSheet()->getStyle("L".($listrow-3))->getFont()->setSize(8);
 
 
-
-//$sheet->setCellValue("L".($listrow-7), $productp1['fab4']); //针距如下
+//$sheet->setCellValue("L".($listrow-7), $productp1['fab4']); //裁法
 $wizard = new HtmlHelper();
 $html1 = str_replace('\"', "", htmlspecialchars_decode($productall['productp1']['fab4'])) ;
 $richText = $wizard->toRichTextObject($html1);
 
 $spreadsheet->getActiveSheet() ->setCellValue("L".($listrow-7), $richText);
-$spreadsheet->getActiveSheet()->getStyle("L".($listrow-7))->applyFromArray($styleArray1);
 
-$spreadsheet->getActiveSheet()->getStyle("L".($listrow-7))->getFont()->setSize(8);
+$cfsrow = $listrow-7;
+$cferow = $listrow - 4;
+$spreadsheet->getActiveSheet()->getStyle("L19:N21")->applyFromArray($styleArray1);
 
 
-$spreadsheet->getActiveSheet()->getStyle('L4:N42')->getAlignment()->setWrapText(true);
-
-$sheet->setCellValue("B43", $productall['productp1']['marker']); //制单人
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
-
 
 
 /**
@@ -254,7 +289,7 @@ $spreadsheet->setActiveSheetIndex(1);  //設置當前活動表
 $sheet = $spreadsheet->getActiveSheet();
 
 $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft Yahei');
-$spreadsheet->getDefaultStyle()->getFont()->setSize(12);
+$spreadsheet->getDefaultStyle()->getFont()->setSize(10);
 
 
 $sheet->setCellValue('B2',  $productall['productp1']['guest']);
@@ -274,7 +309,24 @@ $spreadsheet->getActiveSheet() ->setCellValue('A20', $richText);
 
 /*加載圖片*/
 $img = $productall['productp2']['remarkimg2'];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -294,7 +346,7 @@ $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing
 $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setHeight($height>320 ? 320:$height);
+$drawing->setHeight($height>270 ? 270:$height);
 //$drawing->setWidth(180);
 //$drawing->setHeight(150);
 $drawing->setCoordinates('A5');
@@ -308,7 +360,24 @@ $drawing->setWorksheet($spreadsheet->getActiveSheet());
 
 /*加載圖片*/
 $img = $productall['productp2']['remarkimg3'];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -328,7 +397,7 @@ $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing
 $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setHeight($height>320 ? 320:$height);
+$drawing->setHeight($height>270 ? 270:$height);
 //$drawing->setWidth(180);
 //$drawing->setHeight(150);
 $drawing->setCoordinates('A27');
@@ -347,18 +416,6 @@ $richText = $wizard->toRichTextObject($html1);
 $spreadsheet->getActiveSheet() ->setCellValue('A42', $richText);
 
 
-$styleArray1 = [
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-    'font' => [
-        'Size' => '16',
-    ],
-
-];
 $spreadsheet->getActiveSheet()->getStyle("A20:G25")->applyFromArray($styleArray1);
 $spreadsheet->getActiveSheet()->getStyle("A42:G48")->applyFromArray($styleArray1);
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
@@ -371,9 +428,18 @@ $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作�
 $spreadsheet->setActiveSheetIndex(2);  //設置當前活動表
 $sheet = $spreadsheet->getActiveSheet();
 
+$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(15);
+$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(16);
+$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(52);
+
+$spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(16);
+$spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(16);
+$spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(16);
+
 $sheet->setCellValue('B2',  $productall['doc']);
 $sheet->setCellValue('D2',  $productall['productp1']['styleno']);
 $sheet->setCellValue('F2',  $productall['productp1']['guest']);
+
 
 
 $formnuma= $productall['productp3']["formnum"];
@@ -384,16 +450,29 @@ for($i = 0,$a = 0,$row = 4; $i<$formnuma  ;$i++, $row++){
 
     }
     $sheet->setCellValue("A{$row}", $productall['productp3']['a1']["a". $a ][0]);
+    $spreadsheet->getActiveSheet()->mergeCells("B{$row}:C{$row}");
     $sheet->setCellValue("B{$row}", $productall['productp3']['a1']["b". $a][0]);
-    $sheet->setCellValue("C{$row}", $productall['productp3']['a1']["c". $a][0]);
-    $sheet->setCellValue("D{$row}", $productall['productp3']['a1']["d". $a][0]);
-    $sheet->setCellValue("E{$row}", $productall['productp3']['a1']["e". $a][0]);
-    $sheet->setCellValue("F{$row}", $productall['productp3']['a1']["f". $a][0]);
+    $sheet->setCellValue("D{$row}", $productall['productp3']['a1']["c". $a][0]);
+    $sheet->setCellValue("E{$row}", $productall['productp3']['a1']["d". $a][0]);
+    $sheet->setCellValue("F{$row}", $productall['productp3']['a1']["e". $a][0]);
+    $sheet->setCellValue("G{$row}", $productall['productp3']['a1']["f". $a][0]);
 
+    $spreadsheet->getActiveSheet()->getStyle("A{$row}")->applyFromArray($styleArray1);
+    //$spreadsheet->getActiveSheet()->getStyle("B{$row}")->applyFromArray($styleArray1);
 
+    $spreadsheet->getActiveSheet()->getStyle("B{$row}:C{$row}")->applyFromArray($styleArray1);
+    $spreadsheet->getActiveSheet()->getStyle("D{$row}")->applyFromArray($styleArray1);
+    $spreadsheet->getActiveSheet()->getStyle("E{$row}")->applyFromArray($styleArray1);
+
+    $spreadsheet->getActiveSheet()->getStyle("F{$row}")->applyFromArray($styleArray1);
+    $spreadsheet->getActiveSheet()->getStyle("G{$row}")->applyFromArray($styleArray1);
     $a++;
 
 }
+$spreadsheet->getActiveSheet()->getPageSetup()
+    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE); //打印橫向
+$spreadsheet->getActiveSheet()->getPageSetup()
+    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);//打印橫向 A4
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 /*第三页*/
 
@@ -405,7 +484,11 @@ $sheet = $spreadsheet->getActiveSheet();
 
 $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft Yahei');
 $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
-
+$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(15);
+for ($v = 1; $v < 19; $v++) {
+    $col = chr(97 + $v);
+    $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth(9);
+}
 
 $sheet->setCellValue('B2',  $productall['productp1']['guest']);
 $sheet->setCellValue('B3',  $productall['productp1']['billdate']);
@@ -437,11 +520,18 @@ for($i = 6,$a = 0; $i<$formnuma  ;$i++){
     $sheet->setCellValue("P{$i}", $productall['productp4']['a1']["j". $a][0]);
     $sheet->setCellValue("R{$i}", $productall['productp4']['a1']["k". $a][0]);
     $sheet->setCellValue("S{$i}", $productall['productp4']['a1']["l". $a][0]);
-
+    for ($v = 0; $v < 19; $v++) {
+        $col = chr(97 + $v);
+        $spreadsheet->getActiveSheet()->getStyle($col.$i)->applyFromArray($styleArray1);
+    }
 
     $a++;
 
 }
+$spreadsheet->getActiveSheet()->getPageSetup()
+    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE); //打印橫向
+$spreadsheet->getActiveSheet()->getPageSetup()
+    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);//打印橫向 A4
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 /*第四页*/
@@ -718,18 +808,6 @@ $richText = $wizard->toRichTextObject($html1);
 $spreadsheet->getActiveSheet() ->setCellValue('A22', $richText);
 
 
-$styleArray1 = [
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-    'font' => [
-        'Size' => '10',
-    ],
-
-];
 $spreadsheet->getActiveSheet()->getStyle("A5:G11")->applyFromArray($styleArray1);
 $spreadsheet->getActiveSheet()->getStyle("A14:G19")->applyFromArray($styleArray1);
 $spreadsheet->getActiveSheet()->getStyle("A22:G36")->applyFromArray($styleArray1);

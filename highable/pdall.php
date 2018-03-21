@@ -26,29 +26,37 @@ $sheet->setCellValue('B3',  $pdall['pdp1']["SPL_1_name"]);
 $sheet->setCellValue('C3',  $pdall['pdp1']["SPL_1_country"]);
 $sheet->setCellValue('D3',  $pdall['pdp1']["SPL_1_contact"]);
 $sheet->setCellValue('E3',  $pdall['pdp1']["SPL_1_address"]);
-$sheet->setCellValue('F3',  'EMAIL:'.$pdall['pdp1']["SPL_1_email"].' TEL:'.$pdall['pdp1']["SPL_1_tel"].'MOBILE'.$pdall['pdp1']["SPL_1_mobile"].'QQ:'.$pdall['pdp1']["SPL_1_qq"]);
+$sheet->setCellValue('F3',  'EMAIL:'.$pdall['pdp1']["SPL_1_email"].'\n TEL:'.$pdall['pdp1']["SPL_1_tel"].'\n MOBILE'.$pdall['pdp1']["SPL_1_mobile"].' \n QQ:'.$pdall['pdp1']["SPL_1_qq"]);
 $sheet->setCellValue('G3',  $pdall['pdp1']["SPL_1_goods"]);
+$spreadsheet->getActiveSheet()->getStyle("F3")->getAlignment()->setWrapText(true);
 
 $sheet->setCellValue('A4',  $pdall['pdp1']["SPL_2_code"]);
 $sheet->setCellValue('B4',  $pdall['pdp1']["SPL_2_name"]);
 $sheet->setCellValue('C4',  $pdall['pdp1']["SPL_2_country"]);
 $sheet->setCellValue('D4',  $pdall['pdp1']["SPL_2_contact"]);
 $sheet->setCellValue('E4',  $pdall['pdp1']["SPL_2_address"]);
-$sheet->setCellValue('F4',  'EMAIL:'.$pdall['pdp1']["SPL_2_email"].' TEL:'.$pdall['pdp1']["SPL_2_tel"].'MOBILE:'.$pdall['pdp1']["SPL_2_mobile"].'QQ:'.$pdall['pdp1']["SPL_2_qq"]);
+if($pdall['pdp1']["SPL_2_code"]){
+    $sheet->setCellValue('F4',  'EMAIL:'.$pdall['pdp1']["SPL_2_email"].'  \n TEL:'.$pdall['pdp1']["SPL_2_tel"].' \nMOBILE:'.$pdall['pdp1']["SPL_2_mobile"].' \nQQ:'.$pdall['pdp1']["SPL_2_qq"]);
+}
+
 $sheet->setCellValue('G4',  $pdall['pdp1']["SPL_2_goods"]);
+$spreadsheet->getActiveSheet()->getStyle("F4")->getAlignment()->setWrapText(true);
 
 for($i = 5,$a = 0; $i<8  ;$i++){
     $col = chr(97 + $a);
-    $sheet->setCellValue("A{$i}", $pdall['pdp1']['spli35'][$col.'0']);
+    if($pdall['pdp1']['spli35'][$col.'0']){
+        $sheet->setCellValue("A{$i}", $pdall['pdp1']['spli35'][$col.'0']);
 
-    $sheet->setCellValue("B{$i}", $pdall['pdp1']['spli35'][$col.'1']);
+        $sheet->setCellValue("B{$i}", $pdall['pdp1']['spli35'][$col.'1']);
 
-    $sheet->setCellValue("C{$i}", $pdall['pdp1']['spli35'][$col.'2']);
-    $sheet->setCellValue("D{$i}", $pdall['pdp1']['spli35'][$col.'3']);
-    $sheet->setCellValue("E{$i}", $pdall['pdp1']['spli35'][$col.'4']);
-    $sheet->setCellValue("F{$i}", 'EMAIL:'.$pdall['pdp1']['spli35'][$col.'5'].' TEL:'.$pdall['pdp1']['spli35'][$col.'6'].' MOBILE:'.$pdall['pdp1']['spli35'][$col.'7'].' QQ:'.$pdall['pdp1']['spli35'][$col.'8']);
-    $sheet->setCellValue("G{$i}", $pdall['pdp1']['spli35'][$col.'9']);
-    $spreadsheet->getActiveSheet()->getStyle("F{$i}")->getAlignment()->setWrapText(true);
+        $sheet->setCellValue("C{$i}", $pdall['pdp1']['spli35'][$col.'2']);
+        $sheet->setCellValue("D{$i}", $pdall['pdp1']['spli35'][$col.'3']);
+        $sheet->setCellValue("E{$i}", $pdall['pdp1']['spli35'][$col.'4']);
+        $sheet->setCellValue("F{$i}", 'EMAIL:'.$pdall['pdp1']['spli35'][$col.'5'].' \n TEL:'.$pdall['pdp1']['spli35'][$col.'6'].' \n MOBILE:'.$pdall['pdp1']['spli35'][$col.'7'].' \n QQ:'.$pdall['pdp1']['spli35'][$col.'8']);
+        $sheet->setCellValue("G{$i}", $pdall['pdp1']['spli35'][$col.'9']);
+        $spreadsheet->getActiveSheet()->getStyle("F{$i}")->getAlignment()->setWrapText(true);
+    }
+
     $a++;
 
 }
@@ -379,7 +387,7 @@ $styleArray2 = [
 
 ];
 
-$spreadsheet->getActiveSheet()->getStyle('B9:G34')->applyFromArray($styleArray2);
+$spreadsheet->getActiveSheet()->getStyle('B9:G38')->applyFromArray($styleArray2);
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 

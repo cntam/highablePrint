@@ -15,7 +15,40 @@ $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/productp4.
 $sheet = $spreadsheet->getActiveSheet();
 
 $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft Yahei');
-$spreadsheet->getDefaultStyle()->getFont()->setSize(12);
+$spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(15);
+for ($v = 1; $v < 19; $v++) {
+    $col = chr(97 + $v);
+    $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth(9);
+}
+$styleArray1 = [
+    'alignment' => [
+        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
+        'wrapText' => true,
+        'ShrinkToFit'=>true,
+    ],
+    'font' => [
+        'Size' => '10',
+    ],
+
+    'borders' => [
+        'top' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+        'bottom' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+        'left' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+        'right' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+
+    ],
+
+];
 
 
 $sheet->setCellValue('B2',  $productp4['guest']);
@@ -49,92 +82,18 @@ for($i = 6,$a = 0; $i<$formnuma  ;$i++){
     $sheet->setCellValue("R{$i}", $productp4['a1']["k". $a][0]);
     $sheet->setCellValue("S{$i}", $productp4['a1']["l". $a][0]);
 
+    for ($v = 0; $v < 19; $v++) {
+        $col = chr(97 + $v);
+        $spreadsheet->getActiveSheet()->getStyle($col.$i)->applyFromArray($styleArray1);
+    }
 
     $a++;
 
 }
-/*
-$listrow = $formnuma;
-$listrow = $listrow + 1;
-$sheet->setCellValue("F".$listrow, '产前封样:'.$productp1['bfsample']);
-$listrow = ++$listrow;
-$sheet->setCellValue("A".$listrow, $productp1['ct'][1]);
-$sheet->setCellValue("B".$listrow, $productp1['ct'][2]);
-$sheet->setCellValue("C".$listrow, $productp1['ct'][3]);
-$sheet->setCellValue("E".$listrow, $productp1['ct'][4]);
-$listrow = $listrow + 1;
-$sheet->setCellValue("C".$listrow , $productp1['weight']);
-$sheet->setCellValue("D".++$listrow , $productp1['ctdate']);
-
-$spreadsheet->getActiveSheet()->getStyle("A".++$listrow)->getAlignment()->setWrapText(true);
-$sheet->setCellValue("A".$listrow, '办布如下:'.$productp1['fab1']); //款式图
-
-
-$sheet->setCellValue("L4", $productp1['fab2']); //款式图标注
-//$sheet->setCellValue("L7", $productp1['remarkimg2']); //款式图remarkimg2
-$img = $productp1['remarkimg2'];
-$img = imagecreatefromjpeg($img);
-
-$width = imagesx($img);
-
-$height = imagesy($img);
-
-
-// Generate an image
-//$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-//$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-//imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
-
-// Add a drawing to the worksheet
-$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-$drawing->setName($productp1['doc']);
-$drawing->setDescription($productp1['doc']);
-//$drawing->setImageResource($gdImage);
-$drawing->setImageResource($img);
-$drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-$drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
-//$drawing->setHeight($width);
-
-//$drawing->setHeight($width>550 ? 550:$width);
-$drawing->setWidth(180);
-//$drawing->setHeight(150);
-$drawing->setCoordinates('L7');
-$drawing->setOffsetX(5);
-$drawing->setOffsetY(5);
-$drawing->setWorksheet($spreadsheet->getActiveSheet());
-/*
-$sheet->setCellValue("L18", $productp1['fab4']); //裁法
-$sheet->setCellValue("L22", $productp1['fab4']); //针距如下
-$sheet->setCellValue("L25", $productp1['fab3']); //工艺说明及注意事项
-
-$listrow =  $listrow + 7;
-$sheet->setCellValue("H".$listrow, $productp1["large"]["o0"]);
-$sheet->setCellValue("J".$listrow, $productp1["large"]["o1"]);
-$listrow= 2 +$listrow;
-
-for($i = $listrow , $a=0; $i<($listrow + $productp1["formnumb"]) ;$i++){
-
-    $sheet->setCellValue("A{$i}", $productp1["large"]['p'.$a]);
-    $sheet->setCellValue("B{$i}", $productp1["large"]['q'.$a]);
-    $sheet->setCellValue("C{$i}", $productp1["large"]['r'.$a]);
-    $sheet->setCellValue("D{$i}", $productp1["large"]['s'.$a]);
-    $sheet->setCellValue("E{$i}", $productp1["large"]['t'.$a]);
-    $sheet->setCellValue("F{$i}", $productp1["large"]['u'.$a]);
-    $sheet->setCellValue("G{$i}", $productp1["large"]['v'.$a]);
-    $sheet->setCellValue("H{$i}", $productp1["large"]['w'.$a]);
-    $sheet->setCellValue("I{$i}", $productp1["large"]['x'.$a]);
-    $sheet->setCellValue("J{$i}", $productp1["large"]['y'.$a]);
-    $sheet->setCellValue("K{$i}", $productp1["large"]['z'.$a]);
-    $a++;
-}
-$sheet->setCellValue("L".$listrow, '工艺说明及注意事项:  '.$productp1['fab3']); //款式图
-
-$sheet->setCellValue("L".($listrow-3), $productp1['fab5']); //针距如下
-$sheet->setCellValue("L".($listrow-7), $productp1['fab4']); //针距如下
-$spreadsheet->getActiveSheet()->getStyle('L4:N42')->getAlignment()->setWrapText(true);
-
-$sheet->setCellValue("B43", $productp1['marker']); //制单人
-*/
+$spreadsheet->getActiveSheet()->getPageSetup()
+    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE); //打印橫向
+$spreadsheet->getActiveSheet()->getPageSetup()
+    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);//打印橫向 A4
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 unset($_SESSION['productp4'] ); //注销SESSION
 

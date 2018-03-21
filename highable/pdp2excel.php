@@ -121,7 +121,24 @@ $spreadsheet->getActiveSheet()->getStyle('D7')->getAlignment()->setShrinkToFit(t
 
 //$img = 'http://www.a.cn/wordpress/wp-content/uploads/2018/02/2506390415_532601864.220x220-20.jpg';
 
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 
 $width = imagesx($img);
 
@@ -171,18 +188,20 @@ $styleArray2 = [
 
 ];
 
-$spreadsheet->getActiveSheet()->getStyle('B9:G34')->applyFromArray($styleArray2);
+$spreadsheet->getActiveSheet()->getStyle('B9:G38')->applyFromArray($styleArray2);
 
 
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
+$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
+
 //unset($_SESSION['pdp2'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
-//$output= 0;
-$filenameout = 'pdp2out.xlsx';
+$nt = date("YmdHis",time()); //转换为日期。
+$filenameout = 'pdp2out'.$nt.'.xlsx';
 if($output){
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

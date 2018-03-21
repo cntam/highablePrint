@@ -213,7 +213,7 @@ $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYP
 
 //$drawing->setHeight($width>550 ? 550:$width);
 //$drawing->setWidth(300);
-$drawing->setHeight(150);
+$drawing->setHeight(135);
 $drawing->setCoordinates('B4');
 $drawing->setOffsetX(130);
 $drawing->setOffsetY(5);
@@ -291,9 +291,10 @@ $spreadsheet->setActiveSheetIndex(0);
 
 unset($_SESSION['costp2'] ); //注销SESSION
 
+$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
-//$output= 0;
-$filenameout = 'costp2out.xlsx';
+$nt = date("YmdHis",time()); //转换为日期。
+$filenameout = 'costp2out'.$nt.'.xlsx';
 if($output){
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

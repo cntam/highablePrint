@@ -1,8 +1,8 @@
 <?php
 session_start();
 header("Content-type: text/html; charset=utf-8");
-require '../vendor/autoload.php';
-//require '/home/pan/vendor/autoload.php';
+//require '../vendor/autoload.php';
+require '/home/pan/vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper; // html 解析器
@@ -26,29 +26,36 @@ $sheet->setCellValue('B3',  $pdp1["SPL_1_name"]);
 $sheet->setCellValue('C3',  $pdp1["SPL_1_country"]);
 $sheet->setCellValue('D3',  $pdp1["SPL_1_contact"]);
 $sheet->setCellValue('E3',  $pdp1["SPL_1_address"]);
-$sheet->setCellValue('F3',  'EMAIL:'.$pdp1["SPL_1_email"].' TEL:'.$pdp1["SPL_1_tel"].'MOBILE'.$pdp1["SPL_1_mobile"].'QQ:'.$pdp1["SPL_1_qq"]);
+$sheet->setCellValue('F3',  'EMAIL:'.$pdp1["SPL_1_email"].' \n TEL:'.$pdp1["SPL_1_tel"].' \n MOBILE'.$pdp1["SPL_1_mobile"].'\n QQ:'.$pdp1["SPL_1_qq"]);
 $sheet->setCellValue('G3',  $pdp1["SPL_1_goods"]);
+$spreadsheet->getActiveSheet()->getStyle("F3")->getAlignment()->setWrapText(true);
 
 $sheet->setCellValue('A4',  $pdp1["SPL_2_code"]);
 $sheet->setCellValue('B4',  $pdp1["SPL_2_name"]);
 $sheet->setCellValue('C4',  $pdp1["SPL_2_country"]);
 $sheet->setCellValue('D4',  $pdp1["SPL_2_contact"]);
 $sheet->setCellValue('E4',  $pdp1["SPL_2_address"]);
-$sheet->setCellValue('F4',  'EMAIL:'.$pdp1["SPL_2_email"].' TEL:'.$pdp1["SPL_2_tel"].'MOBILE:'.$pdp1["SPL_2_mobile"].'QQ:'.$pdp1["SPL_2_qq"]);
+if($pdp1["SPL_2_code"]) {
+    $sheet->setCellValue('F4', 'EMAIL:' . $pdp1["SPL_2_email"] . '\n TEL:' . $pdp1["SPL_2_tel"] . '\n MOBILE:' . $pdp1["SPL_2_mobile"] . ' \n QQ:' . $pdp1["SPL_2_qq"]);
+}
 $sheet->setCellValue('G4',  $pdp1["SPL_2_goods"]);
+$spreadsheet->getActiveSheet()->getStyle("F4")->getAlignment()->setWrapText(true);
 
 for($i = 5,$a = 0; $i<8  ;$i++){
     $col = chr(97 + $a);
-    $sheet->setCellValue("A{$i}", $pdp1['spli35'][$col.'0']);
+    if($pdp1['spli35'][$col.'0']){
+        $sheet->setCellValue("A{$i}", $pdp1['spli35'][$col.'0']);
 
-    $sheet->setCellValue("B{$i}", $pdp1['spli35'][$col.'1']);
+        $sheet->setCellValue("B{$i}", $pdp1['spli35'][$col.'1']);
 
-    $sheet->setCellValue("C{$i}", $pdp1['spli35'][$col.'2']);
-    $sheet->setCellValue("D{$i}", $pdp1['spli35'][$col.'3']);
-    $sheet->setCellValue("E{$i}", $pdp1['spli35'][$col.'4']);
-    $sheet->setCellValue("F{$i}", 'EMAIL:'.$pdp1['spli35'][$col.'5'].' TEL:'.$pdp1['spli35'][$col.'6'].' MOBILE:'.$pdp1['spli35'][$col.'7'].' QQ:'.$pdp1['spli35'][$col.'8']);
-    $sheet->setCellValue("G{$i}", $pdp1['spli35'][$col.'9']);
-    $spreadsheet->getActiveSheet()->getStyle("F{$i}")->getAlignment()->setWrapText(true);
+        $sheet->setCellValue("C{$i}", $pdp1['spli35'][$col.'2']);
+        $sheet->setCellValue("D{$i}", $pdp1['spli35'][$col.'3']);
+        $sheet->setCellValue("E{$i}", $pdp1['spli35'][$col.'4']);
+        $sheet->setCellValue("F{$i}", 'EMAIL:'.$pdp1['spli35'][$col.'5'].' \n TEL:'.$pdp1['spli35'][$col.'6'].' \n MOBILE:'.$pdp1['spli35'][$col.'7'].' \n QQ:'.$pdp1['spli35'][$col.'8']);
+        $sheet->setCellValue("G{$i}", $pdp1['spli35'][$col.'9']);
+        $spreadsheet->getActiveSheet()->getStyle("F{$i}")->getAlignment()->setWrapText(true);
+    }
+
     $a++;
 
 }
@@ -221,13 +228,13 @@ $sheet->setCellValue("L25", $pdp1['fab3']); //工艺说明及注意事项*/
 
 
 
-
+$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 unset($_SESSION['pdp1'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
-//$output= 1;
-$filenameout = 'pdp1out.xlsx';
+$nt = date("YmdHis",time()); //转换为日期。
+$filenameout = 'pdp1out'.$nt.'.xlsx';
 if($output){
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

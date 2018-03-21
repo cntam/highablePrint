@@ -150,7 +150,8 @@ $spreadsheet->getActiveSheet()->getStyle('A5:C5')->getAlignment()->setWrapText(t
 $spreadsheet->setActiveSheetIndex(0);
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
-$filenameout = 'pdp3out.xlsx';
+$nt = date("YmdHis",time()); //转换为日期。
+$filenameout = 'pdp3out'.$nt.'.xlsx';
 if($output){
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

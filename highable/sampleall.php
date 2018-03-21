@@ -101,18 +101,35 @@ $spreadsheet->getActiveSheet()->setCellValue('B18', $sampleall['samplep1']["item
 $spreadsheet->getActiveSheet()->setCellValue('B19', $sampleall['samplep1']["samexplain"]);
 
 
-$spreadsheet->getActiveSheet()->setCellValue('F11', $sampleall['samplep1']["transmode"]);
-$spreadsheet->getActiveSheet()->setCellValue('F12', $sampleall['samplep1']["refer"]);
+$spreadsheet->getActiveSheet()->setCellValue('H11', $sampleall['samplep1']["transmode"]);
+$spreadsheet->getActiveSheet()->setCellValue('H12', $sampleall['samplep1']["refer"]);
 
-$spreadsheet->getActiveSheet()->setCellValue('F14', $sampleall['samplep1']["num"]);
-$spreadsheet->getActiveSheet()->setCellValue('F15', $sampleall['samplep1']["transtime3"]);
-$spreadsheet->getActiveSheet()->setCellValue('F16', $sampleall['samplep1']["samtype"]);
-$spreadsheet->getActiveSheet()->setCellValue('F17', $sampleall['samplep1']["orderremark"]);
-$spreadsheet->getActiveSheet()->setCellValue('F18', $sampleall['samplep1']["material"]);
+$spreadsheet->getActiveSheet()->setCellValue('H14', $sampleall['samplep1']["num"]);
+$spreadsheet->getActiveSheet()->setCellValue('H15', $sampleall['samplep1']["transtime3"]);
+$spreadsheet->getActiveSheet()->setCellValue('H16', $sampleall['samplep1']["samtype"]);
+$spreadsheet->getActiveSheet()->setCellValue('H17', $sampleall['samplep1']["orderremark"]);
+$spreadsheet->getActiveSheet()->setCellValue('H18', $sampleall['samplep1']["material"]);
 
 /* 图片模块*/
 $img = $sampleall['samplep1']["remarkimg1"];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -132,7 +149,7 @@ $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing
 $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setHeight($width>170 ? 170:$width);
+$drawing->setHeight($height>130 ? 130:$height);
 //$drawing->setWidth(250);
 //$drawing->setHeight(150);
 $drawing->setCoordinates('A21');
@@ -152,7 +169,24 @@ $spreadsheet->getActiveSheet() ->setCellValue('F21', $richText);
 
 /* 图片模块*/
 $img = $sampleall['samplep1']["remarkimg3"];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -172,7 +206,7 @@ $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing
 $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setHeight($width>170 ? 170:$width);
+$drawing->setHeight($height>130 ? 130:$height);
 //$drawing->setWidth(250);
 //$drawing->setHeight(150);
 $drawing->setCoordinates('A31');
@@ -302,7 +336,24 @@ $spreadsheet->getActiveSheet()->setCellValue('B3', $sampleall['samplep3']["style
 
 /*加載圖片*/
 $img = $sampleall['samplep3']["logo"];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -334,7 +385,24 @@ $drawing->setWorksheet($spreadsheet->getActiveSheet());
 
 /*加載圖片*/
 $img = $sampleall['samplep3']["remarkimg3"];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -366,7 +434,24 @@ $drawing->setWorksheet($spreadsheet->getActiveSheet());
 
 /*加載圖片*/
 $img = $sampleall['samplep3']["remarkimg4"];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -413,7 +498,7 @@ $wizard = new HtmlHelper();
 $html1 = str_replace('\"', "", htmlspecialchars_decode($sampleall['samplep3']["remark"]["b1"])) ;
 $richText = $wizard->toRichTextObject($html1);
 
-$spreadsheet->getActiveSheet() ->setCellValue('D13', $richText);
+$spreadsheet->getActiveSheet() ->setCellValue('D16', $richText);
 /* 文字模块*/
 
 /* 文字模块*/
@@ -421,7 +506,7 @@ $wizard = new HtmlHelper();
 $html1 = str_replace('\"', "", htmlspecialchars_decode($sampleall['samplep3']["remark"]["c1"])) ;
 $richText = $wizard->toRichTextObject($html1);
 
-$spreadsheet->getActiveSheet() ->setCellValue('D20', $richText);
+$spreadsheet->getActiveSheet() ->setCellValue('D23', $richText);
 /* 文字模块*/
 
 /* 文字模块*/
@@ -429,7 +514,7 @@ $wizard = new HtmlHelper();
 $html1 = str_replace('\"', "", htmlspecialchars_decode($sampleall['samplep3']["remark"]["d1"])) ;
 $richText = $wizard->toRichTextObject($html1);
 
-$spreadsheet->getActiveSheet() ->setCellValue('D26', $richText);
+$spreadsheet->getActiveSheet() ->setCellValue('D30', $richText);
 /* 文字模块*/
 
 /* 文字模块*/
@@ -437,7 +522,7 @@ $wizard = new HtmlHelper();
 $html1 = str_replace('\"', "", htmlspecialchars_decode($sampleall['samplep3']["remark"]["e1"])) ;
 $richText = $wizard->toRichTextObject($html1);
 
-$spreadsheet->getActiveSheet() ->setCellValue('D32', $richText);
+$spreadsheet->getActiveSheet() ->setCellValue('D37', $richText);
 /* 文字模块*/
 
 /* 文字模块*/
@@ -445,7 +530,7 @@ $wizard = new HtmlHelper();
 $html1 = str_replace('\"', "", htmlspecialchars_decode($sampleall['samplep3']["remark"]["f1"])) ;
 $richText = $wizard->toRichTextObject($html1);
 
-$spreadsheet->getActiveSheet() ->setCellValue('D38', $richText);
+$spreadsheet->getActiveSheet() ->setCellValue('D44', $richText);
 /* 文字模块*/
 
 $styleArray1 = [
@@ -460,13 +545,13 @@ $styleArray1 = [
     ],
 
 ];
-$spreadsheet->getActiveSheet()->getStyle("D6:F12")->applyFromArray($styleArray1);
-$spreadsheet->getActiveSheet()->getStyle("D13:F19")->applyFromArray($styleArray1);
-$spreadsheet->getActiveSheet()->getStyle("D20:F25")->applyFromArray($styleArray1);
-$spreadsheet->getActiveSheet()->getStyle("D26:F31")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("D6:F15")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("D16:F22")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("D23:F29")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("D30:F36")->applyFromArray($styleArray1);
 
-$spreadsheet->getActiveSheet()->getStyle("D26:F32")->applyFromArray($styleArray1);
-$spreadsheet->getActiveSheet()->getStyle("D32:F38")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("D37:F43")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("D44:F51")->applyFromArray($styleArray1);
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 /*第三页*/
@@ -486,7 +571,24 @@ $spreadsheet->getActiveSheet()->setCellValue('B3', $sampleall['samplep4']["style
 
 /*加載圖片*/
 $img = $sampleall['samplep4']["logo"];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -518,7 +620,24 @@ $drawing->setWorksheet($spreadsheet->getActiveSheet());
 
 /*加載圖片*/
 $img = $sampleall['samplep4']["remarkimg3"];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -730,7 +849,24 @@ $spreadsheet->getActiveSheet()->setCellValue('B3', $sampleall['samplep5']["style
 
 /*加載圖片*/
 $img = $sampleall['samplep5']["logo"];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -762,7 +898,24 @@ $drawing->setWorksheet($spreadsheet->getActiveSheet());
 
 /*加載圖片*/
 $img = $sampleall['samplep5']["remarkimg2"];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 

@@ -37,7 +37,24 @@ $spreadsheet->getActiveSheet() ->setCellValue('A20', $richText);
 
 /*加載圖片*/
 $img = $productp2['remarkimg2'];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -57,7 +74,7 @@ $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing
 $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setHeight($height>320 ? 320:$height);
+$drawing->setHeight($height>270 ? 270:$height);
 //$drawing->setWidth(180);
 //$drawing->setHeight(150);
 $drawing->setCoordinates('A5');
@@ -71,7 +88,24 @@ $drawing->setWorksheet($spreadsheet->getActiveSheet());
 
 /*加載圖片*/
 $img = $productp2['remarkimg3'];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -91,7 +125,7 @@ $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing
 $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setHeight($height>320 ? 320:$height);
+$drawing->setHeight($height>270 ? 270:$height);
 //$drawing->setWidth(180);
 //$drawing->setHeight(150);
 $drawing->setCoordinates('A27');
@@ -146,7 +180,7 @@ unset($_SESSION['productp2'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formprint' )? 1:0;
 //$output= 1;
-$nt=time();
+$nt = date("YmdHis",time()); //转换为日期。
 $filenameout = 'productp2out'.$nt.'.xlsx';
 if($output){
     // Redirect output to a client’s web browser (Xlsx)

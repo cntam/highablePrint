@@ -73,7 +73,24 @@ $spreadsheet->getActiveSheet()->setCellValue('B3', $samplep3["stylename"]);
 
 /*加載圖片*/
 $img = $samplep3["logo"];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -105,7 +122,24 @@ $drawing->setWorksheet($spreadsheet->getActiveSheet());
 
 /*加載圖片*/
 $img = $samplep3["remarkimg3"];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -137,7 +171,24 @@ $drawing->setWorksheet($spreadsheet->getActiveSheet());
 
 /*加載圖片*/
 $img = $samplep3["remarkimg4"];
-$img = imagecreatefromjpeg($img);
+preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+$imgformat = $imgformat[1];
+switch ($imgformat)
+{
+    case "jpg":
+    case "jpeg":
+        $img = imagecreatefromjpeg($img);
+        break;
+    case "bmp":
+        $img =  imagecreatefromwbmp($img);
+        break;
+    case "gif":
+        $img =  imagecreatefromgif($img);
+        break;
+    case "png":
+        $img =   imagecreatefrompng($img);
+        break;
+}
 $width = imagesx($img);
 $height = imagesy($img);
 
@@ -184,7 +235,7 @@ $wizard = new HtmlHelper();
 $html1 = str_replace('\"', "", htmlspecialchars_decode($samplep3["remark"]["b1"])) ;
 $richText = $wizard->toRichTextObject($html1);
 
-$spreadsheet->getActiveSheet() ->setCellValue('D13', $richText);
+$spreadsheet->getActiveSheet() ->setCellValue('D16', $richText);
 /* 文字模块*/
 
 /* 文字模块*/
@@ -192,7 +243,7 @@ $wizard = new HtmlHelper();
 $html1 = str_replace('\"', "", htmlspecialchars_decode($samplep3["remark"]["c1"])) ;
 $richText = $wizard->toRichTextObject($html1);
 
-$spreadsheet->getActiveSheet() ->setCellValue('D20', $richText);
+$spreadsheet->getActiveSheet() ->setCellValue('D23', $richText);
 /* 文字模块*/
 
 /* 文字模块*/
@@ -200,7 +251,7 @@ $wizard = new HtmlHelper();
 $html1 = str_replace('\"', "", htmlspecialchars_decode($samplep3["remark"]["d1"])) ;
 $richText = $wizard->toRichTextObject($html1);
 
-$spreadsheet->getActiveSheet() ->setCellValue('D26', $richText);
+$spreadsheet->getActiveSheet() ->setCellValue('D30', $richText);
 /* 文字模块*/
 
 /* 文字模块*/
@@ -208,7 +259,7 @@ $wizard = new HtmlHelper();
 $html1 = str_replace('\"', "", htmlspecialchars_decode($samplep3["remark"]["e1"])) ;
 $richText = $wizard->toRichTextObject($html1);
 
-$spreadsheet->getActiveSheet() ->setCellValue('D32', $richText);
+$spreadsheet->getActiveSheet() ->setCellValue('D37', $richText);
 /* 文字模块*/
 
 /* 文字模块*/
@@ -216,7 +267,7 @@ $wizard = new HtmlHelper();
 $html1 = str_replace('\"', "", htmlspecialchars_decode($samplep3["remark"]["f1"])) ;
 $richText = $wizard->toRichTextObject($html1);
 
-$spreadsheet->getActiveSheet() ->setCellValue('D38', $richText);
+$spreadsheet->getActiveSheet() ->setCellValue('D44', $richText);
 /* 文字模块*/
 
 $styleArray1 = [
@@ -247,13 +298,13 @@ $styleArray1 = [
         ],
     */
 ];
-$spreadsheet->getActiveSheet()->getStyle("D6:F12")->applyFromArray($styleArray1);
-$spreadsheet->getActiveSheet()->getStyle("D13:F19")->applyFromArray($styleArray1);
-$spreadsheet->getActiveSheet()->getStyle("D20:F25")->applyFromArray($styleArray1);
-$spreadsheet->getActiveSheet()->getStyle("D26:F31")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("D6:F15")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("D16:F22")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("D23:F29")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("D30:F36")->applyFromArray($styleArray1);
 
-$spreadsheet->getActiveSheet()->getStyle("D26:F32")->applyFromArray($styleArray1);
-$spreadsheet->getActiveSheet()->getStyle("D32:F38")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("D37:F43")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("D44:F51")->applyFromArray($styleArray1);
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 

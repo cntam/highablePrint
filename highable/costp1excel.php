@@ -76,20 +76,23 @@ switch ($imgformat)
 //$drawing->setHeight($width>550 ? 550:$width);
 //$drawing->setWidth($width>500 ? 500:$width);
 
-    $resw = $width < 520 ? 0 : 2;
-    $resh = $height < 490 ? 0 : 3;
+    $resw = $width < 660 ? 0 : 2;
+    $resh = $height < 660 ? 0 : 3;
     $res = $resw + $resh;
     switch ($res)
     {
         case "2":
-            $drawing->setWidth(520);
+            $drawing->setWidth(660);
             break;
         case "3":
-            $drawing->setHeight(490);
+            $drawing->setHeight(660);
+            break;
+        case "5":
+            $drawing->setWidth(660);
             break;
 
         default:
-            $drawing->setHeight($height>550 ? 490:$height);
+            $drawing->setHeight($height>660 ? 660:$height);
     }
 
 
@@ -151,32 +154,32 @@ switch ($imgformat)
 //$spreadsheet->getActiveSheet()->getStyle('A1:D1')->getFont()->setSize(14);
 
 //填数据
-    $spreadsheet->getActiveSheet()->setCellValue('B28', $costp1['costname']);
-    $spreadsheet->getActiveSheet()->setCellValue('A29', $costp1['costno']);
-    $spreadsheet->getActiveSheet()->setCellValue('B29', $costp1['ccno2']);
-    $spreadsheet->getActiveSheet()->setCellValue('E31', $costp1['costno']);
+    $spreadsheet->getActiveSheet()->setCellValue('B35', $costp1['costname']);
+    $spreadsheet->getActiveSheet()->setCellValue('A36', $costp1['costno']);
+    $spreadsheet->getActiveSheet()->setCellValue('B36', $costp1['ccno2']);
+    $spreadsheet->getActiveSheet()->setCellValue('E38', $costp1['costno']);
 
-    $spreadsheet->getActiveSheet()->setCellValue('B31', $costp1['fab']['a1']);
-    $spreadsheet->getActiveSheet()->setCellValue('B32', $costp1['fab']['b1']);
-    $spreadsheet->getActiveSheet()->setCellValue('B33', $costp1['fab']['c1']);
-    $spreadsheet->getActiveSheet()->setCellValue('B34', $costp1['fab']['d1']);
-    $spreadsheet->getActiveSheet()->setCellValue('B35', $costp1['fab']['e1']);
-    $spreadsheet->getActiveSheet()->setCellValue('B36', $costp1['fab']['f1']);
-    $spreadsheet->getActiveSheet()->setCellValue('B37', $costp1['fab']['g1']);
-    $spreadsheet->getActiveSheet()->setCellValue('B38', $costp1['fab']['h1']);
+    $spreadsheet->getActiveSheet()->setCellValue('B38', $costp1['fab']['a1']);
+    $spreadsheet->getActiveSheet()->setCellValue('B39', $costp1['fab']['b1']);
+    $spreadsheet->getActiveSheet()->setCellValue('B40', $costp1['fab']['c1']);
+    $spreadsheet->getActiveSheet()->setCellValue('B41', $costp1['fab']['d1']);
+    $spreadsheet->getActiveSheet()->setCellValue('B42', $costp1['fab']['e1']);
+    $spreadsheet->getActiveSheet()->setCellValue('B43', $costp1['fab']['f1']);
+    $spreadsheet->getActiveSheet()->setCellValue('B44', $costp1['fab']['g1']);
+    $spreadsheet->getActiveSheet()->setCellValue('B45', $costp1['fab']['h1']);
 
-    $spreadsheet->getActiveSheet()->setCellValue('E33', $costp1['fab']['c2']);
-    $spreadsheet->getActiveSheet()->setCellValue('E34', $costp1['fab']['d2']);
-    $spreadsheet->getActiveSheet()->setCellValue('E35', $costp1['fab']['e2']);
-    $spreadsheet->getActiveSheet()->setCellValue('E36', $costp1['fab']['f2']);
-    $spreadsheet->getActiveSheet()->setCellValue('E37', $costp1['fab']['g2']);
-    $spreadsheet->getActiveSheet()->setCellValue('E38', $costp1['fab']['h2']);
+    $spreadsheet->getActiveSheet()->setCellValue('E40', $costp1['fab']['c2']);
+    $spreadsheet->getActiveSheet()->setCellValue('E41', $costp1['fab']['d2']);
+    $spreadsheet->getActiveSheet()->setCellValue('E42', $costp1['fab']['e2']);
+    $spreadsheet->getActiveSheet()->setCellValue('E43', $costp1['fab']['f2']);
+    $spreadsheet->getActiveSheet()->setCellValue('E44', $costp1['fab']['g2']);
+    $spreadsheet->getActiveSheet()->setCellValue('E45', $costp1['fab']['h2']);
 
-    $spreadsheet->getActiveSheet()->setCellValue('H33', $costp1['fab']['c3']);
-    $spreadsheet->getActiveSheet()->setCellValue('H34', $costp1['fab']['d3']);
-    $spreadsheet->getActiveSheet()->setCellValue('H35', $costp1['fab']['e3']);
-    $spreadsheet->getActiveSheet()->setCellValue('H36', $costp1['fab']['f3']);
-    $spreadsheet->getActiveSheet()->setCellValue('H37', $costp1['fab']['g3']);
+    $spreadsheet->getActiveSheet()->setCellValue('H40', $costp1['fab']['c3']);
+    $spreadsheet->getActiveSheet()->setCellValue('H41', $costp1['fab']['d3']);
+    $spreadsheet->getActiveSheet()->setCellValue('H42', $costp1['fab']['e3']);
+    $spreadsheet->getActiveSheet()->setCellValue('H43', $costp1['fab']['f3']);
+    $spreadsheet->getActiveSheet()->setCellValue('H44', $costp1['fab']['g3']);
 
 
 
@@ -186,8 +189,10 @@ switch ($imgformat)
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
     $spreadsheet->setActiveSheetIndex(0); //返回第一页
 
-    $spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.1); //设置打印边距
-    $spreadsheet->getActiveSheet()->getPageMargins()->setLeft(0.1); //
+/*    $spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.1); //设置打印边距
+    $spreadsheet->getActiveSheet()->getPageMargins()->setLeft(0.1); //*/
+
+$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 //$output= 0;
