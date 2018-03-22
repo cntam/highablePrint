@@ -290,6 +290,20 @@ $sheet = $spreadsheet->getActiveSheet();
 
 $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft Yahei');
 $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+$styleArray2 = [
+    'alignment' => [
+        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
+        'wrapText' => true,
+        'ShrinkToFit'=>true,
+    ],
+    'font' => [
+        'Size' => '10',
+    ],
+
+
+
+];
 
 
 $sheet->setCellValue('B2',  $productall['productp1']['guest']);
@@ -416,8 +430,8 @@ $richText = $wizard->toRichTextObject($html1);
 $spreadsheet->getActiveSheet() ->setCellValue('A42', $richText);
 
 
-$spreadsheet->getActiveSheet()->getStyle("A20:G25")->applyFromArray($styleArray1);
-$spreadsheet->getActiveSheet()->getStyle("A42:G48")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("A20:G25")->applyFromArray($styleArray2);
+$spreadsheet->getActiveSheet()->getStyle("A42:G48")->applyFromArray($styleArray2);
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 /*第二页*/
