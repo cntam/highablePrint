@@ -109,7 +109,24 @@ for($lt = 0, $lan = 0; $lt<=$prnum; $lt++){
 
     /*加載圖片*/
     $img = $cpsp3[$lan][0]["remarkimg2"];
-    $img = imagecreatefromjpeg($img);
+    preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+    $imgformat = $imgformat[1];
+    switch ($imgformat)
+    {
+        case "jpg":
+        case "jpeg":
+            $img = imagecreatefromjpeg($img);
+            break;
+        case "bmp":
+            $img =  imagecreatefromwbmp($img);
+            break;
+        case "gif":
+            $img =  imagecreatefromgif($img);
+            break;
+        case "png":
+            $img =   imagecreatefrompng($img);
+            break;
+    }
     $width = imagesx($img);
     $height = imagesy($img);
 
@@ -197,7 +214,24 @@ if($maxnum > 4 ){
 
         /*加載圖片*/
         $img = $cpsp3[$lan][0]["remarkimg2"];
-        $img = imagecreatefromjpeg($img);
+        preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+        $imgformat = $imgformat[1];
+        switch ($imgformat)
+        {
+            case "jpg":
+            case "jpeg":
+                $img = imagecreatefromjpeg($img);
+                break;
+            case "bmp":
+                $img =  imagecreatefromwbmp($img);
+                break;
+            case "gif":
+                $img =  imagecreatefromgif($img);
+                break;
+            case "png":
+                $img =   imagecreatefrompng($img);
+                break;
+        }
         $width = imagesx($img);
         $height = imagesy($img);
 
@@ -288,7 +322,24 @@ if($maxnum > 9 ){
 
         /*加載圖片*/
         $img = $cpsp3[$lan][0]["remarkimg2"];
-        $img = imagecreatefromjpeg($img);
+        preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+        $imgformat = $imgformat[1];
+        switch ($imgformat)
+        {
+            case "jpg":
+            case "jpeg":
+                $img = imagecreatefromjpeg($img);
+                break;
+            case "bmp":
+                $img =  imagecreatefromwbmp($img);
+                break;
+            case "gif":
+                $img =  imagecreatefromgif($img);
+                break;
+            case "png":
+                $img =   imagecreatefrompng($img);
+                break;
+        }
         $width = imagesx($img);
         $height = imagesy($img);
 
