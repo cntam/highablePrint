@@ -613,11 +613,11 @@ $lan++;
 
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
-//unset($_SESSION['cpsp1'] ); //注销SESSION
+unset($_SESSION['cpsp1'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
-//$output= 0;
-$filenameout = 'cpsp1out.xlsx';
+$nt = date("YmdHis",time()); //转换为日期。
+$filenameout = 'cpsp1out'.$nt.'.xlsx';
 if($output){
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

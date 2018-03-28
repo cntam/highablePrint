@@ -20,15 +20,45 @@ $sheet = $spreadsheet->getActiveSheet();
 $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft YaHei');
 $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
 
+$styleArray1 = [
+    'alignment' => [
+        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
+        'wrapText' => true,
+        'ShrinkToFit'=>true,
+    ],
+    'font' => [
+        'Size' => '10',
+    ],
+
+    'borders' => [
+        'top' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+        'bottom' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+        'left' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+        'right' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+
+    ],
+
+];
+
 
 $sheet->setCellValue('A3',  $pdall['pdp1']["SPL_1_code"]);
 $sheet->setCellValue('B3',  $pdall['pdp1']["SPL_1_name"]);
 $sheet->setCellValue('C3',  $pdall['pdp1']["SPL_1_country"]);
 $sheet->setCellValue('D3',  $pdall['pdp1']["SPL_1_contact"]);
 $sheet->setCellValue('E3',  $pdall['pdp1']["SPL_1_address"]);
-$sheet->setCellValue('F3',  'EMAIL:'.$pdall['pdp1']["SPL_1_email"].'\n TEL:'.$pdall['pdp1']["SPL_1_tel"].'\n MOBILE'.$pdall['pdp1']["SPL_1_mobile"].' \n QQ:'.$pdall['pdp1']["SPL_1_qq"]);
+$sheet->setCellValue('F3',  'EMAIL:'.$pdall['pdp1']["SPL_1_email"].' \n TEL:'.$pdall['pdp1']["SPL_1_tel"].' \n MOBILE'.$pdall['pdp1']["SPL_1_mobile"].' \n QQ:'.$pdall['pdp1']["SPL_1_qq"]);
 $sheet->setCellValue('G3',  $pdall['pdp1']["SPL_1_goods"]);
-$spreadsheet->getActiveSheet()->getStyle("F3")->getAlignment()->setWrapText(true);
+//$spreadsheet->getActiveSheet()->getStyle("F3")->getAlignment()->setWrapText(true);
+$spreadsheet->getActiveSheet()->getStyle("F3")->applyFromArray($styleArray1);
 
 $sheet->setCellValue('A4',  $pdall['pdp1']["SPL_2_code"]);
 $sheet->setCellValue('B4',  $pdall['pdp1']["SPL_2_name"]);
@@ -36,11 +66,12 @@ $sheet->setCellValue('C4',  $pdall['pdp1']["SPL_2_country"]);
 $sheet->setCellValue('D4',  $pdall['pdp1']["SPL_2_contact"]);
 $sheet->setCellValue('E4',  $pdall['pdp1']["SPL_2_address"]);
 if($pdall['pdp1']["SPL_2_code"]){
-    $sheet->setCellValue('F4',  'EMAIL:'.$pdall['pdp1']["SPL_2_email"].'  \n TEL:'.$pdall['pdp1']["SPL_2_tel"].' \nMOBILE:'.$pdall['pdp1']["SPL_2_mobile"].' \nQQ:'.$pdall['pdp1']["SPL_2_qq"]);
+    $sheet->setCellValue('F4',  'EMAIL:'.$pdall['pdp1']["SPL_2_email"].'  \n TEL:'.$pdall['pdp1']["SPL_2_tel"].' \n MOBILE:'.$pdall['pdp1']["SPL_2_mobile"].' \n QQ:'.$pdall['pdp1']["SPL_2_qq"]);
 }
 
 $sheet->setCellValue('G4',  $pdall['pdp1']["SPL_2_goods"]);
-$spreadsheet->getActiveSheet()->getStyle("F4")->getAlignment()->setWrapText(true);
+//$spreadsheet->getActiveSheet()->getStyle("F4")->getAlignment()->setWrapText(true);
+$spreadsheet->getActiveSheet()->getStyle("F4")->applyFromArray($styleArray1);
 
 for($i = 5,$a = 0; $i<8  ;$i++){
     $col = chr(97 + $a);
@@ -55,6 +86,7 @@ for($i = 5,$a = 0; $i<8  ;$i++){
         $sheet->setCellValue("F{$i}", 'EMAIL:'.$pdall['pdp1']['spli35'][$col.'5'].' \n TEL:'.$pdall['pdp1']['spli35'][$col.'6'].' \n MOBILE:'.$pdall['pdp1']['spli35'][$col.'7'].' \n QQ:'.$pdall['pdp1']['spli35'][$col.'8']);
         $sheet->setCellValue("G{$i}", $pdall['pdp1']['spli35'][$col.'9']);
         $spreadsheet->getActiveSheet()->getStyle("F{$i}")->getAlignment()->setWrapText(true);
+        $spreadsheet->getActiveSheet()->getStyle("F{$i}")->applyFromArray($styleArray1);
     }
 
     $a++;
@@ -130,34 +162,7 @@ $drawing->setOffsetY(5);
 $drawing->setWorksheet($spreadsheet->getActiveSheet());
 
 
-$styleArray1 = [
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-    'font' => [
-        'Size' => '10',
-    ],
 
-    'borders' => [
-        'top' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'left' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ],
-
-];
 $spreadsheet->getActiveSheet()->getStyle("A3:G3")->applyFromArray($styleArray1);
 $spreadsheet->getActiveSheet()->getStyle("A4:G4")->applyFromArray($styleArray1);
 
