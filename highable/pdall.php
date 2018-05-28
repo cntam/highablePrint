@@ -2,7 +2,8 @@
 session_start();
 header("Content-type: text/html; charset=utf-8");
 //require '../vendor/autoload.php';
-require '/home/pan/vendor/autoload.php';
+//require '/home/pan/vendor/autoload.php';
+require '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper; // html 解析器
