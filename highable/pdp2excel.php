@@ -1,16 +1,28 @@
 <?php
 session_start();
 
-$ihkno= $_SESSION['ihkno'];
-$supplier = $_SESSION['supplier'];
-$com =  $_SESSION['com'];
-$faw = $_SESSION['faw'];
-$remark = $_SESSION['remark'];
-$img = $_SESSION['img'];
+//$ihkno= $_SESSION['ihkno'];
+//$supplier = $_SESSION['supplier'];
+//$com =  $_SESSION['com'];
+//$faw = $_SESSION['faw'];
+//$remark = $_SESSION['remark'];
+//$img = $_SESSION['img'];
 
+
+$p2page = $_GET['p2page'];
+
+$frlistcon = $_SESSION['frlistcon'];
+
+
+$ihkno= $frlistcon[$p2page][2];
+$supplier = $frlistcon[$p2page][3];
+$com =  $frlistcon[$p2page][5];
+$faw = $frlistcon[$p2page][6];
+$remark = $frlistcon[$p2page][8];
+$img = $frlistcon[$p2page][9];
 
 require '/home/pan/vendor/autoload.php';
-//require '../vendor/autoload.php';
+//require '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
 
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
