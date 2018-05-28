@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="22dbb095-b711-45ef-80b3-db8d08d0c22f" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/highable/helloworld.php" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/highable/atom.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/highable/pdp1.php" afterPath="$PROJECT_DIR$/highable/pdp1.php" />
-      <change beforePath="$PROJECT_DIR$/highable/pdp2excel.php" afterPath="$PROJECT_DIR$/highable/pdp2excel.php" />
-      <change beforePath="$PROJECT_DIR$/highable/pdp3excel.php" afterPath="$PROJECT_DIR$/highable/pdp3excel.php" />
-      <change beforePath="$PROJECT_DIR$/highable/session.php" afterPath="$PROJECT_DIR$/highable/session.php" />
-      <change beforePath="$PROJECT_DIR$/highable/time.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/template/cpsp1.xlsx" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/template/cpsp3.xlsx" afterPath="" />
       <change beforePath="$PROJECT_DIR$/template/pdp1.xlsx" afterPath="$PROJECT_DIR$/template/pdp1.xlsx" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,7 +27,7 @@
       <file leaf-file-name="pdp1.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/highable/pdp1.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="244">
+            <state relative-caret-position="-790">
               <caret line="320" column="0" lean-forward="true" selection-start-line="320" selection-start-column="0" selection-end-line="320" selection-end-column="0" />
               <folding>
                 <element signature="e#231#272#0#PHP" expanded="true" />
@@ -251,7 +242,7 @@
       <workItem from="1522293595159" duration="609000" />
       <workItem from="1522394263549" duration="47000" />
       <workItem from="1525400526984" duration="661000" />
-      <workItem from="1527473587379" duration="17476000" />
+      <workItem from="1527473587379" duration="17594000" />
     </task>
     <task id="LOCAL-00001" summary="20180327">
       <created>1522145290156</created>
@@ -260,16 +251,23 @@
       <option name="project" value="LOCAL" />
       <updated>1522145290156</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="20180528">
+      <created>1527500263257</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1527500263257</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28061000" />
+    <option name="totallyTimeSpent" value="28179000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="100" y="92" width="1869" height="977" extended-state="0" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25506294" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25506294" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -297,7 +295,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="20180327" />
-    <option name="LAST_COMMIT_MESSAGE" value="20180327" />
+    <MESSAGE value="20180528" />
+    <option name="LAST_COMMIT_MESSAGE" value="20180528" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -651,7 +650,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/highable/pdp1.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
+        <state relative-caret-position="-790">
           <caret line="320" column="0" lean-forward="true" selection-start-line="320" selection-start-column="0" selection-end-line="320" selection-end-column="0" />
           <folding>
             <element signature="e#231#272#0#PHP" expanded="true" />
