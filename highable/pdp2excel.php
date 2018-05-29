@@ -209,11 +209,11 @@ $spreadsheet->setActiveSheetIndex(0);
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-//unset($_SESSION['pdp2'] ); //注销SESSION
+unset($_SESSION['pdp2'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'pdp2out'.$nt.'.xlsx';
+$filenameout = 'rdp2out'.$nt.'.xlsx';
 if($output){
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

@@ -16,7 +16,7 @@ $pdp1 =  $_SESSION['pdp1'];
 //var_dump($pdp1);
 
 //$spreadsheet = new Spreadsheet();
-$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/pdp1.xlsx');
+$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/rdp1.xlsx');
 \PhpOffice\PhpSpreadsheet\Cell\Cell::setValueBinder( new \PhpOffice\PhpSpreadsheet\Cell\AdvancedValueBinder() );
 
 $sheet = $spreadsheet->getActiveSheet();
@@ -475,11 +475,11 @@ $sheet->setCellValue("L25", $pdp1['fab3']); //工艺说明及注意事项*/
 
 //$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-//unset($_SESSION['pdp1'] ); //注销SESSION
+unset($_SESSION['pdp1'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'pdp1out'.$nt.'.xlsx';
+$filenameout = 'rdp1out'.$nt.'.xlsx';
 if($output){
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
