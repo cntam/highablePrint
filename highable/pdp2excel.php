@@ -11,7 +11,7 @@ if($online){
 }else{
     require_once '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
 }
-
+require_once ('img.php');
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -141,54 +141,75 @@ $spreadsheet->getActiveSheet()->getStyle('D6')->getAlignment()->setShrinkToFit(t
 $spreadsheet->getActiveSheet()->getStyle('D7')->getAlignment()->setShrinkToFit(true);//缩小以适合
 
 
-//$img = 'http://www.a.cn/wordpress/wp-content/uploads/2018/02/2506390415_532601864.220x220-20.jpg';
 
-preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
-$imgformat = $imgformat[1];
-switch ($imgformat)
-{
-    case "jpg":
-    case "jpeg":
-        $img = imagecreatefromjpeg($img);
-        break;
-    case "bmp":
-        $img =  imagecreatefromwbmp($img);
-        break;
-    case "gif":
-        $img =  imagecreatefromgif($img);
-        break;
-    case "png":
-        $img =   imagecreatefrompng($img);
-        break;
+/**
+ * 图片模块
+ */
+
+$img = $img;
+if ($img == '') {
+    $haveimg = false;  //没有图片
+
+} else {
+
+    $path = $img;
+    $pathinfo = pathinfo($path);
+    //echo "扩展名：$pathinfo[extension]";
+
+    if ($pathinfo['extension'] == 'pdf') {
+
+        $img = pdficon();
+        $haveimg = true;
+    } else {
+        $haveimg = true;
+    }
 }
 
-$width = imagesx($img);
 
-$height = imagesy($img);
+if ($haveimg){
+    preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+    $imgformat = $imgformat[1];
+    switch ($imgformat)
+    {
+        case "jpg":
+        case "jpeg":
+            $img = imagecreatefromjpeg($img);
+            break;
+        case "bmp":
+            $img =  imagecreatefromwbmp($img);
+            break;
+        case "gif":
+            $img =  imagecreatefromgif($img);
+            break;
+        case "png":
+            $img =   imagecreatefrompng($img);
+            break;
+    }
+    $width = imagesx($img);
+    $height = imagesy($img);
 
-
-// Generate an image
-//$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-//$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-//imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
 
 // Add a drawing to the worksheet
-$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-$drawing->setName($ihkno);
-$drawing->setDescription($ihkno);
+    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+    $drawing->setName('FABRIC RECODE');
+    $drawing->setDescription('FABRIC RECODE');
 //$drawing->setImageResource($gdImage);
-$drawing->setImageResource($img);
-$drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-$drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+    $drawing->setImageResource($img);
+    $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+    $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-//$drawing->setHeight($width>550 ? 550:$width);
-$drawing->setWidth($width>460 ? 460:$width);
-$drawing->setCoordinates('B9');
-$drawing->setOffsetX(10);
-$drawing->setOffsetY(20);
-$drawing->setWorksheet($spreadsheet->getActiveSheet());
+$drawing->setHeight($width>420 ? 420:$width);
+    //$drawing->setHeight($height>130 ? 130:$height);
+//$drawing->setHeight(150);
 
+
+    $drawing->setCoordinates("B9");
+    $drawing->setOffsetX(10);
+    $drawing->setOffsetY(20);
+    $drawing->setWorksheet($spreadsheet->getActiveSheet());
+}
+/* 图片模块 */
 
 
 $styleArray2 = [

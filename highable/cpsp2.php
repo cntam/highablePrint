@@ -4,25 +4,42 @@ global $action;
 
 $cpsp2 =  $_SESSION['cpsp2'];
 //var_dump($cpsp2);
-//require '/home/soft/vendor/autoload.php';
-//require '../vendor/autoload.php';
-require '/home/pan/vendor/autoload.php';
 
+//require '../vendor/autoload.php';
+//require '/home/pan/vendor/autoload.php';
+
+require_once('autoloadconfig.php');  //判断是否在线
+
+if($online){
+    require_once '/home/pan/vendor/autoload.php';
+
+}else{
+    require_once '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
+}
+require_once ('img.php');
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 
-    $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/cpsp2.xlsx');
+$spreadsheet = new Spreadsheet();
+$sheet = $spreadsheet->getActiveSheet();
 
-    $sheet = $spreadsheet->getActiveSheet();
-
-
-    $spreadsheet->getActiveSheet()->setTitle("sheet1");
+$spreadsheet->getActiveSheet()->setTitle("cpsp2 sheet1");
 //$sheet->setCellValue('A1', 'Hello World !');
-    $spreadsheet->getDefaultStyle()->getFont()->setName('微软雅黑');
-    $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+$spreadsheet->getDefaultStyle()->getFont()->setName('微软雅黑');
+$spreadsheet->getDefaultStyle()->getFont()->setSize(12);
+
+//    $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/cpsp2.xlsx');
+//
+//    $sheet = $spreadsheet->getActiveSheet();
+//
+//
+//    $spreadsheet->getActiveSheet()->setTitle("sheet1");
+////$sheet->setCellValue('A1', 'Hello World !');
+//    $spreadsheet->getDefaultStyle()->getFont()->setName('微软雅黑');
+//    $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
 //$spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(50);  //默认行高度
 /*
     $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(5);//列宽度高度
@@ -57,7 +74,7 @@ $styleArray1 = [
         ],
 ];
 
-$maxnum = $cpsp2["maxnum"];
+$maxnum = $cpsp2["arrcount"] - 1;
 
 
 $prnum = $maxnum < 5 ? $maxnum : 4;
@@ -68,14 +85,28 @@ $prnum = $maxnum < 5 ? $maxnum : 4;
  * $lad 列數組數據 $lan + $prnum+1
  */
 $spreadsheet->setActiveSheetIndex(0);  //設置當前活動表
+$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(16);  //列宽度
+$spreadsheet->getActiveSheet()->setCellValue('A1', 'cpsno');
+$spreadsheet->getActiveSheet()->setCellValue('A2', 'sketch');
+$spreadsheet->getActiveSheet()->setCellValue('A3', 'Fty no.：');
+$spreadsheet->getActiveSheet()->setCellValue('A4', 'Job no.：');
+$spreadsheet->getActiveSheet()->setCellValue('A5', 'Style no：');
+$spreadsheet->getActiveSheet()->setCellValue('A6', 'Shipment date：');
+$spreadsheet->getActiveSheet()->setCellValue('A7', 'Net Weight(g)：');
+$spreadsheet->getActiveSheet()->setCellValue('A8', 'Fabric composition：');
+$spreadsheet->getActiveSheet()->setCellValue('A9', 'Lining：');
+$spreadsheet->getActiveSheet()->setCellValue('A10', 'Trim fabric：');
+$spreadsheet->getActiveSheet()->setCellValue('A11', '物料：');
+$spreadsheet->getActiveSheet()->setCellValue('A12', '訂布用料：');
+$spreadsheet->getActiveSheet()->setCellValue('A13', '最新用料（Y/件）：');
+$spreadsheet->getActiveSheet()->setCellValue('A14', '特殊工序：');
+
 
 $spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(100); //列高度
-$spreadsheet->getActiveSheet()->getRowDimension('7')->setRowHeight(32); //列高度
-$spreadsheet->getActiveSheet()->getRowDimension('13')->setRowHeight(32); //列高度
-$spreadsheet->getActiveSheet()->getRowDimension('14')->setRowHeight(32); //列高度
-$spreadsheet->getActiveSheet()->getRowDimension('15')->setRowHeight(32); //列高度
-$spreadsheet->getActiveSheet()->getRowDimension('16')->setRowHeight(32); //列高度
-$spreadsheet->getActiveSheet()->getRowDimension('17')->setRowHeight(32); //列高度
+for ($i = 6 ;$i <= 14 ; $i++){
+    $spreadsheet->getActiveSheet()->getRowDimension($i)->setRowHeight(32); //列高度
+}
+
 
 
 
@@ -83,359 +114,448 @@ $spreadsheet->getActiveSheet()->getRowDimension('17')->setRowHeight(32); //列�
 for($lt = 0, $lan = 0; $lt<=$prnum; $lt++){
     $lad = $lan + $maxnum + 1;
     //$col = chr(97 + $x);
-    $cola = chr(66 + ($lt * 2)); //66 =B;
-    $colb = chr(67 + ($lt * 2)); //66 =B;
+    $cola = chr(66 + ($lt * 3)); //66 =B;
+    $colb = chr(67 + ($lt * 3)); //66 =B;
+    $colc = chr(68 + ($lt * 3)); //66 =D;
     //echo '第一行'.$col.$i;
-    $spreadsheet->getActiveSheet()->getColumnDimension($cola)->setWidth(20);  //列宽度
-    $spreadsheet->getActiveSheet()->getColumnDimension($colb)->setWidth(20);  //列宽度
+    $spreadsheet->getActiveSheet()->getColumnDimension($cola)->setWidth(16);  //列宽度
+    $spreadsheet->getActiveSheet()->getColumnDimension($colb)->setWidth(16);  //列宽度
+    $spreadsheet->getActiveSheet()->getColumnDimension($colc)->setWidth(16);  //列宽度
 
-    $spreadsheet->getActiveSheet()->getStyle("{$cola}1:{$colb}1")->applyFromArray($styleArray1);
+    $spreadsheet->getActiveSheet()->getStyle("{$cola}1:{$colc}1")->applyFromArray($styleArray1);
+
     $spreadsheet->getActiveSheet()->setCellValue($cola.'1', $cpsp2[$lan][0]["cpsno"]);
 
-    $spreadsheet->getActiveSheet()->getStyle("{$colb}2")->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->setCellValue("{$colb}2", $cpsp2[$lad][4]);
+
+
+
+        $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colc}3")->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->mergeCells("{$cola}3:{$colc}3");
+        $spreadsheet->getActiveSheet()->setCellValue("{$cola}3", $cpsp2[$lan][0]["ftyno"]);
+        $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colc}3")->getAlignment()->setShrinkToFit(true);//缩小以适合
+
+    $spreadsheet->getActiveSheet()->getStyle("{$cola}4:{$colc}4")->applyFromArray($styleArray1);
+    $spreadsheet->getActiveSheet()->mergeCells("{$cola}4:{$colc}4");
+    $spreadsheet->getActiveSheet()->setCellValue("{$cola}4", $cpsp2[$lan][0]["jobno"]);
+    $spreadsheet->getActiveSheet()->getStyle("{$cola}4:{$colc}4")->getAlignment()->setShrinkToFit(true);//缩小以适合
+
+
+//    $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colc}3")->applyFromArray($styleArray1);
+//    $spreadsheet->getActiveSheet()->mergeCells("{$cola}3:{$colc}3");
+//    $spreadsheet->getActiveSheet()->setCellValue($cola.'3', $cpsp2[$lan][0]["ftyno"]);
+//    $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colc}3")->getAlignment()->setShrinkToFit(true);//缩小以适合
     /*
 //$spreadsheet->getActiveSheet()->setCellValue('C1', $cpsp2["maxnum"]);
     $spreadsheet->getActiveSheet()->mergeCells("{$cola}3:{$colb}3");
     $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colb}3")->applyFromArray($styleArray1);
     $spreadsheet->getActiveSheet()->setCellValue("{$cola}3", $cpsp2[$lan][0]["ftyno"]);
 */
-    $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colb}3")->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->mergeCells("{$cola}3:{$colb}3");
-    $spreadsheet->getActiveSheet()->setCellValue("{$cola}3", $cpsp2[$lan][0]["jobno"]);
-
-    $spreadsheet->getActiveSheet()->getStyle("{$cola}4:{$colb}4")->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->mergeCells("{$cola}4:{$colb}4");
-    $spreadsheet->getActiveSheet()->setCellValue("{$cola}4", $cpsp2[$lan][0]["styleno"]);
-
-
-
-    for($listtop = 0,$lttime1 = 0,$listta = 5;$lttime1<=9;$listtop++,$listta++,$lttime1++){
-            if($lttime1 == 4)
-            {$listta = 8;
-                continue;};
-        $spreadsheet->getActiveSheet()->getStyle("{$cola}{$listta}:{$colb}{$listta}")->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->mergeCells("{$cola}{$listta}:{$colb}{$listta}");
-        $spreadsheet->getActiveSheet()->setCellValue("{$cola}{$listta}", $cpsp2[$lad][$listtop]);
-    }
+//    $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colb}3")->applyFromArray($styleArray1);
+//    $spreadsheet->getActiveSheet()->mergeCells("{$cola}3:{$colb}3");
+//    $spreadsheet->getActiveSheet()->setCellValue("{$cola}3", $cpsp2[$lan][0]["jobno"]);
+//
+//    $spreadsheet->getActiveSheet()->getStyle("{$cola}4:{$colb}4")->applyFromArray($styleArray1);
+//    $spreadsheet->getActiveSheet()->mergeCells("{$cola}4:{$colb}4");
+//    $spreadsheet->getActiveSheet()->setCellValue("{$cola}4", $cpsp2[$lan][0]["styleno"]);
 
 
-    /*加載圖片*/
-    $img = $cpsp2[$lan][0]["remarkimg2"];
-    preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
-    $imgformat = $imgformat[1];
-    switch ($imgformat)
-    {
-        case "jpg":
-        case "jpeg":
-            $img = imagecreatefromjpeg($img);
-            break;
-        case "bmp":
-            $img =  imagecreatefromwbmp($img);
-            break;
-        case "gif":
-            $img =  imagecreatefromgif($img);
-            break;
-        case "png":
-            $img =   imagecreatefrompng($img);
-            break;
-    }
-    $width = imagesx($img);
-    $height = imagesy($img);
+
+//    for($listtop = 0,$lttime1 = 0,$listta = 5;$lttime1<=9;$listtop++,$listta++,$lttime1++){
+//            if($lttime1 == 4)
+//            {$listta = 8;
+//                continue;};
+//        $spreadsheet->getActiveSheet()->getStyle("{$cola}{$listta}:{$colb}{$listta}")->applyFromArray($styleArray1);
+//        $spreadsheet->getActiveSheet()->mergeCells("{$cola}{$listta}:{$colb}{$listta}");
+//        $spreadsheet->getActiveSheet()->setCellValue("{$cola}{$listta}", $cpsp2[$lad][$listtop]);
+//    }
+
+//    /**
+//     * 图片模块
+//     */
+//
+//    $img = $cpsp2[$lan][0]["remarkimg2"];
+//    if ($img == '') {
+//        $haveimg = false;  //没有图片
+//
+//    } else {
+//
+//        $path = $img;
+//        $pathinfo = pathinfo($path);
+//        //echo "扩展名：$pathinfo[extension]";
+//
+//        if ($pathinfo['extension'] == 'pdf') {
+//
+//            $img = pdficon();
+//            $haveimg = true;
+//        } else {
+//            $haveimg = true;
+//        }
+//    }
+//
+//
+//    if ($haveimg){
+//        preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+//        $imgformat = $imgformat[1];
+//        switch ($imgformat)
+//        {
+//            case "jpg":
+//            case "jpeg":
+//                $img = imagecreatefromjpeg($img);
+//                break;
+//            case "bmp":
+//                $img =  imagecreatefromwbmp($img);
+//                break;
+//            case "gif":
+//                $img =  imagecreatefromgif($img);
+//                break;
+//            case "png":
+//                $img =   imagecreatefrompng($img);
+//                break;
+//        }
+//        $width = imagesx($img);
+//        $height = imagesy($img);
+//
+//
+//// Add a drawing to the worksheet
+//        $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+//        $drawing->setName('img');
+//        $drawing->setDescription('img');
+////$drawing->setImageResource($gdImage);
+//        $drawing->setImageResource($img);
+//        $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+//        $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+////$drawing->setHeight($width);
+//
+//        $drawing->setWidth($width>120 ? 120:$width);
+//        //$drawing->setHeight($height>130 ? 130:$height);
+////$drawing->setHeight(150);
+//
+//
+//        //$drawing->setCoordinates($cola.'2');
+//        $drawing->setCoordinates('B2');
+//        $drawing->setOffsetX(5);
+//        $drawing->setOffsetY(5);
+//        $drawing->setWorksheet($spreadsheet->getActiveSheet());
+//    }
+    /* 图片模块 */
 
 
-// Generate an image
-//$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-//$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-//imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
+//    /*加載圖片*/
+//    $img = $cpsp2[$lan][0]["remarkimg2"];
+//    preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+//    $imgformat = $imgformat[1];
+//    switch ($imgformat)
+//    {
+//        case "jpg":
+//        case "jpeg":
+//            $img = imagecreatefromjpeg($img);
+//            break;
+//        case "bmp":
+//            $img =  imagecreatefromwbmp($img);
+//            break;
+//        case "gif":
+//            $img =  imagecreatefromgif($img);
+//            break;
+//        case "png":
+//            $img =   imagecreatefrompng($img);
+//            break;
+//    }
+//    $width = imagesx($img);
+//    $height = imagesy($img);
+//
+//
+//// Generate an image
+////$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
+////$textColor = imagecolorallocate($gdImage, 255, 255, 255);
+////imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
+//
+//// Add a drawing to the worksheet
+//    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+//    $drawing->setName($cpsp2[$lad][4]);
+//    $drawing->setDescription($cpsp2[$lad][4]);
+////$drawing->setImageResource($gdImage);
+//    $drawing->setImageResource($img);
+//    $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+//    $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+////$drawing->setHeight($width);
+//
+//    $drawing->setWidth($width>120 ? 120:$width);
+////$drawing->setWidth(180);
+////$drawing->setHeight(150);
+//    $drawing->setCoordinates($cola.'2');
+//    $drawing->setOffsetX(5);
+//    $drawing->setOffsetY(5);
+//    $drawing->setWorksheet($spreadsheet->getActiveSheet());
+//
+//    /*加載圖片*/
 
-// Add a drawing to the worksheet
-    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-    $drawing->setName($cpsp2[$lad][4]);
-    $drawing->setDescription($cpsp2[$lad][4]);
-//$drawing->setImageResource($gdImage);
-    $drawing->setImageResource($img);
-    $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-    $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
-//$drawing->setHeight($width);
-
-    $drawing->setWidth($width>120 ? 120:$width);
-//$drawing->setWidth(180);
-//$drawing->setHeight(150);
-    $drawing->setCoordinates($cola.'2');
-    $drawing->setOffsetX(5);
-    $drawing->setOffsetY(5);
-    $drawing->setWorksheet($spreadsheet->getActiveSheet());
-
-    /*加載圖片*/
-
-    for($j = 0 ,$z=10, $x = 14; $j < 13 ; $j++) {
-        //$z=//數組值
-        //$x = 20; //行數
-
-        for ($i = 0; $i < 2; $i++) {
-            $list = chr(66 + $i + ($lt * 2)); //66 =B;
-            $spreadsheet->getActiveSheet()->getRowDimension($x)->setRowHeight(32); //列高度
-            $spreadsheet->getActiveSheet()->getStyle($list.$x)->applyFromArray($styleArray1);
-            $spreadsheet->getActiveSheet()->setCellValue($list.$x,$cpsp2[$lad][$z] );
-            $z++;
-        }
-        $x++;
-    }
+//    for($j = 0 ,$z=10, $x = 14; $j < 13 ; $j++) {
+//        //$z=//數組值
+//        //$x = 20; //行數
+//
+//        for ($i = 0; $i < 2; $i++) {
+//            $list = chr(66 + $i + ($lt * 2)); //66 =B;
+//            $spreadsheet->getActiveSheet()->getRowDimension($x)->setRowHeight(32); //列高度
+//            $spreadsheet->getActiveSheet()->getStyle($list.$x)->applyFromArray($styleArray1);
+//            $spreadsheet->getActiveSheet()->setCellValue($list.$x,$cpsp2[$lad][$z] );
+//            $z++;
+//        }
+//        $x++;
+//    }
 
     $lan++;
 } //1st for
 
-/**
- * 第二頁
- */
-$prnum = $maxnum <= 9 ? $maxnum : 9;
-if($maxnum > 4 ){
+///**
+// * 第二頁
+// */
+//$prnum = $maxnum <= 9 ? $maxnum : 9;
+//if($maxnum > 4 ){
+//
+//    /**
+//     * $lt 列名
+//     * $lan 列數組序號 取數據
+//     * $lad 列數組數據 $lan + $prnum+1
+//     */
+//    $spreadsheet->setActiveSheetIndex(1);  //設置當前活動表
+//
+//
+//    for($lt = 0, $lan = 5,$time2 = 5; $time2<=$prnum; $lt++,$time2++){
+//        $lad = $lan + $maxnum + 1;
+//        //$col = chr(97 + $x);
+//        $cola = chr(66 + ($lt * 2)); //66 =B;
+//        $colb = chr(67 + ($lt * 2)); //66 =B;
+//        //echo '第一行'.$col.$i;
+//        $spreadsheet->getActiveSheet()->getColumnDimension($cola)->setWidth(20);  //列宽度
+//        $spreadsheet->getActiveSheet()->getColumnDimension($colb)->setWidth(20);  //列宽度
+//
+//        $spreadsheet->getActiveSheet()->getStyle("{$cola}1:{$colb}1")->applyFromArray($styleArray1);
+//        $spreadsheet->getActiveSheet()->setCellValue($cola.'1', $cpsp2[$lan][0]["cpsno"]);
+//
+//        $spreadsheet->getActiveSheet()->getStyle("{$colb}2")->applyFromArray($styleArray1);
+//        $spreadsheet->getActiveSheet()->setCellValue("{$colb}2", $cpsp2[$lad][4]);
+//        /*
+//    //$spreadsheet->getActiveSheet()->setCellValue('C1', $cpsp2["maxnum"]);
+//        $spreadsheet->getActiveSheet()->mergeCells("{$cola}3:{$colb}3");
+//        $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colb}3")->applyFromArray($styleArray1);
+//        $spreadsheet->getActiveSheet()->setCellValue("{$cola}3", $cpsp2[$lan][0]["ftyno"]);
+//    */
+//        $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colb}3")->applyFromArray($styleArray1);
+//        $spreadsheet->getActiveSheet()->mergeCells("{$cola}3:{$colb}3");
+//        $spreadsheet->getActiveSheet()->setCellValue("{$cola}3", $cpsp2[$lan][0]["jobno"]);
+//
+//        $spreadsheet->getActiveSheet()->getStyle("{$cola}4:{$colb}4")->applyFromArray($styleArray1);
+//        $spreadsheet->getActiveSheet()->mergeCells("{$cola}4:{$colb}4");
+//        $spreadsheet->getActiveSheet()->setCellValue("{$cola}4", $cpsp2[$lan][0]["styleno"]);
+//
+//
+//
+//        for($listtop = 0,$lttime1 = 0,$listta = 5;$lttime1<=9;$listtop++,$listta++,$lttime1++){
+//            if($lttime1 == 4)
+//            {$listta = 8;
+//                continue;};
+//            $spreadsheet->getActiveSheet()->getStyle("{$cola}{$listta}:{$colb}{$listta}")->applyFromArray($styleArray1);
+//            $spreadsheet->getActiveSheet()->mergeCells("{$cola}{$listta}:{$colb}{$listta}");
+//            $spreadsheet->getActiveSheet()->setCellValue("{$cola}{$listta}", $cpsp2[$lad][$listtop]);
+//        }
+//
+//
+//        /*加載圖片*/
+//        $img = $cpsp2[$lan][0]["remarkimg2"];
+//        preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+//        $imgformat = $imgformat[1];
+//        switch ($imgformat)
+//        {
+//            case "jpg":
+//            case "jpeg":
+//                $img = imagecreatefromjpeg($img);
+//                break;
+//            case "bmp":
+//                $img =  imagecreatefromwbmp($img);
+//                break;
+//            case "gif":
+//                $img =  imagecreatefromgif($img);
+//                break;
+//            case "png":
+//                $img =   imagecreatefrompng($img);
+//                break;
+//        }
+//        $width = imagesx($img);
+//        $height = imagesy($img);
+//
+//
+//// Generate an image
+////$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
+////$textColor = imagecolorallocate($gdImage, 255, 255, 255);
+////imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
+//
+//// Add a drawing to the worksheet
+//        $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+//        $drawing->setName($cpsp2[$lad][4]);
+//        $drawing->setDescription($cpsp2[$lad][4]);
+////$drawing->setImageResource($gdImage);
+//        $drawing->setImageResource($img);
+//        $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+//        $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+////$drawing->setHeight($width);
+//
+//        $drawing->setWidth($width>120 ? 120:$width);
+////$drawing->setWidth(180);
+////$drawing->setHeight(150);
+//        $drawing->setCoordinates($cola.'2');
+//        $drawing->setOffsetX(5);
+//        $drawing->setOffsetY(5);
+//        $drawing->setWorksheet($spreadsheet->getActiveSheet());
+//
+//        /*加載圖片*/
+//
+//        for($j = 0 ,$z=10, $x = 14; $j < 13 ; $j++) {
+//            //$z=//數組值
+//            //$x = 20; //行數
+//
+//            for ($i = 0; $i < 2; $i++) {
+//                $list = chr(66 + $i + ($lt * 2)); //66 =B;
+//                $spreadsheet->getActiveSheet()->getRowDimension($x)->setRowHeight(32); //列高度
+//                $spreadsheet->getActiveSheet()->getStyle($list.$x)->applyFromArray($styleArray1);
+//                $spreadsheet->getActiveSheet()->setCellValue($list.$x,$cpsp2[$lad][$z] );
+//                $z++;
+//            }
+//            $x++;
+//        }
+//
+//        $lan++;
+//
+//    } //1st for
+//
+//}
+//
+//
+///**
+// * 第三頁
+// */
+//$prnum = $maxnum <=14 ? $maxnum : 14;
+//if($maxnum > 9 ){
+//
+//    /**
+//     * $lt 列名
+//     * $lan 列數組序號 取數據
+//     * $lad 列數組數據 $lan + $prnum+1
+//     */
+//    $spreadsheet->setActiveSheetIndex(2);  //設置當前活動表
+//
+//    for($lt = 0, $lan = 10,$time3 = 10; $time3<=$prnum; $lt++,$time3++){
+//        $lad = $lan + $maxnum + 1;
+//        //$col = chr(97 + $x);
+//        $cola = chr(66 + ($lt * 2)); //66 =B;
+//        $colb = chr(67 + ($lt * 2)); //66 =B;
+//        //echo '第一行'.$col.$i;
+//        $spreadsheet->getActiveSheet()->getColumnDimension($cola)->setWidth(20);  //列宽度
+//        $spreadsheet->getActiveSheet()->getColumnDimension($colb)->setWidth(20);  //列宽度
+//
+//        $spreadsheet->getActiveSheet()->getStyle("{$cola}1:{$colb}1")->applyFromArray($styleArray1);
+//        $spreadsheet->getActiveSheet()->setCellValue($cola.'1', $cpsp2[$lan][0]["cpsno"]);
+//
+//        $spreadsheet->getActiveSheet()->getStyle("{$colb}2")->applyFromArray($styleArray1);
+//        $spreadsheet->getActiveSheet()->setCellValue("{$colb}2", $cpsp2[$lad][4]);
+//        /*
+//    //$spreadsheet->getActiveSheet()->setCellValue('C1', $cpsp2["maxnum"]);
+//        $spreadsheet->getActiveSheet()->mergeCells("{$cola}3:{$colb}3");
+//        $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colb}3")->applyFromArray($styleArray1);
+//        $spreadsheet->getActiveSheet()->setCellValue("{$cola}3", $cpsp2[$lan][0]["ftyno"]);
+//    */
+//        $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colb}3")->applyFromArray($styleArray1);
+//        $spreadsheet->getActiveSheet()->mergeCells("{$cola}3:{$colb}3");
+//        $spreadsheet->getActiveSheet()->setCellValue("{$cola}3", $cpsp2[$lan][0]["jobno"]);
+//
+//        $spreadsheet->getActiveSheet()->getStyle("{$cola}4:{$colb}4")->applyFromArray($styleArray1);
+//        $spreadsheet->getActiveSheet()->mergeCells("{$cola}4:{$colb}4");
+//        $spreadsheet->getActiveSheet()->setCellValue("{$cola}4", $cpsp2[$lan][0]["styleno"]);
+//
+//
+//
+//        for($listtop = 0,$lttime1 = 0,$listta = 5;$lttime1<=9;$listtop++,$listta++,$lttime1++){
+//            if($lttime1 == 4)
+//            {$listta = 8;
+//                continue;};
+//            $spreadsheet->getActiveSheet()->getStyle("{$cola}{$listta}:{$colb}{$listta}")->applyFromArray($styleArray1);
+//            $spreadsheet->getActiveSheet()->mergeCells("{$cola}{$listta}:{$colb}{$listta}");
+//            $spreadsheet->getActiveSheet()->setCellValue("{$cola}{$listta}", $cpsp2[$lad][$listtop]);
+//        }
+//
+//
+//        /*加載圖片*/
+//        $img = $cpsp2[$lan][0]["remarkimg2"];
+//        preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+//        $imgformat = $imgformat[1];
+//        switch ($imgformat)
+//        {
+//            case "jpg":
+//            case "jpeg":
+//                $img = imagecreatefromjpeg($img);
+//                break;
+//            case "bmp":
+//                $img =  imagecreatefromwbmp($img);
+//                break;
+//            case "gif":
+//                $img =  imagecreatefromgif($img);
+//                break;
+//            case "png":
+//                $img =   imagecreatefrompng($img);
+//                break;
+//        }
+//        $width = imagesx($img);
+//        $height = imagesy($img);
+//
+//
+//// Generate an image
+////$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
+////$textColor = imagecolorallocate($gdImage, 255, 255, 255);
+////imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
+//
+//// Add a drawing to the worksheet
+//        $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+//        $drawing->setName($cpsp2[$lad][4]);
+//        $drawing->setDescription($cpsp2[$lad][4]);
+////$drawing->setImageResource($gdImage);
+//        $drawing->setImageResource($img);
+//        $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+//        $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+////$drawing->setHeight($width);
+//
+//        $drawing->setWidth($width>120 ? 120:$width);
+////$drawing->setWidth(180);
+////$drawing->setHeight(150);
+//        $drawing->setCoordinates($cola.'2');
+//        $drawing->setOffsetX(5);
+//        $drawing->setOffsetY(5);
+//        $drawing->setWorksheet($spreadsheet->getActiveSheet());
+//
+//        /*加載圖片*/
+//
+//        for($j = 0 ,$z=10, $x = 14; $j < 13 ; $j++) {
+//            //$z=//數組值
+//            //$x = 20; //行數
+//
+//            for ($i = 0; $i < 2; $i++) {
+//                $list = chr(66 + $i + ($lt * 2)); //66 =B;
+//                $spreadsheet->getActiveSheet()->getRowDimension($x)->setRowHeight(32); //列高度
+//                $spreadsheet->getActiveSheet()->getStyle($list.$x)->applyFromArray($styleArray1);
+//                $spreadsheet->getActiveSheet()->setCellValue($list.$x,$cpsp2[$lad][$z] );
+//                $z++;
+//            }
+//            $x++;
+//        }
+//
+//        $lan++;
+//
+//    } //1st for
+//
+//}
+//
+//$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-    /**
-     * $lt 列名
-     * $lan 列數組序號 取數據
-     * $lad 列數組數據 $lan + $prnum+1
-     */
-    $spreadsheet->setActiveSheetIndex(1);  //設置當前活動表
 
-
-    for($lt = 0, $lan = 5,$time2 = 5; $time2<=$prnum; $lt++,$time2++){
-        $lad = $lan + $maxnum + 1;
-        //$col = chr(97 + $x);
-        $cola = chr(66 + ($lt * 2)); //66 =B;
-        $colb = chr(67 + ($lt * 2)); //66 =B;
-        //echo '第一行'.$col.$i;
-        $spreadsheet->getActiveSheet()->getColumnDimension($cola)->setWidth(20);  //列宽度
-        $spreadsheet->getActiveSheet()->getColumnDimension($colb)->setWidth(20);  //列宽度
-
-        $spreadsheet->getActiveSheet()->getStyle("{$cola}1:{$colb}1")->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->setCellValue($cola.'1', $cpsp2[$lan][0]["cpsno"]);
-
-        $spreadsheet->getActiveSheet()->getStyle("{$colb}2")->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->setCellValue("{$colb}2", $cpsp2[$lad][4]);
-        /*
-    //$spreadsheet->getActiveSheet()->setCellValue('C1', $cpsp2["maxnum"]);
-        $spreadsheet->getActiveSheet()->mergeCells("{$cola}3:{$colb}3");
-        $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colb}3")->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->setCellValue("{$cola}3", $cpsp2[$lan][0]["ftyno"]);
-    */
-        $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colb}3")->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->mergeCells("{$cola}3:{$colb}3");
-        $spreadsheet->getActiveSheet()->setCellValue("{$cola}3", $cpsp2[$lan][0]["jobno"]);
-
-        $spreadsheet->getActiveSheet()->getStyle("{$cola}4:{$colb}4")->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->mergeCells("{$cola}4:{$colb}4");
-        $spreadsheet->getActiveSheet()->setCellValue("{$cola}4", $cpsp2[$lan][0]["styleno"]);
-
-
-
-        for($listtop = 0,$lttime1 = 0,$listta = 5;$lttime1<=9;$listtop++,$listta++,$lttime1++){
-            if($lttime1 == 4)
-            {$listta = 8;
-                continue;};
-            $spreadsheet->getActiveSheet()->getStyle("{$cola}{$listta}:{$colb}{$listta}")->applyFromArray($styleArray1);
-            $spreadsheet->getActiveSheet()->mergeCells("{$cola}{$listta}:{$colb}{$listta}");
-            $spreadsheet->getActiveSheet()->setCellValue("{$cola}{$listta}", $cpsp2[$lad][$listtop]);
-        }
-
-
-        /*加載圖片*/
-        $img = $cpsp2[$lan][0]["remarkimg2"];
-        preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
-        $imgformat = $imgformat[1];
-        switch ($imgformat)
-        {
-            case "jpg":
-            case "jpeg":
-                $img = imagecreatefromjpeg($img);
-                break;
-            case "bmp":
-                $img =  imagecreatefromwbmp($img);
-                break;
-            case "gif":
-                $img =  imagecreatefromgif($img);
-                break;
-            case "png":
-                $img =   imagecreatefrompng($img);
-                break;
-        }
-        $width = imagesx($img);
-        $height = imagesy($img);
-
-
-// Generate an image
-//$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-//$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-//imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
-
-// Add a drawing to the worksheet
-        $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-        $drawing->setName($cpsp2[$lad][4]);
-        $drawing->setDescription($cpsp2[$lad][4]);
-//$drawing->setImageResource($gdImage);
-        $drawing->setImageResource($img);
-        $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-        $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
-//$drawing->setHeight($width);
-
-        $drawing->setWidth($width>120 ? 120:$width);
-//$drawing->setWidth(180);
-//$drawing->setHeight(150);
-        $drawing->setCoordinates($cola.'2');
-        $drawing->setOffsetX(5);
-        $drawing->setOffsetY(5);
-        $drawing->setWorksheet($spreadsheet->getActiveSheet());
-
-        /*加載圖片*/
-
-        for($j = 0 ,$z=10, $x = 14; $j < 13 ; $j++) {
-            //$z=//數組值
-            //$x = 20; //行數
-
-            for ($i = 0; $i < 2; $i++) {
-                $list = chr(66 + $i + ($lt * 2)); //66 =B;
-                $spreadsheet->getActiveSheet()->getRowDimension($x)->setRowHeight(32); //列高度
-                $spreadsheet->getActiveSheet()->getStyle($list.$x)->applyFromArray($styleArray1);
-                $spreadsheet->getActiveSheet()->setCellValue($list.$x,$cpsp2[$lad][$z] );
-                $z++;
-            }
-            $x++;
-        }
-
-        $lan++;
-
-    } //1st for
-
-}
-
-
-/**
- * 第三頁
- */
-$prnum = $maxnum <=14 ? $maxnum : 14;
-if($maxnum > 9 ){
-
-    /**
-     * $lt 列名
-     * $lan 列數組序號 取數據
-     * $lad 列數組數據 $lan + $prnum+1
-     */
-    $spreadsheet->setActiveSheetIndex(2);  //設置當前活動表
-
-    for($lt = 0, $lan = 10,$time3 = 10; $time3<=$prnum; $lt++,$time3++){
-        $lad = $lan + $maxnum + 1;
-        //$col = chr(97 + $x);
-        $cola = chr(66 + ($lt * 2)); //66 =B;
-        $colb = chr(67 + ($lt * 2)); //66 =B;
-        //echo '第一行'.$col.$i;
-        $spreadsheet->getActiveSheet()->getColumnDimension($cola)->setWidth(20);  //列宽度
-        $spreadsheet->getActiveSheet()->getColumnDimension($colb)->setWidth(20);  //列宽度
-
-        $spreadsheet->getActiveSheet()->getStyle("{$cola}1:{$colb}1")->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->setCellValue($cola.'1', $cpsp2[$lan][0]["cpsno"]);
-
-        $spreadsheet->getActiveSheet()->getStyle("{$colb}2")->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->setCellValue("{$colb}2", $cpsp2[$lad][4]);
-        /*
-    //$spreadsheet->getActiveSheet()->setCellValue('C1', $cpsp2["maxnum"]);
-        $spreadsheet->getActiveSheet()->mergeCells("{$cola}3:{$colb}3");
-        $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colb}3")->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->setCellValue("{$cola}3", $cpsp2[$lan][0]["ftyno"]);
-    */
-        $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colb}3")->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->mergeCells("{$cola}3:{$colb}3");
-        $spreadsheet->getActiveSheet()->setCellValue("{$cola}3", $cpsp2[$lan][0]["jobno"]);
-
-        $spreadsheet->getActiveSheet()->getStyle("{$cola}4:{$colb}4")->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->mergeCells("{$cola}4:{$colb}4");
-        $spreadsheet->getActiveSheet()->setCellValue("{$cola}4", $cpsp2[$lan][0]["styleno"]);
-
-
-
-        for($listtop = 0,$lttime1 = 0,$listta = 5;$lttime1<=9;$listtop++,$listta++,$lttime1++){
-            if($lttime1 == 4)
-            {$listta = 8;
-                continue;};
-            $spreadsheet->getActiveSheet()->getStyle("{$cola}{$listta}:{$colb}{$listta}")->applyFromArray($styleArray1);
-            $spreadsheet->getActiveSheet()->mergeCells("{$cola}{$listta}:{$colb}{$listta}");
-            $spreadsheet->getActiveSheet()->setCellValue("{$cola}{$listta}", $cpsp2[$lad][$listtop]);
-        }
-
-
-        /*加載圖片*/
-        $img = $cpsp2[$lan][0]["remarkimg2"];
-        preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
-        $imgformat = $imgformat[1];
-        switch ($imgformat)
-        {
-            case "jpg":
-            case "jpeg":
-                $img = imagecreatefromjpeg($img);
-                break;
-            case "bmp":
-                $img =  imagecreatefromwbmp($img);
-                break;
-            case "gif":
-                $img =  imagecreatefromgif($img);
-                break;
-            case "png":
-                $img =   imagecreatefrompng($img);
-                break;
-        }
-        $width = imagesx($img);
-        $height = imagesy($img);
-
-
-// Generate an image
-//$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-//$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-//imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
-
-// Add a drawing to the worksheet
-        $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-        $drawing->setName($cpsp2[$lad][4]);
-        $drawing->setDescription($cpsp2[$lad][4]);
-//$drawing->setImageResource($gdImage);
-        $drawing->setImageResource($img);
-        $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-        $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
-//$drawing->setHeight($width);
-
-        $drawing->setWidth($width>120 ? 120:$width);
-//$drawing->setWidth(180);
-//$drawing->setHeight(150);
-        $drawing->setCoordinates($cola.'2');
-        $drawing->setOffsetX(5);
-        $drawing->setOffsetY(5);
-        $drawing->setWorksheet($spreadsheet->getActiveSheet());
-
-        /*加載圖片*/
-
-        for($j = 0 ,$z=10, $x = 14; $j < 13 ; $j++) {
-            //$z=//數組值
-            //$x = 20; //行數
-
-            for ($i = 0; $i < 2; $i++) {
-                $list = chr(66 + $i + ($lt * 2)); //66 =B;
-                $spreadsheet->getActiveSheet()->getRowDimension($x)->setRowHeight(32); //列高度
-                $spreadsheet->getActiveSheet()->getStyle($list.$x)->applyFromArray($styleArray1);
-                $spreadsheet->getActiveSheet()->setCellValue($list.$x,$cpsp2[$lad][$z] );
-                $z++;
-            }
-            $x++;
-        }
-
-        $lan++;
-
-    } //1st for
-
-}
-
-$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
-
-
-unset($_SESSION['cpsp2'] ); //注销SESSION
+//unset($_SESSION['cpsp2'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。

@@ -23,7 +23,7 @@ $sampleall =   $_SESSION['sampleall'];
 
 //$spreadsheet = new Spreadsheet();
 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/sampleall.xlsx');
-$sheet = $spreadsheet->getActiveSheet();
+$sheet = $spreadsheet->getActiveSheet(0);
 
 $spreadsheet->getActiveSheet()->setTitle("sheet1");
 
@@ -174,8 +174,8 @@ if ($haveimg){
 
 // Add a drawing to the worksheet
     $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-    $drawing->setName('FABRIC RECODE');
-    $drawing->setDescription('FABRIC RECODE');
+    $drawing->setName('img');
+    $drawing->setDescription('img');
 //$drawing->setImageResource($gdImage);
     $drawing->setImageResource($img);
     $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
@@ -430,11 +430,7 @@ $spreadsheet->getActiveSheet()->setCellValue('K'.(41 + $addrow), '总计');
 
 // Set cell A1 with a string value
 
-//$spreadsheet->getActiveSheet()->getStyle('A1:D1')->getFont()->setSize(14);
-
-
-
-$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
+//$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 
 /**
@@ -525,152 +521,217 @@ $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
 $spreadsheet->getActiveSheet()->setCellValue('B2', $sampleall['samplep3']["category"]);
 $spreadsheet->getActiveSheet()->setCellValue('B3', $sampleall['samplep3']["stylename"]);
 
-/*加載圖片*/
+
+
+/**
+ * 图片模块
+ */
+
 $img = $sampleall['samplep3']["logo"];
-preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
-$imgformat = $imgformat[1];
-switch ($imgformat)
-{
-    case "jpg":
-    case "jpeg":
-        $img = imagecreatefromjpeg($img);
-        break;
-    case "bmp":
-        $img =  imagecreatefromwbmp($img);
-        break;
-    case "gif":
-        $img =  imagecreatefromgif($img);
-        break;
-    case "png":
-        $img =   imagecreatefrompng($img);
-        break;
+if ($img == '') {
+    $haveimg = false;  //没有图片
+
+} else {
+
+    $path = $img;
+    $pathinfo = pathinfo($path);
+    //echo "扩展名：$pathinfo[extension]";
+
+    if ($pathinfo['extension'] == 'pdf') {
+
+        $img = pdficon();
+        $haveimg = true;
+    } else {
+        $haveimg = true;
+    }
 }
-$width = imagesx($img);
-$height = imagesy($img);
 
 
-// Generate an image
-//$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-//$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-//imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
+if ($haveimg){
+    preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+    $imgformat = $imgformat[1];
+    switch ($imgformat)
+    {
+        case "jpg":
+        case "jpeg":
+            $img = imagecreatefromjpeg($img);
+            break;
+        case "bmp":
+            $img =  imagecreatefromwbmp($img);
+            break;
+        case "gif":
+            $img =  imagecreatefromgif($img);
+            break;
+        case "png":
+            $img =   imagecreatefrompng($img);
+            break;
+    }
+    $width = imagesx($img);
+    $height = imagesy($img);
+
 
 // Add a drawing to the worksheet
-$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-$drawing->setName($sampleall['samplep3']["stylename"]);
-$drawing->setDescription($sampleall['samplep3']["stylename"]);
+    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+    $drawing->setName('img');
+    $drawing->setDescription('img');
 //$drawing->setImageResource($gdImage);
-$drawing->setImageResource($img);
-$drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-$drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+    $drawing->setImageResource($img);
+    $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+    $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setHeight($height>60 ? 60:$height);
-//$drawing->setWidth(180);
+//$drawing->setHeight($width>550 ? 550:$width);
+    $drawing->setHeight($height>60 ? 60:$height);
 //$drawing->setHeight(150);
-$drawing->setCoordinates('G2');
-$drawing->setOffsetX(5);
-$drawing->setOffsetY(5);
-$drawing->setWorksheet($spreadsheet->getActiveSheet());
 
-/*加載圖片*/
 
-/*加載圖片*/
+    $drawing->setCoordinates("G2");
+    $drawing->setOffsetX(5);
+    $drawing->setOffsetY(5);
+    $drawing->setWorksheet($spreadsheet->getActiveSheet());
+}
+/* 图片模块 */
+
+
+/**
+ * 图片模块
+ */
+
 $img = $sampleall['samplep3']["remarkimg3"];
-preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
-$imgformat = $imgformat[1];
-switch ($imgformat)
-{
-    case "jpg":
-    case "jpeg":
-        $img = imagecreatefromjpeg($img);
-        break;
-    case "bmp":
-        $img =  imagecreatefromwbmp($img);
-        break;
-    case "gif":
-        $img =  imagecreatefromgif($img);
-        break;
-    case "png":
-        $img =   imagecreatefrompng($img);
-        break;
+if ($img == '') {
+    $haveimg = false;  //没有图片
+
+} else {
+
+    $path = $img;
+    $pathinfo = pathinfo($path);
+    //echo "扩展名：$pathinfo[extension]";
+
+    if ($pathinfo['extension'] == 'pdf') {
+
+        $img = pdficon();
+        $haveimg = true;
+    } else {
+        $haveimg = true;
+    }
 }
-$width = imagesx($img);
-$height = imagesy($img);
 
 
-// Generate an image
-//$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-//$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-//imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
+if ($haveimg){
+    preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+    $imgformat = $imgformat[1];
+    switch ($imgformat)
+    {
+        case "jpg":
+        case "jpeg":
+            $img = imagecreatefromjpeg($img);
+            break;
+        case "bmp":
+            $img =  imagecreatefromwbmp($img);
+            break;
+        case "gif":
+            $img =  imagecreatefromgif($img);
+            break;
+        case "png":
+            $img =   imagecreatefrompng($img);
+            break;
+    }
+    $width = imagesx($img);
+    $height = imagesy($img);
+
 
 // Add a drawing to the worksheet
-$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-$drawing->setName($sampleall['samplep3']["stylename"]);
-$drawing->setDescription($sampleall['samplep3']["stylename"]);
+    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+    $drawing->setName('img');
+    $drawing->setDescription('img');
 //$drawing->setImageResource($gdImage);
-$drawing->setImageResource($img);
-$drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-$drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+    $drawing->setImageResource($img);
+    $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+    $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setWidth($width>260 ? 260:$width);
-//$drawing->setWidth(180);
+//$drawing->setHeight($width>550 ? 550:$width);
+    $drawing->setHeight($height>260 ? 260:$height);
 //$drawing->setHeight(150);
-$drawing->setCoordinates('A6');
-$drawing->setOffsetX(5);
-$drawing->setOffsetY(5);
-$drawing->setWorksheet($spreadsheet->getActiveSheet());
 
-/*加載圖片*/
 
-/*加載圖片*/
+    $drawing->setCoordinates("A6");
+    $drawing->setOffsetX(5);
+    $drawing->setOffsetY(5);
+    $drawing->setWorksheet($spreadsheet->getActiveSheet());
+}
+/* 图片模块 */
+
+
+/**
+ * 图片模块
+ */
+
 $img = $sampleall['samplep3']["remarkimg4"];
-preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
-$imgformat = $imgformat[1];
-switch ($imgformat)
-{
-    case "jpg":
-    case "jpeg":
-        $img = imagecreatefromjpeg($img);
-        break;
-    case "bmp":
-        $img =  imagecreatefromwbmp($img);
-        break;
-    case "gif":
-        $img =  imagecreatefromgif($img);
-        break;
-    case "png":
-        $img =   imagecreatefrompng($img);
-        break;
+if ($img == '') {
+    $haveimg = false;  //没有图片
+
+} else {
+
+    $path = $img;
+    $pathinfo = pathinfo($path);
+    //echo "扩展名：$pathinfo[extension]";
+
+    if ($pathinfo['extension'] == 'pdf') {
+
+        $img = pdficon();
+        $haveimg = true;
+    } else {
+        $haveimg = true;
+    }
 }
-$width = imagesx($img);
-$height = imagesy($img);
 
 
-// Generate an image
-//$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-//$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-//imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
+if ($haveimg){
+    preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+    $imgformat = $imgformat[1];
+    switch ($imgformat)
+    {
+        case "jpg":
+        case "jpeg":
+            $img = imagecreatefromjpeg($img);
+            break;
+        case "bmp":
+            $img =  imagecreatefromwbmp($img);
+            break;
+        case "gif":
+            $img =  imagecreatefromgif($img);
+            break;
+        case "png":
+            $img =   imagecreatefrompng($img);
+            break;
+    }
+    $width = imagesx($img);
+    $height = imagesy($img);
+
 
 // Add a drawing to the worksheet
-$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-$drawing->setName($sampleall['samplep3']["stylename"]);
-$drawing->setDescription($sampleall['samplep3']["stylename"]);
+    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+    $drawing->setName('img');
+    $drawing->setDescription('img');
 //$drawing->setImageResource($gdImage);
-$drawing->setImageResource($img);
-$drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-$drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+    $drawing->setImageResource($img);
+    $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+    $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-//drawing->setHeight($height>60 ? 60:$height);
-$drawing->setWidth($width>260 ? 260:$width);
+//$drawing->setHeight($width>550 ? 550:$width);
+    $drawing->setHeight($height>260 ? 260:$height);
 //$drawing->setHeight(150);
-$drawing->setCoordinates('G6');
-$drawing->setOffsetX(5);
-$drawing->setOffsetY(5);
-$drawing->setWorksheet($spreadsheet->getActiveSheet());
 
-/*加載圖片*/
+
+    $drawing->setCoordinates("G6");
+    $drawing->setOffsetX(5);
+    $drawing->setOffsetY(5);
+    $drawing->setWorksheet($spreadsheet->getActiveSheet());
+}
+/* 图片模块 */
+
 
 
 /* 文字模块*/
@@ -760,135 +821,217 @@ $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
 $spreadsheet->getActiveSheet()->setCellValue('B2', $sampleall['samplep4']["category"]);
 $spreadsheet->getActiveSheet()->setCellValue('B3', $sampleall['samplep4']["stylename"]);
 
-/*加載圖片*/
+/**
+ * 图片模块
+ */
+
 $img = $sampleall['samplep4']["logo"];
-preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
-$imgformat = $imgformat[1];
-switch ($imgformat)
-{
-    case "jpg":
-    case "jpeg":
-        $img = imagecreatefromjpeg($img);
-        break;
-    case "bmp":
-        $img =  imagecreatefromwbmp($img);
-        break;
-    case "gif":
-        $img =  imagecreatefromgif($img);
-        break;
-    case "png":
-        $img =   imagecreatefrompng($img);
-        break;
+if ($img == '') {
+    $haveimg = false;  //没有图片
+
+} else {
+
+    $path = $img;
+    $pathinfo = pathinfo($path);
+    //echo "扩展名：$pathinfo[extension]";
+
+    if ($pathinfo['extension'] == 'pdf') {
+
+        $img = pdficon();
+        $haveimg = true;
+    } else {
+        $haveimg = true;
+    }
 }
-$width = imagesx($img);
-$height = imagesy($img);
 
 
-// Generate an image
-//$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-//$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-//imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
+if ($haveimg){
+    preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+    $imgformat = $imgformat[1];
+    switch ($imgformat)
+    {
+        case "jpg":
+        case "jpeg":
+            $img = imagecreatefromjpeg($img);
+            break;
+        case "bmp":
+            $img =  imagecreatefromwbmp($img);
+            break;
+        case "gif":
+            $img =  imagecreatefromgif($img);
+            break;
+        case "png":
+            $img =   imagecreatefrompng($img);
+            break;
+    }
+    $width = imagesx($img);
+    $height = imagesy($img);
+
 
 // Add a drawing to the worksheet
-$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-$drawing->setName($sampleall['samplep4']["stylename"]);
-$drawing->setDescription($sampleall['samplep4']["stylename"]);
+    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+    $drawing->setName('img');
+    $drawing->setDescription('img');
 //$drawing->setImageResource($gdImage);
-$drawing->setImageResource($img);
-$drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-$drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+    $drawing->setImageResource($img);
+    $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+    $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setHeight($height>55 ? 55:$height);
-//$drawing->setWidth(180);
+//$drawing->setHeight($width>550 ? 550:$width);
+    $drawing->setHeight($height>55 ? 55:$height);
 //$drawing->setHeight(150);
-$drawing->setCoordinates('G2');
-$drawing->setOffsetX(5);
-$drawing->setOffsetY(5);
-$drawing->setWorksheet($spreadsheet->getActiveSheet());
 
-/*加載圖片*/
 
-/*加載圖片*/
+    $drawing->setCoordinates("G2");
+    $drawing->setOffsetX(2);
+    $drawing->setOffsetY(2);
+    $drawing->setWorksheet($spreadsheet->getActiveSheet());
+}
+/* 图片模块 */
+
+
+
+
+/**
+ * 图片模块
+ */
+
 $img = $sampleall['samplep4']["remarkimg3"];
-preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
-$imgformat = $imgformat[1];
-switch ($imgformat)
-{
-    case "jpg":
-    case "jpeg":
-        $img = imagecreatefromjpeg($img);
-        break;
-    case "bmp":
-        $img =  imagecreatefromwbmp($img);
-        break;
-    case "gif":
-        $img =  imagecreatefromgif($img);
-        break;
-    case "png":
-        $img =   imagecreatefrompng($img);
-        break;
+if ($img == '') {
+    $haveimg = false;  //没有图片
+
+} else {
+
+    $path = $img;
+    $pathinfo = pathinfo($path);
+    //echo "扩展名：$pathinfo[extension]";
+
+    if ($pathinfo['extension'] == 'pdf') {
+
+        $img = pdficon();
+        $haveimg = true;
+    } else {
+        $haveimg = true;
+    }
 }
-$width = imagesx($img);
-$height = imagesy($img);
 
 
-// Generate an image
-//$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-//$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-//imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
+if ($haveimg){
+    preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+    $imgformat = $imgformat[1];
+    switch ($imgformat)
+    {
+        case "jpg":
+        case "jpeg":
+            $img = imagecreatefromjpeg($img);
+            break;
+        case "bmp":
+            $img =  imagecreatefromwbmp($img);
+            break;
+        case "gif":
+            $img =  imagecreatefromgif($img);
+            break;
+        case "png":
+            $img =   imagecreatefrompng($img);
+            break;
+    }
+    $width = imagesx($img);
+    $height = imagesy($img);
+
 
 // Add a drawing to the worksheet
-$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-$drawing->setName($sampleall['samplep4']["stylename"]);
-$drawing->setDescription($sampleall['samplep4']["stylename"]);
+    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+    $drawing->setName('img');
+    $drawing->setDescription('img');
 //$drawing->setImageResource($gdImage);
-$drawing->setImageResource($img);
-$drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-$drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+    $drawing->setImageResource($img);
+    $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+    $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setWidth($width>250 ? 250:$width);
-//$drawing->setWidth(180);
+$drawing->setHeight($width>250 ? 250:$width);
+    //$drawing->setHeight($height>55 ? 55:$height);
 //$drawing->setHeight(150);
-$drawing->setCoordinates('A5');
-$drawing->setOffsetX(5);
-$drawing->setOffsetY(5);
-$drawing->setWorksheet($spreadsheet->getActiveSheet());
 
-/*加載圖片*/
 
-/*加載圖片*/
+    $drawing->setCoordinates("A5");
+    $drawing->setOffsetX(5);
+    $drawing->setOffsetY(5);
+    $drawing->setWorksheet($spreadsheet->getActiveSheet());
+}
+/* 图片模块 */
+
+
+
+/**
+ * 图片模块
+ */
+
 $img = $sampleall['samplep4']["remarkimg4"];
-$img = imagecreatefromjpeg($img);
-$width = imagesx($img);
-$height = imagesy($img);
+if ($img == '') {
+    $haveimg = false;  //没有图片
+
+} else {
+
+    $path = $img;
+    $pathinfo = pathinfo($path);
+    //echo "扩展名：$pathinfo[extension]";
+
+    if ($pathinfo['extension'] == 'pdf') {
+
+        $img = pdficon();
+        $haveimg = true;
+    } else {
+        $haveimg = true;
+    }
+}
 
 
-// Generate an image
-//$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-//$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-//imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
+if ($haveimg){
+    preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+    $imgformat = $imgformat[1];
+    switch ($imgformat)
+    {
+        case "jpg":
+        case "jpeg":
+            $img = imagecreatefromjpeg($img);
+            break;
+        case "bmp":
+            $img =  imagecreatefromwbmp($img);
+            break;
+        case "gif":
+            $img =  imagecreatefromgif($img);
+            break;
+        case "png":
+            $img =   imagecreatefrompng($img);
+            break;
+    }
+    $width = imagesx($img);
+    $height = imagesy($img);
+
 
 // Add a drawing to the worksheet
-$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-$drawing->setName($sampleall['samplep4']["stylename"]);
-$drawing->setDescription($sampleall['samplep4']["stylename"]);
+    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+    $drawing->setName('img');
+    $drawing->setDescription('img');
 //$drawing->setImageResource($gdImage);
-$drawing->setImageResource($img);
-$drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-$drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+    $drawing->setImageResource($img);
+    $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+    $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-//drawing->setHeight($height>60 ? 60:$height);
-$drawing->setWidth($width>250 ? 250:$width);
+    $drawing->setHeight($width>250 ? 250:$width);
+    //$drawing->setHeight($height>55 ? 55:$height);
 //$drawing->setHeight(150);
-$drawing->setCoordinates('E5');
-$drawing->setOffsetX(5);
-$drawing->setOffsetY(5);
-$drawing->setWorksheet($spreadsheet->getActiveSheet());
 
-/*加載圖片*/
+
+    $drawing->setCoordinates("E5");
+    $drawing->setOffsetX(5);
+    $drawing->setOffsetY(5);
+    $drawing->setWorksheet($spreadsheet->getActiveSheet());
+}
+/* 图片模块 */
 
 
 /* 文字模块*/
@@ -1021,7 +1164,7 @@ $spreadsheet->getActiveSheet()->getStyle("D33:D37")->applyFromArray($styleArray1
 
 
 
-$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
+//$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 /*第四页*/
 
 /**
@@ -1038,103 +1181,146 @@ $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
 $spreadsheet->getActiveSheet()->setCellValue('B2', $sampleall['samplep5']["category"]);
 $spreadsheet->getActiveSheet()->setCellValue('B3', $sampleall['samplep5']["stylename"]);
 
-/*加載圖片*/
+
+/**
+ * 图片模块
+ */
+
 $img = $sampleall['samplep5']["logo"];
-preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
-$imgformat = $imgformat[1];
-switch ($imgformat)
-{
-    case "jpg":
-    case "jpeg":
-        $img = imagecreatefromjpeg($img);
-        break;
-    case "bmp":
-        $img =  imagecreatefromwbmp($img);
-        break;
-    case "gif":
-        $img =  imagecreatefromgif($img);
-        break;
-    case "png":
-        $img =   imagecreatefrompng($img);
-        break;
+if ($img == '') {
+    $haveimg = false;  //没有图片
+
+} else {
+
+    $path = $img;
+    $pathinfo = pathinfo($path);
+    //echo "扩展名：$pathinfo[extension]";
+
+    if ($pathinfo['extension'] == 'pdf') {
+
+        $img = pdficon();
+        $haveimg = true;
+    } else {
+        $haveimg = true;
+    }
 }
-$width = imagesx($img);
-$height = imagesy($img);
 
 
-// Generate an image
-//$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-//$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-//imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
+if ($haveimg){
+    preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+    $imgformat = $imgformat[1];
+    switch ($imgformat)
+    {
+        case "jpg":
+        case "jpeg":
+            $img = imagecreatefromjpeg($img);
+            break;
+        case "bmp":
+            $img =  imagecreatefromwbmp($img);
+            break;
+        case "gif":
+            $img =  imagecreatefromgif($img);
+            break;
+        case "png":
+            $img =   imagecreatefrompng($img);
+            break;
+    }
+    $width = imagesx($img);
+    $height = imagesy($img);
+
 
 // Add a drawing to the worksheet
-$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-$drawing->setName($sampleall['samplep5']["stylename"]);
-$drawing->setDescription($sampleall['samplep5']["stylename"]);
+    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+    $drawing->setName('img');
+    $drawing->setDescription('img');
 //$drawing->setImageResource($gdImage);
-$drawing->setImageResource($img);
-$drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-$drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+    $drawing->setImageResource($img);
+    $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+    $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setHeight($height>60 ? 60:$height);
-//$drawing->setWidth(180);
+//$drawing->setHeight($width>550 ? 550:$width);
+    $drawing->setHeight($height>60 ? 60:$height);
 //$drawing->setHeight(150);
-$drawing->setCoordinates('G2');
-$drawing->setOffsetX(5);
-$drawing->setOffsetY(5);
-$drawing->setWorksheet($spreadsheet->getActiveSheet());
 
-/*加載圖片*/
 
-/*加載圖片*/
+    $drawing->setCoordinates("G2");
+    $drawing->setOffsetX(2);
+    $drawing->setOffsetY(2);
+    $drawing->setWorksheet($spreadsheet->getActiveSheet());
+}
+/* 图片模块 */
+
+
+
+/**
+ * 图片模块
+ */
+
 $img = $sampleall['samplep5']["remarkimg2"];
-preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
-$imgformat = $imgformat[1];
-switch ($imgformat)
-{
-    case "jpg":
-    case "jpeg":
-        $img = imagecreatefromjpeg($img);
-        break;
-    case "bmp":
-        $img =  imagecreatefromwbmp($img);
-        break;
-    case "gif":
-        $img =  imagecreatefromgif($img);
-        break;
-    case "png":
-        $img =   imagecreatefrompng($img);
-        break;
+if ($img == '') {
+    $haveimg = false;  //没有图片
+
+} else {
+
+    $path = $img;
+    $pathinfo = pathinfo($path);
+    //echo "扩展名：$pathinfo[extension]";
+
+    if ($pathinfo['extension'] == 'pdf') {
+
+        $img = pdficon();
+        $haveimg = true;
+    } else {
+        $haveimg = true;
+    }
 }
-$width = imagesx($img);
-$height = imagesy($img);
 
 
-// Generate an image
-//$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-//$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-//imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
+if ($haveimg){
+    preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+    $imgformat = $imgformat[1];
+    switch ($imgformat)
+    {
+        case "jpg":
+        case "jpeg":
+            $img = imagecreatefromjpeg($img);
+            break;
+        case "bmp":
+            $img =  imagecreatefromwbmp($img);
+            break;
+        case "gif":
+            $img =  imagecreatefromgif($img);
+            break;
+        case "png":
+            $img =   imagecreatefrompng($img);
+            break;
+    }
+    $width = imagesx($img);
+    $height = imagesy($img);
+
 
 // Add a drawing to the worksheet
-$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-$drawing->setName($sampleall['samplep5']["stylename"]);
-$drawing->setDescription($sampleall['samplep5']["stylename"]);
+    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+    $drawing->setName('img');
+    $drawing->setDescription('img');
 //$drawing->setImageResource($gdImage);
-$drawing->setImageResource($img);
-$drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-$drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+    $drawing->setImageResource($img);
+    $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+    $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setWidth($width>420 ? 420:$width);
-//$drawing->setWidth(180);
+//$drawing->setHeight($width>550 ? 550:$width);
+    $drawing->setHeight($height>420 ? 420:$height);
 //$drawing->setHeight(150);
-$drawing->setCoordinates('A6');
-$drawing->setOffsetX(5);
-$drawing->setOffsetY(5);
-$drawing->setWorksheet($spreadsheet->getActiveSheet());
 
-/*加載圖片*/
+
+    $drawing->setCoordinates("A6");
+    $drawing->setOffsetX(5);
+    $drawing->setOffsetY(5);
+    $drawing->setWorksheet($spreadsheet->getActiveSheet());
+}
+/* 图片模块 */
 
 
 /* 文字模块*/
@@ -1167,7 +1353,7 @@ $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作�
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
-//unset($_SESSION['$sampleall'] ); //注销SESSION
+unset($_SESSION['$sampleall'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。
