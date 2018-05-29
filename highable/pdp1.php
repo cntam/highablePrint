@@ -2,8 +2,15 @@
 session_start();
 header("Content-type: text/html; charset=utf-8");
 //require '../vendor/autoload.php';
-require '/home/pan/vendor/autoload.php';
-//require '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
+//require '/home/pan/vendor/autoload.php';
+require_once('autoloadconfig.php');  //判断是否在线
+
+if($online){
+    require_once '/home/pan/vendor/autoload.php';
+
+}else{
+    require_once '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
+}
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;

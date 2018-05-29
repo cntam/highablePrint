@@ -1,47 +1,16 @@
 <?php
 session_start();
 
-/*
-$client = $samplep1['client'];
-$maker = $samplep1['maker'];
+require_once('autoloadconfig.php');  //判断是否在线
 
-$samtime = $samplep1['samtime'];
-$pages = $samplep1['pages'];
-$clientno = $samplep1['clientno'];
-$ordernum = $samplep1['ordernum'];
-$transtime1 = $samplep1['transtime1'];
-$season = $samplep1['season'];
-$cate = $samplep1['cate'];
-$filerefer = $samplep1['filerefer'];
-$quotas = $samplep1['quotas'];
-$transterms = $samplep1['transterms'];
-$transmode = $samplep1['transmode'];
-$transtime2 = $samplep1['transtime2'];
-$refer = $samplep1['refer'];
-$styleno = $samplep1['styleno'];
-$num = $samplep1['num'];
-$client2 = $samplep1['client2'];
-$transtime3 = $samplep1['transtime3'];
-$sku = $samplep1['sku'];
-$samtype = $samplep1['samtype'];
-$skucate = $samplep1['skucate'];
-$orderremark = $samplep1['orderremark'];
-$item = $samplep1['item'];
-$material = $samplep1['material'];
-$samexplain = $samplep1['samexplain'];
-$remark1 = $samplep1['remark1'];
-$remarkimg1 = $samplep1['remarkimg1'];
-$remark2 = $samplep1['remark2'];
-$remarkimg2 = $samplep1['remarkimg2'];
-$remark3 = $samplep1['remark3'];
-$remarkimg3 = $samplep1['remarkimg3'];
-$remark4 = $samplep1['remark4'];
-$remarkimg4 = $samplep1['remarkimg4'];
+if($online){
+    require_once '/home/pan/vendor/autoload.php';
 
-*/
-require '/home/pan/vendor/autoload.php';
+}else{
+    require_once '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
+}
 
-//require '../vendor/autoload.php';
+require_once ('img.php');
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -82,20 +51,6 @@ $styleArray1 = [
     ],
    
 ];
-//$spreadsheet->getActiveSheet()->getStyle('A1:D1')->applyFromArray($styleArray1);
-/*
-	$spreadsheet->getActiveSheet()->getStyle('A1')
-    ->getBorders()->getLEFT()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
-		$spreadsheet->getActiveSheet()->getStyle('A1')
-    ->getBorders()->getRight()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-			$spreadsheet->getActiveSheet()->getStyle('B1')
-    ->getBorders()->getRight()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-
-$spreadsheet->getActiveSheet()->getStyle('D1')
-    ->getBorders()->getLEFT()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-	$spreadsheet->getActiveSheet()->getStyle('D1')
-    ->getBorders()->getRight()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
-*/
 
 
 $styleArray = [
@@ -122,24 +77,17 @@ $styleArray = [
    
 ];
 
-//$spreadsheet->getActiveSheet()->getStyle('A2:B2')->applyFromArray($styleArray);
-
-
-//$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(15);  //列宽度
-
-
-//$spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(40); //列高度
-
-
-
-// Set cell A1 with a string value
-
-//$spreadsheet->getActiveSheet()->getStyle('A1:D1')->getFont()->setSize(14);
-
 
 $spreadsheet->getActiveSheet()->setCellValue('B2', $samplep1["client"]);
 
 $spreadsheet->getActiveSheet()->setCellValue('B3', $samplep1["maker"]);
+
+$spreadsheet->getActiveSheet()->setCellValue('D2', '工厂');
+$spreadsheet->getActiveSheet()->setCellValue('D3', '通知');
+$spreadsheet->getActiveSheet()->setCellValue('E2', $samplep1["factory"]);
+$spreadsheet->getActiveSheet()->setCellValue('E3', $samplep1["notice"]);
+
+
 $spreadsheet->getActiveSheet()->setCellValue('B5', $samplep1["orderno"]);
 $spreadsheet->getActiveSheet()->setCellValue('E5', $samplep1["samtime"]);
 $spreadsheet->getActiveSheet()->setCellValue('H5', $samplep1["pages"]);
@@ -180,53 +128,78 @@ $spreadsheet->getActiveSheet()->setCellValue('H16', $samplep1["samtype"]);
 $spreadsheet->getActiveSheet()->setCellValue('H17', $samplep1["orderremark"]);
 $spreadsheet->getActiveSheet()->setCellValue('H18', $samplep1["material"]);
 
-/* 图片模块*/
+/**
+ * 图片模块
+ */
+
 $img = $samplep1["remarkimg1"];
-preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
-$imgformat = $imgformat[1];
-switch ($imgformat)
-{
-    case "jpg":
-    case "jpeg":
-        $img = imagecreatefromjpeg($img);
-        break;
-    case "bmp":
-        $img =  imagecreatefromwbmp($img);
-        break;
-    case "gif":
-        $img =  imagecreatefromgif($img);
-        break;
-    case "png":
-        $img =   imagecreatefrompng($img);
-        break;
+if ($img == '') {
+    $haveimg = false;  //没有图片
+
+} else {
+
+    $path = $img;
+    $pathinfo = pathinfo($path);
+    //echo "扩展名：$pathinfo[extension]";
+
+    if ($pathinfo['extension'] == 'pdf') {
+
+        $img = pdficon();
+        $haveimg = true;
+    } else {
+        $haveimg = true;
+    }
 }
-$width = imagesx($img);
-$height = imagesy($img);
 
 
-// Generate an image
-//$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-//$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-//imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
+if ($haveimg){
+    preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+    $imgformat = $imgformat[1];
+    switch ($imgformat)
+    {
+        case "jpg":
+        case "jpeg":
+            $img = imagecreatefromjpeg($img);
+            break;
+        case "bmp":
+            $img =  imagecreatefromwbmp($img);
+            break;
+        case "gif":
+            $img =  imagecreatefromgif($img);
+            break;
+        case "png":
+            $img =   imagecreatefrompng($img);
+            break;
+    }
+    $width = imagesx($img);
+    $height = imagesy($img);
+
 
 // Add a drawing to the worksheet
-$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-$drawing->setName('remarkimg1');
-$drawing->setDescription('remarkimg1');
+    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+    $drawing->setName('FABRIC RECODE');
+    $drawing->setDescription('FABRIC RECODE');
 //$drawing->setImageResource($gdImage);
-$drawing->setImageResource($img);
-$drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-$drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+    $drawing->setImageResource($img);
+    $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+    $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setHeight($height>130 ? 130:$height);
-//$drawing->setWidth(250);
+//$drawing->setHeight($width>550 ? 550:$width);
+    $drawing->setHeight($height>130 ? 130:$height);
 //$drawing->setHeight(150);
-$drawing->setCoordinates('A21');
-$drawing->setOffsetX(5);
-$drawing->setOffsetY(5);
-$drawing->setWorksheet($spreadsheet->getActiveSheet());
-/* 图片模块*/
+
+
+    $drawing->setCoordinates("A21");
+    $drawing->setOffsetX(5);
+    $drawing->setOffsetY(5);
+    $drawing->setWorksheet($spreadsheet->getActiveSheet());
+}
+/* 图片模块 */
+///
+
+
+
 
 /* 文字模块*/
 $wizard = new HtmlHelper();
@@ -236,54 +209,74 @@ $richText = $wizard->toRichTextObject($html1);
 $spreadsheet->getActiveSheet() ->setCellValue('F21', $richText);
 /* 文字模块*/
 
+/**
+ * 图片模块
+ */
 
-/* 图片模块*/
 $img = $samplep1["remarkimg3"];
-preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
-$imgformat = $imgformat[1];
-switch ($imgformat)
-{
-    case "jpg":
-    case "jpeg":
-        $img = imagecreatefromjpeg($img);
-        break;
-    case "bmp":
-        $img =  imagecreatefromwbmp($img);
-        break;
-    case "gif":
-        $img =  imagecreatefromgif($img);
-        break;
-    case "png":
-        $img =   imagecreatefrompng($img);
-        break;
+if ($img == '') {
+    $haveimg = false;  //没有图片
+
+} else {
+
+    $path = $img;
+    $pathinfo = pathinfo($path);
+    //echo "扩展名：$pathinfo[extension]";
+
+    if ($pathinfo['extension'] == 'pdf') {
+
+        $img = pdficon();
+        $haveimg = true;
+    } else {
+        $haveimg = true;
+    }
 }
-$width = imagesx($img);
-$height = imagesy($img);
 
 
-// Generate an image
-//$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-//$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-//imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
+if ($haveimg){
+    preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+    $imgformat = $imgformat[1];
+    switch ($imgformat)
+    {
+        case "jpg":
+        case "jpeg":
+            $img = imagecreatefromjpeg($img);
+            break;
+        case "bmp":
+            $img =  imagecreatefromwbmp($img);
+            break;
+        case "gif":
+            $img =  imagecreatefromgif($img);
+            break;
+        case "png":
+            $img =   imagecreatefrompng($img);
+            break;
+    }
+    $width = imagesx($img);
+    $height = imagesy($img);
+
 
 // Add a drawing to the worksheet
-$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-$drawing->setName('remarkimg3');
-$drawing->setDescription('remarkimg3');
+    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+    $drawing->setName('FABRIC RECODE');
+    $drawing->setDescription('FABRIC RECODE');
 //$drawing->setImageResource($gdImage);
-$drawing->setImageResource($img);
-$drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-$drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+    $drawing->setImageResource($img);
+    $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+    $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setHeight($height>130 ? 130:$height);
-//$drawing->setWidth(250);
+//$drawing->setHeight($width>550 ? 550:$width);
+    $drawing->setHeight($height>130 ? 130:$height);
 //$drawing->setHeight(150);
-$drawing->setCoordinates('A31');
-$drawing->setOffsetX(5);
-$drawing->setOffsetY(5);
-$drawing->setWorksheet($spreadsheet->getActiveSheet());
-/* 图片模块*/
+
+
+    $drawing->setCoordinates("A31");
+    $drawing->setOffsetX(5);
+    $drawing->setOffsetY(5);
+    $drawing->setWorksheet($spreadsheet->getActiveSheet());
+}
+/* 图片模块 */
 
 /* 文字模块*/
 $wizard = new HtmlHelper();
@@ -294,26 +287,151 @@ $spreadsheet->getActiveSheet() ->setCellValue('F31', $richText);
 /* 文字模块*/
 
 
+
+
+
+if ($samplep1['formnum'] > 5) {
+
+    for ($i = 5, $v = 0,$x = 1; $i < $samplep1['formnum']; $i++, $v++,$x++) {
+
+
+        $spreadsheet->getActiveSheet()->insertNewRowBefore(40, 9);
+
+
+        $spreadsheet->getActiveSheet()->mergeCells("A40:D47");
+        $spreadsheet->getActiveSheet()->mergeCells("F40:K47");
+        $spreadsheet->getActiveSheet()->getStyle("A40:D47")->getAlignment()->setWrapText(true);//自动换行
+        $spreadsheet->getActiveSheet()->getStyle("F40:K47")->getAlignment()->setWrapText(true);//自动换行
+
+        /**
+         * FR 边框线
+         */
+        $styleArray = [
+            'borders' => [
+                'outline' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '00000000'],
+                ],
+            ],
+        ];
+
+
+        $spreadsheet->getActiveSheet()->getStyle("A40:D47")->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("F40:K47")->applyFromArray($styleArray);
+        /* 边框线  */
+
+        /**
+         * 图片模块
+         */
+
+        $img = $samplep1["remarkimg5"][$v];
+        if ($img == '') {
+            $haveimg = false;  //没有图片
+
+        } else {
+
+            $path = $img;
+            $pathinfo = pathinfo($path);
+            //echo "扩展名：$pathinfo[extension]";
+
+            if ($pathinfo['extension'] == 'pdf') {
+
+                $img = pdficon();
+                $haveimg = true;
+            } else {
+                $haveimg = true;
+            }
+        }
+
+
+        if ($haveimg){
+            preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+            $imgformat = $imgformat[1];
+            switch ($imgformat)
+            {
+                case "jpg":
+                case "jpeg":
+                    $img = imagecreatefromjpeg($img);
+                    break;
+                case "bmp":
+                    $img =  imagecreatefromwbmp($img);
+                    break;
+                case "gif":
+                    $img =  imagecreatefromgif($img);
+                    break;
+                case "png":
+                    $img =   imagecreatefrompng($img);
+                    break;
+            }
+            $width = imagesx($img);
+            $height = imagesy($img);
+
+
+// Add a drawing to the worksheet
+            $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+            $drawing->setName('img');
+            $drawing->setDescription('img');
+//$drawing->setImageResource($gdImage);
+            $drawing->setImageResource($img);
+            $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+            $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+//$drawing->setHeight($width);
+
+//$drawing->setHeight($width>550 ? 550:$width);
+            $drawing->setHeight($height>180 ? 180:$height);
+//$drawing->setHeight(150);
+
+
+            $drawing->setCoordinates("A40");
+            $drawing->setOffsetX(5);
+            $drawing->setOffsetY(5);
+            $drawing->setWorksheet($spreadsheet->getActiveSheet());
+        }
+        /* 图片模块 */
+
+        /* 文字模块*/
+        $wizard = new HtmlHelper();
+        //$html1 = str_replace('\"', "", htmlspecialchars_decode($samplep1["remark5"])) ;
+        $html1 = str_replace('\"', "", $samplep1["remark5"][$v]) ;
+        $richText = $wizard->toRichTextObject($html1);
+
+        $spreadsheet->getActiveSheet() ->setCellValue('F40', $richText);
+        /* 文字模块*/
+
+    }
+
+}
+
+
+if($samplep1['formnum'] > 5){
+    $addrow = $samplep1['formnum'] - 5;
+}else{
+    $addrow = 0;
+}
+$addrow = $addrow * 9;
+
+
 for($j = 0 ; $j < 5 ; $j++) {
 
     $col = chr(97 + $j);
 
     for ($i = 2; $i < 10; $i++) {
         $list = chr(66 + $i);
-        $x = 41 + $j ;
+        $x = 41 + $j + $addrow;
         //$arr[ $col. $i] = $_POST[$col . $i];
         $spreadsheet->getActiveSheet()->setCellValue($list.$x, $samplep1["color"][$col. $i]);
     }
 
 }
-$spreadsheet->getActiveSheet()->setCellValue('B41', $samplep1["color"]["a1"]);
-$spreadsheet->getActiveSheet()->setCellValue('A42', $samplep1["color"]["b1"]);
-$spreadsheet->getActiveSheet()->setCellValue('A43', $samplep1["color"]["c1"]);
-$spreadsheet->getActiveSheet()->setCellValue('A44', $samplep1["color"]["d1"]);
-$spreadsheet->getActiveSheet()->setCellValue('A45', $samplep1["color"]["e1"]);
-$spreadsheet->getActiveSheet()->setCellValue('K41', '总计');
 
-$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
+$spreadsheet->getActiveSheet()->setCellValue('B'.(41 + $addrow), $samplep1["color"]["a1"]);
+$spreadsheet->getActiveSheet()->setCellValue('A'.(42 + $addrow), $samplep1["color"]["b1"]);
+$spreadsheet->getActiveSheet()->setCellValue('A'.(43 + $addrow), $samplep1["color"]["c1"]);
+$spreadsheet->getActiveSheet()->setCellValue('A'.(44 + $addrow), $samplep1["color"]["d1"]);
+$spreadsheet->getActiveSheet()->setCellValue('A'.(45 + $addrow), $samplep1["color"]["e1"]);
+$spreadsheet->getActiveSheet()->setCellValue('K'.(41 + $addrow), '总计');
+//
+//$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);

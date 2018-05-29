@@ -1,6 +1,32 @@
 <?php
 session_start();
 
+require_once('autoloadconfig.php');  //判断是否在线
+
+if($online){
+    require_once '/home/pan/vendor/autoload.php';
+
+}else{
+    require_once '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
+}
+
+
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+$spreadsheet = new Spreadsheet();
+$sheet = $spreadsheet->getActiveSheet();
+
+$spreadsheet->getActiveSheet()->setTitle("sheet1");
+//$sheet->setCellValue('A1', 'Hello World !');
+$spreadsheet->getDefaultStyle()->getFont()->setName('微软雅黑');
+$spreadsheet->getDefaultStyle()->getFont()->setSize(12);
+$spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(50);
+
+
+
 $client =  $_SESSION['client'] ;
 $date =    $_SESSION['date'] ;
 $remark1 = $_SESSION['remark1'][1] ;
@@ -22,24 +48,6 @@ $remark6no = $_SESSION['remark6'][0] ;
 $remark7no = $_SESSION['remark7'][0] ;
 $remark8no = $_SESSION['remark8'][0] ;
 
-
-require '/home/pan/vendor/autoload.php';
-//require '../vendor/autoload.php';
-//require '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
-
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
-$spreadsheet = new Spreadsheet();
-$sheet = $spreadsheet->getActiveSheet();
-
-$spreadsheet->getActiveSheet()->setTitle("sheet1");
-//$sheet->setCellValue('A1', 'Hello World !');
-$spreadsheet->getDefaultStyle()->getFont()->setName('微软雅黑');
-$spreadsheet->getDefaultStyle()->getFont()->setSize(12);
-$spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(50);
 $styleArray1 = [
  'alignment' => [
         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,

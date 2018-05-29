@@ -1,6 +1,35 @@
 <?php
 session_start();
 
+
+//require '/home/pan/vendor/autoload.php';
+require_once('autoloadconfig.php');  //判断是否在线
+
+if($online){
+    require_once '/home/pan/vendor/autoload.php';
+
+}else{
+    require_once '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
+}
+
+
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+
+$spreadsheet = new Spreadsheet();
+$sheet = $spreadsheet->getActiveSheet();
+
+$spreadsheet->getActiveSheet()->setTitle("sheet1");
+//$sheet->setCellValue('A1', 'Hello World !');
+$spreadsheet->getDefaultStyle()->getFont()->setName('微软雅黑');
+$spreadsheet->getDefaultStyle()->getFont()->setSize(12);
+//$spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(50);
+
+
+
 //$ihkno= $_SESSION['ihkno'];
 //$supplier = $_SESSION['supplier'];
 //$com =  $_SESSION['com'];
@@ -20,25 +49,6 @@ $com =  $frlistcon[$p2page][5];
 $faw = $frlistcon[$p2page][6];
 $remark = $frlistcon[$p2page][8];
 $img = $frlistcon[$p2page][9];
-
-require '/home/pan/vendor/autoload.php';
-//require '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
-
-
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
-
-$spreadsheet = new Spreadsheet();
-$sheet = $spreadsheet->getActiveSheet();
-
-$spreadsheet->getActiveSheet()->setTitle("sheet1");
-//$sheet->setCellValue('A1', 'Hello World !');
-$spreadsheet->getDefaultStyle()->getFont()->setName('微软雅黑');
-$spreadsheet->getDefaultStyle()->getFont()->setSize(12);
-//$spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(50);
 
 
 $styleArray1 = [
