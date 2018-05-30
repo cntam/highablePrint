@@ -78,7 +78,7 @@ for($spage = 0;$spage< $stotal;$spage++){
         $prnum = $maxnum <= (4 + 5 * $spage) ? $maxnum : (4 + 5 * $spage);
         //$prnum = $maxnum <= 9 ? $maxnum : 9;
     }else{
-        $prnum = $maxlist < 5 ? $maxlist : 4;
+        $prnum = $maxnum < 5 ? $maxnum : 4;
     }
 //$prnum = $maxnum < (5 + 5 * $spage) ? $maxnum : (4 + 5 * $spage);
 //$prnum = $maxnum <= 9 ? $maxnum : 9;
@@ -201,7 +201,7 @@ $spreadsheet->getActiveSheet()->setCellValue('A14', '特殊工序：');
         $pathinfo = pathinfo($path);
         //echo "扩展名：$pathinfo[extension]";
 
-        if ($pathinfo['extension'] == 'pdf') {
+        if ($pathinfo["extension"] == 'pdf') {
 
             $img = pdficon();
             $haveimg = true;

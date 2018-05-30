@@ -17,6 +17,7 @@ if($online){
     require_once '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
 }
 require_once ('img.php');
+
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -79,7 +80,7 @@ for($spage = 0;$spage< $stotal;$spage++){
         $prnum = $maxnum <= (4 + 5 * $spage) ? $maxnum : (4 + 5 * $spage);
         //$prnum = $maxnum <= 9 ? $maxnum : 9;
     }else{
-        $prnum = $maxlist < 5 ? $maxlist : 4;
+        $prnum = $maxnum < 5 ? $maxnum : 4;
     }
 //$prnum = $maxnum < (5 + 5 * $spage) ? $maxnum : (4 + 5 * $spage);
 //$prnum = $maxnum <= 9 ? $maxnum : 9;
@@ -202,7 +203,7 @@ $spreadsheet->getActiveSheet()->setCellValue('A14', '特殊工序：');
         $pathinfo = pathinfo($path);
         //echo "扩展名：$pathinfo[extension]";
 
-        if ($pathinfo['extension'] == 'pdf') {
+        if ($pathinfo["extension"] == 'pdf') {
 
             $img = pdficon();
             $haveimg = true;
@@ -330,7 +331,7 @@ $thiscol = 15;  //当前行
 //$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 $spreadsheet->setActiveSheetIndex(0);  //設置當前活動表
 
-unset($_SESSION['cpsp2'] ); //注销SESSION
+//unset($_SESSION['cpsp2'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。

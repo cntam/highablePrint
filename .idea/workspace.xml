@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="22dbb095-b711-45ef-80b3-db8d08d0c22f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/highable/autoloadconfig.php" afterPath="$PROJECT_DIR$/highable/autoloadconfig.php" />
+      <change beforePath="$PROJECT_DIR$/highable/cpsall.php" afterPath="$PROJECT_DIR$/highable/cpsall.php" />
+      <change beforePath="$PROJECT_DIR$/highable/cpsp2.php" afterPath="$PROJECT_DIR$/highable/cpsp2.php" />
       <change beforePath="$PROJECT_DIR$/highable/pdp2excel.php" afterPath="$PROJECT_DIR$/highable/pdp2excel.php" />
+      <change beforePath="$PROJECT_DIR$/highable/productp1.php" afterPath="$PROJECT_DIR$/highable/productp1.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,18 +30,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="pdp1.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/highable/pdp1.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="83" column="23" lean-forward="false" selection-start-line="83" selection-start-column="23" selection-end-line="83" selection-end-column="23" />
-              <folding>
-                <element signature="e#360#401#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="rdall.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/highable/rdall.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -50,11 +42,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pdp2excel.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pdp2excel.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/highable/pdp2excel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="129" column="0" lean-forward="false" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
+            <state relative-caret-position="57">
+              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="11" selection-end-column="25" />
               <folding>
                 <element signature="e#300#343#0#PHP" expanded="true" />
               </folding>
@@ -62,24 +54,36 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cpsall.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/highable/cpsall.php">
+      <file leaf-file-name="productp1.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/highable/productp1.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+            <state relative-caret-position="76">
+              <caret line="4" column="2" lean-forward="false" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="2" />
               <folding>
-                <element signature="e#390#433#0#PHP" expanded="true" />
+                <element signature="e#337#378#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pdp3excel.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/highable/pdp3excel.php">
+      <file leaf-file-name="autoloadconfig.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/highable/autoloadconfig.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="38">
               <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cpsall.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/highable/cpsall.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-229">
+              <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+              <folding>
+                <element signature="e#390#433#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -106,16 +110,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="samplep2.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/highable/samplep2.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="12" column="1" lean-forward="false" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="session.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/highable/session.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -126,14 +120,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cpsp2.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="cpsp2.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/highable/cpsp2.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-708">
-              <caret line="135" column="3" lean-forward="false" selection-start-line="135" selection-start-column="3" selection-end-line="135" selection-end-column="3" />
+            <state relative-caret-position="-1284">
+              <caret line="218" column="27" lean-forward="true" selection-start-line="218" selection-start-column="27" selection-end-line="218" selection-end-column="27" />
               <folding>
-                <element signature="e#389#432#0#PHP" expanded="true" />
+                <element signature="e#390#433#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="img.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/highable/img.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-105">
+              <caret line="2" column="9" lean-forward="false" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -178,7 +182,6 @@
         <option value="$PROJECT_DIR$/highable/helloworld.php" />
         <option value="$PROJECT_DIR$/highable/pdall.php" />
         <option value="$PROJECT_DIR$/highable/rdall.php" />
-        <option value="$PROJECT_DIR$/highable/autoloadconfig.php" />
         <option value="$PROJECT_DIR$/highable/pdp1.php" />
         <option value="$PROJECT_DIR$/highable/pdp3excel.php" />
         <option value="$PROJECT_DIR$/highable/samplep2.php" />
@@ -186,10 +189,12 @@
         <option value="$PROJECT_DIR$/highable/samplep1excel.php" />
         <option value="$PROJECT_DIR$/highable/sampleall.php" />
         <option value="$PROJECT_DIR$/highable/session.php" />
-        <option value="$PROJECT_DIR$/highable/cpsp2.php" />
         <option value="$PROJECT_DIR$/highable/cpsp2test.php" />
         <option value="$PROJECT_DIR$/highable/cpsall.php" />
         <option value="$PROJECT_DIR$/highable/pdp2excel.php" />
+        <option value="$PROJECT_DIR$/highable/autoloadconfig.php" />
+        <option value="$PROJECT_DIR$/highable/productp1.php" />
+        <option value="$PROJECT_DIR$/highable/cpsp2.php" />
       </list>
     </option>
   </component>
@@ -201,8 +206,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="42" />
-    <option name="y" value="23" />
+    <option name="x" value="238" />
+    <option name="y" value="80" />
     <option name="width" value="1869" />
     <option name="height" value="1057" />
   </component>
@@ -256,7 +261,7 @@
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/highable/bak/cpsall_20180530.php" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/highable/cpsp2.php" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -291,7 +296,7 @@
       <workItem from="1525400526984" duration="661000" />
       <workItem from="1527473587379" duration="18670000" />
       <workItem from="1527555378146" duration="23608000" />
-      <workItem from="1527641863765" duration="16229000" />
+      <workItem from="1527641863765" duration="22173000" />
     </task>
     <task id="LOCAL-00001" summary="20180327">
       <created>1522145290156</created>
@@ -363,16 +368,23 @@
       <option name="project" value="LOCAL" />
       <updated>1527664906381</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="20180530">
+      <created>1527664942187</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1527664942187</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69092000" />
+    <option name="totallyTimeSpent" value="75036000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="42" y="23" width="1869" height="1057" extended-state="0" />
+    <frame x="238" y="80" width="1869" height="1057" extended-state="0" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1592775" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1592775" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952183" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -417,7 +429,7 @@
         <state relative-caret-position="7239">
           <caret line="384" column="9" lean-forward="false" selection-start-line="384" selection-start-column="9" selection-end-line="384" selection-end-column="9" />
           <folding>
-            <element signature="e#389#432#0#PHP" expanded="true" />
+            <element signature="e#390#433#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -472,7 +484,7 @@
         <state relative-caret-position="7239">
           <caret line="384" column="9" lean-forward="false" selection-start-line="384" selection-start-column="9" selection-end-line="384" selection-end-column="9" />
           <folding>
-            <element signature="e#389#432#0#PHP" expanded="true" />
+            <element signature="e#390#433#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -534,7 +546,7 @@
         <state relative-caret-position="7239">
           <caret line="384" column="9" lean-forward="false" selection-start-line="384" selection-start-column="9" selection-end-line="384" selection-end-column="9" />
           <folding>
-            <element signature="e#389#432#0#PHP" expanded="true" />
+            <element signature="e#390#433#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -596,7 +608,7 @@
         <state relative-caret-position="7239">
           <caret line="384" column="9" lean-forward="false" selection-start-line="384" selection-start-column="9" selection-end-line="384" selection-end-column="9" />
           <folding>
-            <element signature="e#389#432#0#PHP" expanded="true" />
+            <element signature="e#390#433#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -658,7 +670,7 @@
         <state relative-caret-position="7239">
           <caret line="384" column="9" lean-forward="false" selection-start-line="384" selection-start-column="9" selection-end-line="384" selection-end-column="9" />
           <folding>
-            <element signature="e#389#432#0#PHP" expanded="true" />
+            <element signature="e#390#433#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -720,13 +732,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
           <caret line="9" column="2" lean-forward="false" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/highable/autoloadconfig.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="1" column="26" lean-forward="false" selection-start-line="1" selection-start-column="26" selection-end-line="1" selection-end-column="26" />
+          <folding>
+            <element signature="e#6#87#0#PHP" expanded="true" />
+            <element signature="e#201#242#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -738,25 +747,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/highable/img.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/highable/productp1.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="32" column="4" lean-forward="false" selection-start-line="32" selection-start-column="4" selection-end-line="36" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/highable/productall.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
           <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding>
+            <element signature="e#102#143#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -822,19 +819,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/highable/cpsp2.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-708">
-          <caret line="135" column="3" lean-forward="false" selection-start-line="135" selection-start-column="3" selection-end-line="135" selection-end-column="3" />
-          <folding>
-            <element signature="e#389#432#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/highable/cpsall.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
+        <state relative-caret-position="-229">
           <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
           <folding>
             <element signature="e#390#433#0#PHP" expanded="true" />
@@ -844,10 +831,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/highable/pdp2excel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="129" column="0" lean-forward="false" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
+        <state relative-caret-position="57">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="11" selection-end-column="25" />
           <folding>
             <element signature="e#300#343#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/highable/productp1.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="2" lean-forward="false" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="2" />
+          <folding>
+            <element signature="e#337#378#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/highable/autoloadconfig.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/highable/img.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-105">
+          <caret line="2" column="9" lean-forward="false" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/highable/cpsp2.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1284">
+          <caret line="218" column="27" lean-forward="true" selection-start-line="218" selection-start-column="27" selection-end-line="218" selection-end-column="27" />
+          <folding>
+            <element signature="e#390#433#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
