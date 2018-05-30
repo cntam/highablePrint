@@ -129,7 +129,6 @@ $spreadsheet->getActiveSheet()->getStyle('D6')->getAlignment()->setShrinkToFit(t
 $spreadsheet->getActiveSheet()->getStyle('D7')->getAlignment()->setShrinkToFit(true);//缩小以适合
 
 
-
 /**
  * 图片模块
  */
