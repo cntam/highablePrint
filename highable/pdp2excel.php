@@ -1,7 +1,5 @@
 <?php
 session_start();
-
-
 //require '/home/pan/vendor/autoload.php';
 require_once('autoloadconfig.php');  //判断是否在线
 
@@ -27,16 +25,6 @@ $spreadsheet->getActiveSheet()->setTitle("sheet1");
 $spreadsheet->getDefaultStyle()->getFont()->setName('微软雅黑');
 $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
 //$spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(50);
-
-
-
-//$ihkno= $_SESSION['ihkno'];
-//$supplier = $_SESSION['supplier'];
-//$com =  $_SESSION['com'];
-//$faw = $_SESSION['faw'];
-//$remark = $_SESSION['remark'];
-//$img = $_SESSION['img'];
-
 
 $p2page = $_GET['p2page'];
 
