@@ -39,16 +39,18 @@ $spreadsheet->getActiveSheet()->getPageMargins()->setLeft(0.1); //页边距
 
 $styleArray1 = [
  'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-		'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+//        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+//		'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+     'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+     'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
     ],
     
-    'borders' => [
-        'top' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-        ],
-		
-    ],
+//    'borders' => [
+//        'top' => [
+//            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+//        ],
+//
+//    ],
    
 ];
 
@@ -200,14 +202,13 @@ if ($haveimg){
 
 
 
-
+/* textarea文字模块*/
+$spreadsheet->getActiveSheet()->getCell('F21')->setValue($samplep1['remark2']);
+$spreadsheet->getActiveSheet()->getStyle('F21')->getAlignment()->setWrapText(true);  //在单元格中写入换行符“\ n”（ALT +“Enter”）
+$spreadsheet->getActiveSheet()->getStyle("F21")->applyFromArray($styleArray1);
 /* 文字模块*/
-$wizard = new HtmlHelper();
-$html1 = str_replace('\"', "", htmlspecialchars_decode($samplep1['remark2'])) ;
-$richText = $wizard->toRichTextObject($html1);
 
-$spreadsheet->getActiveSheet() ->setCellValue('F21', $richText);
-/* 文字模块*/
+
 
 /**
  * 图片模块
@@ -278,14 +279,11 @@ if ($haveimg){
 }
 /* 图片模块 */
 
+/* textarea文字模块*/
+$spreadsheet->getActiveSheet()->getCell('F31')->setValue($samplep1['remark4']);
+$spreadsheet->getActiveSheet()->getStyle('F31')->getAlignment()->setWrapText(true);  //在单元格中写入换行符“\ n”（ALT +“Enter”）
+$spreadsheet->getActiveSheet()->getStyle("F31")->applyFromArray($styleArray1);
 /* 文字模块*/
-$wizard = new HtmlHelper();
-$html1 = str_replace('\"', "", htmlspecialchars_decode($samplep1['remark4'])) ;
-$richText = $wizard->toRichTextObject($html1);
-
-$spreadsheet->getActiveSheet() ->setCellValue('F31', $richText);
-/* 文字模块*/
-
 
 
 
@@ -389,13 +387,12 @@ if ($samplep1['formnum'] > 5) {
         }
         /* 图片模块 */
 
-        /* 文字模块*/
-        $wizard = new HtmlHelper();
-        //$html1 = str_replace('\"', "", htmlspecialchars_decode($samplep1["remark5"])) ;
-        $html1 = str_replace('\"', "", $samplep1["remark5"][$v]) ;
-        $richText = $wizard->toRichTextObject($html1);
 
-        $spreadsheet->getActiveSheet() ->setCellValue('F40', $richText);
+
+        /* textarea文字模块*/
+        $spreadsheet->getActiveSheet()->getCell('F40')->setValue($samplep1["remark5"][$v]);
+        $spreadsheet->getActiveSheet()->getStyle('F40')->getAlignment()->setWrapText(true);  //在单元格中写入换行符“\ n”（ALT +“Enter”）
+        $spreadsheet->getActiveSheet()->getStyle("F40")->applyFromArray($styleArray1);
         /* 文字模块*/
 
     }

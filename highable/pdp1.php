@@ -35,7 +35,7 @@ $sheet->setCellValue('B3',  $pdp1["SPL_1_name"]);
 $sheet->setCellValue('C3',  $pdp1["SPL_1_country"]);
 $sheet->setCellValue('D3',  $pdp1["SPL_1_contact"]);
 $sheet->setCellValue('E3',  $pdp1["SPL_1_address"]);
-$sheet->setCellValue('F3',  'EMAIL:'.$pdp1["SPL_1_email"].' \n TEL:'.$pdp1["SPL_1_tel"].' \n MOBILE'.$pdp1["SPL_1_mobile"].'\n QQ:'.$pdp1["SPL_1_qq"]);
+$sheet->setCellValue('F3',  'EMAIL:'.$pdp1["SPL_1_email"].PHP_EOL.'TEL:'.$pdp1["SPL_1_tel"].PHP_EOL.'MOBILE'.$pdp1["SPL_1_mobile"].PHP_EOL.'QQ:'.$pdp1["SPL_1_qq"]);
 $sheet->setCellValue('G3',  $pdp1["SPL_1_goods"]);
 $spreadsheet->getActiveSheet()->getStyle("F3")->getAlignment()->setWrapText(true);
 
@@ -45,10 +45,11 @@ $sheet->setCellValue('C4',  $pdp1["SPL_2_country"]);
 $sheet->setCellValue('D4',  $pdp1["SPL_2_contact"]);
 $sheet->setCellValue('E4',  $pdp1["SPL_2_address"]);
 if($pdp1["SPL_2_code"]) {
-    $sheet->setCellValue('F4', 'EMAIL:' . $pdp1["SPL_2_email"] . '\n TEL:' . $pdp1["SPL_2_tel"] . '\n MOBILE:' . $pdp1["SPL_2_mobile"] . ' \n QQ:' . $pdp1["SPL_2_qq"]);
+    $sheet->setCellValue('F4', 'EMAIL:' . $pdp1["SPL_2_email"] .PHP_EOL. 'TEL:' . $pdp1["SPL_2_tel"] .PHP_EOL. 'MOBILE:' .PHP_EOL. $pdp1["SPL_2_mobile"] . 'QQ:' . $pdp1["SPL_2_qq"]);
 }
 $sheet->setCellValue('G4',  $pdp1["SPL_2_goods"]);
 $spreadsheet->getActiveSheet()->getStyle("F4")->getAlignment()->setWrapText(true);
+
 
 for($i = 5,$a = 0; $i<8  ;$i++){
     $col = chr(97 + $a);
@@ -60,7 +61,7 @@ for($i = 5,$a = 0; $i<8  ;$i++){
         $sheet->setCellValue("C{$i}", $pdp1['spli35'][$col.'2']);
         $sheet->setCellValue("D{$i}", $pdp1['spli35'][$col.'3']);
         $sheet->setCellValue("E{$i}", $pdp1['spli35'][$col.'4']);
-        $sheet->setCellValue("F{$i}", 'EMAIL:'.$pdp1['spli35'][$col.'5'].' \n TEL:'.$pdp1['spli35'][$col.'6'].' \n MOBILE:'.$pdp1['spli35'][$col.'7'].' \n QQ:'.$pdp1['spli35'][$col.'8']);
+        $sheet->setCellValue("F{$i}", 'EMAIL:'.$pdp1['spli35'][$col.'5'].PHP_EOL.'TEL:'.$pdp1['spli35'][$col.'6'].PHP_EOL.'MOBILE:'.$pdp1['spli35'][$col.'7'].PHP_EOL.'QQ:'.$pdp1['spli35'][$col.'8']);
         $sheet->setCellValue("G{$i}", $pdp1['spli35'][$col.'9']);
         $spreadsheet->getActiveSheet()->getStyle("F{$i}")->getAlignment()->setWrapText(true);
     }
