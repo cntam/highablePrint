@@ -2,7 +2,7 @@
 session_start();
 
 
-$samplep1 =   $_SESSION['shippingp1'];
+$samplep1 =   $_SESSION['invoiceTem2'];
 var_dump($samplep1);
 
 
