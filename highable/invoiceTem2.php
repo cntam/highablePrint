@@ -53,12 +53,18 @@ $styleArray1 = [
 
 ];
 
-$styleArrayr = [
+$styleArraybor = [
 
     'borders' => [
 
+        'left' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+        ],
         'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+        ],
+        'bottom' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
         ],
 
     ],
@@ -73,6 +79,20 @@ $styleArraybu = [
             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
         ],
 
+    ],
+
+];
+
+$styleArraysize6 = [
+
+    'alignment' => [
+        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+        'wrapText' => true,
+        'ShrinkToFit'=>true,
+    ],
+    'font' => [
+        'Size' => '6',
     ],
 
 ];
@@ -121,11 +141,16 @@ $nowcol = 18;
 //
 //$nowcol++;
 //
-for($x = 0 ,$c = 1; $c <= $intem2["invoiceform"]["formnum"]; $x++ ,$c++){
+for($x = 0 ,$c = 1; $x <= $intem2["invoiceform"]["formnum"]; $x++ ,$c++){
 
-$f19 = 18 + 1 * $x;
+$f18 = 18 + 4 * $x;
+$f19 = 19 + 4 * $x;
+$f20 = 20 + 4 * $x;
 
-$formarr = array('A'.$f19,'B'.$f19,'C'.$f19,'D'.$f19,'E'.$f19,'F'.$f19,'G'.$f19,'H'.$f19,'I'.$f19);
+    $spreadsheet->getActiveSheet()->mergeCells("C{$f18}:G{$f18}");
+    $spreadsheet->getActiveSheet()->mergeCells("C{$f20}:D{$f20}");
+
+$formarr = array('C'.$f18,'K'.$f18,'A'.$f19,'B'.$f19,'C'.$f19,'D'.$f19,'E'.$f19,'F'.$f19,'G'.$f19,'H'.$f19,'I'.$f19,'J'.$f19,'K'.$f19,'C'.$f20);
 
     for($i = 7,$y = 0; $i <= $intem2["invoiceform"]["brrnum"] ; $i++ ,$y++){
 
@@ -134,50 +159,85 @@ $formarr = array('A'.$f19,'B'.$f19,'C'.$f19,'D'.$f19,'E'.$f19,'F'.$f19,'G'.$f19,
     }
 
 
-    $nowcol = 22 +   1 * $c;
+    $nowcol = 21 +   4 * $x;
 
 
 
-    if($x >12){
-        $spreadsheet->getActiveSheet()->insertNewRowBefore($nowcol, 1);
+    if($x >2){
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($nowcol, 4);
     }
 
 }
+
+$nowcol++;
 //$nowcol = $intem2["invoiceform"]["formnum"] > 12 ? ($nowcol + 1) : 36;
-////$spreadsheet->getActiveSheet()->getCell('A1')->setValue($nowcol);
-//
-//$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, $intem2["invoiceform"]["coltb"]);
-//$spreadsheet->getActiveSheet()->setCellValue('I'.$nowcol, $intem2["invoiceform"]["coltc"]);
-//
-//$nowcol++;
-//$nowcol++;
-//$spreadsheet->getActiveSheet()->getCell('D'.$nowcol)->setValue($intem2["invoiceform"]["formremark"]);
+//$spreadsheet->getActiveSheet()->getCell('A1')->setValue($nowcol);
+
+$spreadsheet->getActiveSheet()->mergeCells("F{$nowcol}:I{$nowcol}");
+$spreadsheet->getActiveSheet()->getCell('F'.$nowcol)->setValue($intem2["invoiceform"]["formremark"][0]);
+
+$spreadsheet->getActiveSheet()->setCellValue('J'.$nowcol, $intem2["invoiceform"]["coltb"]);
+$spreadsheet->getActiveSheet()->getStyle("J{$nowcol}")->applyFromArray($styleArraybu);
+$nowcol++;
+
+$spreadsheet->getActiveSheet()->setCellValue('J'.$nowcol, $intem2["invoiceform"]["coltc"]);
+$spreadsheet->getActiveSheet()->getStyle("J{$nowcol}")->applyFromArray($styleArraybu);
+
+$nowcol++;
+$spreadsheet->getActiveSheet()->mergeCells("C{$nowcol}:F{$nowcol}");
+$spreadsheet->getActiveSheet()->getCell('C'.$nowcol)->setValue($intem2["invoiceform"]["formremark"][1]);
 //$spreadsheet->getActiveSheet()->getStyle('D'.$nowcol)->applyFromArray($styleArray1);
-//
-//$nowcol++;
-//$nowcol++;
-//$nowcol++;
-//$spreadsheet->getActiveSheet()->mergeCells("E{$nowcol}:H{$nowcol}");
-//$spreadsheet->getActiveSheet()->getCell('E'.$nowcol)->setValue($intem2["remark"]["bottomremark"]);
-//$spreadsheet->getActiveSheet()->getStyle("F{$nowcol}:H{$nowcol}")->applyFromArray($styleArray1);
-//$nowcol++;
-//$nowcol++;
-//
-//
-//for($b = 1 ; $b<= $intem2["remark"]["crrnum"] ; $b++ ){
-//    $spreadsheet->getActiveSheet()->mergeCells("F{$nowcol}:H{$nowcol}");
-//    $spreadsheet->getActiveSheet()->getCell('F'.$nowcol)->setValue($intem2["remark"]["c".$b]);
-//    $spreadsheet->getActiveSheet()->getStyle("F{$nowcol}:H{$nowcol}")->applyFromArray($styleArray1);
-//    $nowcol++;
-//
-//
-//}
-//
 
 
-////边栏样式
-//$spreadsheet->getActiveSheet()->getStyle("A19:A{$nowcol}")->applyFromArray($styleArrayl);
-//$spreadsheet->getActiveSheet()->getStyle("H19:H{$nowcol}")->applyFromArray($styleArrayr);
+$nowcol++;
+$nowcol++;
+$spreadsheet->getActiveSheet()->mergeCells("D{$nowcol}:G{$nowcol}");
+$spreadsheet->getActiveSheet()->getCell('D'.$nowcol)->setValue($intem2["remark"]["c1"]);
+$spreadsheet->getActiveSheet()->getStyle("D{$nowcol}:F{$nowcol}")->applyFromArray($styleArray1);
+
+$nowcol++;
+$spreadsheet->getActiveSheet()->mergeCells("D{$nowcol}:F{$nowcol}");
+$spreadsheet->getActiveSheet()->getCell('D'.$nowcol)->setValue($intem2["remark"]["c2"]);
+$spreadsheet->getActiveSheet()->getStyle("D{$nowcol}:F{$nowcol}")->applyFromArray($styleArray1);
+
+$nowcol++;
+$spreadsheet->getActiveSheet()->getCell('C'.$nowcol)->setValue('ORIGIN OF PAYMENT:');
+$spreadsheet->getActiveSheet()->getStyle('C'.$nowcol)->applyFromArray($styleArraysize6);
+$spreadsheet->getActiveSheet()->mergeCells("D{$nowcol}:F{$nowcol}");
+$spreadsheet->getActiveSheet()->getCell('D'.$nowcol)->setValue($intem2["remark"]["c3"]);
+$spreadsheet->getActiveSheet()->getStyle("D{$nowcol}:F{$nowcol}")->applyFromArray($styleArray1);
+
+$nowcol++;
+$now3 = $nowcol+3;
+$spreadsheet->getActiveSheet()->getCell('C'.$nowcol)->setValue('TERMS OF PAYMENT:');
+$spreadsheet->getActiveSheet()->mergeCells("D{$nowcol}:F{$now3}");
+$spreadsheet->getActiveSheet()->getCell('D'.$nowcol)->setValue($intem2["remark"]["c4"]);
+$spreadsheet->getActiveSheet()->getStyle("D{$nowcol}:F{$nowcol}")->applyFromArray($styleArray1);
+
+$nowcol = $nowcol+5;
+
+
+$titlearr = array('BANKER :','ADDRESS:','USD A/C NO.:','SWIFT CODE:');
+    $spreadsheet->getActiveSheet()->getCell('C'.$nowcol)->setValue('BANK DETAILS：');
+    $nowcol++;
+for($b = 5 ,$t = 0; $b<= $intem2["remark"]["crrnum"] ; $b++,$t++ ){
+    $spreadsheet->getActiveSheet()->mergeCells("D{$nowcol}:F{$nowcol}");
+    $spreadsheet->getActiveSheet()->getCell('C'.$nowcol)->setValue($titlearr[$t]);
+    $spreadsheet->getActiveSheet()->getCell('D'.$nowcol)->setValue($intem2["remark"]["c".$b]);
+    $spreadsheet->getActiveSheet()->getStyle("D{$nowcol}:F{$nowcol}")->applyFromArray($styleArray1);
+    $nowcol++;
+
+
+}
+
+
+
+//边栏样式
+$spreadsheet->getActiveSheet()->getStyle("A13:B{$nowcol}")->applyFromArray($styleArraybor);
+$spreadsheet->getActiveSheet()->getStyle("C13:G{$nowcol}")->applyFromArray($styleArraybor);
+$spreadsheet->getActiveSheet()->getStyle("H13:H{$nowcol}")->applyFromArray($styleArraybor);
+$spreadsheet->getActiveSheet()->getStyle("I13:I{$nowcol}")->applyFromArray($styleArraybor);
+$spreadsheet->getActiveSheet()->getStyle("J13:K{$nowcol}")->applyFromArray($styleArraybor);
 //$spreadsheet->getActiveSheet()->getStyle("A{$nowcol}:H{$nowcol}")->applyFromArray($styleArraybu);
 
 
