@@ -3,6 +3,11 @@ session_start();
 
 $cpsp2 =  $_SESSION['cpsp2'];
 
+//var_dump($cpsp2);
+
+//require '../vendor/autoload.php';
+//require '/home/pan/vendor/autoload.php';
+
 require_once('autoloadconfig.php');  //判断是否在线
 
 if($online){
@@ -86,46 +91,27 @@ for($spage = 0;$spage< $stotal;$spage++){
      */
 
 $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(16);  //列宽度
-$spreadsheet->getActiveSheet()->setCellValue('A1', 'Sample order no.');
+$spreadsheet->getActiveSheet()->setCellValue('A1', 'cpsno');
 
 $spreadsheet->getActiveSheet()->setCellValue('A2', 'sketch');
-$spreadsheet->getActiveSheet()->setCellValue('A3', 'Job no.：');
-$spreadsheet->getActiveSheet()->setCellValue('A4', 'Style no：');
-$spreadsheet->getActiveSheet()->setCellValue('A5', 'Shipment date：');
-$spreadsheet->getActiveSheet()->setCellValue('A6', 'style type');
-$spreadsheet->getActiveSheet()->setCellValue('A7', 'weight (kg)');
-//$spreadsheet->getActiveSheet()->setCellValue('A8', 'Fabric composition：');
-//$spreadsheet->getActiveSheet()->setCellValue('A9', 'Lining：');
-//$spreadsheet->getActiveSheet()->setCellValue('A10', 'Trim fabric：');
-//$spreadsheet->getActiveSheet()->setCellValue('A11', '物料：');
-//$spreadsheet->getActiveSheet()->setCellValue('A12', '訂布用料：');
-//$spreadsheet->getActiveSheet()->setCellValue('A13', '最新用料（Y/件）：');
-//$spreadsheet->getActiveSheet()->setCellValue('A14', '特殊工序：');
-$spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(100); //列高度
-    /**
-     * title
-     */
-    for($ti = 1 ;$ti<= 7; $ti++){
+$spreadsheet->getActiveSheet()->setCellValue('A3', 'Fty no.：');
+$spreadsheet->getActiveSheet()->setCellValue('A4', 'Job no.：');
+$spreadsheet->getActiveSheet()->setCellValue('A5', 'Style no：');
+$spreadsheet->getActiveSheet()->setCellValue('A6', 'Shipment date：');
+$spreadsheet->getActiveSheet()->setCellValue('A7', 'Net Weight(g)：');
+$spreadsheet->getActiveSheet()->setCellValue('A8', 'Fabric composition：');
+$spreadsheet->getActiveSheet()->setCellValue('A9', 'Lining：');
+$spreadsheet->getActiveSheet()->setCellValue('A10', 'Trim fabric：');
+$spreadsheet->getActiveSheet()->setCellValue('A11', '物料：');
+$spreadsheet->getActiveSheet()->setCellValue('A12', '訂布用料：');
+$spreadsheet->getActiveSheet()->setCellValue('A13', '最新用料（Y/件）：');
+$spreadsheet->getActiveSheet()->setCellValue('A14', '特殊工序：');
 
-        $spreadsheet->getActiveSheet()->getStyle('A'.$ti)->applyFromArray($styleArray1);
+
+    $spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(100); //列高度
+    for ($i = 6 ;$i <= 14 ; $i++){
+        $spreadsheet->getActiveSheet()->getRowDimension($i)->setRowHeight(32); //列高度
     }
-
-
-
-    for($ti = 1 ,$tin = 8 ;$ti<= count($cpsp2["title"] ); $ti++,$tin++){
-
-        $spreadsheet->getActiveSheet()->setCellValue('A'.$tin , $cpsp2["title"]['t'.$ti]);
-        $spreadsheet->getActiveSheet()->getRowDimension($tin)->setRowHeight(36); //列高度
-        $spreadsheet->getActiveSheet()->getStyle('A'.$tin)->getAlignment()->setWrapText(true);//自动换行
-        $spreadsheet->getActiveSheet()->getStyle('A'.$tin)->applyFromArray($styleArray1);
-    }
-
-    /*title*/
-
-
-//    for ($i = 6 ;$i <= 14 ; $i++){
-//        $spreadsheet->getActiveSheet()->getRowDimension($i)->setRowHeight(32); //列高度
-//    }
 
 
 
@@ -143,7 +129,6 @@ $spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(100); //列�
         $itemarr = json_decode(stripcslashes($cpsp2[$n][0]["item"]), true);
         $itemcol = (count($itemarr)/3);
         $maxitem =  ($maxitem >= $itemcol ? $maxitem : $itemcol ) ;
-
     }
 
 
@@ -153,73 +138,57 @@ $spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(100); //列�
         //$col = chr(97 + $x);
         $cola = chr(66 + ($lt * 3)); //66 =B;
         $colb = chr(67 + ($lt * 3)); //67 =C;
-        //$colc = chr(68 + ($lt * 3)); //68 =D;
+        $colc = chr(68 + ($lt * 3)); //68 =D;
         //echo '第一行'.$col.$i;
         $spreadsheet->getActiveSheet()->getColumnDimension($cola)->setWidth(16);  //列宽度
         $spreadsheet->getActiveSheet()->getColumnDimension($colb)->setWidth(16);  //列宽度
-        //$spreadsheet->getActiveSheet()->getColumnDimension($colc)->setWidth(16);  //列宽度
+        $spreadsheet->getActiveSheet()->getColumnDimension($colc)->setWidth(16);  //列宽度
 
-       $spreadsheet->getActiveSheet()->getStyle("{$cola}1:{$colb}1")->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->getStyle("{$cola}1:{$colc}1")->applyFromArray($styleArray1);
 
-        $spreadsheet->getActiveSheet()->mergeCells("{$cola}1:{$colb}1");
         $spreadsheet->getActiveSheet()->setCellValue($cola . '1', $cpsp2[$lan][0]["cpsno"]);
 //        $spreadsheet->getActiveSheet()->setCellValue($cola . '1', $n);
 //        $spreadsheet->getActiveSheet()->setCellValue($colb . '1', $nowprnum);
 //        $spreadsheet->getActiveSheet()->setCellValue($colc . '1', $lt);
 
-//
-//        $spreadsheet->getActiveSheet()->mergeCells("{$cola}2:{$colb}2");
+        $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colc}3")->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->mergeCells("{$cola}3:{$colc}3");
+        $spreadsheet->getActiveSheet()->setCellValue("{$cola}3", $cpsp2[$lan][0]["ftyno"]);
+        $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colc}3")->getAlignment()->setShrinkToFit(true);//缩小以适合
+
+        $spreadsheet->getActiveSheet()->getStyle("{$cola}4:{$colc}4")->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->mergeCells("{$cola}4:{$colc}4");
+        $spreadsheet->getActiveSheet()->setCellValue("{$cola}4", $cpsp2[$lan][0]["jobno"]);
+        $spreadsheet->getActiveSheet()->getStyle("{$cola}4:{$colc}4")->getAlignment()->setShrinkToFit(true);//缩小以适合
+
+        $spreadsheet->getActiveSheet()->getStyle("{$cola}5:{$colc}5")->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->mergeCells("{$cola}5:{$colc}5");
+        $spreadsheet->getActiveSheet()->setCellValue("{$cola}5", $cpsp2[$lan][0]["styleno"]);
+        $spreadsheet->getActiveSheet()->getStyle("{$cola}5:{$colc}5")->getAlignment()->setShrinkToFit(true);//缩小以适合
 
 
-
-//        $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colc}3")->applyFromArray($styleArray1);
-//        $spreadsheet->getActiveSheet()->mergeCells("{$cola}3:{$colc}3");
-//        $spreadsheet->getActiveSheet()->setCellValue("{$cola}3", $cpsp2[$lan][0]["ftyno"]);
-//        $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colc}3")->getAlignment()->setShrinkToFit(true);//缩小以适合
-
-        $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colb}3")->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->mergeCells("{$cola}3:{$colb}3");
-        $spreadsheet->getActiveSheet()->setCellValue("{$cola}3", $cpsp2[$lan][0]["jobno"]);
-        $spreadsheet->getActiveSheet()->getStyle("{$cola}3:{$colb}3")->getAlignment()->setShrinkToFit(true);//缩小以适合
-
-        $spreadsheet->getActiveSheet()->getStyle("{$cola}4:{$colb}4")->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->mergeCells("{$cola}4:{$colb}4");
-        $spreadsheet->getActiveSheet()->setCellValue("{$cola}4", $cpsp2[$lan][0]["styleno"]);
-        $spreadsheet->getActiveSheet()->getStyle("{$cola}4:{$colb}4")->getAlignment()->setShrinkToFit(true);//缩小以适合
-//
-//
         $fabarr = array();
-        $fabarr = json_decode($cpsp2[$lan][0]["fab"], true);
-        //var_dump($fabarr);
-//
-//        $itemarr = array();
-//        $itemarr = json_decode(stripcslashes($cpsp2[$lan][0]["item"]), true);
-//
+        $fabarr = json_decode(stripcslashes($cpsp2[$lan][0]["fab"]), true);
 
+        $itemarr = array();
+        $itemarr = json_decode(stripcslashes($cpsp2[$lan][0]["item"]), true);
 
-    for($t = 1,$l = 5 ;$t<=3;$t++,$l++){
+    for($t = 1,$l = 6;$t<=9;$t++,$l++){
 
-        $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}:{$colb}{$l}")->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->mergeCells("{$cola}{$l}:{$colb}{$l}");
+        $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}:{$colc}{$l}")->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->mergeCells("{$cola}{$l}:{$colc}{$l}");
         $spreadsheet->getActiveSheet()->setCellValue("{$cola}{$l}", $fabarr[$t]);
-        $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}:{$colb}{$l}")->getAlignment()->setShrinkToFit(true);//缩小以适合
+        $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}:{$colc}{$l}")->getAlignment()->setShrinkToFit(true);//缩小以适合
     }
-//
-//
-//
-//
+
+
+
+
 /* 图片标注*/
-//    $spreadsheet->getActiveSheet()->getStyle("{$cola}2:{$colb}2")->applyFromArray($styleArray1);
-//    $spreadsheet->getActiveSheet()->mergeCells("{$cola}2:{$colb}2");
-//    $spreadsheet->getActiveSheet()->setCellValue($cola.'2', $fabarr[0]);
-//    $spreadsheet->getActiveSheet()->getStyle("{$cola}2:{$colb}2")->getAlignment()->setShrinkToFit(true);//缩小以适合
-
-    /* textarea文字模块*/
-        $spreadsheet->getActiveSheet()->getCell("{$cola}2")->setValue($fabarr[0]);
-        $spreadsheet->getActiveSheet()->getStyle($cola.'2')->getAlignment()->setWrapText(true);  //在单元格中写入换行符“\ n”（ALT +“Enter”）
-        $spreadsheet->getActiveSheet()->getStyle($cola.'2')->applyFromArray($styleArray1);
-        /* 文字模块*//* 图片标注*/
-
+    $spreadsheet->getActiveSheet()->getStyle("{$colb}2:{$colc}2")->applyFromArray($styleArray1);
+    $spreadsheet->getActiveSheet()->mergeCells("{$colb}2:{$colc}2");
+    $spreadsheet->getActiveSheet()->setCellValue($colb.'2', $fabarr[0]);
+    $spreadsheet->getActiveSheet()->getStyle("{$colb}2:{$colc}2")->getAlignment()->setShrinkToFit(true);//缩小以适合
     /**
      * 图片模块
      */
@@ -283,71 +252,71 @@ $spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(100); //列�
 
 
         //$drawing->setCoordinates($cola.'2');
-        $drawing->setCoordinates($colb.'2');
+        $drawing->setCoordinates($cola.'2');
         $drawing->setOffsetX(5);
         $drawing->setOffsetY(5);
         $drawing->setWorksheet($spreadsheet->getActiveSheet());
     }
     /* 图片模块 */
 
-//
-//$thiscol = 15;  //当前行
-//    $itemcol = (count($itemarr)/3);
-//    if($itemcol != 0){
-//
-//        for($l= $thiscol,$t= 0;$l< ($thiscol + $itemcol);$l++ ,$t++){
-//
-//
-//            $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}")->applyFromArray($styleArray1);
-//            $spreadsheet->getActiveSheet()->getStyle("{$colb}{$l}")->applyFromArray($styleArray1);
-//            $spreadsheet->getActiveSheet()->getStyle("{$colc}{$l}")->applyFromArray($styleArray1);
-//
-//            $a = 0 + ($t * 3);
-//            $b = 1 + ($t * 3);
-//            $c = 2 + ($t * 3);
-//
-//            $spreadsheet->getActiveSheet()->setCellValue("{$cola}{$l}", $itemarr[$a]);
-//            $spreadsheet->getActiveSheet()->setCellValue("{$colb}{$l}", $itemarr[$b]);
-//            $spreadsheet->getActiveSheet()->setCellValue("{$colc}{$l}", $itemarr[$c]);
-//            //$spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}:{$colc}{$l}")->getAlignment()->setShrinkToFit(true);//缩小以适合
-//
-//        }
-//    }else{
-//        $itemcol = 0;
-//    }
-//
-//
-//
-//
-//    $thiscol = 15 + $maxitem ;//当前行
-//
-//        for($l= 15;$l < $thiscol;$l++) {  //填写样式
-//
-//
-//            $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}")->applyFromArray($styleArray1);
-//            $spreadsheet->getActiveSheet()->getStyle("{$colb}{$l}")->applyFromArray($styleArray1);
-//            $spreadsheet->getActiveSheet()->getStyle("{$colc}{$l}")->applyFromArray($styleArray1);
-//        }
-//
-//    $rearr = array('Remarks','Price');
-//    $itemcol = count($rearr);
-//
-//    for($l= $thiscol,$t= 0,$v = 5;$l< ($thiscol + 2);$l++ ,$t++,$v++){
-//
-//
-//        $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}")->applyFromArray($styleArray1);
-//        $spreadsheet->getActiveSheet()->getStyle("{$colb}{$l}")->applyFromArray($styleArray1);
-//        $spreadsheet->getActiveSheet()->getStyle("{$colc}{$l}")->applyFromArray($styleArray1);
-//
-//
-//        $b = 0 + ($v * 2);
-//        $c = 1 + ($v * 2);
-//
-//        $spreadsheet->getActiveSheet()->setCellValue("{$cola}{$l}", $rearr[$t]);
-//        $spreadsheet->getActiveSheet()->setCellValue("{$colb}{$l}", $fabarr[$b]);
-//        $spreadsheet->getActiveSheet()->setCellValue("{$colc}{$l}", $fabarr[$c]);
-//
-//    }
+
+$thiscol = 15;  //当前行
+    $itemcol = (count($itemarr)/3);
+    if($itemcol != 0){
+
+        for($l= $thiscol,$t= 0;$l< ($thiscol + $itemcol);$l++ ,$t++){
+
+
+            $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}")->applyFromArray($styleArray1);
+            $spreadsheet->getActiveSheet()->getStyle("{$colb}{$l}")->applyFromArray($styleArray1);
+            $spreadsheet->getActiveSheet()->getStyle("{$colc}{$l}")->applyFromArray($styleArray1);
+
+            $a = 0 + ($t * 3);
+            $b = 1 + ($t * 3);
+            $c = 2 + ($t * 3);
+
+            $spreadsheet->getActiveSheet()->setCellValue("{$cola}{$l}", $itemarr[$a]);
+            $spreadsheet->getActiveSheet()->setCellValue("{$colb}{$l}", $itemarr[$b]);
+            $spreadsheet->getActiveSheet()->setCellValue("{$colc}{$l}", $itemarr[$c]);
+            //$spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}:{$colc}{$l}")->getAlignment()->setShrinkToFit(true);//缩小以适合
+
+        }
+    }else{
+        $itemcol = 0;
+    }
+
+
+
+
+    $thiscol = 15 + $maxitem ;//当前行
+
+        for($l= 15;$l < $thiscol;$l++) {  //填写样式
+
+
+            $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}")->applyFromArray($styleArray1);
+            $spreadsheet->getActiveSheet()->getStyle("{$colb}{$l}")->applyFromArray($styleArray1);
+            $spreadsheet->getActiveSheet()->getStyle("{$colc}{$l}")->applyFromArray($styleArray1);
+        }
+
+    $rearr = array('Remarks','Price');
+    $itemcol = count($rearr);
+
+    for($l= $thiscol,$t= 0,$v = 5;$l< ($thiscol + 2);$l++ ,$t++,$v++){
+
+
+        $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}")->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->getStyle("{$colb}{$l}")->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->getStyle("{$colc}{$l}")->applyFromArray($styleArray1);
+
+
+        $b = 0 + ($v * 2);
+        $c = 1 + ($v * 2);
+
+        $spreadsheet->getActiveSheet()->setCellValue("{$cola}{$l}", $rearr[$t]);
+        $spreadsheet->getActiveSheet()->setCellValue("{$colb}{$l}", $fabarr[$b]);
+        $spreadsheet->getActiveSheet()->setCellValue("{$colc}{$l}", $fabarr[$c]);
+
+    }
 
 
 

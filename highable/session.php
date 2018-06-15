@@ -2,7 +2,7 @@
 session_start();
 
 
-$samplep1 =   $_SESSION['potem2'];
+$samplep1 =   $_SESSION['cpsp2'];
 var_dump($samplep1);
 
 
