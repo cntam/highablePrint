@@ -397,7 +397,7 @@ $spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(100); //列�
 //$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 $spreadsheet->setActiveSheetIndex(0);  //設置當前活動表
 
-//unset($_SESSION['cpsp2'] ); //注销SESSION
+unset($_SESSION['cpsp2'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。
