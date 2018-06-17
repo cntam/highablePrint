@@ -122,39 +122,41 @@ $spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(100); //列�
 
     /*title*/
 
-
-//    for ($i = 6 ;$i <= 14 ; $i++){
-//        $spreadsheet->getActiveSheet()->getRowDimension($i)->setRowHeight(32); //列高度
-//    }
-
-
-
-    if($spage == 0){
-        $nowprnum =  $prnum ;
-        $lan = 0;
-    }else{
-        $nowprnum =    $prnum  - (5 * $spage) ;
-        $lan = (5 * $spage);
-    }
-
-    $maxitem = 0;    //表格中 item 行数最大的数值是
-    for($q = 0,$n = $lan; $q<= $nowprnum ;$q++,$n++){
-        $itemarr = array();
-        $itemarr = json_decode(stripcslashes($cpsp2[$n][0]["item"]), true);
-        $itemcol = (count($itemarr)/3);
-        $maxitem =  ($maxitem >= $itemcol ? $maxitem : $itemcol ) ;
-
-    }
+            /*计算是否在本页*/
+        if($spage == 0){
+            $nowprnum =  $prnum ;
+            $lan = 0;
+        }else{
+            $nowprnum =    $prnum  - (5 * $spage) ;
+            $lan = (5 * $spage);
+        }
 
 
+        $maxitem = 0;    //表格中 item 行数最大的数值是
+        for($q = 0,$n = $lan; $q<= $nowprnum ;$q++,$n++){
+            $itemarr = array();
+            $itemarr = json_decode(stripcslashes($cpsp2[$n][0]["item"]), true);
+
+            $itemcol = (count($itemarr)/3);
+            $maxitem =  ($maxitem >= $itemcol ? $maxitem : $itemcol ) ;
+
+        }
+        /*计算是否在本页*/
+
+    /**
+     * B&C  list
+     */
 
     for($lt = 0; $lt <= $nowprnum ; $lt++,$lan++) {
         $lad = $lan + $maxnum + 1;
         //$col = chr(97 + $x);
-        $cola = chr(66 + ($lt * 3)); //66 =B;
-        $colb = chr(67 + ($lt * 3)); //67 =C;
+        $cola = chr(66 + ($lt * 2)); //66 =B;
+        $colb = chr(67 + ($lt * 2)); //67 =C;
         //$colc = chr(68 + ($lt * 3)); //68 =D;
         //echo '第一行'.$col.$i;
+
+        $thiscol = 8;
+
         $spreadsheet->getActiveSheet()->getColumnDimension($cola)->setWidth(16);  //列宽度
         $spreadsheet->getActiveSheet()->getColumnDimension($colb)->setWidth(16);  //列宽度
         //$spreadsheet->getActiveSheet()->getColumnDimension($colc)->setWidth(16);  //列宽度
@@ -190,145 +192,178 @@ $spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(100); //列�
 //
         $fabarr = array();
         $fabarr = json_decode($cpsp2[$lan][0]["fab"], true);
-        //var_dump($fabarr);
-//
-//        $itemarr = array();
-//        $itemarr = json_decode(stripcslashes($cpsp2[$lan][0]["item"]), true);
-//
+
+        /* 图片标注*/
 
 
-    for($t = 1,$l = 5 ;$t<=3;$t++,$l++){
-
-        $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}:{$colb}{$l}")->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->mergeCells("{$cola}{$l}:{$colb}{$l}");
-        $spreadsheet->getActiveSheet()->setCellValue("{$cola}{$l}", $fabarr[$t]);
-        $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}:{$colb}{$l}")->getAlignment()->setShrinkToFit(true);//缩小以适合
-    }
-//
-//
-//
-//
-/* 图片标注*/
-//    $spreadsheet->getActiveSheet()->getStyle("{$cola}2:{$colb}2")->applyFromArray($styleArray1);
-//    $spreadsheet->getActiveSheet()->mergeCells("{$cola}2:{$colb}2");
-//    $spreadsheet->getActiveSheet()->setCellValue($cola.'2', $fabarr[0]);
-//    $spreadsheet->getActiveSheet()->getStyle("{$cola}2:{$colb}2")->getAlignment()->setShrinkToFit(true);//缩小以适合
-
-    /* textarea文字模块*/
+        /* textarea文字模块*/
         $spreadsheet->getActiveSheet()->getCell("{$cola}2")->setValue($fabarr[0]);
         $spreadsheet->getActiveSheet()->getStyle($cola.'2')->getAlignment()->setWrapText(true);  //在单元格中写入换行符“\ n”（ALT +“Enter”）
         $spreadsheet->getActiveSheet()->getStyle($cola.'2')->applyFromArray($styleArray1);
         /* 文字模块*//* 图片标注*/
 
-    /**
-     * 图片模块
-     */
+        /**
+         * 图片模块
+         */
 
-    $img = $cpsp2[$lan][0]["remarkimg2"];
-    if ($img == '') {
-        $haveimg = false;  //没有图片
+        $img = $cpsp2[$lan][0]["remarkimg2"];
+        if ($img == '') {
+            $haveimg = false;  //没有图片
 
-    } else {
-
-        $path = $img;
-        $pathinfo = pathinfo($path);
-        //echo "扩展名：$pathinfo[extension]";
-
-        if ($pathinfo["extension"] == 'pdf') {
-
-            $img = pdficon();
-            $haveimg = true;
         } else {
-            $haveimg = true;
+
+            $path = $img;
+            $pathinfo = pathinfo($path);
+            //echo "扩展名：$pathinfo[extension]";
+
+            if ($pathinfo["extension"] == 'pdf') {
+
+                $img = pdficon();
+                $haveimg = true;
+            } else {
+                $haveimg = true;
+            }
         }
-    }
 
 
-    if ($haveimg){
-        preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
-        $imgformat = $imgformat[1];
-        switch ($imgformat)
-        {
-            case "jpg":
-            case "jpeg":
-                $img = imagecreatefromjpeg($img);
-                break;
-            case "bmp":
-                $img =  imagecreatefromwbmp($img);
-                break;
-            case "gif":
-                $img =  imagecreatefromgif($img);
-                break;
-            case "png":
-                $img =   imagecreatefrompng($img);
-                break;
-        }
-        $width = imagesx($img);
-        $height = imagesy($img);
+        if ($haveimg){
+            preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+            $imgformat = $imgformat[1];
+            switch ($imgformat)
+            {
+                case "jpg":
+                case "jpeg":
+                    $img = imagecreatefromjpeg($img);
+                    break;
+                case "bmp":
+                    $img =  imagecreatefromwbmp($img);
+                    break;
+                case "gif":
+                    $img =  imagecreatefromgif($img);
+                    break;
+                case "png":
+                    $img =   imagecreatefrompng($img);
+                    break;
+            }
+            $width = imagesx($img);
+            $height = imagesy($img);
 
 
 // Add a drawing to the worksheet
-        $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-        $drawing->setName('img');
-        $drawing->setDescription('img');
+            $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+            $drawing->setName('img');
+            $drawing->setDescription('img');
 //$drawing->setImageResource($gdImage);
-        $drawing->setImageResource($img);
-        $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-        $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+            $drawing->setImageResource($img);
+            $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+            $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-        $drawing->setWidth($width>120 ? 120:$width);
-        //$drawing->setHeight($height>130 ? 130:$height);
+            $drawing->setWidth($width>120 ? 120:$width);
+            //$drawing->setHeight($height>130 ? 130:$height);
 //$drawing->setHeight(150);
 
 
-        //$drawing->setCoordinates($cola.'2');
-        $drawing->setCoordinates($colb.'2');
-        $drawing->setOffsetX(5);
-        $drawing->setOffsetY(5);
-        $drawing->setWorksheet($spreadsheet->getActiveSheet());
-    }
-    /* 图片模块 */
+            //$drawing->setCoordinates($cola.'2');
+            $drawing->setCoordinates($colb.'2');
+            $drawing->setOffsetX(5);
+            $drawing->setOffsetY(5);
+            $drawing->setWorksheet($spreadsheet->getActiveSheet());
+        }
+        /* 图片模块 */
 
-//
-//$thiscol = 15;  //当前行
-//    $itemcol = (count($itemarr)/3);
-//    if($itemcol != 0){
-//
-//        for($l= $thiscol,$t= 0;$l< ($thiscol + $itemcol);$l++ ,$t++){
-//
-//
-//            $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}")->applyFromArray($styleArray1);
-//            $spreadsheet->getActiveSheet()->getStyle("{$colb}{$l}")->applyFromArray($styleArray1);
-//            $spreadsheet->getActiveSheet()->getStyle("{$colc}{$l}")->applyFromArray($styleArray1);
-//
-//            $a = 0 + ($t * 3);
-//            $b = 1 + ($t * 3);
-//            $c = 2 + ($t * 3);
-//
-//            $spreadsheet->getActiveSheet()->setCellValue("{$cola}{$l}", $itemarr[$a]);
-//            $spreadsheet->getActiveSheet()->setCellValue("{$colb}{$l}", $itemarr[$b]);
-//            $spreadsheet->getActiveSheet()->setCellValue("{$colc}{$l}", $itemarr[$c]);
-//            //$spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}:{$colc}{$l}")->getAlignment()->setShrinkToFit(true);//缩小以适合
-//
-//        }
-//    }else{
-//        $itemcol = 0;
-//    }
-//
-//
-//
-//
-//    $thiscol = 15 + $maxitem ;//当前行
-//
-//        for($l= 15;$l < $thiscol;$l++) {  //填写样式
-//
-//
-//            $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}")->applyFromArray($styleArray1);
-//            $spreadsheet->getActiveSheet()->getStyle("{$colb}{$l}")->applyFromArray($styleArray1);
-//            $spreadsheet->getActiveSheet()->getStyle("{$colc}{$l}")->applyFromArray($styleArray1);
-//        }
-//
+    for($t = 1,$l = 5 ;$t<=3;$t++,$l++){
+
+        $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}:{$colb}{$l}")->applyFromArray($styleArray1);
+        //$spreadsheet->getActiveSheet()->mergeCells("{$cola}{$l}:{$colb}{$l}");
+        $spreadsheet->getActiveSheet()->setCellValue("{$cola}{$l}", $fabarr[$t]);
+        $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}:{$colb}{$l}")->getAlignment()->setShrinkToFit(true);//缩小以适合
+    }
+
+    $spreadsheet->getActiveSheet()->getStyle("{$colb}6:{$colb}7")->applyFromArray($styleArray1);
+    $spreadsheet->getActiveSheet()->mergeCells("{$colb}6:{$colb}7");
+    $spreadsheet->getActiveSheet()->setCellValue($colb.'6', $fabarr[0]);
+    $spreadsheet->getActiveSheet()->getStyle("{$colb}6:{$colb}7")->getAlignment()->setShrinkToFit(true);//缩小以适合
+
+        $barr = array();
+        $barr = json_decode($cpsp2[$lan][0]["blist"], true);
+
+        $carr = array();
+        $carr = json_decode($cpsp2[$lan][0]["clist"], true);
+
+        for($t = 0,$l = 8 ;$t< count($barr);$t++,$l++){
+
+            if($l<=12){
+                $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}:{$colb}{$l}")->applyFromArray($styleArray1);
+                $spreadsheet->getActiveSheet()->mergeCells("{$cola}{$l}:{$colb}{$l}");
+                $spreadsheet->getActiveSheet()->setCellValue("{$cola}{$l}", $barr[$t]);
+                $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}:{$colb}{$l}")->getAlignment()->setShrinkToFit(true);//缩小以适合
+            }else{
+                $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}")->applyFromArray($styleArray1);
+                $spreadsheet->getActiveSheet()->setCellValue("{$cola}{$l}", $barr[$t]);
+                $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}")->getAlignment()->setShrinkToFit(true);//缩小以适合
+                /*C列数据*/
+                $spreadsheet->getActiveSheet()->getStyle("{$colb}{$l}")->applyFromArray($styleArray1);
+                $spreadsheet->getActiveSheet()->setCellValue("{$colb}{$l}", $carr[$t]);
+                $spreadsheet->getActiveSheet()->getStyle("{$colb}{$l}")->getAlignment()->setShrinkToFit(true);//缩小以适合
+            }
+
+        }
+
+        /*B&C*/
+
+        /**
+         * itemcol
+         */
+
+        $itemarr = array();
+        $itemarr = json_decode($cpsp2[$lan][0]["item"], true);
+
+        $itemcol = (count($itemarr)/3);
+        //$spreadsheet->getActiveSheet()->setCellValue("A40", $itemcol);
+
+    $startcol = $thiscol + count($barr);  //当前行
+    if($itemcol != 0){
+
+        for($l = $startcol, $t= 0;$l< ($startcol + $itemcol);$l++ ,$t++){
+
+            if($lan == 0){
+                /*title*/
+                $spreadsheet->getActiveSheet()->getStyle("A{$l}")->applyFromArray($styleArray1);
+                $c = 0 + ($t * 3);
+                $spreadsheet->getActiveSheet()->setCellValue("A{$l}", $itemarr[$c]);
+                /*title*/
+            }
+
+
+            $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}")->applyFromArray($styleArray1);
+            $spreadsheet->getActiveSheet()->getStyle("{$colb}{$l}")->applyFromArray($styleArray1);
+
+            $a = 1 + ($t * 3);
+            $b = 2 + ($t * 3);
+
+            $spreadsheet->getActiveSheet()->setCellValue("{$cola}{$l}", $itemarr[$a]);
+            $spreadsheet->getActiveSheet()->setCellValue("{$colb}{$l}", $itemarr[$b]);
+
+
+            //$spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}:{$colc}{$l}")->getAlignment()->setShrinkToFit(true);//缩小以适合
+
+        }
+    }else{
+        $itemcol = 0;
+    }
+
+
+    $itemcolstyle = $startcol + $maxitem ;//当前行
+
+        for($l= $startcol ; $l < $itemcolstyle ;$l++) {  //填写样式
+
+            $spreadsheet->getActiveSheet()->getStyle("A{$l}")->applyFromArray($styleArray1);
+            $spreadsheet->getActiveSheet()->getStyle("{$cola}{$l}")->applyFromArray($styleArray1);
+            $spreadsheet->getActiveSheet()->getStyle("{$colb}{$l}")->applyFromArray($styleArray1);
+
+        }
+
 //    $rearr = array('Remarks','Price');
 //    $itemcol = count($rearr);
 //
