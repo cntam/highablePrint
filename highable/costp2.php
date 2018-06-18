@@ -57,24 +57,6 @@ $styleArray1 = [
 
 
 
-//合并/取消合并单元格
-//$spreadsheet->getActiveSheet()->mergeCells("B1:C1");
-//$spreadsheet->getActiveSheet()->mergeCells("B2:C2");
-//$spreadsheet->getActiveSheet()->mergeCells("B3:C3");
-//$spreadsheet->getActiveSheet()->mergeCells("B4:C11");
-//for ($i = 12;$i<41;$i++){
-//    $spreadsheet->getActiveSheet()->mergeCells("B{$i}:C{$i}");
-//    $spreadsheet->getActiveSheet()->getStyle("B{$i}:C{$i}")->applyFromArray($styleArray1);
-//}
-//$spreadsheet->getActiveSheet()->mergeCells("A4:A11");
-//$spreadsheet->getActiveSheet()->mergeCells("B4:C11");
-
-
-
-
-
-
-
 
 $styleArray = [
     
@@ -106,19 +88,54 @@ $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(70);  //列宽
 $spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(36); //列高度
 $spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(100); //列高度
 
-$daftitle=array("CLIENT:","Sketch","Style no.：");
-$daftitlenum = count($daftitle);
-for ($j=0,$k = 1,$v =1 ;$j<$daftitlenum;$j++,$k++){
+//$daftitle=array("CLIENT:","Sketch","Style no.：");
+//$daftitlenum = count($daftitle);
+//for ($j=0,$k = 1,$v =1 ;$j<$daftitlenum;$j++,$k++){
+//
+//    $spreadsheet->getActiveSheet()->setCellValue("A{$k}", $daftitle[$j]);
+//    $spreadsheet->getActiveSheet()->getStyle("A{$k}")->applyFromArray($styleArray);
+//    $spreadsheet->getActiveSheet()->getStyle("A{$k}")->getAlignment()->setWrapText(true);
+//
+//
+//
+//}
 
-    $spreadsheet->getActiveSheet()->setCellValue("A{$k}", $daftitle[$j]);
-    $spreadsheet->getActiveSheet()->getStyle("A{$k}")->applyFromArray($styleArray);
-    $spreadsheet->getActiveSheet()->getStyle("A{$k}")->getAlignment()->setWrapText(true);
+$spreadsheet->getActiveSheet()->setCellValue("A1", 'CLIENT:');
+$spreadsheet->getActiveSheet()->getStyle("A1")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("A1")->getAlignment()->setWrapText(true);
+
+$spreadsheet->getActiveSheet()->setCellValue("A2", 'Sketch');
+$spreadsheet->getActiveSheet()->getStyle("A2:A8")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("A2:A8")->getAlignment()->setWrapText(true);
+
+$spreadsheet->getActiveSheet()->setCellValue("A9", 'Style no.：');
+$spreadsheet->getActiveSheet()->getStyle("A9")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("A9")->getAlignment()->setWrapText(true);
+$spreadsheet->getActiveSheet()->getStyle("B2:B8")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B9")->applyFromArray($styleArray);
 
 
+$spreadsheet->getActiveSheet()->setCellValue("B1", $costp2["costname"][0]);
+$spreadsheet->getActiveSheet()->getStyle("B1")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B1")->getAlignment()->setWrapText(true);
 
-}
+$spreadsheet->getActiveSheet()->setCellValue("C1", $costp2["costdata"]['cd1'][0]);
+$spreadsheet->getActiveSheet()->getStyle("C1")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("C1")->getAlignment()->setWrapText(true);
 
 
+$spreadsheet->getActiveSheet()->setCellValue("C2", $costp2["costdata"]['cd2'][0]);
+$spreadsheet->getActiveSheet()->getStyle("C2:C8")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("C2:C8")->getAlignment()->setWrapText(true);
+
+$spreadsheet->getActiveSheet()->mergeCells("C4:C6");
+$spreadsheet->getActiveSheet()->setCellValue("C4", $costp2["costdata"]['cd3'][0]);
+
+$spreadsheet->getActiveSheet()->getStyle("C4")->getAlignment()->setWrapText(true);
+
+$spreadsheet->getActiveSheet()->setCellValue("C8", $costp2["costdata"]['cd4'][0]);
+$spreadsheet->getActiveSheet()->getStyle("C9")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("C8")->getAlignment()->setWrapText(true);
 
 /**
  * 图片模块
@@ -177,7 +194,7 @@ if ($haveimg){
     $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-    $drawing->setWidth($width>120 ? 120:$width);
+    $drawing->setWidth($width>250 ? 250:$width);
     //$drawing->setHeight($height>130 ? 130:$height);
 //$drawing->setHeight(150);
 
