@@ -180,7 +180,7 @@ for($b = 1 ; $b<= $intem1["remark"]["crrnum"] ; $b++ ){
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-//unset($_SESSION['shipp1'] ); //注销SESSION
+unset($_SESSION['invoiceTem1'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。

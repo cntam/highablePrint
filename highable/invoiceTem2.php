@@ -141,7 +141,7 @@ $nowcol = 18;
 //
 //$nowcol++;
 //
-for($x = 0 ,$c = 1; $x <= $intem2["invoiceform"]["formnum"]; $x++ ,$c++){
+for($x = 0 ,$c = 1; $c <= $intem2["invoiceform"]["formnum"]; $x++ ,$c++){
 
 $f18 = 18 + 4 * $x;
 $f19 = 19 + 4 * $x;
@@ -201,8 +201,10 @@ $spreadsheet->getActiveSheet()->getCell('D'.$nowcol)->setValue($intem2["remark"]
 $spreadsheet->getActiveSheet()->getStyle("D{$nowcol}:F{$nowcol}")->applyFromArray($styleArray1);
 
 $nowcol++;
+
 $spreadsheet->getActiveSheet()->getCell('C'.$nowcol)->setValue('ORIGIN OF PAYMENT:');
 $spreadsheet->getActiveSheet()->getStyle('C'.$nowcol)->applyFromArray($styleArraysize6);
+
 $spreadsheet->getActiveSheet()->mergeCells("D{$nowcol}:F{$nowcol}");
 $spreadsheet->getActiveSheet()->getCell('D'.$nowcol)->setValue($intem2["remark"]["c3"]);
 $spreadsheet->getActiveSheet()->getStyle("D{$nowcol}:F{$nowcol}")->applyFromArray($styleArray1);
@@ -210,6 +212,8 @@ $spreadsheet->getActiveSheet()->getStyle("D{$nowcol}:F{$nowcol}")->applyFromArra
 $nowcol++;
 $now3 = $nowcol+3;
 $spreadsheet->getActiveSheet()->getCell('C'.$nowcol)->setValue('TERMS OF PAYMENT:');
+$spreadsheet->getActiveSheet()->getStyle('C'.$nowcol)->applyFromArray($styleArraysize6);
+
 $spreadsheet->getActiveSheet()->mergeCells("D{$nowcol}:F{$now3}");
 $spreadsheet->getActiveSheet()->getCell('D'.$nowcol)->setValue($intem2["remark"]["c4"]);
 $spreadsheet->getActiveSheet()->getStyle("D{$nowcol}:F{$nowcol}")->applyFromArray($styleArray1);
@@ -249,7 +253,7 @@ $spreadsheet->getActiveSheet()->getPageSetup()
     ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);//打印橫向 A4
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-//unset($_SESSION['shipp1'] ); //注销SESSION
+unset($_SESSION['invoiceTem2'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。
