@@ -197,7 +197,7 @@ $spreadsheet->getActiveSheet()->setCellValue('I'.$nowcol, $potem11["remark"]["c4
 //
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 //
-//unset($_SESSION['potem11'] ); //注销SESSION
+unset($_SESSION['potem11'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。
