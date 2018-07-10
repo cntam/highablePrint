@@ -107,10 +107,10 @@ $styleArraybu = [
 
 //填数据
 $spreadsheet->getActiveSheet()->setCellValue('B7', $potem10["tosb"]);
-$spreadsheet->getActiveSheet()->setCellValue('F7', $potem10["podate"]);
+//$spreadsheet->getActiveSheet()->setCellValue('F7', $potem10["podate"]);
 
 
-$toaddr = array('B6','A10','B10','E10','F10','H10','I10','J10','K10','B12','C12','D12','E12','F12','G12','H12','I12','J13','K12','K13','J5');
+$toaddr = array('B6','J5','A10','B10','E10','F10','H10','I10','J10','K10','B12','C12','D12','E12','F12','G12','H12','I12','J13','K12','K13');
 
     for($i = 1,$y = 0; $i <= count($toaddr) ; $i++ ,$y++){
 
@@ -121,9 +121,9 @@ $toaddr = array('B6','A10','B10','E10','F10','H10','I10','J10','K10','B12','C12'
 
 //中部form
 
-$nowcol = 12;
+$nowcol = 13;
 //$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:F{$nowcol}");
-$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, 'PO NO: '.$potem10["orderform"]["midpono"].'   注：請在開發票時把“PONO”寫上，不可重復，并且寫上制單號）');
+//$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, 'PO NO: '.$potem10["orderform"]["midpono"].'   注：請在開發票時把“PONO”寫上，不可重復，并且寫上制單號）');
 //$spreadsheet->getActiveSheet()->setCellValue('I'.$nowcol, $potem10["invoiceform"]["amout"]);
 
 
@@ -144,29 +144,30 @@ $formarr = array('A'.$f19,'B'.$f19,'C'.$f19,'D'.$f19,'E'.$f19,'F'.$f19,'G'.$f19,
     $nowcol = 13  +   1 * $c;
 
 
-    if($x >1){
+    if($c >3){
         $spreadsheet->getActiveSheet()->insertNewRowBefore($nowcol, 1);
     }
 
 }
-//$nowcol = $potem10["orderform"]["formnum"] > 2 ? ($nowcol + 1) : 18;
-////$spreadsheet->getActiveSheet()->getCell('A1')->setValue($nowcol); 貨送以下地址
-////$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-////$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, '貨送以下地址');
-////$nowcol++;
-//
-////$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-//$spreadsheet->getActiveSheet()->setCellValue('B'.$nowcol, $potem10["remark"]["c1"]);
+$nowcol = $potem10["orderform"]["formnum"] > 3 ? ($nowcol + 2) : 18;
+//$spreadsheet->getActiveSheet()->getCell('A1')->setValue($nowcol); 貨送以下地址
+//$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
+//$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, '貨送以下地址');
 //$nowcol++;
-//
-////$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-//$spreadsheet->getActiveSheet()->setCellValue('B'.$nowcol, $potem10["remark"]["c2"]);
-//$nowcol++;
-////$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-//$spreadsheet->getActiveSheet()->setCellValue('E'.$nowcol, $potem10["remark"]["c3"]);
-//$nowcol++;
-//
-//$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, $potem10["remark"]["c4"]);
+
+//$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
+$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, '送货地址：'.$potem10["remark"]["c1"]);
+
+
+//$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
+$spreadsheet->getActiveSheet()->setCellValue('F'.$nowcol, $potem10["remark"]["c2"]);
+
+//$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
+$spreadsheet->getActiveSheet()->setCellValue('J'.$nowcol, $potem10["remark"]["c3"]);
+$nowcol++;
+$nowcol++;
+$spreadsheet->getActiveSheet()->setCellValue('B'.$nowcol, $potem10["remark"]["c4"]);
+$spreadsheet->getActiveSheet()->setCellValue('J'.$nowcol, $potem10["remark"]["c5"]);
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 

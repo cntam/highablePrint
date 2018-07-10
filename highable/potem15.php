@@ -127,37 +127,37 @@ for($i = 1,$y = 0; $i <= count($toaddr) ; $i++ ,$y++){
 //
 //
 ////中部form
-//
-//$nowcol = 14;
-////////$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:F{$nowcol}");
+
+//$nowcol = 24;
+//////$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:F{$nowcol}");
 //$spreadsheet->getActiveSheet()->setCellValue('B'.$nowcol, $potem15["orderform"]["midpono"]);
-////////$spreadsheet->getActiveSheet()->setCellValue('I'.$nowcol, $potem15["invoiceform"]["amout"]);
-////
-////
-//for($x = 0 ,$c = 1; $c <= $potem15["orderform"]["formnum"]; $x++ ,$c++){
+//////$spreadsheet->getActiveSheet()->setCellValue('I'.$nowcol, $potem15["invoiceform"]["amout"]);
 //
-//$f19 = 15 + 1 * $x;
 //
+for($x = 0 ,$c = 1; $c <= $potem15["orderform"]["formnum"]; $x++ ,$c++){
+
+$f19 = 24 + 1 * $x;
+
 //    $spreadsheet->getActiveSheet()->mergeCells("A{$f19}:B{$f19}");
 //    $spreadsheet->getActiveSheet()->mergeCells("C{$f19}:G{$f19}");
-//
-//
-//$formarr = array('A'.$f19,'C'.$f19);
-//
-//    for($i = 1,$y = 0; $i <= $potem15["orderform"]["brrnum"] ; $i++ ,$y++){
-//
-//        $sheet->setCellValue($formarr[$y],  $potem15["orderform"]['b'.$i][$x]);
-//
-//    }
-//
-//    $nowcol = 15  +  1 * $c;
-//
-//
-//    if($x >4){
-//        $spreadsheet->getActiveSheet()->insertNewRowBefore($nowcol, 1);
-//    }
-//
-//}
+
+
+$formarr = array('A'.$f19,'B'.$f19,'C'.$f19,'D'.$f19);
+
+    for($i = 1,$y = 0; $i <= $potem15["orderform"]["brrnum"] ; $i++ ,$y++){
+
+        $sheet->setCellValue($formarr[$y],  $potem15["orderform"]['b'.$i][$x]);
+
+    }
+
+    $nowcol = 24  +  1 * $c;
+
+
+    if($x >15){
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($nowcol, 1);
+    }
+
+}
 //$nowcol = $potem15["orderform"]["formnum"] > 4 ? ($nowcol + 1) : 21;
 //$spreadsheet->getActiveSheet()->setCellValue('C'.$nowcol, $potem15["toaddr"]["a5"]);
 //$nowcol++;
