@@ -1,7 +1,13 @@
 <?php
 session_start();
-//require '../vendor/autoload.php';
-require '/home/pan/vendor/autoload.php';
+require_once('autoloadconfig.php');  //判断是否在线
+
+if($online){
+    require_once '/home/pan/vendor/autoload.php';
+
+}else{
+    require_once '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
+}
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -59,37 +65,41 @@ $sheet->setCellValue('P2',  $productp4['department']);
 $sheet->setCellValue('P3',  $productp4['findate']);
 $sheet->setCellValue('R3',  $productp4['trans']);
 
-$sheet->setCellValue('I4',  $productp4['a1']["a1"]);
-$sheet->setCellValue('M4',  $productp4['a1']["a2"]);
+$sheet->setCellValue('I4',  $productp4['large']['o0']);
+$sheet->setCellValue('M4',  $productp4['large']['o1']);
 
-$formnuma= $productp4["formnum"] +6;
-for($i = 6,$a = 0; $i<$formnuma  ;$i++){
-    if($formnuma>12 && $i>11 ){
-        $y = $i;
-        $spreadsheet->getActiveSheet()->insertNewRowBefore($y, 1);
+$sheet->setCellValue("B5", $productp4['ct'][13]);
+$sheet->setCellValue("D5", $productp4['ct'][14]);
+$sheet->setCellValue("F5", $productp4['ct'][15]);
+$sheet->setCellValue("H5", $productp4['ct'][16]);
+$sheet->setCellValue("J5", $productp4['ct'][17]);
+$sheet->setCellValue("L5", $productp4['ct'][18]);
+$sheet->setCellValue("N5", $productp4['ct'][19]);
+$sheet->setCellValue("P5", $productp4['ct'][20]);
+
+
+
+$formarr = array('A','B','D','F','H','J','L','N','P','R','S');
+for($x = 0 ,$c = 1; $c <= count($formarr); $x++ ,$c++){
+    $f19 = 6;
+    for($i = 1,$y = 0; $i <= $productp4["formnumb"] ; $i++ ,$y++){
+        $sheet->setCellValue($formarr[$x].$f19,  $productp4['large']['c'.$c][$y]);
+        $f19++;
 
     }
-
-    $sheet->setCellValue("A{$i}", $productp4['a1']["b" . $a][0]);
-    $sheet->setCellValue("B{$i}", $productp4['a1']["c". $a][0]);
-    $sheet->setCellValue("D{$i}", $productp4['a1']["d". $a][0]);
-    $sheet->setCellValue("F{$i}", $productp4['a1']["e". $a][0]);
-    $sheet->setCellValue("H{$i}", $productp4['a1']["f". $a][0]);
-    $sheet->setCellValue("J{$i}", $productp4['a1']["g". $a][0]);
-    $sheet->setCellValue("L{$i}", $productp4['a1']["h". $a][0]);
-    $sheet->setCellValue("N{$i}", $productp4['a1']["i". $a][0]);
-    $sheet->setCellValue("P{$i}", $productp4['a1']["j". $a][0]);
-    $sheet->setCellValue("R{$i}", $productp4['a1']["k". $a][0]);
-    $sheet->setCellValue("S{$i}", $productp4['a1']["l". $a][0]);
-
-    for ($v = 0; $v < 19; $v++) {
-        $col = chr(97 + $v);
-        $spreadsheet->getActiveSheet()->getStyle($col.$i)->applyFromArray($styleArray1);
-    }
-
-    $a++;
-
 }
+
+
+for($x = 0 ,$c = 1; $c <= 19; $x++ ,$c++){
+    $f19 = 6;
+    for($i = 1,$y = 0; $i <= $productp4["formnumb"] ; $i++ ,$y++){
+        $col = chr(97 + $x);
+        $spreadsheet->getActiveSheet()->getStyle($col.$f19)->applyFromArray($styleArray1);
+        $f19++;
+    }
+}
+
+
 $spreadsheet->getActiveSheet()->getPageSetup()
     ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE); //打印橫向
 $spreadsheet->getActiveSheet()->getPageSetup()
@@ -97,7 +107,7 @@ $spreadsheet->getActiveSheet()->getPageSetup()
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 unset($_SESSION['productp4'] ); //注销SESSION
 
-$output=  ($_GET['action'] == 'formprint' )? 1:0;
+$output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。
 $filenameout = 'productp4out'.$nt.'.xlsx';
 if($output){

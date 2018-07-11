@@ -88,10 +88,7 @@ $sheet->setCellValue("D".++$listrow , $productp1['ctdate']);
 $spreadsheet->getActiveSheet()->getStyle("A".++$listrow)->getAlignment()->setWrapText(true);
 //$sheet->setCellValue("A".$listrow, '办布如下:'.str_replace('\"', "", htmlspecialchars_decode($productp1['fab1']))); //款式图
 
-/*
-$html1 = str_replace('\"', "", htmlspecialchars_decode($productp1['fab1'])) ;
-//$html1 = '办布如下:<b><font size=5>這可怎麼辦？</font></b><div><b><font size=5><strike>很尷尬是吧？</strike></font></b></div><div><b><font size=5><u>就這樣定吧</u></font></b></div>';
-*/
+
 
 $wizard = new HtmlHelper();
 $html1 = str_replace('\"', "", htmlspecialchars_decode($productp1['fab1'])) ;
