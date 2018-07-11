@@ -1,7 +1,14 @@
 <?php
 session_start();
-//require '../vendor/autoload.php';
-require '/home/pan/vendor/autoload.php';
+require_once('autoloadconfig.php');  //判断是否在线
+
+if($online){
+    require_once '/home/pan/vendor/autoload.php';
+
+}else{
+    require_once '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
+}
+require_once ('img.php');
 
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -178,7 +185,7 @@ $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作�
 
 unset($_SESSION['productp2'] ); //注销SESSION
 
-$output=  ($_GET['action'] == 'formprint' )? 1:0;
+$output=  ($_GET['action'] == 'formdown' )? 1:0;
 //$output= 1;
 $nt = date("YmdHis",time()); //转换为日期。
 $filenameout = 'productp2out'.$nt.'.xlsx';

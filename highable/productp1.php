@@ -28,6 +28,16 @@ $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/productp1.
 $sheet = $spreadsheet->getActiveSheet();
 $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft YaHei');
 $spreadsheet->getDefaultStyle()->getFont()->setSize(8);
+$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(8);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(8);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(8);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(8);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(8);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(8);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(8);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(8);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(8);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(8);  //列宽度
 
 $sheet->setCellValue('C2',  $productp1['guest']);
 $sheet->setCellValue('C3',  $productp1['billdate']);
@@ -36,6 +46,17 @@ $sheet->setCellValue('H3',  $productp1['styleno']);
 $sheet->setCellValue('L2',  $productp1['department']);
 $sheet->setCellValue('L3',  $productp1['findate']);
 $sheet->setCellValue('M3',  $productp1['trans']);
+
+
+$sheet->setCellValue("C5", $productp1['ct'][5]);
+$sheet->setCellValue("D5", $productp1['ct'][6]);
+$sheet->setCellValue("E5", $productp1['ct'][7]);
+$sheet->setCellValue("F5", $productp1['ct'][8]);
+$sheet->setCellValue("G5", $productp1['ct'][9]);
+$sheet->setCellValue("H5", $productp1['ct'][10]);
+$sheet->setCellValue("I5", $productp1['ct'][11]);
+$sheet->setCellValue("J5", $productp1['ct'][12]);
+
 
 $formnuma= $productp1["formnum"] +7;
 for($i = 7,$a = 0; $i<$formnuma  ;$i++){
@@ -86,8 +107,6 @@ $sheet->setCellValue("C".$listrow , $productp1['weight']);
 $sheet->setCellValue("D".++$listrow , $productp1['ctdate']);
 
 $spreadsheet->getActiveSheet()->getStyle("A".++$listrow)->getAlignment()->setWrapText(true);
-//$sheet->setCellValue("A".$listrow, '办布如下:'.str_replace('\"', "", htmlspecialchars_decode($productp1['fab1']))); //款式图
-
 
 
 $wizard = new HtmlHelper();
@@ -96,20 +115,7 @@ $richText = $wizard->toRichTextObject($html1);
 
 $spreadsheet->getActiveSheet() ->setCellValue("A".$listrow, '办布如下:'.$richText);
 
-/*$spreadsheet->getActiveSheet()
-    ->getColumnDimension('A')
-    ->setWidth(48);
-$spreadsheet->getActiveSheet()
-    ->getRowDimension(1)
-    ->setRowHeight(-1);*/
-/*
-$spreadsheet->getActiveSheet()->getStyle("A".$listrow)
-    ->getAlignment()
-    ->setWrapText(true);
-$spreadsheet->getActiveSheet()->getStyle("A".$listrow)
-    ->getAlignment()
-    ->setShrinkToFit(true);
-*/
+
 $styleArray1 = [
     'alignment' => [
         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
@@ -143,17 +149,17 @@ $spreadsheet->getActiveSheet()->getStyle("A".$listrow)->applyFromArray($styleArr
 $spreadsheet->getActiveSheet()->getStyle("A".$listrow)->getFont()->setSize(8);
 
 
-//$sheet->setCellValue("L4", $productp1['fab2']); //款式图标注
+
 
 $wizard = new HtmlHelper();
 $html1 = str_replace('\"', "", htmlspecialchars_decode($productp1['fab2'])) ;
 $richText = $wizard->toRichTextObject($html1);
 
-$spreadsheet->getActiveSheet() ->setCellValue('L4', '办布如下:'.$richText);
+$spreadsheet->getActiveSheet() ->setCellValue('L4', '款式图:'.$richText);
 $spreadsheet->getActiveSheet()->getStyle('L4')->applyFromArray($styleArray1);
 
 $spreadsheet->getActiveSheet()->getStyle('L4')->getFont()->setSize(8);
-//$sheet->setCellValue("L7", $productp1['remarkimg2']); //款式图remarkimg2
+
 $img = $productp1['remarkimg2'];
 preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
 $imgformat = $imgformat[1];
@@ -178,13 +184,6 @@ $width = imagesx($img);
 
 $height = imagesy($img);
 
-
-// Generate an image
-//$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-//$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-//imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
-
-// Add a drawing to the worksheet
 $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
 $drawing->setName($productp1['doc']);
 $drawing->setDescription($productp1['doc']);
@@ -195,124 +194,81 @@ $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYP
 //$drawing->setHeight($width);
 
 //$drawing->setHeight($width>550 ? 550:$width);
-$drawing->setWidth(170);
-/*$resw = $width < 180 ? 0 : 2;
-$resh = $height < 220 ? 0 : 3;
-$res = $resw + $resh;
-switch ($res)
-{
-    case "2":
-        $drawing->setWidth(180);
-        break;
-    case "3":
-        $drawing->setHeight(220);
-        break;
-    case "5":
-        $drawing->setWidth(180);
-        break;
-
-    default:
-        $drawing->setWidth($width>180 ? 180:$width);
-}*/
-//$drawing->setHeight(150);
+$drawing->setWidth(210);
 $drawing->setCoordinates('L7');
 $drawing->setOffsetX(5);
 $drawing->setOffsetY(5);
 $drawing->setWorksheet($spreadsheet->getActiveSheet());
-/*
-$sheet->setCellValue("L18", $productp1['fab4']); //裁法
-$sheet->setCellValue("L22", $productp1['fab4']); //针距如下
-$sheet->setCellValue("L25", $productp1['fab3']); //工艺说明及注意事项*/
+
 
 $listrow =  $listrow + 7; //行數
 $sheet->setCellValue("G".$listrow, $productp1["large"]["o0"]);
 $sheet->setCellValue("J".$listrow, $productp1["large"]["o1"]);
 
-$formnumbrow = $productp1["formnumb"] > 15 ? ($productp1["formnumb"] - 15) : 0 ;
-$listrowmarker = $listrow + 17 + $formnumbrow ;
+$listct = $listrow + 1 ;
+$sheet->setCellValue("B".$listct, $productp1['ct'][13]);
+$sheet->setCellValue("C".$listct, $productp1['ct'][14]);
+$sheet->setCellValue("D".$listct, $productp1['ct'][15]);
+$sheet->setCellValue("E".$listct, $productp1['ct'][16]);
+$sheet->setCellValue("F".$listct, $productp1['ct'][17]);
+$sheet->setCellValue("G".$listct, $productp1['ct'][18]);
+$sheet->setCellValue("H".$listct, $productp1['ct'][19]);
+$sheet->setCellValue("I".$listct, $productp1['ct'][20]);
+
+
+$listrowmarker = $listrow + 17  ;
 $sheet->setCellValue("A".$listrowmarker, '制单人'); //制单人
 $sheet->setCellValue("B".$listrowmarker, $productp1['marker']); //制单人
 
+if($productp1["formnumb"] > 14){    //如果行数大于12 增加行
+    $addlist = $listct + 15 ;
 
-
-$listrow= 2 +$listrow;
-for($i = $listrow , $a=0; $i<($listrow + $productp1["formnumb"]) ;$i++){
-    if($productp1["formnumb"]>15 && $i>$listrowmarker-1 ){
-        $y = $i;
-        $spreadsheet->getActiveSheet()->insertNewRowBefore($y, 1);
-
+    for($n = 1;$n<=($productp1["formnumb"] - 14);$n++ ){
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($addlist, 1);
     }
-    $sheet->setCellValue("A{$i}", $productp1["large"]['p'.$a]);
-    $sheet->setCellValue("B{$i}", $productp1["large"]['q'.$a]);
-    $sheet->setCellValue("C{$i}", $productp1["large"]['r'.$a]);
-    $sheet->setCellValue("D{$i}", $productp1["large"]['s'.$a]);
-    $sheet->setCellValue("E{$i}", $productp1["large"]['t'.$a]);
-    $sheet->setCellValue("F{$i}", $productp1["large"]['u'.$a]);
-    $sheet->setCellValue("G{$i}", $productp1["large"]['v'.$a]);
-    $sheet->setCellValue("H{$i}", $productp1["large"]['w'.$a]);
-    $sheet->setCellValue("I{$i}", $productp1["large"]['x'.$a]);
-    $sheet->setCellValue("J{$i}", $productp1["large"]['y'.$a]);
-    $sheet->setCellValue("K{$i}", $productp1["large"]['z'.$a]);
-    $spreadsheet->getActiveSheet()->getStyle("A{$i}")->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle("B{$i}")->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle("C{$i}")->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle("D{$i}")->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle("E{$i}")->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle("F{$i}")->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle("G{$i}")->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle("H{$i}")->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle("I{$i}")->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle("J{$i}")->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle("K{$i}")->applyFromArray($styleArray1);
-    $a++;
 }
 
 
 
-//$sheet->setCellValue("L".$listrow, '工艺说明及注意事项:  '.$productp1['fab3']); //款式图
-$wizard = new HtmlHelper();
-$html1 = str_replace('\"', "", htmlspecialchars_decode($productp1['fab3'])) ;
-$richText = $wizard->toRichTextObject($html1);
+$listct = $listct + 1 ;
+$formarr = array('A','B','C','D','E','F','G','H','I','J','K');
+for($x = 0 ,$c = 1; $c <= count($formarr); $x++ ,$c++){
+    $f19 = $listct;
+    for($i = 1,$y = 0; $i <= $productp1["formnumb"] ; $i++ ,$y++){
+        $sheet->setCellValue($formarr[$x].$f19,  $productp1['large']['c'.$c][$y]);
+        $f19++;
 
-$listrowmarker = $listrowmarker-1; //制单人 行 減1
-$spreadsheet->getActiveSheet()->mergeCells("L{$listrow}:N{$listrowmarker}");
-
-$spreadsheet->getActiveSheet() ->setCellValue("L".$listrow, '工艺说明及注意事项:  '.$richText);
-//$spreadsheet->getActiveSheet()->getStyle("L".$listrow)->applyFromArray($styleArray1);
-$spreadsheet->getActiveSheet()->getStyle("L{$listrow}:N{$listrowmarker}")->applyFromArray($styleArray1);
-
-$spreadsheet->getActiveSheet()->getStyle("L".$listrow)->getFont()->setSize(8);
+    }
 
 
+}
 
-//$sheet->setCellValue("L".($listrow-3), $productp1['fab5']); //针距如下
+/*针距如下  */
 $wizard = new HtmlHelper();
 $html1 = str_replace('\"', "", htmlspecialchars_decode($productp1['fab5'])) ;
 $richText = $wizard->toRichTextObject($html1);
 
-$spreadsheet->getActiveSheet() ->setCellValue("L".($listrow-3), $richText);
-$cfrow = $listrow - 3;
-$spreadsheet->getActiveSheet()->getStyle("L{$cfrow}:N{$listrow}")->applyFromArray($styleArray1);
-$spreadsheet->getActiveSheet()->getStyle("L{$cfrow}:N{$listrow}")->getFont()->setSize(8);
+$spreadsheet->getActiveSheet() ->setCellValue("L".($listct-3), $richText);
+/*//针距如下 */
 
-//$sheet->setCellValue("L".($listrow-7), $productp1['fab4']); //裁法
+/*裁法： */
 $wizard = new HtmlHelper();
 $html1 = str_replace('\"', "", htmlspecialchars_decode($productp1['fab4'])) ;
 $richText = $wizard->toRichTextObject($html1);
 
-$spreadsheet->getActiveSheet() ->setCellValue("L".($listrow-7), $richText);
-
-$cfsrow = $listrow-7;
-$cferow = $listrow - 4;
-$spreadsheet->getActiveSheet()->getStyle("L19:N21")->applyFromArray($styleArray1);
-//$spreadsheet->getActiveSheet()->getStyle("L{$cfrow}:N{$cferow}")->getFont()->setSize(8);
-
-//$spreadsheet->getActiveSheet()->getStyle("L".($listrow-7))->applyFromArray($styleArray1);
-
-//$spreadsheet->getActiveSheet()->getStyle("L".($listrow-7))->getFont()->setSize(8);
+$spreadsheet->getActiveSheet() ->setCellValue("L".($listct-7), $richText);
+/*//裁法： */
 
 
-$spreadsheet->getActiveSheet()->getStyle("L4:N{$listrowmarker}")->getAlignment()->setWrapText(true);
+
+/*工艺说明及注意事项： */
+$wizard = new HtmlHelper();
+$html1 = str_replace('\"', "", htmlspecialchars_decode($productp1['fab3'])) ;
+$richText = $wizard->toRichTextObject($html1);
+
+$spreadsheet->getActiveSheet() ->setCellValue("L".($listct), '工艺说明及注意事项:  '.$richText);
+/*//工艺说明及注意事项： */
+
 
 
 unset($_SESSION['productp1'] ); //注销SESSION

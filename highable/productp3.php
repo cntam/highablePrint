@@ -1,12 +1,20 @@
 <?php
 session_start();
-//require '../vendor/autoload.php';
-require '/home/pan/vendor/autoload.php';
+require_once('autoloadconfig.php');  //判断是否在线
+
+if ($online) {
+    require_once '/home/pan/vendor/autoload.php';
+
+} else {
+    require_once '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
+}
+require_once('img.php');
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-$productp3 =  $_SESSION['productp3'];
+
+$productp3 = $_SESSION['productp3'];
 
 
 //$spreadsheet = new Spreadsheet();
@@ -24,7 +32,7 @@ $styleArray1 = [
         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
         'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
         'wrapText' => true,
-        'ShrinkToFit'=>true,
+        'ShrinkToFit' => true,
     ],
     'font' => [
         'Size' => '10',
@@ -49,42 +57,26 @@ $styleArray1 = [
 ];
 
 
-$sheet->setCellValue('B2',  $productp3['doc']);
-$sheet->setCellValue('D2',  $productp3['styleno']);
-$sheet->setCellValue('F2',  $productp3['guest']);
+$sheet->setCellValue('B2', $productp3['doc']);
+$sheet->setCellValue('D2', $productp3['styleno']);
+$sheet->setCellValue('F2', $productp3['guest']);
 
 
-$formnuma= $productp3["formnum"];
-for($i = 0,$a = 0,$row = 4; $i<$formnuma  ;$i++, $row++){
-    if($formnuma>25 && $i>24 ){
-        $y = $row;
-        $spreadsheet->getActiveSheet()->insertNewRowBefore($y, 1);
+$formarr = array('A','B','D','E','F','G');
+for($x = 0 ,$c = 1; $c <= count($formarr); $x++ ,$c++){
+    $f19 = 4;
+
+    for($i = 1,$y = 0; $i <= $productp3["formnum"] ; $i++ ,$y++){
+        $spreadsheet->getActiveSheet()->mergeCells("B{$f19}:C{$f19}");
+        $sheet->setCellValue($formarr[$x].$f19,  $productp3["a1"]['c'.$c][$y]);
+        $spreadsheet->getActiveSheet()->getStyle($formarr[$x].$f19)->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->getStyle("B{$f19}:C{$f19}")->applyFromArray($styleArray1);  //BC样式
+        $f19++;
 
     }
-    $sheet->setCellValue("A{$row}", $productp3['a1']["a" .$a][0]);
-    $spreadsheet->getActiveSheet()->mergeCells("B{$row}:C{$row}");
-    $sheet->setCellValue("B{$row}", $productp3['a1']["b" .$a][0]);
-
-    $sheet->setCellValue("D{$row}", $productp3['a1']["c". $a][0]);
-    //$sheet->setCellValue("D{$row}", $productp3['a1']["d". $a][0]);
-
-    $sheet->setCellValue("E{$row}", $productp3['a1']["d". $a][0]);
-    $sheet->setCellValue("F{$row}", $productp3['a1']["e". $a][0]);
-    $sheet->setCellValue("G{$row}", $productp3['a1']["f". $a][0]);
-
-
-    $spreadsheet->getActiveSheet()->getStyle("A{$row}")->applyFromArray($styleArray1);
-    //$spreadsheet->getActiveSheet()->getStyle("B{$row}")->applyFromArray($styleArray1);
-
-    $spreadsheet->getActiveSheet()->getStyle("B{$row}:C{$row}")->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle("D{$row}")->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle("E{$row}")->applyFromArray($styleArray1);
-
-    $spreadsheet->getActiveSheet()->getStyle("F{$row}")->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle("G{$row}")->applyFromArray($styleArray1);
-    $a++;
-
 }
+
+
 
 unset($_SESSION['productp3'] ); //注销SESSION
 
@@ -95,14 +87,14 @@ $spreadsheet->getActiveSheet()->getPageSetup()
     ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);//打印橫向 A4
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-$output=  ($_GET['action'] == 'formprint' )? 1:0;
-$nt = date("YmdHis",time()); //转换为日期。
+$output = ($_GET['action'] == 'formdown') ? 1 : 0;
+$nt = date("YmdHis", time()); //转换为日期。
 
-$filenameout = 'productp3out'.$nt.'.xlsx';
-if($output){
+$filenameout = 'productp3out' . $nt . '.xlsx';
+if ($output) {
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename='."$filenameout");
+    header('Content-Disposition: attachment;filename=' . "$filenameout");
     header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
     header('Cache-Control: max-age=1');
@@ -115,12 +107,12 @@ if($output){
 
     $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
     $writer->save('php://output');
-}else{
+} else {
     $writer = new Xlsx($spreadsheet);
-    $writer->save('../output/'.$filenameout);
-	
-	$FILEURL = 'http://allinone321.com/highable/output/'.$filenameout;
-    $MSFILEURL = 'http://view.officeapps.live.com/op/view.aspx?src='. urlencode($FILEURL);
+    $writer->save('../output/' . $filenameout);
+
+    $FILEURL = 'http://allinone321.com/highable/output/' . $filenameout;
+    $MSFILEURL = 'http://view.officeapps.live.com/op/view.aspx?src=' . urlencode($FILEURL);
 
     Header("Location:{$MSFILEURL}");
 }
