@@ -18,17 +18,19 @@ use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 
-
 $productp5 =  $_SESSION['productp5'];
 
-//var_dump($productp5);
-//echo $productp5[1][2];
 //$spreadsheet = new Spreadsheet();
 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/productp5.xlsx');
 
 $sheet = $spreadsheet->getActiveSheet();
 $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft YaHei');
 $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+for ($v = 1; $v <= 8; $v++) {
+    $col = chr(97 + $v);
+    $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth(11);
+}
+
 
 $sheet->setCellValue('C1',  $productp5[0]["title"]);
 $spreadsheet->getActiveSheet()->getStyle('C1')->getFont()->setSize(16);
@@ -45,24 +47,23 @@ $sheet->setCellValue('B5',  $productp5[0]["style"]);
 $sheet->setCellValue('D5',  $productp5[0]["deldate"]);
 $sheet->setCellValue('F5',  $productp5[0]["comdate"]);
 
-/*$sheet->setCellValue('L3',  $productp5['findate']);
-$sheet->setCellValue('M3',  $productp5['trans']);*/
-
-//$formnuma= $productp5["formnum"] +7;
 
 $listrow = 7;
-$formnuma = $productp5[1][0];
-for($i= 0,$x = $listrow ; $i <= $formnuma ; $i++){
-    //$spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-    if($formnuma >2 && $i>2 ){
-        $spreadsheet->getActiveSheet()->insertNewRowBefore($x, 1);
 
+$thisrow = $listrow;
+for($x = 0 ,$c = 1; $c <= $productp5[1][0]; $x++ ,$c++){
+
+    if($c >3){
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($thisrow, 1);
     }
-    $spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-    $sheet->setCellValue("A{$x}", $productp5[8][$i]);
-    $x++;
+    $spreadsheet->getActiveSheet()->mergeCells("A{$thisrow}:H{$thisrow}");
+    $sheet->setCellValue("A{$thisrow}", $productp5[8][$x]);
+    $thisrow++;
+
 }
-$listrow = $listrow + $formnuma + 1 ;
+$listrow = ($productp5[1][0]>3) ? ($listrow + $productp5[1][0]) : ($listrow+3);
+//$sheet->setCellValue("L1", $listrow);
+
 if($productp5[1][1] == '1'){
    $radioa = '■ 有';
    $radiob = '□ 无';
@@ -77,21 +78,23 @@ $sheet->setCellValue('C'.$listrow, $radiob);
 //echo $listrow ;
 $sheet->setCellValue('F'.$listrow, $productp5[1][2]); //处理方法
 
-/* 二、车缝注意事项：*/
+/** 二、车缝注意事项：*/
 $listrow = $listrow +  3 ;
-//echo $listrow;
-$formnuma = $productp5[2][0];
-for($i= 0,$x = $listrow ; $i <= $formnuma ; $i++){
-    //$spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-    if($formnuma >2 && $i>2 ){
-        $spreadsheet->getActiveSheet()->insertNewRowBefore($x, 1);
 
+$thisrow = $listrow;
+for($x = 0 ,$c = 1; $c <= $productp5[2][0]; $x++ ,$c++){
+
+    if($c >3){
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($thisrow, 1);
     }
-    $spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-    $sheet->setCellValue("A{$x}", $productp5[9][$i]);
-    $x++;
+    $spreadsheet->getActiveSheet()->mergeCells("A{$thisrow}:H{$thisrow}");
+    $sheet->setCellValue("A{$thisrow}", $productp5[9][$x]);
+    $thisrow++;
+
 }
-$listrow = $listrow + $formnuma + 1 ;
+$listrow = ($productp5[2][0]>3) ? ($listrow + $productp5[2][0]) : ($listrow+3);
+//$sheet->setCellValue("L2", $listrow);
+
 if($productp5[2][1] == '1'){
     $radioa = '■ 有';
     $radiob = '□ 无';
@@ -105,30 +108,31 @@ $sheet->setCellValue('C'.$listrow, $radiob);
 
 //echo $listrow ;
 $sheet->setCellValue('F'.$listrow, $productp5[2][2]); //处理方法
-/* //二、车缝注意事项：*/
+///* //二、车缝注意事项：*/
 
 
-/* 三、尺寸注意事项：：*/
+
+/** 三、尺寸注意事项：：*/
 $listrow = $listrow +  3 ;
-//echo $listrow;
-$formnuma = $productp5[3][0];
-for($i= 0,$x = $listrow ; $i <= $formnuma ; $i++){
-    //$spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-    if($formnuma >2 && $i>2 ){
-        $spreadsheet->getActiveSheet()->insertNewRowBefore($x, 1);
 
+$thisrow = $listrow;
+for($x = 0 ,$c = 1; $c <= $productp5[3][0]; $x++ ,$c++){
+
+    if($c >3){
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($thisrow, 1);
     }
-    $spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-    $sheet->setCellValue("A{$x}", $productp5[10][$i]);
-    $x++;
+    $spreadsheet->getActiveSheet()->mergeCells("A{$thisrow}:H{$thisrow}");
+    $sheet->setCellValue("A{$thisrow}", $productp5[10][$x]);
+    $thisrow++;
+
 }
-$rowadd = $formnuma > 1 ? 1 :2;
-$listrow = $listrow + $formnuma + $rowadd ;
+$listrow = ($productp5[3][0]>3) ? ($listrow + $productp5[3][0]) : ($listrow+3);
+//$sheet->setCellValue("L3", $listrow);
 
 $sheet->setCellValue('F'.$listrow, $productp5[3][1]); //处理方法
-/* //三、尺寸注意事项：：*/
-
-/* 四、洗水注意事项：*/
+///* //三、尺寸注意事项：：*/
+//
+/** 四、洗水注意事项：*/
 $listrow = $listrow +  3 ;
 if($productp5[4][1] == '1'){
     $radioa = '■ 需要';
@@ -139,58 +143,60 @@ if($productp5[4][1] == '1'){
 }
 $sheet->setCellValue('B'.$listrow, $radioa);
 $sheet->setCellValue('C'.$listrow, $radiob);
-//echo $listrow;
+
 $listrow = $listrow + 1 ;
 
-$formnuma = $productp5[4][0];
-for($i= 0,$x = $listrow ; $i <= $formnuma ; $i++){
-    //$spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-    if($formnuma >2 && $i>2 ){
-        $spreadsheet->getActiveSheet()->insertNewRowBefore($x, 1);
+$thisrow = $listrow;
+for($x = 0 ,$c = 1; $c <= $productp5[4][0]; $x++ ,$c++){
 
+    if($c >3){
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($thisrow, 1);
     }
-    $spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-    $sheet->setCellValue("A{$x}", $productp5[11][$i]);
-    $x++;
+    $spreadsheet->getActiveSheet()->mergeCells("A{$thisrow}:H{$thisrow}");
+    $sheet->setCellValue("A{$thisrow}", $productp5[11][$x]);
+    $thisrow++;
+
 }
+$listrow = ($productp5[4][0]>3) ? ($listrow + $productp5[4][0]) : ($listrow+3);
 
-/* 四、洗水注意事项：*/
+///* 四、洗水注意事项：*/
+//
+/** 五、整烫注意事项：：*/
+$listrow = $listrow +  2 ;
 
-/* 五、整烫注意事项：：*/
+$thisrow = $listrow;
+for($x = 0 ,$c = 1; $c <= $productp5[5][0]; $x++ ,$c++){
 
-$listrow = $listrow +  4 ;
-//echo $listrow;
-$formnuma = $productp5[5][0];
-for($i= 0,$x = $listrow ; $i <= $formnuma ; $i++){
-    //$spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-    if($formnuma >2 && $i>2 ){
-        $spreadsheet->getActiveSheet()->insertNewRowBefore($x, 1);
-
+    if($c >3){
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($thisrow, 1);
     }
-    $spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-    $sheet->setCellValue("A{$x}", $productp5[12][$i]);
-    $x++;
+    $spreadsheet->getActiveSheet()->mergeCells("A{$thisrow}:H{$thisrow}");
+    $sheet->setCellValue("A{$thisrow}", $productp5[12][$x]);
+    $thisrow++;
+
 }
+$listrow = ($productp5[5][0]>3) ? ($listrow + $productp5[5][0]) : ($listrow+3);
 
-/* //五、整烫注意事项：*/
+///* //五、整烫注意事项：*/
+//
+/** 六、包装注意事项：*/
 
-/* 六、包装注意事项：*/
-$rowadd = $formnuma < 3 ? 3 :0;
-$listrow = $listrow + $rowadd ;
-$listrow = $listrow +  3 ;
-//echo $listrow;
-$formnuma = $productp5[6][0];
-for($i= 0,$x = $listrow ; $i <= $formnuma ; $i++){
-    //$spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-    if($formnuma >2 && $i>2 ){
-        $spreadsheet->getActiveSheet()->insertNewRowBefore($x, 1);
+$listrow = $listrow +  2 ;
 
+$thisrow = $listrow;
+for($x = 0 ,$c = 1; $c <= $productp5[6][0]; $x++ ,$c++){
+
+    if($c >3){
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($thisrow, 1);
     }
-    $spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-    $sheet->setCellValue("A{$x}", $productp5[13][$i]);
-    $x++;
+    $spreadsheet->getActiveSheet()->mergeCells("A{$thisrow}:H{$thisrow}");
+    $sheet->setCellValue("A{$thisrow}", $productp5[13][$x]);
+    $thisrow++;
+
 }
-$listrow = $listrow + $formnuma + 1 ;
+$listrow = ($productp5[6][0]>3) ? ($listrow + $productp5[6][0]) : ($listrow+3);
+//$sheet->setCellValue("L1", $listrow);
+
 if($productp5[6][1] == '1'){
     $radioa = '■ 有';
     $radiob = '□ 无';
@@ -201,46 +207,27 @@ if($productp5[6][1] == '1'){
 $sheet->setCellValue('B'.$listrow, $radioa);
 $sheet->setCellValue('C'.$listrow, $radiob);
 
-
-//echo $listrow ;
 $sheet->setCellValue('F'.$listrow, $productp5[6][2]); //处理方法
 
-/* //六、包装注意事项：*/
+/* 六、包装注意事项：*/
 
 /* 七、其他：*/
-
 $listrow = $listrow +  3 ;
-//echo $listrow;
-$formnuma = $productp5[7][0];
-for($i= 0,$x = $listrow ; $i <= $formnuma ; $i++){
-    //$spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-    if($formnuma >2 && $i>2 ){
-        $spreadsheet->getActiveSheet()->insertNewRowBefore($x, 1);
 
+$thisrow = $listrow;
+for($x = 0 ,$c = 1; $c <= $productp5[7][0]; $x++ ,$c++){
+
+    if($c >3){
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($thisrow, 1);
     }
-    $spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-    $sheet->setCellValue("A{$x}", $productp5[14][$i]);
-    $x++;
-}
-//$rowadd = $formnuma < 3 ? 1 :1;
+    $spreadsheet->getActiveSheet()->mergeCells("A{$thisrow}:H{$thisrow}");
+    $sheet->setCellValue("A{$thisrow}", $productp5[14][$x]);
+    $thisrow++;
 
-/*echo $listrow;
-echo $formnuma;*/
-switch ($formnuma){
-    case '0':
-        $rowadd = 3;
-        break;
-    case '1':
-        $rowadd = 2;
-    break;
-    case '2':
-        $rowadd = 1;
-        break;
-    default:
-        $rowadd = 1;
 }
-$listrow = $listrow + $formnuma + $rowadd ;
-//echo $listrow;
+$listrow = ($productp5[7][0]>3) ? ($listrow + $productp5[7][0]) : ($listrow+3);
+//$sheet->setCellValue("L1", $listrow);
+
 $sheet->setCellValue('B'.$listrow,  $productp5[0]["rename1"]);
 $sheet->setCellValue('F'.$listrow,  $productp5[0]["rename2"]);
 /* //七、其他*/

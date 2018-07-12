@@ -85,7 +85,6 @@ for($x = 0 ,$c = 1; $c <= count($formarr); $x++ ,$c++){
     for($i = 1,$y = 0; $i <= $productp4["formnumb"] ; $i++ ,$y++){
         $sheet->setCellValue($formarr[$x].$f19,  $productp4['large']['c'.$c][$y]);
         $f19++;
-
     }
 }
 

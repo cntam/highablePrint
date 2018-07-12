@@ -542,9 +542,9 @@ $styleArray1 = [
 
 
 $sheet->setCellValue('B2',  $productall['productp4']['guest']);
-//$sheet->setCellValue('B3',  $productall['productp4']['billdate']);
-//$sheet->setCellValue('H2',  $productall['productp4']['doc']);
-//$sheet->setCellValue('H3',  $productall['productp4']['styleno']);
+$sheet->setCellValue('B3',  $productall['productp4']['billdate']);
+$sheet->setCellValue('H2',  $productall['doc']);
+$sheet->setCellValue('H3',  $productall['productp4']['styleno']);
 $sheet->setCellValue('P2',  $productall['productp4']['department']);
 $sheet->setCellValue('P3',  $productall['productp4']['findate']);
 $sheet->setCellValue('R3',  $productall['productp4']['trans']);
@@ -582,290 +582,283 @@ for($x = 0 ,$c = 1; $c <= 19; $x++ ,$c++){
         $f19++;
     }
 }
-//$spreadsheet->getActiveSheet()->getPageSetup()
-//    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE); //打印橫向
-//$spreadsheet->getActiveSheet()->getPageSetup()
-//    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);//打印橫向 A4
-//$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
+$spreadsheet->getActiveSheet()->getPageSetup()
+    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE); //打印橫向
+$spreadsheet->getActiveSheet()->getPageSetup()
+    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);//打印橫向 A4
+$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 /*第四页*/
 
 /**
  * 第五页
  */
-//$spreadsheet->setActiveSheetIndex(4);  //設置當前活動表
-//$sheet = $spreadsheet->getActiveSheet();
-//$spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft YaHei');
-//$spreadsheet->getDefaultStyle()->getFont()->setSize(10);
-//
-//$sheet->setCellValue('C1',  $productall["productp5"][0]["title"]);
-//$spreadsheet->getActiveSheet()->getStyle('C1')->getFont()->setSize(16);
-//$spreadsheet->getActiveSheet()->getStyle('C1')->getFont()->setBold(true);
-//$sheet->setCellValue('C2',  $productall['productp5'][0]["subhead"]);
-//$sheet->setCellValue('B3',  $productall['productp5'][0]["attendee"]);
-//$sheet->setCellValue('H3',  $productall['productp5'][0]["serial"]);
-//
-//$sheet->setCellValue('B4',  $productall['productp5'][0]["styleno"]);
-//$sheet->setCellValue('D4',  $productall["doc"]);
-//$sheet->setCellValue('F4',  $productall['productp5'][0]["num"]);
-//$sheet->setCellValue('H4',  $productall['productp5'][0]["atdate"]);
-//$sheet->setCellValue('B5',  $productall['productp5'][0]["style"]);
-//$sheet->setCellValue('D5',  $productall['productp5'][0]["deldate"]);
-//$sheet->setCellValue('F5',  $productall['productp5'][0]["comdate"]);
-//
-///*$sheet->setCellValue('L3',  $productp5['findate']);
-//$sheet->setCellValue('M3',  $productp5['trans']);*/
-//
-////$formnuma= $productp5["formnum"] +7;
-//
-//$listrow = 7;
-//$formnuma = $productall['productp5'][1][0];
-//for($i= 0,$x = $listrow ; $i <= $formnuma ; $i++){
-//    //$spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-//    if($formnuma >2 && $i>2 ){
-//        $spreadsheet->getActiveSheet()->insertNewRowBefore($x, 1);
-//
-//    }
-//    $spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-//    $sheet->setCellValue("A{$x}", $productall['productp5'][8][$i]);
-//    $x++;
-//}
-//$listrow = $listrow + $formnuma + 1 ;
-//if($productall['productp5'][1][1] == '1'){
-//    $radioa = '■ 有';
-//    $radiob = '□ 无';
-//}else{
-//    $radioa = '□ 有';
-//    $radiob = '■ 无';
-//}
-//$sheet->setCellValue('B'.$listrow, $radioa);
-//$sheet->setCellValue('C'.$listrow, $radiob);
-//
-//
-////echo $listrow ;
-//$sheet->setCellValue('F'.$listrow, $productall['productp5'][1][2]); //处理方法
-//
-///* 二、车缝注意事项：*/
-//$listrow = $listrow +  3 ;
-////echo $listrow;
-//$formnuma = $productall['productp5'][2][0];
-//for($i= 0,$x = $listrow ; $i <= $formnuma ; $i++){
-//    //$spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-//    if($formnuma >2 && $i>2 ){
-//        $spreadsheet->getActiveSheet()->insertNewRowBefore($x, 1);
-//
-//    }
-//    $spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-//    $sheet->setCellValue("A{$x}", $productall['productp5'][9][$i]);
-//    $x++;
-//}
-//$listrow = $listrow + $formnuma + 1 ;
-//if($productall['productp5'][2][1] == '1'){
-//    $radioa = '■ 有';
-//    $radiob = '□ 无';
-//}else{
-//    $radioa = '□ 有';
-//    $radiob = '■ 无';
-//}
-//$sheet->setCellValue('B'.$listrow, $radioa);
-//$sheet->setCellValue('C'.$listrow, $radiob);
-//
-//
-////echo $listrow ;
-//$sheet->setCellValue('F'.$listrow, $productall['productp5'][2][2]); //处理方法
+$spreadsheet->setActiveSheetIndex(4);  //設置當前活動表
+$sheet = $spreadsheet->getActiveSheet();
+$spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft YaHei');
+$spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+
+for ($v = 1; $v <= 8; $v++) {
+    $col = chr(97 + $v);
+    $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth(11);
+}
+
+
+$sheet->setCellValue('C1',  $productall['productp5'][0]["title"]);
+$spreadsheet->getActiveSheet()->getStyle('C1')->getFont()->setSize(16);
+$spreadsheet->getActiveSheet()->getStyle('C1')->getFont()->setBold(true);
+$sheet->setCellValue('C2',  $productall['productp5'][0]["subhead"]);
+$sheet->setCellValue('B3',  $productall['productp5'][0]["attendee"]);
+$sheet->setCellValue('H3',  $productall['productp5'][0]["serial"]);
+
+$sheet->setCellValue('B4',  $productall['productp5'][0]["styleno"]);
+$sheet->setCellValue('D4',  $productall['doc']);
+$sheet->setCellValue('F4',  $productall['productp5'][0]["num"]);
+$sheet->setCellValue('H4',  $productall['productp5'][0]["atdate"]);
+$sheet->setCellValue('B5',  $productall['productp5'][0]["style"]);
+$sheet->setCellValue('D5',  $productall['productp5'][0]["deldate"]);
+$sheet->setCellValue('F5',  $productall['productp5'][0]["comdate"]);
+
+
+
+$listrow = 7;
+
+$thisrow = $listrow;
+for($x = 0 ,$c = 1; $c <= $productall['productp5'][1][0]; $x++ ,$c++){
+
+    if($c >3){
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($thisrow, 1);
+    }
+    $spreadsheet->getActiveSheet()->mergeCells("A{$thisrow}:H{$thisrow}");
+    $sheet->setCellValue("A{$thisrow}", $productall['productp5'][8][$x]);
+    $thisrow++;
+
+}
+$listrow = ($productall['productp5'][1][0]>3) ? ($listrow + $productall['productp5'][1][0]) : ($listrow+3);
+//$sheet->setCellValue("L1", $listrow);
+
+if($productall['productp5'][1][1] == '1'){
+    $radioa = '■ 有';
+    $radiob = '□ 无';
+}else{
+    $radioa = '□ 有';
+    $radiob = '■ 无';
+}
+$sheet->setCellValue('B'.$listrow, $radioa);
+$sheet->setCellValue('C'.$listrow, $radiob);
+
+
+//echo $listrow ;
+$sheet->setCellValue('F'.$listrow, $productall['productp5'][1][2]); //处理方法
+
+/** 二、车缝注意事项：*/
+$listrow = $listrow +  3 ;
+
+$thisrow = $listrow;
+for($x = 0 ,$c = 1; $c <= $productall['productp5'][2][0]; $x++ ,$c++){
+
+    if($c >3){
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($thisrow, 1);
+    }
+    $spreadsheet->getActiveSheet()->mergeCells("A{$thisrow}:H{$thisrow}");
+    $sheet->setCellValue("A{$thisrow}", $productall['productp5'][9][$x]);
+    $thisrow++;
+
+}
+$listrow = ($productall['productp5'][2][0]>3) ? ($listrow + $productall['productp5'][2][0]) : ($listrow+3);
+//$sheet->setCellValue("L2", $listrow);
+
+if($productall['productp5'][2][1] == '1'){
+    $radioa = '■ 有';
+    $radiob = '□ 无';
+}else{
+    $radioa = '□ 有';
+    $radiob = '■ 无';
+}
+$sheet->setCellValue('B'.$listrow, $radioa);
+$sheet->setCellValue('C'.$listrow, $radiob);
+
+
+//echo $listrow ;
+$sheet->setCellValue('F'.$listrow, $productall['productp5'][2][2]); //处理方法
 ///* //二、车缝注意事项：*/
-//
-//
-///* 三、尺寸注意事项：：*/
-//$listrow = $listrow +  3 ;
-////echo $listrow;
-//$formnuma = $productall['productp5'][3][0];
-//for($i= 0,$x = $listrow ; $i <= $formnuma ; $i++){
-//    //$spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-//    if($formnuma >2 && $i>2 ){
-//        $spreadsheet->getActiveSheet()->insertNewRowBefore($x, 1);
-//
-//    }
-//    $spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-//    $sheet->setCellValue("A{$x}", $productall['productp5'][10][$i]);
-//    $x++;
-//}
-//$rowadd = $formnuma > 1 ? 1 :2;
-//$listrow = $listrow + $formnuma + $rowadd ;
-//
-//$sheet->setCellValue('F'.$listrow, $productall['productp5'][3][1]); //处理方法
+
+
+
+/** 三、尺寸注意事项：：*/
+$listrow = $listrow +  3 ;
+
+$thisrow = $listrow;
+for($x = 0 ,$c = 1; $c <= $productall['productp5'][3][0]; $x++ ,$c++){
+
+    if($c >3){
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($thisrow, 1);
+    }
+    $spreadsheet->getActiveSheet()->mergeCells("A{$thisrow}:H{$thisrow}");
+    $sheet->setCellValue("A{$thisrow}", $productall['productp5'][10][$x]);
+    $thisrow++;
+
+}
+$listrow = ($productall['productp5'][3][0]>3) ? ($listrow + $productall['productp5'][3][0]) : ($listrow+3);
+//$sheet->setCellValue("L3", $listrow);
+
+$sheet->setCellValue('F'.$listrow, $productall['productp5'][3][1]); //处理方法
 ///* //三、尺寸注意事项：：*/
 //
+/** 四、洗水注意事项：*/
+$listrow = $listrow +  3 ;
+if($productall['productp5'][4][1] == '1'){
+    $radioa = '■ 需要';
+    $radiob = '□ 不需要';
+}else{
+    $radioa = '□ 需要';
+    $radiob = '■ 不需要';
+}
+$sheet->setCellValue('B'.$listrow, $radioa);
+$sheet->setCellValue('C'.$listrow, $radiob);
+
+$listrow = $listrow + 1 ;
+
+$thisrow = $listrow;
+for($x = 0 ,$c = 1; $c <= $productall['productp5'][4][0]; $x++ ,$c++){
+
+    if($c >3){
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($thisrow, 1);
+    }
+    $spreadsheet->getActiveSheet()->mergeCells("A{$thisrow}:H{$thisrow}");
+    $sheet->setCellValue("A{$thisrow}", $productall['productp5'][11][$x]);
+    $thisrow++;
+
+}
+$listrow = ($productall['productp5'][4][0]>3) ? ($listrow + $productall['productp5'][4][0]) : ($listrow+3);
+
 ///* 四、洗水注意事项：*/
-//$listrow = $listrow +  3 ;
-//if($productall['productp5'][4][1] == '1'){
-//    $radioa = '■ 需要';
-//    $radiob = '□ 不需要';
-//}else{
-//    $radioa = '□ 需要';
-//    $radiob = '■ 不需要';
-//}
-//$sheet->setCellValue('B'.$listrow, $radioa);
-//$sheet->setCellValue('C'.$listrow, $radiob);
-////echo $listrow;
-//$listrow = $listrow + 1 ;
 //
-//$formnuma = $productall['productp5'][4][0];
-//for($i= 0,$x = $listrow ; $i <= $formnuma ; $i++){
-//    //$spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-//    if($formnuma >2 && $i>2 ){
-//        $spreadsheet->getActiveSheet()->insertNewRowBefore($x, 1);
-//
-//    }
-//    $spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-//    $sheet->setCellValue("A{$x}", $productall['productp5'][11][$i]);
-//    $x++;
-//}
-//
-///* 四、洗水注意事项：*/
-//
-///* 五、整烫注意事项：：*/
-//
-//$listrow = $listrow +  4 ;
-////echo $listrow;
-//$formnuma = $productall['productp5'][5][0];
-//for($i= 0,$x = $listrow ; $i <= $formnuma ; $i++){
-//    //$spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-//    if($formnuma >2 && $i>2 ){
-//        $spreadsheet->getActiveSheet()->insertNewRowBefore($x, 1);
-//
-//    }
-//    $spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-//    $sheet->setCellValue("A{$x}", $productall['productp5'][12][$i]);
-//    $x++;
-//}
-//
+/** 五、整烫注意事项：：*/
+$listrow = $listrow +  2 ;
+
+$thisrow = $listrow;
+for($x = 0 ,$c = 1; $c <= $productall['productp5'][5][0]; $x++ ,$c++){
+
+    if($c >3){
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($thisrow, 1);
+    }
+    $spreadsheet->getActiveSheet()->mergeCells("A{$thisrow}:H{$thisrow}");
+    $sheet->setCellValue("A{$thisrow}", $productall['productp5'][12][$x]);
+    $thisrow++;
+
+}
+$listrow = ($productall['productp5'][5][0]>3) ? ($listrow + $productall['productp5'][5][0]) : ($listrow+3);
+
 ///* //五、整烫注意事项：*/
 //
-///* 六、包装注意事项：*/
-//$rowadd = $formnuma < 3 ? 3 :0;
-//$listrow = $listrow + $rowadd ;
-//$listrow = $listrow +  3 ;
-////echo $listrow;
-//$formnuma = $productall['productp5'][6][0];
-//for($i= 0,$x = $listrow ; $i <= $formnuma ; $i++){
-//    //$spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-//    if($formnuma >2 && $i>2 ){
-//        $spreadsheet->getActiveSheet()->insertNewRowBefore($x, 1);
-//
-//    }
-//    $spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-//    $sheet->setCellValue("A{$x}", $productall['productp5'][13][$i]);
-//    $x++;
-//}
-//$listrow = $listrow + $formnuma + 1 ;
-//if($productall['productp5'][6][1] == '1'){
-//    $radioa = '■ 有';
-//    $radiob = '□ 无';
-//}else{
-//    $radioa = '□ 有';
-//    $radiob = '■ 无';
-//}
-//$sheet->setCellValue('B'.$listrow, $radioa);
-//$sheet->setCellValue('C'.$listrow, $radiob);
-//
-//
-////echo $listrow ;
-//$sheet->setCellValue('F'.$listrow, $productall['productp5'][6][2]); //处理方法
-//
-///* //六、包装注意事项：*/
-//
-///* 七、其他：*/
-//
-//$listrow = $listrow +  3 ;
-////echo $listrow;
-//$formnuma = $productall['productp5'][7][0];
-//for($i= 0,$x = $listrow ; $i <= $formnuma ; $i++){
-//    //$spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-//    if($formnuma >2 && $i>2 ){
-//        $spreadsheet->getActiveSheet()->insertNewRowBefore($x, 1);
-//
-//    }
-//    $spreadsheet->getActiveSheet()->mergeCells("A{$x}:H{$x}");
-//    $sheet->setCellValue("A{$x}", $productall['productp5'][14][$i]);
-//    $x++;
-//}
-////$rowadd = $formnuma < 3 ? 1 :1;
-//
-///*echo $listrow;
-//echo $formnuma;*/
-//switch ($formnuma){
-//    case '0':
-//        $rowadd = 3;
-//        break;
-//    case '1':
-//        $rowadd = 2;
-//        break;
-//    case '2':
-//        $rowadd = 1;
-//        break;
-//    default:
-//        $rowadd = 1;
-//}
-//$listrow = $listrow + $formnuma + $rowadd ;
-////echo $listrow;
-//$sheet->setCellValue('B'.$listrow,  $productall['productp5'][0]["rename1"]);
-//$sheet->setCellValue('F'.$listrow,  $productall['productp5'][0]["rename2"]);
-///* //七、其他*/
-//$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
+/** 六、包装注意事项：*/
+
+$listrow = $listrow +  2 ;
+
+$thisrow = $listrow;
+for($x = 0 ,$c = 1; $c <= $productall['productp5'][6][0]; $x++ ,$c++){
+
+    if($c >3){
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($thisrow, 1);
+    }
+    $spreadsheet->getActiveSheet()->mergeCells("A{$thisrow}:H{$thisrow}");
+    $sheet->setCellValue("A{$thisrow}", $productall['productp5'][13][$x]);
+    $thisrow++;
+
+}
+$listrow = ($productall['productp5'][6][0]>3) ? ($listrow + $productall['productp5'][6][0]) : ($listrow+3);
+//$sheet->setCellValue("L1", $listrow);
+
+if($productall['productp5'][6][1] == '1'){
+    $radioa = '■ 有';
+    $radiob = '□ 无';
+}else{
+    $radioa = '□ 有';
+    $radiob = '■ 无';
+}
+$sheet->setCellValue('B'.$listrow, $radioa);
+$sheet->setCellValue('C'.$listrow, $radiob);
+
+$sheet->setCellValue('F'.$listrow, $productall['productp5'][6][2]); //处理方法
+
+/* 六、包装注意事项：*/
+
+/* 七、其他：*/
+$listrow = $listrow +  3 ;
+
+$thisrow = $listrow;
+for($x = 0 ,$c = 1; $c <= $productall['productp5'][7][0]; $x++ ,$c++){
+
+    if($c >3){
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($thisrow, 1);
+    }
+    $spreadsheet->getActiveSheet()->mergeCells("A{$thisrow}:H{$thisrow}");
+    $sheet->setCellValue("A{$thisrow}", $productall['productp5'][14][$x]);
+    $thisrow++;
+
+}
+$listrow = ($productall['productp5'][7][0]>3) ? ($listrow + $productall['productp5'][7][0]) : ($listrow+3);
+//$sheet->setCellValue("L1", $listrow);
+
+$sheet->setCellValue('B'.$listrow,  $productall['productp5'][0]["rename1"]);
+$sheet->setCellValue('F'.$listrow,  $productall['productp5'][0]["rename2"]);
+/* //七、其他*/
+
+$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 /*第五页*/
 
 /**
  * 第六页
  */
-//$spreadsheet->setActiveSheetIndex(5);  //設置當前活動表
-//$sheet = $spreadsheet->getActiveSheet();
-//
-//$spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft Yahei');
-//$spreadsheet->getDefaultStyle()->getFont()->setSize(12);
-//$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(9.5);
-//$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(9.5);
-//$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(9.5);
-//$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(9.5);
-//$spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(9.5);
-//$spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(9.5);
-//$spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(9.5);
-//
-//$sheet->setCellValue('B2',  $productall['productp1']['guest']);
-//$sheet->setCellValue('B3',  $productall['productp1']['billdate']);
-//$sheet->setCellValue('D2',  $productall['doc']);
-//$sheet->setCellValue('D3',  $productall['productp1']['styleno']);
-//$sheet->setCellValue('F2',  $productall['productp1']['department']);
-//$sheet->setCellValue('F3',  $productall['productp1']['findate']);
-//$sheet->setCellValue('G3',  $productall['productp1']['trans']);
-//
-//
-//$wizard = new HtmlHelper();
-//$html1 = str_replace('\"', "", htmlspecialchars_decode($productall['productp6']['fab1'])) ;
-//$richText = $wizard->toRichTextObject($html1);
-//
-//$spreadsheet->getActiveSheet() ->setCellValue('A5', $richText);
-//
-//
-//
-//
-//$wizard = new HtmlHelper();
-//$html1 = str_replace('\"', "", htmlspecialchars_decode($productall['productp6']['fab2'])) ;
-//$richText = $wizard->toRichTextObject($html1);
-//
-//$spreadsheet->getActiveSheet() ->setCellValue('A14', $richText);
-//
-//$wizard = new HtmlHelper();
-//$html1 = str_replace('\"', "", htmlspecialchars_decode($productall['productp6']['fab3'])) ;
-//$richText = $wizard->toRichTextObject($html1);
-//
-//$spreadsheet->getActiveSheet() ->setCellValue('A22', $richText);
-//
-//
-//$spreadsheet->getActiveSheet()->getStyle("A5:G11")->applyFromArray($styleArray1);
-//$spreadsheet->getActiveSheet()->getStyle("A14:G19")->applyFromArray($styleArray1);
-//$spreadsheet->getActiveSheet()->getStyle("A22:G36")->applyFromArray($styleArray1);
-//$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
+$spreadsheet->setActiveSheetIndex(5);  //設置當前活動表
+$sheet = $spreadsheet->getActiveSheet();
+
+$spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft Yahei');
+$spreadsheet->getDefaultStyle()->getFont()->setSize(12);
+$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(9.5);
+$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(9.5);
+$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(9.5);
+$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(9.5);
+$spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(9.5);
+$spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(9.5);
+$spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(9.5);
+
+$sheet->setCellValue('B2',  $productall['productp1']['guest']);
+$sheet->setCellValue('B3',  $productall['productp1']['billdate']);
+$sheet->setCellValue('D2',  $productall['doc']);
+$sheet->setCellValue('D3',  $productall['productp1']['styleno']);
+$sheet->setCellValue('F2',  $productall['productp1']['department']);
+$sheet->setCellValue('F3',  $productall['productp1']['findate']);
+$sheet->setCellValue('G3',  $productall['productp1']['trans']);
+
+
+$wizard = new HtmlHelper();
+$html1 = str_replace('\"', "", htmlspecialchars_decode($productall['productp6']['fab1'])) ;
+$richText = $wizard->toRichTextObject($html1);
+
+$spreadsheet->getActiveSheet() ->setCellValue('A5', $richText);
+
+
+
+
+$wizard = new HtmlHelper();
+$html1 = str_replace('\"', "", htmlspecialchars_decode($productall['productp6']['fab2'])) ;
+$richText = $wizard->toRichTextObject($html1);
+
+$spreadsheet->getActiveSheet() ->setCellValue('A14', $richText);
+
+$wizard = new HtmlHelper();
+$html1 = str_replace('\"', "", htmlspecialchars_decode($productall['productp6']['fab3'])) ;
+$richText = $wizard->toRichTextObject($html1);
+
+$spreadsheet->getActiveSheet() ->setCellValue('A22', $richText);
+
+
+$spreadsheet->getActiveSheet()->getStyle("A5:G11")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("A14:G19")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("A22:G36")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 ///*第六页*/
 //unset($_SESSION['productall'] ); //注销SESSION
 
