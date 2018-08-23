@@ -2,7 +2,7 @@
 session_start();
 
 
-$samplep1 =   $_SESSION['productall'];
+$samplep1 =   $_SESSION['potem30'];
 var_dump($samplep1);
 
 
