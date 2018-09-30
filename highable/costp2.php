@@ -5,12 +5,6 @@ $costp2 =  $_SESSION['costp2'];
 
 require_once('autoloadconfig.php');  //判断是否在线
 
-if($online){
-    require_once '/home/pan/vendor/autoload.php';
-
-}else{
-    require_once '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
-}
 require_once ('img.php');
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
@@ -18,9 +12,10 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-
+//var_dump($costp2);
 $temno = $costp2["temno"];
-
+$titlearr = unserialize(gzuncompress(base64_decode($costp2["cctitle"])));
+//print_r($titlearr);
 
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
@@ -30,6 +25,12 @@ $spreadsheet->getActiveSheet()->setTitle("COST CHART sheet1");
 $spreadsheet->getDefaultStyle()->getFont()->setName('微软雅黑');
 $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
 //$spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(50); //行默认高度
+$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(20);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(50);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(50);  //列宽度
+
+$spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(36); //列高度
+$spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(50); //列高度
 
 $styleArray1 = [
     'alignment' => [
@@ -81,12 +82,7 @@ $styleArray = [
     ],
    
 ];
-$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(26);  //列宽度
-$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(70);  //列宽度
-$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(70);  //列宽度
 
-$spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(36); //列高度
-$spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(100); //列高度
 
 //$daftitle=array("CLIENT:","Sketch","Style no.：");
 //$daftitlenum = count($daftitle);
@@ -115,33 +111,37 @@ $spreadsheet->getActiveSheet()->getStyle("B2:B8")->applyFromArray($styleArray);
 $spreadsheet->getActiveSheet()->getStyle("B9")->applyFromArray($styleArray);
 
 
-$spreadsheet->getActiveSheet()->setCellValue("B1", $costp2["costname"][0]);
+$spreadsheet->getActiveSheet()->setCellValue("B1", $costp2["clientname"]);
 $spreadsheet->getActiveSheet()->getStyle("B1")->applyFromArray($styleArray);
 $spreadsheet->getActiveSheet()->getStyle("B1")->getAlignment()->setWrapText(true);
 
-$spreadsheet->getActiveSheet()->setCellValue("C1", $costp2["costdata"]['cd1'][0]);
+$spreadsheet->getActiveSheet()->setCellValue("C1", $costp2["alist"]["a1"]);
 $spreadsheet->getActiveSheet()->getStyle("C1")->applyFromArray($styleArray);
 $spreadsheet->getActiveSheet()->getStyle("C1")->getAlignment()->setWrapText(true);
 
 
-$spreadsheet->getActiveSheet()->setCellValue("C2", $costp2["costdata"]['cd2'][0]);
+$spreadsheet->getActiveSheet()->setCellValue("C2", $costp2["alist"]["a3"]);
 $spreadsheet->getActiveSheet()->getStyle("C2:C8")->applyFromArray($styleArray);
 $spreadsheet->getActiveSheet()->getStyle("C2:C8")->getAlignment()->setWrapText(true);
 
 $spreadsheet->getActiveSheet()->mergeCells("C4:C6");
-$spreadsheet->getActiveSheet()->setCellValue("C4", $costp2["costdata"]['cd3'][0]);
+$spreadsheet->getActiveSheet()->setCellValue("C4", $costp2["alist"]["a4"]);
 
 $spreadsheet->getActiveSheet()->getStyle("C4")->getAlignment()->setWrapText(true);
 
-$spreadsheet->getActiveSheet()->setCellValue("C8", $costp2["costdata"]['cd4'][0]);
+$spreadsheet->getActiveSheet()->setCellValue("C8", $costp2["alist"]["a5"]);
 $spreadsheet->getActiveSheet()->getStyle("C9")->applyFromArray($styleArray);
 $spreadsheet->getActiveSheet()->getStyle("C8")->getAlignment()->setWrapText(true);
+
+$spreadsheet->getActiveSheet()->setCellValue("B9", $costp2["styleno"]);
+$spreadsheet->getActiveSheet()->getStyle("B9")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B9")->getAlignment()->setWrapText(true);
 
 /**
  * 图片模块
  */
 
-$img = $costp2['remarkimg2'][0];
+$img = $costp2["alist"]["a2"];
 if ($img == '') {
     $haveimg = false;  //没有图片
 
@@ -210,15 +210,15 @@ if ($haveimg){
 
 
 switch ($temno){
-     case 2:  //KM
-     $titlearr = array('Fabrication', 'Fabric Price', 'Cons./Doz    (NET)', 'Lining ', 'Lining price ', 'Cons./Doz    (NET)', 'Contrast', 'Contrast price ', 'Cons./Doz    (NET)', 'FABRIC COST', 'Thread', 'Interlining ', 'Main Label', 'C/O label', 'care label', 'Hanger Tape', 'Hangtag 1', 'Hangtag 2', 'Sealing', 'Polybag', 'Hanger', 'carton', 'zip', '壓褶', 'Total Trim Cost', 'Sewing', 'Cut,Trim,Pack etc.', 'Factory Overhead', 'Profit margin', 'Unit Price (FOB)');
+     case 7:  //MCQ
+     case 8:  //PS
+
+     $tdefault = true;
       break;
 
     default:
-      $titlearr = array('SLEF FABRIC：','Fabric Cost：','Cons./Doz(NET):','CONTRAST 1 fabric:','Fabric Cost:'	,'Cons./Doz(NET):'	,'CONTRAST 2 fabric:'	,'Fabric Cost:'	,'Cons./Doz(NET):'	,'CONTRAST 3 fabric:','Fabric Cost:','Cons./Doz(NET):','FABRIC COST:','Interlining @ 15:','Thread:','MCQ label(main label,size label & CO label):','Carton:','MCQ poly bag & hangtag:','Fabric test cost:','Sticker:','18L Shell button(7+1) use for centre front placker:','16L Shell button(2+1) use for cuff:','trimming cost:','Tatal trim cost(10%):','Sewing(RMB:120.0/PC):','Cut,Trim,Pack etc.:','Factory Overhead:','Profit margin	:');
 
-      $tdefault = true;
-        break;
+    break;
     }
 
     for($i=1,$v = 0,$l = 10;$i<= count($titlearr);$i++,$v++,$l++){
@@ -227,16 +227,18 @@ switch ($temno){
         $spreadsheet->getActiveSheet()->getStyle("A{$l}")->applyFromArray($styleArray);
         $spreadsheet->getActiveSheet()->getStyle("A{$l}")->getAlignment()->setWrapText(true);
 
-        $spreadsheet->getActiveSheet()->setCellValue("B{$l}", $costp2["fab"]["a".$i][0]);
+        $spreadsheet->getActiveSheet()->setCellValue("B{$l}", $costp2["clist"]["c".$i]);
         $spreadsheet->getActiveSheet()->getStyle("B{$l}")->applyFromArray($styleArray);
         $spreadsheet->getActiveSheet()->getStyle("B{$l}")->getAlignment()->setWrapText(true);
 
-        $spreadsheet->getActiveSheet()->setCellValue("C{$l}", $costp2["fab"]["b".$i][0]);
+        $spreadsheet->getActiveSheet()->setCellValue("C{$l}", $costp2["dlist"]["d".$i]);
         $spreadsheet->getActiveSheet()->getStyle("C{$l}")->applyFromArray($styleArray);
         $spreadsheet->getActiveSheet()->getStyle("C{$l}")->getAlignment()->setWrapText(true);
-
-
         }
+
+/**
+ *  下面就是 旧的
+ */
 
 
 //for ($i = 1;$i<44;$i++) {
