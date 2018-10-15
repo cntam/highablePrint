@@ -137,6 +137,10 @@ $spreadsheet->getActiveSheet()->setCellValue("B9", $costp2["styleno"]);
 $spreadsheet->getActiveSheet()->getStyle("B9")->applyFromArray($styleArray);
 $spreadsheet->getActiveSheet()->getStyle("B9")->getAlignment()->setWrapText(true);
 
+
+
+
+
 /**
  * 图片模块
  */
@@ -235,6 +239,94 @@ switch ($temno){
         $spreadsheet->getActiveSheet()->getStyle("C{$l}")->applyFromArray($styleArray);
         $spreadsheet->getActiveSheet()->getStyle("C{$l}")->getAlignment()->setWrapText(true);
         }
+
+/**
+ * 中间布料栏
+ */
+
+if($costp2["alist"]["a10"] > 0){    //如果行数大于12 增加行
+    $spreadsheet->getActiveSheet()->setCellValue("D1", $costp2["alist"]["a10"]);
+    $addlist = 10;
+
+    for($n = 1,$r=($costp2["alist"]["a10"]-1);$n<=($costp2["alist"]["a10"]);$n++,$r-- ){
+
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($addlist, 3);
+
+        /**第一行*/
+        $spreadsheet->getActiveSheet()->setCellValue("A10", $costp2["alist"]["a11"][$r]);
+        $spreadsheet->getActiveSheet()->getStyle("A10")->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("A10")->getAlignment()->setWrapText(true);
+
+        $spreadsheet->getActiveSheet()->setCellValue("B10", $costp2["alist"]["a12"][$r]);
+        $spreadsheet->getActiveSheet()->getStyle("B10")->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("B10")->getAlignment()->setWrapText(true);
+
+        $spreadsheet->getActiveSheet()->setCellValue("C10", $costp2["alist"]["a13"][$r]);
+        $spreadsheet->getActiveSheet()->getStyle("C10")->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("C10")->getAlignment()->setWrapText(true);
+        /**第一行*/
+
+        /**第2行*/
+        $spreadsheet->getActiveSheet()->setCellValue("A11", $costp2["alist"]["a14"][$r]);
+        $spreadsheet->getActiveSheet()->getStyle("A11")->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("A11")->getAlignment()->setWrapText(true);
+
+        if(1 == $costp2["alist"]["a15"][$r]){
+            $alista15 = 'USD$';
+        }elseif (2 == $costp2["alist"]["a15"][$r]){
+            $alista15 = 'HKD$';
+        }elseif (3 == $costp2["alist"]["a15"][$r]){
+            $alista15 = 'RMB￥';
+        }
+
+        $alistB11 = $alista15 .' '. $costp2["alist"]["a16"][$r] .' '. $costp2["alist"]["a17"][$r] ;
+
+        $spreadsheet->getActiveSheet()->setCellValue("B11", $alistB11);
+        $spreadsheet->getActiveSheet()->getStyle("B11")->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("B11")->getAlignment()->setWrapText(true);
+
+        $spreadsheet->getActiveSheet()->setCellValue("C11", $costp2["alist"]["a18"][$r]);
+        $spreadsheet->getActiveSheet()->getStyle("C11")->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("C11")->getAlignment()->setWrapText(true);
+        /**第2行*/
+
+        /**第3行*/
+        $spreadsheet->getActiveSheet()->setCellValue("A12", $costp2["alist"]["a19"][$r]);
+        $spreadsheet->getActiveSheet()->getStyle("A12")->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("A12")->getAlignment()->setWrapText(true);
+
+        if(1 == $costp2["alist"]["a22"][$r]){
+            $alista22 = 'y/DZ';
+        }elseif (2 == $costp2["alist"]["a22"][$r]){
+            $alista22 = 'y/PC';
+        }
+
+        $alistB12 =   $costp2["alist"]["a20"][$r] .' '. $costp2["alist"]["a21"][$r] .' '. $alista22;
+
+        $spreadsheet->getActiveSheet()->setCellValue("B12", $alistB12);
+        $spreadsheet->getActiveSheet()->getStyle("B12")->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("B12")->getAlignment()->setWrapText(true);
+
+        if(1 == $costp2["alist"]["a23"][$r]){
+            $alista23 = 'y/DZ';
+        }elseif (2 == $costp2["alist"]["a23"][$r]){
+            $alista23 = 'y/PC';
+        }
+
+        $alistB12 =   $costp2["alist"]["a20"][$r] .' '. $costp2["alist"]["a21"][$r] .' '. $alista22;
+
+        $spreadsheet->getActiveSheet()->setCellValue("C12", $costp2["alist"]["a23"][$r]);
+        $spreadsheet->getActiveSheet()->getStyle("C12")->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("C12")->getAlignment()->setWrapText(true);
+        /**第3行*/
+    }
+}
+
+
+/**
+ * //中间布料栏
+ */
+
 
 /**
  *  下面就是 旧的
