@@ -16,7 +16,8 @@ if($online){
 //require '/home/pan/vendor/autoload.php';
 
 
-
+define("PRINTURL", "http://allinone321.com/highable/output/"); //打印路徑
+define("MSFILEURL", 'http://view.officeapps.live.com/op/view.aspx?src='); //微软网上预览路径
 
 //if($online){
 //    echo '/home/pan/vendor/autoload.php';

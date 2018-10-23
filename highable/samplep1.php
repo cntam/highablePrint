@@ -359,7 +359,7 @@ $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作�
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
-//unset($_SESSION['samplep1'] ); //注销SESSION
+unset($_SESSION['samplep1'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。
