@@ -13,8 +13,8 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 //var_dump($costp2);
-$temno = $costp2["temno"];
-$titlearr = unserialize(gzuncompress(base64_decode($costp2["cctitle"])));
+//$temno = $costp2["temno"];
+//$titlearr = unserialize(gzuncompress(base64_decode($costp2["cctitle"])));
 //print_r($titlearr);
 
 $spreadsheet = new Spreadsheet();
@@ -83,6 +83,35 @@ $styleArray = [
    
 ];
 
+function getforexcate($forex) {
+    switch ($forex){
+        case 1:
+            $output = 'USD$';
+            break;
+        case 2:
+            $output = 'HKD$';
+            break;
+        case 3:
+            $output = 'RMB￥';
+            break;
+        case 4:
+            $output = 'EUR€';
+            break;
+        case 5:
+            $output = 'JPY￥';
+            break;
+
+            default:
+                 $output = 'USD$';
+            break;
+    }
+    return $output;
+    }
+
+
+
+
+
 
 //$daftitle=array("CLIENT:","Sketch","Style no.：");
 //$daftitlenum = count($daftitle);
@@ -100,45 +129,47 @@ $spreadsheet->getActiveSheet()->setCellValue("A1", 'CLIENT:');
 $spreadsheet->getActiveSheet()->getStyle("A1")->applyFromArray($styleArray);
 $spreadsheet->getActiveSheet()->getStyle("A1")->getAlignment()->setWrapText(true);
 
-$spreadsheet->getActiveSheet()->setCellValue("A2", 'Sketch');
-$spreadsheet->getActiveSheet()->getStyle("A2:A8")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("A2:A8")->getAlignment()->setWrapText(true);
+$spreadsheet->getActiveSheet()->setCellValue("A2", 'SO no.');
+$spreadsheet->getActiveSheet()->getStyle("A2")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("A2")->getAlignment()->setWrapText(true);
 
-$spreadsheet->getActiveSheet()->setCellValue("A9", 'Style no.：');
-$spreadsheet->getActiveSheet()->getStyle("A9")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("A9")->getAlignment()->setWrapText(true);
-$spreadsheet->getActiveSheet()->getStyle("B2:B8")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("B9")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->setCellValue("A3", 'Sketch');
+$spreadsheet->getActiveSheet()->getStyle("A3:A9")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("A3:A9")->getAlignment()->setWrapText(true);
+
+$spreadsheet->getActiveSheet()->setCellValue("A10", 'Style no.：');
+$spreadsheet->getActiveSheet()->getStyle("A10")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("A10")->getAlignment()->setWrapText(true);
+
+$spreadsheet->getActiveSheet()->getStyle("B3:B10")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B10")->applyFromArray($styleArray);
 
 
 $spreadsheet->getActiveSheet()->setCellValue("B1", $costp2["clientname"]);
 $spreadsheet->getActiveSheet()->getStyle("B1")->applyFromArray($styleArray);
 $spreadsheet->getActiveSheet()->getStyle("B1")->getAlignment()->setWrapText(true);
 
+$spreadsheet->getActiveSheet()->setCellValue("B2", $costp2['so']);
+$spreadsheet->getActiveSheet()->getStyle("B2")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B2")->getAlignment()->setWrapText(true);
+
 $spreadsheet->getActiveSheet()->setCellValue("C1", $costp2["alist"]["a1"]);
 $spreadsheet->getActiveSheet()->getStyle("C1")->applyFromArray($styleArray);
 $spreadsheet->getActiveSheet()->getStyle("C1")->getAlignment()->setWrapText(true);
 
-
-$spreadsheet->getActiveSheet()->setCellValue("C2", $costp2["alist"]["a3"]);
-$spreadsheet->getActiveSheet()->getStyle("C2:C8")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("C2:C8")->getAlignment()->setWrapText(true);
-
-$spreadsheet->getActiveSheet()->mergeCells("C4:C6");
-$spreadsheet->getActiveSheet()->setCellValue("C4", $costp2["alist"]["a4"]);
-
-$spreadsheet->getActiveSheet()->getStyle("C4")->getAlignment()->setWrapText(true);
-
-$spreadsheet->getActiveSheet()->setCellValue("C8", $costp2["alist"]["a5"]);
-$spreadsheet->getActiveSheet()->getStyle("C9")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("C8")->getAlignment()->setWrapText(true);
-
-$spreadsheet->getActiveSheet()->setCellValue("B9", $costp2["styleno"]);
-$spreadsheet->getActiveSheet()->getStyle("B9")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("B9")->getAlignment()->setWrapText(true);
+$spreadsheet->getActiveSheet()->mergeCells("C3:C9");
+$spreadsheet->getActiveSheet()->setCellValue("C3", $costp2["alist"]["a3"]);
+$spreadsheet->getActiveSheet()->getStyle("C3:C9")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("C3:C9")->getAlignment()->setWrapText(true);
 
 
+$spreadsheet->getActiveSheet()->setCellValue("B10", $costp2["styleno"]);
+$spreadsheet->getActiveSheet()->getStyle("B10")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B10")->getAlignment()->setWrapText(true);
 
+
+$spreadsheet->getActiveSheet()->getStyle("C2")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("C10")->applyFromArray($styleArray);
 
 
 /**
@@ -198,326 +229,300 @@ if ($haveimg){
     $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-    $drawing->setWidth($width>250 ? 250:$width);
-    //$drawing->setHeight($height>130 ? 130:$height);
+    //$drawing->setWidth($width>250 ? 250:$width);
+    $drawing->setHeight($height>130 ? 130:$height);
 //$drawing->setHeight(150);
 
 
     //$drawing->setCoordinates($cola.'2');
-    $drawing->setCoordinates('B2');
+    $drawing->setCoordinates('B3');
     $drawing->setOffsetX(5);
     $drawing->setOffsetY(5);
     $drawing->setWorksheet($spreadsheet->getActiveSheet());
 }
 /* 图片模块 */
 
-
-
-switch ($temno){
-     case 7:  //MCQ
-     case 8:  //PS
-
-     $tdefault = true;
-      break;
-
-    default:
-
-    break;
-    }
-
-    for($i=1,$v = 0,$l = 10;$i<= count($titlearr);$i++,$v++,$l++){
-
-        $spreadsheet->getActiveSheet()->setCellValue("A{$l}", $titlearr[$v]);
-        $spreadsheet->getActiveSheet()->getStyle("A{$l}")->applyFromArray($styleArray);
-        $spreadsheet->getActiveSheet()->getStyle("A{$l}")->getAlignment()->setWrapText(true);
-
-        $spreadsheet->getActiveSheet()->setCellValue("B{$l}", $costp2["clist"]["c".$i]);
-        $spreadsheet->getActiveSheet()->getStyle("B{$l}")->applyFromArray($styleArray);
-        $spreadsheet->getActiveSheet()->getStyle("B{$l}")->getAlignment()->setWrapText(true);
-
-        $spreadsheet->getActiveSheet()->setCellValue("C{$l}", $costp2["dlist"]["d".$i]);
-        $spreadsheet->getActiveSheet()->getStyle("C{$l}")->applyFromArray($styleArray);
-        $spreadsheet->getActiveSheet()->getStyle("C{$l}")->getAlignment()->setWrapText(true);
-        }
-
 /**
- * 中间布料栏
+ * FABRIC COST
+ */
+$spreadsheet->getActiveSheet()->setCellValue("A11", 'FABRIC COST');
+$spreadsheet->getActiveSheet()->getStyle("A11:A12")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("A11:A12")->getAlignment()->setWrapText(true);
+if($costp2["alist"]["a33"] == '1'){
+    $radioa = '■ 100%';
+    $radiob = '□ 110%';
+}else{
+    $radioa = '□ 100%';
+    $radiob = '■ 110%';
+}
+
+$a31 = '   '.getforexcate($costp2["fixalist"]["fixa1"]).' '.$costp2["alist"]["a31"];
+$radioa .=$a31;
+$a32 = '   '.getforexcate($costp2["fixalist"]["fixa1"]).' '.$costp2["alist"]["a32"];
+$radiob .=$a32;
+
+$spreadsheet->getActiveSheet()->setCellValue("B11", $radioa);
+$spreadsheet->getActiveSheet()->setCellValue("B12", $radiob);
+$spreadsheet->getActiveSheet()->getStyle("B11")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B12")->applyFromArray($styleArray);
+
+$spreadsheet->getActiveSheet()->getStyle("C11")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("C12")->applyFromArray($styleArray);
+
+$spreadsheet->getActiveSheet()->setCellValue("A13", 'Fushing');
+$spreadsheet->getActiveSheet()->getStyle("A13")->applyFromArray($styleArray);
+
+$spreadsheet->getActiveSheet()->setCellValue("B13", $costp2["alist"]["a29"]);
+$spreadsheet->getActiveSheet()->getStyle("B13")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B13")->getAlignment()->setWrapText(true);
+
+$spreadsheet->getActiveSheet()->setCellValue("C13", $costp2["alist"]["a30"]);
+$spreadsheet->getActiveSheet()->getStyle("C13")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("C13")->getAlignment()->setWrapText(true);
+/**
+ *  //FABRIC COST
  */
 
-if($costp2["alist"]["a10"] > 0){    //如果行数大于12 增加行
-    $spreadsheet->getActiveSheet()->setCellValue("D1", $costp2["alist"]["a10"]);
-    $addlist = 10;
+/**
+ * Total Trim Cost
+ */
+$spreadsheet->getActiveSheet()->setCellValue("A14", $costp2["elist"]["fixedval"]["fixedtitle"][0]);
+$spreadsheet->getActiveSheet()->getStyle("A14")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->setCellValue("A15", $costp2["elist"]["fixedval"]["fixedtitle"][1]);
+$spreadsheet->getActiveSheet()->getStyle("A15")->applyFromArray($styleArray);
 
-    for($n = 1,$r=($costp2["alist"]["a10"]-1);$n<=($costp2["alist"]["a10"]);$n++,$r-- ){
+$fixa2 = getforexcate($costp2["fixalist"]["fixa2"]).' '.$costp2["elist"]["fixedval"]["fixedval"][0];
 
-        $spreadsheet->getActiveSheet()->insertNewRowBefore($addlist, 3);
+$fixa3 = getforexcate($costp2["fixalist"]["fixa3"]).' '.$costp2["elist"]["fixedval"]["fixedval"][1];
 
-        /**第一行*/
-        $spreadsheet->getActiveSheet()->setCellValue("A10", $costp2["alist"]["a11"][$r]);
-        $spreadsheet->getActiveSheet()->getStyle("A10")->applyFromArray($styleArray);
-        $spreadsheet->getActiveSheet()->getStyle("A10")->getAlignment()->setWrapText(true);
 
-        $spreadsheet->getActiveSheet()->setCellValue("B10", $costp2["alist"]["a12"][$r]);
-        $spreadsheet->getActiveSheet()->getStyle("B10")->applyFromArray($styleArray);
-        $spreadsheet->getActiveSheet()->getStyle("B10")->getAlignment()->setWrapText(true);
+$spreadsheet->getActiveSheet()->setCellValue("B14", $fixa2);
+$spreadsheet->getActiveSheet()->setCellValue("B15", $fixa3);
+$spreadsheet->getActiveSheet()->getStyle("B14")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B15")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B14")->getAlignment()->setWrapText(true);
+$spreadsheet->getActiveSheet()->getStyle("B15")->getAlignment()->setWrapText(true);
 
-        $spreadsheet->getActiveSheet()->setCellValue("C10", $costp2["alist"]["a13"][$r]);
-        $spreadsheet->getActiveSheet()->getStyle("C10")->applyFromArray($styleArray);
-        $spreadsheet->getActiveSheet()->getStyle("C10")->getAlignment()->setWrapText(true);
-        /**第一行*/
+$spreadsheet->getActiveSheet()->getStyle("C14")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("C15")->applyFromArray($styleArray);
 
-        /**第2行*/
-        $spreadsheet->getActiveSheet()->setCellValue("A11", $costp2["alist"]["a14"][$r]);
-        $spreadsheet->getActiveSheet()->getStyle("A11")->applyFromArray($styleArray);
-        $spreadsheet->getActiveSheet()->getStyle("A11")->getAlignment()->setWrapText(true);
+/**
+ *  //Total Trim Cost
+ */
 
-        if(1 == $costp2["alist"]["a15"][$r]){
-            $alista15 = 'USD$';
-        }elseif (2 == $costp2["alist"]["a15"][$r]){
-            $alista15 = 'HKD$';
-        }elseif (3 == $costp2["alist"]["a15"][$r]){
-            $alista15 = 'RMB￥';
+/**
+ * Total Cost
+ */
+$spreadsheet->getActiveSheet()->setCellValue("A16", $costp2["elist"]["fixedval"]["fixedtitle"][2]);
+$spreadsheet->getActiveSheet()->getStyle("A16")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->setCellValue("A17", $costp2["elist"]["fixedval"]["fixedtitle"][3]);
+$spreadsheet->getActiveSheet()->getStyle("A17")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->setCellValue("A18", $costp2["elist"]["fixedval"]["fixedtitle"][4]);
+$spreadsheet->getActiveSheet()->getStyle("A18")->applyFromArray($styleArray);
+
+$fixa4 = getforexcate($costp2["fixalist"]["fixa4"]).' '.$costp2["elist"]["fixedval"]["fixedval"][2];
+$spreadsheet->getActiveSheet()->setCellValue("B16", $fixa4);
+$fixedval3 = $costp2["elist"]["fixedval"]["fixedval"][3].' %';
+$spreadsheet->getActiveSheet()->setCellValue("B17", $fixedval3);
+$spreadsheet->getActiveSheet()->setCellValue("B18", $costp2["elist"]["fixedval"]["fixedval"][4]);
+
+$spreadsheet->getActiveSheet()->getStyle("B16")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B17")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B18")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B16")->getAlignment()->setWrapText(true);
+$spreadsheet->getActiveSheet()->getStyle("B17")->getAlignment()->setWrapText(true);
+$spreadsheet->getActiveSheet()->getStyle("B18")->getAlignment()->setWrapText(true);
+
+$spreadsheet->getActiveSheet()->getStyle("C16")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("C17")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("C18")->applyFromArray($styleArray);
+
+/**
+ *  //Total Cost
+ */
+
+/**
+ * Unit Price
+ */
+if($costp2["glist"]["g1"] > 0){
+    $spreadsheet->getActiveSheet()->setCellValue("A19", $costp2["elist"]["fixedval"]["fixedtitle"][5]);
+    $spreadsheet->getActiveSheet()->getStyle("A19")->applyFromArray($styleArray);
+
+
+    $b = 1;$v=0;
+
+    foreach ($costp2["glist"]["g2"] as $value){
+        if($b == $costp2["glist"]["g1"]){
+            $g2 = '■  '.$value. '   '.$costp2["glist"]["g3"][$v] . ' %';
+        }else{
+            $g2 = '□  '.$value. '   '.$costp2["glist"]["g3"][$v] . ' %';
         }
+        $thisrow = 18 + $b ;
+        $spreadsheet->getActiveSheet()->setCellValue("B".$thisrow , $g2);
+        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
 
-        $alistB11 = $alista15 .' '. $costp2["alist"]["a16"][$r] .' '. $costp2["alist"]["a17"][$r] ;
+        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->applyFromArray($styleArray);
 
-        $spreadsheet->getActiveSheet()->setCellValue("B11", $alistB11);
-        $spreadsheet->getActiveSheet()->getStyle("B11")->applyFromArray($styleArray);
-        $spreadsheet->getActiveSheet()->getStyle("B11")->getAlignment()->setWrapText(true);
-
-        $spreadsheet->getActiveSheet()->setCellValue("C11", $costp2["alist"]["a18"][$r]);
-        $spreadsheet->getActiveSheet()->getStyle("C11")->applyFromArray($styleArray);
-        $spreadsheet->getActiveSheet()->getStyle("C11")->getAlignment()->setWrapText(true);
-        /**第2行*/
-
-        /**第3行*/
-        $spreadsheet->getActiveSheet()->setCellValue("A12", $costp2["alist"]["a19"][$r]);
-        $spreadsheet->getActiveSheet()->getStyle("A12")->applyFromArray($styleArray);
-        $spreadsheet->getActiveSheet()->getStyle("A12")->getAlignment()->setWrapText(true);
-
-        if(1 == $costp2["alist"]["a22"][$r]){
-            $alista22 = 'y/DZ';
-        }elseif (2 == $costp2["alist"]["a22"][$r]){
-            $alista22 = 'y/PC';
-        }
-
-        $alistB12 =   $costp2["alist"]["a20"][$r] .' '. $costp2["alist"]["a21"][$r] .' '. $alista22;
-
-        $spreadsheet->getActiveSheet()->setCellValue("B12", $alistB12);
-        $spreadsheet->getActiveSheet()->getStyle("B12")->applyFromArray($styleArray);
-        $spreadsheet->getActiveSheet()->getStyle("B12")->getAlignment()->setWrapText(true);
-
-        if(1 == $costp2["alist"]["a23"][$r]){
-            $alista23 = 'y/DZ';
-        }elseif (2 == $costp2["alist"]["a23"][$r]){
-            $alista23 = 'y/PC';
-        }
-
-        $alistB12 =   $costp2["alist"]["a20"][$r] .' '. $costp2["alist"]["a21"][$r] .' '. $alista22;
-
-        $spreadsheet->getActiveSheet()->setCellValue("C12", $costp2["alist"]["a23"][$r]);
-        $spreadsheet->getActiveSheet()->getStyle("C12")->applyFromArray($styleArray);
-        $spreadsheet->getActiveSheet()->getStyle("C12")->getAlignment()->setWrapText(true);
-        /**第3行*/
+        $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow , getforexcate($costp2["fixalist"]["fixa4"]).' '.$costp2["glist"]["g4"][$v]);
+        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
+        $b++;$v++;
     }
+    /**
+     *  Final Price
+     */
+    $thisrow = 18 + $b ;
+    $spreadsheet->getActiveSheet()->setCellValue("A".$thisrow, $costp2["elist"]["fixedval"]["fixedtitle"][6]);
+    $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->applyFromArray($styleArray);
+
+    $spreadsheet->getActiveSheet()->setCellValue("B".$thisrow, getforexcate($costp2["fixalist"]["fixa4"]).' '.$costp2["elist"]["fixedval"]["fixedval"][5]);
+    $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
+    $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
+
+    $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
 }
 
 
 /**
- * //中间布料栏
+ *  //Unit Price
  */
-
 
 /**
- *  下面就是 旧的
+ *  Total Trim Cost row+
  */
 
+if($costp2["dlist"]['fromnumf'] > 0){
 
-//for ($i = 1;$i<44;$i++) {
-//    $spreadsheet->getActiveSheet()->getStyle("A{$i}")->applyFromArray($styleArray);
-//}
-//
-//
-//$styleArray2 = [
-//
-//    'alignment' => [
-//        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-//        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-//    ],
-//
-//    'borders' => [
-//        'top' => [
-//            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-//        ],
-//        'bottom' => [
-//            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-//        ],
-//        'left' => [
-//            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-//        ],
-//        'right' => [
-//            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-//        ],
-//    ],
-//
-//];
-//for ($i = 1;$i<44;$i++) {
-//
-//    $spreadsheet->getActiveSheet()->getStyle("B{$i}")->applyFromArray($styleArray2);
-//    $spreadsheet->getActiveSheet()->getStyle("C{$i}")->applyFromArray($styleArray2);
-//}
-///*
-//$spreadsheet->getActiveSheet()->getStyle('C2:D2')->applyFromArray($styleArray);
-//$spreadsheet->getActiveSheet()->getStyle('A3:B3')->applyFromArray($styleArray);
-//$spreadsheet->getActiveSheet()->getStyle('C3:D3')->applyFromArray($styleArray);
-//$spreadsheet->getActiveSheet()->getStyle('A4:B4')->applyFromArray($styleArray);
-//$spreadsheet->getActiveSheet()->getStyle('C4:D4')->applyFromArray($styleArray);
-//$spreadsheet->getActiveSheet()->getStyle('A5:B5')->applyFromArray($styleArray);
-//$spreadsheet->getActiveSheet()->getStyle('C5:D5')->applyFromArray($styleArray);
-//*/
-//$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(32); //列宽度
-//$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(21);
-//$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(32);
-///*
-//
-//
-//$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(19);
-//
-//$spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(40);
-//$spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(160);
-//$spreadsheet->getActiveSheet()->getRowDimension('3')->setRowHeight(160);
-//$spreadsheet->getActiveSheet()->getRowDimension('4')->setRowHeight(160);
-//$spreadsheet->getActiveSheet()->getRowDimension('5')->setRowHeight(160);
-//*/
-//
-//// Set cell A1 with a string value
-//
-////$spreadsheet->getActiveSheet()->getStyle('A1:D1')->getFont()->setSize(14);
-//
-//
-//$spreadsheet->getActiveSheet()->setCellValue('B1', $costp2['costname']);
-//$spreadsheet->getActiveSheet()->setCellValue('A2', "DATE:");
-//$spreadsheet->getActiveSheet()->setCellValue('B2', $costp2['costdata']);
-//$spreadsheet->getActiveSheet()->setCellValue('A3', "款式：");
-//$spreadsheet->getActiveSheet()->setCellValue('B3', $costp2['costno']);
-//
-//
-//
-//$img = $costp2['remarkimg2'];
-//preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
-//$imgformat = $imgformat[1];
-//switch ($imgformat)
-//{
-//    case "jpg":
-//    case "jpeg":
-//        $img = imagecreatefromjpeg($img);
-//        break;
-//    case "bmp":
-//        $img =  imagecreatefromwbmp($img);
-//        break;
-//    case "gif":
-//        $img =  imagecreatefromgif($img);
-//        break;
-//    case "png":
-//        $img =   imagecreatefrompng($img);
-//        break;
-//}
-//
-////$img = imagecreatefromjpeg($img);
-//
-//$width = imagesx($img);
-//
-//$height = imagesy($img);
-//
-//
-//// Generate an image
-////$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-////$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-////imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
-//
-//// Add a drawing to the worksheet
-//$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-//$drawing->setName($costp2['costname']);
-//$drawing->setDescription($costp2['costname']);
-////$drawing->setImageResource($gdImage);
-//$drawing->setImageResource($img);
-//$drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-//$drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
-////$drawing->setHeight($width);
-//
-////$drawing->setHeight($width>550 ? 550:$width);
-////$drawing->setWidth(300);
-//$drawing->setHeight(135);
-//$drawing->setCoordinates('B4');
-//$drawing->setOffsetX(130);
-//$drawing->setOffsetY(5);
-//$drawing->setWorksheet($spreadsheet->getActiveSheet());
-//
-//
-//
-//$spreadsheet->getActiveSheet()->setCellValue('A12', "Style no：");
-//$spreadsheet->getActiveSheet()->setCellValue('B12', $costp2['styleno']);
-//
-//
-//$fabname=array("SLEF FABRIC：","Fabric Cost：","Cons./Doz(NET)：",'CONTRAST 1 fabric：','Fabric Cost：','Cons./Doz(NET)：','CONTRAST 2 fabric：','Fabric Cost：','Cons./Doz(NET)：','CONTRAST 3 fabric：','Fabric Cost：','Cons./Doz(NET)：','FABRIC COST：','Interlining @ 15：','Thread：','MCQ label(main label,size label & CO label)：','Carton：','MCQ poly bag & hangtag：','Fabric test cost：','Sticker：','18L Shell button(7+1) use for centre front placker：','16L Shell button(2+1) use for cuff：','trimming cost：','Tatal trim cost(10%)：','Sewing(RMB:120.0/PC)：','Cut,Trim,Pack etc.','Factory Overhead','Profit margin','100-200PCS+CM30%','201-400PCS+CM15%','OVER 400PCS');
-//$fabcou = count($fabname);
-//for ($j=0,$k = 13,$v =1 ;$j<$fabcou;$j++){
-//
-//    $m = $k+2;
-//    if($v<29){
-//        $spreadsheet->getActiveSheet()->setCellValue("A{$k}", $fabname[$j]);
-//        $spreadsheet->getActiveSheet()->setCellValue("B{$k}", $costp2['fab']['a'.$v]);
-//    }else{
-//        if($v == 29){
-//            $spreadsheet->getActiveSheet()->mergeCells("A{$k}:A{$m}");
-//            $spreadsheet->getActiveSheet()->setCellValue("A{$k}", 'Unit Price');
-//            $spreadsheet->getActiveSheet()->setCellValue("B{$k}", $fabname[$j]);
-//            $spreadsheet->getActiveSheet()->setCellValue("C{$k}", $costp2['fab']['a'.$v]);
-//
-//        }else{
-//            $spreadsheet->getActiveSheet()->setCellValue("B{$k}", $fabname[$j]);
-//            $spreadsheet->getActiveSheet()->setCellValue("C{$k}", $costp2['fab']['a'.$v]);
-//        }
-//
-//
-//    }
-//    $spreadsheet->getActiveSheet()->getStyle("A{$k}")->getAlignment()->setWrapText(true);
-//
-//    $k++;
-//    $v++;
-//}
+    for ($u = ($costp2["dlist"]['fromnumf'] - 1);$u >= 0;$u-- ){
+        $thisrow = 16;
+        $spreadsheet->getActiveSheet()->insertNewRowBefore(16, 1);
 
-// Set cell A2 with a numeric value.
-/*
-//$spreadsheet->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
-$spreadsheet->getActiveSheet()->mergeCells('A2:B2');
-$spreadsheet->getActiveSheet()->setCellValue('A2', "$remark1");
-$spreadsheet->getActiveSheet()->mergeCells('C2:D2');
-$spreadsheet->getActiveSheet()->setCellValue('C2', "$remark2");
+        $spreadsheet->getActiveSheet()->setCellValue("A16", $costp2["dlist"]["titlef"][$u]);
+        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->getAlignment()->setWrapText(true);
 
-// Set cell A2 with a numeric value
-$spreadsheet->getActiveSheet()->mergeCells('A3:B3');
-$spreadsheet->getActiveSheet()->setCellValue('A3', "$remark3");
-$spreadsheet->getActiveSheet()->mergeCells('C3:D3');
-$spreadsheet->getActiveSheet()->setCellValue('C3', "$remark4");
 
-// Set cell A2 with a numeric value
-$spreadsheet->getActiveSheet()->mergeCells('A4:B4');
-$spreadsheet->getActiveSheet()->setCellValue('A4', "$remark5");
-$spreadsheet->getActiveSheet()->mergeCells('C4:D4');
-$spreadsheet->getActiveSheet()->setCellValue('C4', "$remark6");
+        $spreadsheet->getActiveSheet()->setCellValue("B".$thisrow, $costp2["dlist"]["d1"][$u]);
+        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
 
-// Set cell A2 with a numeric value
-$spreadsheet->getActiveSheet()->mergeCells('A5:B5');
-$spreadsheet->getActiveSheet()->setCellValue('A5', "$remark7");
-$spreadsheet->getActiveSheet()->mergeCells('C5:D5');
-$spreadsheet->getActiveSheet()->setCellValue('C5', "$remark8");
+        $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow, $costp2["dlist"]["d2"][$u]);
+        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
 
-$spreadsheet->getActiveSheet()->getStyle('A2:C2')->getAlignment()->setWrapText(true);
-$spreadsheet->getActiveSheet()->getStyle('A3:C3')->getAlignment()->setWrapText(true);
-$spreadsheet->getActiveSheet()->getStyle('A4:C4')->getAlignment()->setWrapText(true);
-$spreadsheet->getActiveSheet()->getStyle('A5:C5')->getAlignment()->setWrapText(true);
-*/
+    }
+
+}
+
+/**
+ *  //Total Trim Cost row+
+ */
+
+/**
+ *  Total Trim Cost row+
+ */
+
+if($costp2["clist"]['fromnume'] > 0){
+
+    for ($u = ($costp2["clist"]['fromnume'] - 1);$u >= 0;$u-- ){
+        $thisrow = 14;
+        $spreadsheet->getActiveSheet()->insertNewRowBefore(14, 1);
+
+        $spreadsheet->getActiveSheet()->setCellValue("A14", $costp2["clist"]["titlee"][$u]);
+        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->getAlignment()->setWrapText(true);
+
+
+        $spreadsheet->getActiveSheet()->setCellValue("B".$thisrow, $costp2["clist"]["c1"][$u]);
+        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
+
+        $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow, $costp2["clist"]["c2"][$u]);
+        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
+
+    }
+
+}
+
+/**
+ *  //Total Trim Cost row+
+ */
+
+/**
+ *  主布
+ */
+
+if($costp2["alist"]["a10"] > 0){
+
+    for ($u = ($costp2["alist"]["a10"] - 1);$u >= 0;$u-- ){
+        $thisrow = 11;
+        $spreadsheet->getActiveSheet()->insertNewRowBefore(11, 3);
+
+        $spreadsheet->getActiveSheet()->setCellValue("A11", $costp2["alist"]["a11"][$u]);
+        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->getAlignment()->setWrapText(true);
+
+
+        $spreadsheet->getActiveSheet()->setCellValue("B11", $costp2["alist"]["a12"][$u]);
+        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
+
+        $spreadsheet->getActiveSheet()->setCellValue("C11", $costp2["alist"]["a13"][$u]);
+        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
+
+        $thisrow = 12;
+        $spreadsheet->getActiveSheet()->setCellValue("A12", $costp2["alist"]["a14"][$u]);
+        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->getAlignment()->setWrapText(true);
+
+        if($costp2["alist"]["a4"][$u] == 1){
+            $A4 = ' /y';
+        }else{
+            $A4 = ' /m';
+        }
+        $B12 = getforexcate($costp2["alist"]["a15"][$u]).' '.$costp2["alist"]["a16"][$u].$A4.' '.$costp2["alist"]["a17"][$u];
+        $spreadsheet->getActiveSheet()->setCellValue("B".$thisrow, $B12);
+        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
+
+        $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow, $costp2["alist"]["a18"][$u]);
+        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
+
+        $thisrow = 13;
+        $spreadsheet->getActiveSheet()->setCellValue("A13", $costp2["alist"]["a19"][$u]);
+        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->getAlignment()->setWrapText(true);
+
+        if($costp2["alist"]["a22"][$u] == 1){
+            $A22 = ' y/DZ';
+        }else{
+            $A22 = ' y/PC';
+        }
+        $B13 = $costp2["alist"]["a20"][$u].' X  '.$costp2["alist"]["a21"][$u].$A22;
+        $spreadsheet->getActiveSheet()->setCellValue("B".$thisrow, $B13);
+        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
+
+
+        if($costp2["alist"]["a24"][$u] == 1){
+            $A24 = ' y/PC';
+        }else{
+            $A24 = ' m/PC';
+        }
+        $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow, $costp2["alist"]["a23"][$u].$A24);
+        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
+    }
+
+}
+
+/**
+ *  //主布
+ */
 
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
@@ -528,7 +533,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'costp2out'.$nt.'.xlsx';
+$filenameout = 'CC'.$nt.'.xlsx';
 if($output){
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
