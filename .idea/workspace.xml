@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="22dbb095-b711-45ef-80b3-db8d08d0c22f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/highable/costp2.php" afterPath="$PROJECT_DIR$/highable/costp2.php" />
+      <change beforePath="$PROJECT_DIR$/highable/cpsform.php" afterPath="$PROJECT_DIR$/highable/cpsform.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -253,8 +253,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-14" />
-    <option name="y" value="42" />
+    <option name="x" value="70" />
+    <option name="y" value="13" />
     <option name="width" value="1920" />
     <option name="height" value="977" />
   </component>
@@ -273,7 +273,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -296,6 +295,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -379,7 +379,8 @@
       <workItem from="1540196027394" duration="658000" />
       <workItem from="1540282280600" duration="160000" />
       <workItem from="1540366143841" duration="178000" />
-      <workItem from="1541671587001" duration="12000" />
+      <workItem from="1541671587001" duration="45000" />
+      <workItem from="1541731271104" duration="12000" />
     </task>
     <task id="LOCAL-00001" summary="20180327">
       <created>1522145290156</created>
@@ -689,16 +690,23 @@
       <option name="project" value="LOCAL" />
       <updated>1540366221947</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="201801108">
+      <created>1541671618516</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1541671618516</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="252024000" />
+    <option name="totallyTimeSpent" value="252069000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-14" y="42" width="1920" height="977" extended-state="0" />
+    <frame x="70" y="13" width="1920" height="977" extended-state="0" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25162336" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25541127" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952183" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -745,7 +753,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="20180601 bug fix" />
     <MESSAGE value="20180604 bug fix" />
     <MESSAGE value="20180606 bug fix" />
     <MESSAGE value="20180607 potem2" />
@@ -770,7 +777,8 @@
     <MESSAGE value="201801022 samplep1" />
     <MESSAGE value="201801023 samplep1" />
     <MESSAGE value="201801023 report" />
-    <option name="LAST_COMMIT_MESSAGE" value="201801023 report" />
+    <MESSAGE value="201801108" />
+    <option name="LAST_COMMIT_MESSAGE" value="201801108" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

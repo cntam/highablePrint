@@ -303,7 +303,6 @@ for($col=0;$col< count($cpsform['id']);$col++) {
         $drawing->setHeight($height > 130 ? 130 : $height);
 //$drawing->setHeight(150);
 
-
         //$drawing->setCoordinates($cola.'2');
         $drawing->setCoordinates($Brow.'3');
         $drawing->setOffsetX(5);
@@ -385,39 +384,6 @@ for($col=0;$col< count($cpsform['id']);$col++) {
 
 
 /**
- * Total Cost
- */
-//$spreadsheet->getActiveSheet()->setCellValue("A16", $cpsform["elist"]["fixedval"]["fixedtitle"][2]);
-//$spreadsheet->getActiveSheet()->getStyle("A16")->applyFromArray($styleArray);
-//$spreadsheet->getActiveSheet()->setCellValue("A17", $cpsform["elist"]["fixedval"]["fixedtitle"][3]);
-//$spreadsheet->getActiveSheet()->getStyle("A17")->applyFromArray($styleArray);
-//$spreadsheet->getActiveSheet()->setCellValue("A18", $cpsform["elist"]["fixedval"]["fixedtitle"][4]);
-//$spreadsheet->getActiveSheet()->getStyle("A18")->applyFromArray($styleArray);
-//
-//$fixa4 = getforexcate($cpsform["fixalist"]["fixa4"]).' '.$cpsform["elist"]["fixedval"]["fixedval"][2];
-//$spreadsheet->getActiveSheet()->setCellValue("B16", $fixa4);
-//$fixedval3 = $cpsform["elist"]["fixedval"]["fixedval"][3].' %';
-//$spreadsheet->getActiveSheet()->setCellValue("B17", $fixedval3);
-//$spreadsheet->getActiveSheet()->setCellValue("B18", $cpsform["elist"]["fixedval"]["fixedval"][4]);
-//
-//$spreadsheet->getActiveSheet()->getStyle("B16")->applyFromArray($styleArray);
-//$spreadsheet->getActiveSheet()->getStyle("B17")->applyFromArray($styleArray);
-//$spreadsheet->getActiveSheet()->getStyle("B18")->applyFromArray($styleArray);
-//$spreadsheet->getActiveSheet()->getStyle("B16")->getAlignment()->setWrapText(true);
-//$spreadsheet->getActiveSheet()->getStyle("B17")->getAlignment()->setWrapText(true);
-//$spreadsheet->getActiveSheet()->getStyle("B18")->getAlignment()->setWrapText(true);
-//
-//$spreadsheet->getActiveSheet()->getStyle("C16")->applyFromArray($styleArray);
-//$spreadsheet->getActiveSheet()->getStyle("C17")->applyFromArray($styleArray);
-//$spreadsheet->getActiveSheet()->getStyle("C18")->applyFromArray($styleArray);
-
-/**
- *  //Total Cost
- */
-
-
-
-/**
  *  Total Trim Cost row+
  */
 for($col=0;$col< count($cpsform['id']);$col++) {
@@ -430,7 +396,7 @@ for($col=0;$col< count($cpsform['id']);$col++) {
         for ($u = 0,$i=1;$u < 21;  $u++,$i++) {
 
             if($col == 0){
-                $spreadsheet->getActiveSheet()->insertNewRowBefore(17, 1);
+                $spreadsheet->getActiveSheet()->insertNewRowBefore(19, 1);
             }
 
 
@@ -454,14 +420,11 @@ for($col=0;$col< count($cpsform['id']);$col++) {
         }
 
     }
-
-
-
-
 }
 /**
  *  //Total Trim Cost row+
  */
+
 /**
  * fa2alist
  */
@@ -494,6 +457,7 @@ for($col=0;$col< count($cpsform['id']);$col++) {
 /**
  *  //fa2alist
  */
+
 /**
  * shell
  */
@@ -502,42 +466,33 @@ for($col=0;$col< count($cpsform['id']);$col++) {
     $Crow = chr(67 + $col * 2);  //C
     if (isset($cpsform["falist"][$col]['falist']['fabrow']) && $cpsform["falist"][$col]['falist']['fabrow'] > 0) {
 
-        $spreadsheet->getActiveSheet()->setCellValue('A19' , $cpsform["falist"][$col]['falist']['fabrow']);
-        $spreadsheet->getActiveSheet()->getStyle("A19")->getAlignment()->setWrapText(true);
 
-        $thisrow = 19;
+
+
         for ($u = 0,$i=1;$u < $cpsform["falist"][$col]['falist']['fabrow'];  $u++,$i++) {
 
-//            if($col == 0){
-//                $spreadsheet->getActiveSheet()->insertNewRowBefore(19, 1);
-//            }
+            if($col == 0){
+                $spreadsheet->getActiveSheet()->insertNewRowBefore(17, 1);
+            }
 
 
-//            $spreadsheet->getActiveSheet()->setCellValue('A'.$thisrow , $cpsform["falist"][$col]['falist']['fabrow']);
-//            $spreadsheet->getActiveSheet()->getStyle("A" . $thisrow)->getAlignment()->setWrapText(true);
+        }
+        $thisrow = 17;
+        for ($u = 0,$i=1;$u < $cpsform["falist"][$col]['falist']['fabrow'];  $u++,$i++) {
 
-//            $spreadsheet->getActiveSheet()->setCellValue($Brow. $thisrow, $cpsform["blist"][$col]["b".$i][0]);
-//            $spreadsheet->getActiveSheet()->getStyle($Brow. $thisrow)->applyFromArray($styleArray);
-//            $spreadsheet->getActiveSheet()->getStyle($Brow. $thisrow)->getAlignment()->setWrapText(true);
-//
-//            $spreadsheet->getActiveSheet()->setCellValue($Crow. $thisrow, $cpsform["clist"][$col]["c".$i][0]);
-//            $spreadsheet->getActiveSheet()->getStyle($Crow. $thisrow)->applyFromArray($styleArray);
-//            $spreadsheet->getActiveSheet()->getStyle($Crow. $thisrow)->getAlignment()->setWrapText(true);
+
+            $spreadsheet->getActiveSheet()->setCellValue('A'.$thisrow , $cpsform["falist"][$col]['falist']['title'][$u]);
+            $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->getAlignment()->setWrapText(true);
+
+
+            $BC = "{$Brow}{$thisrow}:{$Crow}{$thisrow}";
+            $spreadsheet->getActiveSheet()->mergeCells($BC);
+            $spreadsheet->getActiveSheet()->setCellValue($Brow.$thisrow,$cpsform["falist"][$col]['falist']["fa".$i]);
+            $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray);
+            $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
+
             $thisrow++;
         }
-
-//        $thisrow = 19;
-//        for ($u = 0,$i=1;$u < 21;  $u++,$i++) {
-//
-//            $spreadsheet->getActiveSheet()->setCellValue($Brow. $thisrow, $cpsform["blist"][$col]["b".$i][0]);
-//            $spreadsheet->getActiveSheet()->getStyle($Brow. $thisrow)->applyFromArray($styleArray);
-//            $spreadsheet->getActiveSheet()->getStyle($Brow. $thisrow)->getAlignment()->setWrapText(true);
-//
-//            $spreadsheet->getActiveSheet()->setCellValue($Crow. $thisrow, $cpsform["clist"][$col]["c".$i][0]);
-//            $spreadsheet->getActiveSheet()->getStyle($Crow. $thisrow)->applyFromArray($styleArray);
-//            $spreadsheet->getActiveSheet()->getStyle($Crow. $thisrow)->getAlignment()->setWrapText(true);
-//            $thisrow++;
-//        }
 
     }
 
@@ -546,110 +501,8 @@ for($col=0;$col< count($cpsform['id']);$col++) {
 /**
  *  //shell
  */
-/**
- *  Total Trim Cost row+
- */
 
-//if($cpsform["clist"]['fromnume'] > 0){
-//
-//    for ($u = ($cpsform["clist"]['fromnume'] - 1);$u >= 0;$u-- ){
-//        $thisrow = 14;
-//        $spreadsheet->getActiveSheet()->insertNewRowBefore(14, 1);
-//
-//        $spreadsheet->getActiveSheet()->setCellValue("A14", $cpsform["clist"]["titlee"][$u]);
-//        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->applyFromArray($styleArray);
-//        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->getAlignment()->setWrapText(true);
-//
-//
-//        $spreadsheet->getActiveSheet()->setCellValue("B".$thisrow, $cpsform["clist"]["c1"][$u]);
-//        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
-//        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
-//
-//        $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow, $cpsform["clist"]["c2"][$u]);
-//        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
-//        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
-//
-//    }
-//
-//}
 
-/**
- *  //Total Trim Cost row+
- */
-
-/**
- *  主布
- */
-//
-//if($cpsform["alist"]["a10"] > 0){
-//
-//    for ($u = ($cpsform["alist"]["a10"] - 1);$u >= 0;$u-- ){
-//        $thisrow = 11;
-//        $spreadsheet->getActiveSheet()->insertNewRowBefore(11, 3);
-//
-//        $spreadsheet->getActiveSheet()->setCellValue("A11", $cpsform["alist"]["a11"][$u]);
-//        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->applyFromArray($styleArray);
-//        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->getAlignment()->setWrapText(true);
-//
-//
-//        $spreadsheet->getActiveSheet()->setCellValue("B11", $cpsform["alist"]["a12"][$u]);
-//        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
-//        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
-//
-//        $spreadsheet->getActiveSheet()->setCellValue("C11", $cpsform["alist"]["a13"][$u]);
-//        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
-//        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
-//
-//        $thisrow = 12;
-//        $spreadsheet->getActiveSheet()->setCellValue("A12", $cpsform["alist"]["a14"][$u]);
-//        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->applyFromArray($styleArray);
-//        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->getAlignment()->setWrapText(true);
-//
-//        if($cpsform["alist"]["a4"][$u] == 1){
-//            $A4 = ' /y';
-//        }else{
-//            $A4 = ' /m';
-//        }
-//        $B12 = getforexcate($cpsform["alist"]["a15"][$u]).' '.$cpsform["alist"]["a16"][$u].$A4.' '.$cpsform["alist"]["a17"][$u];
-//        $spreadsheet->getActiveSheet()->setCellValue("B".$thisrow, $B12);
-//        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
-//        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
-//
-//        $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow, $cpsform["alist"]["a18"][$u]);
-//        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
-//        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
-//
-//        $thisrow = 13;
-//        $spreadsheet->getActiveSheet()->setCellValue("A13", $cpsform["alist"]["a19"][$u]);
-//        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->applyFromArray($styleArray);
-//        $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->getAlignment()->setWrapText(true);
-//
-//        if($cpsform["alist"]["a22"][$u] == 1){
-//            $A22 = ' y/DZ';
-//        }else{
-//            $A22 = ' y/PC';
-//        }
-//        $B13 = $cpsform["alist"]["a20"][$u].' X  '.$cpsform["alist"]["a21"][$u].$A22;
-//        $spreadsheet->getActiveSheet()->setCellValue("B".$thisrow, $B13);
-//        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
-//        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
-//
-//
-//        if($cpsform["alist"]["a24"][$u] == 1){
-//            $A24 = ' y/PC';
-//        }else{
-//            $A24 = ' m/PC';
-//        }
-//        $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow, $cpsform["alist"]["a23"][$u].$A24);
-//        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
-//        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
-//    }
-//
-//}
-
-/**
- *  //主布
- */
 
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
