@@ -2,12 +2,6 @@
 session_start();
 require_once('autoloadconfig.php');  //判断是否在线
 
-if($online){
-    require_once '/home/pan/vendor/autoload.php';
-
-}else{
-    require_once '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
-}
 require_once ('img.php');
 
 
@@ -27,168 +21,251 @@ $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft Yahei');
 $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
 
 
-$sheet->setCellValue('B2',  $productp2['guest']);
-$sheet->setCellValue('B3',  $productp2['billdate']);
-$sheet->setCellValue('D2',  $productp2['doc']);
-$sheet->setCellValue('D3',  $productp2['styleno']);
-$sheet->setCellValue('F2',  $productp2['department']);
-$sheet->setCellValue('F3',  $productp2['findate']);
-$sheet->setCellValue('G3',  $productp2['trans']);
+$sheet->setCellValue('C2',  $productp2['guest']);
+$sheet->setCellValue('C3',  $productp2['alist']['a1']);
+$sheet->setCellValue('I2',  $productp2['jobno']);
+$sheet->setCellValue('I3',  $productp2['styleno']);
+$sheet->setCellValue('M2',  $productp2['sampleno']);
+$sheet->setCellValue('N3',  $productp2['alist']['a2']);
 
-
+/**
+ *  一.主唛/烟治唛/产地唛车法：
+ */
+$sheet->setCellValue('F7',  $productp2['blist']['b1']);
+$sheet->setCellValue('F17',  $productp2['blist']['b2']);
 $wizard = new HtmlHelper();
-$html1 = str_replace('\"', "", htmlspecialchars_decode($productp2['fab1'])) ;
+$html1 = str_replace('\"', "", $productp2['blist']['b9']) ;
 $richText = $wizard->toRichTextObject($html1);
-
-$spreadsheet->getActiveSheet() ->setCellValue('A20', $richText);
+$spreadsheet->getActiveSheet() ->setCellValue('C18', $richText);
+$spreadsheet->getActiveSheet()->getStyle('C18')->getAlignment()->setWrapText(true);
 
 /*加載圖片*/
-$img = $productp2['remarkimg2'];
-preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
-$imgformat = $imgformat[1];
-switch ($imgformat)
-{
-    case "jpg":
-    case "jpeg":
-        $img = imagecreatefromjpeg($img);
-        break;
-    case "bmp":
-        $img =  imagecreatefromwbmp($img);
-        break;
-    case "gif":
-        $img =  imagecreatefromgif($img);
-        break;
-    case "png":
-        $img =   imagecreatefrompng($img);
-        break;
+$img = $productp2['blist']['b3'];
+if ($img == '') {
+    $haveimg = false;  //没有图片
+
+} else {
+
+    $path = $img;
+    $pathinfo = pathinfo($path);
+    //echo "扩展名：$pathinfo[extension]";
+
+    if ($pathinfo["extension"] == 'pdf') {
+
+        $img = pdficon();
+        $haveimg = true;
+    } else {
+        $haveimg = true;
+    }
 }
-$width = imagesx($img);
-$height = imagesy($img);
 
 
-// Generate an image
-//$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-//$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-//imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
+if ($haveimg) {
+    preg_match('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+    $imgformat = $imgformat[1];
+    switch ($imgformat) {
+        case "jpg":
+        case "jpeg":
+            $img = imagecreatefromjpeg($img);
+            break;
+        case "bmp":
+            $img = imagecreatefromwbmp($img);
+            break;
+        case "gif":
+            $img = imagecreatefromgif($img);
+            break;
+        case "png":
+            $img = imagecreatefrompng($img);
+            break;
+    }
+    $width = imagesx($img);
+    $height = imagesy($img);
+
 
 // Add a drawing to the worksheet
-$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-$drawing->setName($productp2['doc']);
-$drawing->setDescription($productp2['doc']);
+    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+    $drawing->setName('img');
+    $drawing->setDescription('img');
 //$drawing->setImageResource($gdImage);
-$drawing->setImageResource($img);
-$drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-$drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+    $drawing->setImageResource($img);
+    $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+    $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setHeight($height>270 ? 270:$height);
-//$drawing->setWidth(180);
+    //$drawing->setWidth($width>250 ? 250:$width);
+    $drawing->setHeight($height > 170 ? 170 : $height);
 //$drawing->setHeight(150);
-$drawing->setCoordinates('A5');
-$drawing->setOffsetX(5);
-$drawing->setOffsetY(5);
-$drawing->setWorksheet($spreadsheet->getActiveSheet());
 
-/*加載圖片*/
-
-
-
-/*加載圖片*/
-$img = $productp2['remarkimg3'];
-preg_match ('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
-$imgformat = $imgformat[1];
-switch ($imgformat)
-{
-    case "jpg":
-    case "jpeg":
-        $img = imagecreatefromjpeg($img);
-        break;
-    case "bmp":
-        $img =  imagecreatefromwbmp($img);
-        break;
-    case "gif":
-        $img =  imagecreatefromgif($img);
-        break;
-    case "png":
-        $img =   imagecreatefrompng($img);
-        break;
+    //$drawing->setCoordinates($cola.'2');
+    $drawing->setCoordinates('F8');
+    $drawing->setOffsetX(5);
+    $drawing->setOffsetY(5);
+    $drawing->setWorksheet($spreadsheet->getActiveSheet());
 }
-$width = imagesx($img);
-$height = imagesy($img);
+
+/*加載圖片*/
+
+/**
+ *  //一.主唛/烟治唛/产地唛车法：
+ */
+
+/**
+ *  二.洗水唛位置
+ */
+$sheet->setCellValue('P38',  $productp2['blist']['b5']);
+$spreadsheet->getActiveSheet()->getStyle('P38')->getAlignment()->setWrapText(true);
+$sheet->setCellValue('E40',  $productp2['blist']['b6']);
+$spreadsheet->getActiveSheet()->getStyle('E40')->getAlignment()->setWrapText(true);
+///*加載圖片*/
+$img = $productp2['blist']['b4'];
+if ($img == '') {
+    $haveimg = false;  //没有图片
+
+} else {
+
+    $path = $img;
+    $pathinfo = pathinfo($path);
+    //echo "扩展名：$pathinfo[extension]";
+
+    if ($pathinfo["extension"] == 'pdf') {
+
+        $img = pdficon();
+        $haveimg = true;
+    } else {
+        $haveimg = true;
+    }
+}
 
 
-// Generate an image
-//$gdImage = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
-//$textColor = imagecolorallocate($gdImage, 255, 255, 255);
-//imagestring($gdImage, 1, 5, 5,  'Created with PhpSpreadsheet', $textColor);
+if ($haveimg) {
+    preg_match('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+    $imgformat = $imgformat[1];
+    switch ($imgformat) {
+        case "jpg":
+        case "jpeg":
+            $img = imagecreatefromjpeg($img);
+            break;
+        case "bmp":
+            $img = imagecreatefromwbmp($img);
+            break;
+        case "gif":
+            $img = imagecreatefromgif($img);
+            break;
+        case "png":
+            $img = imagecreatefrompng($img);
+            break;
+    }
+    $width = imagesx($img);
+    $height = imagesy($img);
+
 
 // Add a drawing to the worksheet
-$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-$drawing->setName($productp2['doc']);
-$drawing->setDescription($productp2['doc']);
+    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+    $drawing->setName('img');
+    $drawing->setDescription('img');
 //$drawing->setImageResource($gdImage);
-$drawing->setImageResource($img);
-$drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-$drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+    $drawing->setImageResource($img);
+    $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+    $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-$drawing->setHeight($height>270 ? 270:$height);
-//$drawing->setWidth(180);
+    //$drawing->setWidth($width>250 ? 250:$width);
+    $drawing->setHeight($height > 300 ? 300 : $height);
 //$drawing->setHeight(150);
-$drawing->setCoordinates('A27');
-$drawing->setOffsetX(5);
-$drawing->setOffsetY(5);
-$drawing->setWorksheet($spreadsheet->getActiveSheet());
 
+    //$drawing->setCoordinates($cola.'2');
+    $drawing->setCoordinates('D26');
+    $drawing->setOffsetX(5);
+    $drawing->setOffsetY(5);
+    $drawing->setWorksheet($spreadsheet->getActiveSheet());
+}
 /*加載圖片*/
+/**
+ *  //二.洗水唛位置
+ */
+
+/**
+ *   三.挂牌位置
+ */
+$sheet->setCellValue('A43',  $productp2['blist']['b8']);
+$spreadsheet->getActiveSheet()->getStyle('A43')->getAlignment()->setWrapText(true);
+
+///*加載圖片*/
+$img = $productp2['blist']['b7'];
+if ($img == '') {
+    $haveimg = false;  //没有图片
+
+} else {
+
+    $path = $img;
+    $pathinfo = pathinfo($path);
+    //echo "扩展名：$pathinfo[extension]";
+
+    if ($pathinfo["extension"] == 'pdf') {
+
+        $img = pdficon();
+        $haveimg = true;
+    } else {
+        $haveimg = true;
+    }
+}
 
 
+if ($haveimg) {
+    preg_match('/.(jpg|gif|bmp|jpeg|png)/i', $img, $imgformat);
+    $imgformat = $imgformat[1];
+    switch ($imgformat) {
+        case "jpg":
+        case "jpeg":
+            $img = imagecreatefromjpeg($img);
+            break;
+        case "bmp":
+            $img = imagecreatefromwbmp($img);
+            break;
+        case "gif":
+            $img = imagecreatefromgif($img);
+            break;
+        case "png":
+            $img = imagecreatefrompng($img);
+            break;
+    }
+    $width = imagesx($img);
+    $height = imagesy($img);
 
-$wizard = new HtmlHelper();
-$html1 = str_replace('\"', "", htmlspecialchars_decode($productp2['fab2'])) ;
-$richText = $wizard->toRichTextObject($html1);
 
-$spreadsheet->getActiveSheet() ->setCellValue('A42', $richText);
+// Add a drawing to the worksheet
+    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+    $drawing->setName('img');
+    $drawing->setDescription('img');
+//$drawing->setImageResource($gdImage);
+    $drawing->setImageResource($img);
+    $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+    $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+//$drawing->setHeight($width);
 
+    //$drawing->setWidth($width>250 ? 250:$width);
+    $drawing->setHeight($height > 500 ? 500 : $height);
+//$drawing->setHeight(150);
 
-$styleArray1 = [
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-    'font' => [
-        'Size' => '20',
-    ],
-/*
-    'borders' => [
-        'top' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'left' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
+    //$drawing->setCoordinates($cola.'2');
+    $drawing->setCoordinates('D44');
+    $drawing->setOffsetX(5);
+    $drawing->setOffsetY(5);
+    $drawing->setWorksheet($spreadsheet->getActiveSheet());
+}
+/*加載圖片*/
+/**
+ *   //三.挂牌位置
+ */
 
-    ],
-*/
-];
-$spreadsheet->getActiveSheet()->getStyle("A20:G25")->applyFromArray($styleArray1);
-$spreadsheet->getActiveSheet()->getStyle("A42:G48")->applyFromArray($styleArray1);
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-unset($_SESSION['productp2'] ); //注销SESSION
+//unset($_SESSION['productp2'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 //$output= 1;
 $nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'productp2out'.$nt.'.xlsx';
+$filenameout = 'productp2'.$nt.'.xlsx';
 if($output){
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
