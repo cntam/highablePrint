@@ -2,13 +2,7 @@
 session_start();
 require_once('autoloadconfig.php');  //判断是否在线
 
-if ($online) {
-    require_once '/home/pan/vendor/autoload.php';
-
-} else {
-    require_once '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
-}
-require_once('img.php');
+require_once ('img.php');
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -57,28 +51,41 @@ $styleArray1 = [
 ];
 
 
-$sheet->setCellValue('B2', $productp3['doc']);
-$sheet->setCellValue('D2', $productp3['styleno']);
-$sheet->setCellValue('F2', $productp3['guest']);
-
-
-$formarr = array('A','B','D','E','F','G');
-for($x = 0 ,$c = 1; $c <= count($formarr); $x++ ,$c++){
-    $f19 = 4;
-
-    for($i = 1,$y = 0; $i <= $productp3["formnum"] ; $i++ ,$y++){
-        $spreadsheet->getActiveSheet()->mergeCells("B{$f19}:C{$f19}");
-        $sheet->setCellValue($formarr[$x].$f19,  $productp3["a1"]['c'.$c][$y]);
-        $spreadsheet->getActiveSheet()->getStyle($formarr[$x].$f19)->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->getStyle("B{$f19}:C{$f19}")->applyFromArray($styleArray1);  //BC样式
-        $f19++;
-
+$sheet->setCellValue('E2', $productp3['guest']);
+$sheet->setCellValue('C2', $productp3['styleno']);
+$formarr = array('B','C','D','E','F');
+$startarr = 4;
+if($productp3['a1']['formnum'] >13){
+    $spreadsheet->getActiveSheet()->insertNewRowBefore(18, $productp3['a1']['formnum']-13);
+}
+for($j = 1;$j<count($productp3['a1']);$j++){
+    //var_dump(count($productp3['a1'])-1);
+    $carray = $productp3['a1']['c'.$j];
+    foreach ($carray as $key => $item ){
+        //var_dump($formarr[$j-1].($key+$startarr)."----".$item."<br>");
+        $sheet->setCellValue($formarr[$j-1].($key+$startarr),$item);
     }
 }
 
 
 
-unset($_SESSION['productp3'] ); //注销SESSION
+//$formarr = array('A','B','D','E','F','G');
+//for($x = 0 ,$c = 1; $c <= count($formarr); $x++ ,$c++){
+//    $f19 = 4;
+//
+//    for($i = 1,$y = 0; $i <= $productp3["formnum"] ; $i++ ,$y++){
+//        $spreadsheet->getActiveSheet()->mergeCells("B{$f19}:C{$f19}");
+//        $sheet->setCellValue($formarr[$x].$f19,  $productp3["a1"]['c'.$c][$y]);
+//        $spreadsheet->getActiveSheet()->getStyle($formarr[$x].$f19)->applyFromArray($styleArray1);
+//        $spreadsheet->getActiveSheet()->getStyle("B{$f19}:C{$f19}")->applyFromArray($styleArray1);  //BC样式
+//        $f19++;
+//
+//    }
+//}
+
+
+
+//unset($_SESSION['productp3'] ); //注销SESSION
 
 
 $spreadsheet->getActiveSheet()->getPageSetup()
@@ -92,14 +99,16 @@ $nt = date("YmdHis", time()); //转换为日期。
 
 $filenameout = 'productp3out' . $nt . '.xlsx';
 if ($output) {
+
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header('Content-Disposition: attachment;filename=' . "$filenameout");
     header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
+
+    // If you're serving to IE 9, then the following may be needed
     header('Cache-Control: max-age=1');
 
-// If you're serving to IE over SSL, then the following may be needed
+    // If you're serving to IE over SSL, then the following may be needed
     header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
     header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
     header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
