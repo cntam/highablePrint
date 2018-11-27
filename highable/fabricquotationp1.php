@@ -86,6 +86,7 @@ $styleArray = [
 
 //$spreadsheet->getActiveSheet()->setCellValue('C4', $fabp1["alist"]['a1']);
 $spreadsheet->getActiveSheet()->setCellValue('E1', 'DATE: '.$fabp1["date"]);
+$spreadsheet->getActiveSheet()->setCellValue('A4', $fabp1["quotitle"]);
 $row = 6;
 /**
  * 标题
@@ -148,86 +149,6 @@ foreach ($fabp1["blist"]['b1'] as $value){
     $row++;
 }
 
-
-
-//
-////特殊工序
-//if(is_array($fabp1['b10name']) && (count($fabp1['b10name']) >0 )){
-//
-//    $b10 = '';
-//    foreach ($fabp1['b10name'] as $value){
-//        $b10 .= '  '.$value;
-//    }
-//
-//}
-//
-//$spreadsheet->getActiveSheet()->setCellValue('B33', $b10);
-//$spreadsheet->getActiveSheet()->setCellValue('B35', $fabp1['data']["blist"]['b11']);
-//$spreadsheet->getActiveSheet()->setCellValue('B37', $fabp1['data']["blist"]['b12']);
-//
-//
-//for($i=1,$u=0;$i <= $fabp1['data']["clist"]["clistnum"] ;$i++,$u++){
-//    $arownum = 40 + $u;
-//
-//    $spreadsheet->getActiveSheet()->setCellValue('B'.$arownum, $fabp1['data']["clist"]['c1'][$u]);
-//    $spreadsheet->getActiveSheet()->setCellValue('C'.$arownum, $fabp1['data']["clist"]['c2'][$u]);
-//    $spreadsheet->getActiveSheet()->setCellValue('D'.$arownum, $fabp1['data']["clist"]['c3'][$u]);
-//    $spreadsheet->getActiveSheet()->setCellValue('E'.$arownum, $fabp1['data']["clist"]['c4'][$u]);
-//    $spreadsheet->getActiveSheet()->setCellValue('F'.$arownum, $fabp1['data']["clist"]['c5'][$u]);
-//    $spreadsheet->getActiveSheet()->setCellValue('G'.$arownum, $fabp1['data']["clist"]['c6'][$u]);
-//}
-//$spreadsheet->getActiveSheet()->setCellValue('H42', $fabp1['data']["clist"]['c7']);
-//
-//for($i=1,$u=0;$i <= $fabp1['data']["dlist"]["dlistnum"] ;$i++,$u++){
-//    $arownum = 46 + $u;
-//
-//    $spreadsheet->getActiveSheet()->setCellValue('A'.$arownum, $fabp1['data']["dlist"]['d1'][$u]);
-//    $spreadsheet->getActiveSheet()->setCellValue('B'.$arownum, $fabp1['data']["dlist"]['d2'][$u]);
-//    $spreadsheet->getActiveSheet()->setCellValue('C'.$arownum, $fabp1['data']["dlist"]['d3'][$u]);
-//    $spreadsheet->getActiveSheet()->setCellValue('D'.$arownum, $fabp1['data']["dlist"]['d4'][$u]);
-//    $spreadsheet->getActiveSheet()->setCellValue('E'.$arownum, $fabp1['data']["dlist"]['d5'][$u]);
-//    $spreadsheet->getActiveSheet()->setCellValue('F'.$arownum, $fabp1['data']["dlist"]['d6'][$u]);
-//    $spreadsheet->getActiveSheet()->setCellValue('G'.$arownum, $fabp1['data']["dlist"]['d7'][$u]);
-//    $spreadsheet->getActiveSheet()->setCellValue('H'.$arownum, $fabp1['data']["dlist"]['d8'][$u]);
-//}
-//
-////
-//
-///**
-// * 款号备注
-// */
-//
-//$titlearr = array('面布 ：',' 裡布1：',' 裡布2：','裡布3：','撞布1：','撞布2：','撞布3');
-//$f = 0;
-//$browrow = 25;
-//for($r=0;$r<=6;$r++){
-//
-//    $b1 = 'b'. (1 + $r );
-//    $b1 = $fabp1['data']["blist"][$b1];
-//    if('on' == $b1){
-//        $spreadsheet->getActiveSheet()->setCellValue('B'.$browrow, $titlearr[$r]);
-//        $spreadsheet->getActiveSheet()->setCellValue('C'.$browrow, $fabp1['data']["blist"]["b1v"][$r]);
-//        $browrow++;
-//        $f++;
-//    }
-//}
-//
-//if($fabp1['data']["blist"]["formnumb"] > 0){
-//    for($r=0 , $k = 1;$k<= $fabp1['data']["blist"]["formnumb"];$r++,$k++){
-//
-//            $spreadsheet->getActiveSheet()->setCellValue('B'.$browrow, $fabp1['data']["blist"]["b8"][$r]);
-//            $spreadsheet->getActiveSheet()->setCellValue('C'.$browrow, $fabp1['data']["blist"]["b9"][$r]);
-//        $spreadsheet->getActiveSheet()->getStyle("B{$browrow}")->applyFromArray($styleArray);
-//            $browrow++;
-//            $f++;
-//
-//if($f>7){
-//    $spreadsheet->getActiveSheet()->insertNewRowBefore($browrow, 1);
-//    $spreadsheet->getActiveSheet()->mergeCells("C{$browrow}:H{$browrow}");
-//    $spreadsheet->getActiveSheet()->getStyle("B{$browrow}")->applyFromArray($styleArray);
-//}
-//    }
-//}
 
 //
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
