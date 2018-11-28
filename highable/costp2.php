@@ -12,6 +12,10 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
+/*
+ * 思路 先填固定行 后增加 可变行
+ * 1
+ */
 //var_dump($costp2);
 //$temno = $costp2["temno"];
 //$titlearr = unserialize(gzuncompress(base64_decode($costp2["cctitle"])));
@@ -108,7 +112,36 @@ function getforexcate($forex) {
     return $output;
     }
 
+function fabricname($cate) {
+    switch ($cate){
+        case '0':
+            $output = 'Shell Fabric';
+            break;
+        case '1':
+            $output = 'Lining';
+            break;
+        case '2':
+            $output = 'Contrast';
+            break;
+        case '3':
+            $output = 'Contrast 1';
+            break;
+        case '4':
+            $output = 'Contrast 2';
+            break;
+        case '5':
+            $output = 'Contrast 3';
+            break;
+        case '6':
+            $output = 'Contrast 4';
+            break;
 
+        default:
+            $output = 'Contrast';
+            break;
+    }
+    return $output;
+}
 
 
 
@@ -249,11 +282,11 @@ $spreadsheet->getActiveSheet()->setCellValue("A11", 'FABRIC COST');
 $spreadsheet->getActiveSheet()->getStyle("A11:A12")->applyFromArray($styleArray);
 $spreadsheet->getActiveSheet()->getStyle("A11:A12")->getAlignment()->setWrapText(true);
 if($costp2["alist"]["a33"] == '1'){
-    $radioa = '■ 100%';
-    $radiob = '□ 110%';
+    $radioa = '■ 110%';
+    $radiob = '□ 121%';
 }else{
-    $radioa = '□ 100%';
-    $radiob = '■ 110%';
+    $radioa = '□ 110%';
+    $radiob = '■ 121%';
 }
 
 $a31 = '   '.getforexcate($costp2["fixalist"]["fixa1"]).' '.$costp2["alist"]["a31"];
@@ -460,7 +493,8 @@ if($costp2["alist"]["a10"] > 0){
         $thisrow = 11;
         $spreadsheet->getActiveSheet()->insertNewRowBefore(11, 3);
 
-        $spreadsheet->getActiveSheet()->setCellValue("A11", $costp2["alist"]["a11"][$u]);
+        //$spreadsheet->getActiveSheet()->setCellValue("A11", $costp2["alist"]["a11"][$u]);
+        $spreadsheet->getActiveSheet()->setCellValue("A11", fabricname($costp2["alist"]["a25"][$u]));
         $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->applyFromArray($styleArray);
         $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->getAlignment()->setWrapText(true);
 
@@ -507,15 +541,20 @@ if($costp2["alist"]["a10"] > 0){
         $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
         $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
 
+        if(($costp2["alist"]["a22"][$u] == 2) and ($costp2["alist"]["a24"][$u] == 1) ){
 
-        if($costp2["alist"]["a24"][$u] == 1){
-            $A24 = ' y/PC';
         }else{
-            $A24 = ' m/PC';
+            if($costp2["alist"]["a24"][$u] == 1){
+                $A24 = ' y/PC';
+            }else{
+                $A24 = ' m/PC';
+            }
+            $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow, $costp2["alist"]["a23"][$u].$A24);
+            $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
+            $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
         }
-        $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow, $costp2["alist"]["a23"][$u].$A24);
-        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
-        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
+
+
     }
 
 }
@@ -528,7 +567,7 @@ if($costp2["alist"]["a10"] > 0){
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
-//unset($_SESSION['costp2'] ); //注销SESSION
+unset($_SESSION['costp2'] ); //注销SESSION
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
