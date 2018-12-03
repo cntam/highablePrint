@@ -302,10 +302,17 @@ $spreadsheet->getActiveSheet()->getStyle("B12")->applyFromArray($styleArray);
 $spreadsheet->getActiveSheet()->getStyle("C11")->applyFromArray($styleArray);
 $spreadsheet->getActiveSheet()->getStyle("C12")->applyFromArray($styleArray);
 
-$spreadsheet->getActiveSheet()->setCellValue("A13", 'Fushing');
-$spreadsheet->getActiveSheet()->getStyle("A13")->applyFromArray($styleArray);
 
-$spreadsheet->getActiveSheet()->setCellValue("B13", $costp2["alist"]["a29"]);
+
+
+if($costp2["alist"]["a29"] == 0){    //如果 Fushing 为0 不打印
+
+}else{
+    $spreadsheet->getActiveSheet()->setCellValue("A13", 'Fushing');
+    $spreadsheet->getActiveSheet()->setCellValue("B13", $costp2["alist"]["a29"]);
+}
+
+$spreadsheet->getActiveSheet()->getStyle("A13")->applyFromArray($styleArray);
 $spreadsheet->getActiveSheet()->getStyle("B13")->applyFromArray($styleArray);
 $spreadsheet->getActiveSheet()->getStyle("B13")->getAlignment()->setWrapText(true);
 
