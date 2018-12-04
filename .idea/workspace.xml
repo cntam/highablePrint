@@ -4,7 +4,11 @@
     <list default="true" id="22dbb095-b711-45ef-80b3-db8d08d0c22f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/highable/fabricquotationp1.php" afterPath="$PROJECT_DIR$/highable/fabricquotationp1.php" />
+      <change beforePath="$PROJECT_DIR$/highable/potem30.php" afterPath="$PROJECT_DIR$/highable/potem30.php" />
+      <change beforePath="$PROJECT_DIR$/highable/productp1.php" afterPath="$PROJECT_DIR$/highable/productp1.php" />
       <change beforePath="$PROJECT_DIR$/template/fabricquotationp1.xlsx" afterPath="$PROJECT_DIR$/template/fabricquotationp1.xlsx" />
+      <change beforePath="$PROJECT_DIR$/template/potem30.xlsx" afterPath="$PROJECT_DIR$/template/potem30.xlsx" />
+      <change beforePath="$PROJECT_DIR$/template/productp1.xlsx" afterPath="$PROJECT_DIR$/template/productp1.xlsx" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -30,9 +34,11 @@
       <file leaf-file-name="costp2.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/highable/costp2.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="588">
+              <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+              <folding>
+                <marker date="1543803710224" expanded="true" signature="300:301" ph="//..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -41,7 +47,7 @@
         <entry file="file://$PROJECT_DIR$/highable/autoloadconfig.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="315">
-              <caret line="15" column="42" lean-forward="true" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
+              <caret line="15" column="42" lean-forward="false" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -50,7 +56,7 @@
       <file leaf-file-name="productp4.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/highable/productp4.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
+            <state relative-caret-position="105">
               <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding>
                 <element signature="e#97#138#0#PHP" expanded="true" />
@@ -85,7 +91,7 @@
         <entry file="file://$PROJECT_DIR$/../../highable/costp2.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="777">
-              <caret line="40" column="18" lean-forward="true" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
+              <caret line="40" column="18" lean-forward="false" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -127,11 +133,9 @@
       <file leaf-file-name="potem30.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/highable/potem30.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="37" selection-end-column="79" />
-              <folding>
-                <element signature="e#282#323#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="483">
+              <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -268,8 +272,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-15" />
-    <option name="y" value="28" />
+    <option name="x" value="86" />
+    <option name="y" value="4" />
     <option name="width" value="1920" />
     <option name="height" value="977" />
   </component>
@@ -288,7 +292,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -310,7 +314,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -402,28 +406,10 @@
       <workItem from="1542866801928" duration="976000" />
       <workItem from="1542874687245" duration="359000" />
       <workItem from="1542875069460" duration="807000" />
-      <workItem from="1543306013677" duration="6000" />
-    </task>
-    <task id="LOCAL-00002" summary="20180528">
-      <created>1527500263257</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1527500263257</updated>
-    </task>
-    <task id="LOCAL-00003" summary="20180528">
-      <created>1527500373894</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1527500373894</updated>
-    </task>
-    <task id="LOCAL-00004" summary="20180528">
-      <created>1527501652429</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1527501652429</updated>
+      <workItem from="1543306013677" duration="621000" />
+      <workItem from="1543390214879" duration="1218000" />
+      <workItem from="1543803882985" duration="626000" />
+      <workItem from="1543885953566" duration="1161000" />
     </task>
     <task id="LOCAL-00005" summary="20180529">
       <created>1527565282417</created>
@@ -747,26 +733,47 @@
       <option name="project" value="LOCAL" />
       <updated>1542875274939</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="201801127">
+      <created>1543306033266</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1543306033266</updated>
+    </task>
+    <task id="LOCAL-00052" summary="201801128">
+      <created>1543390232939</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1543390232939</updated>
+    </task>
+    <task id="LOCAL-00053" summary="201801203 CC2">
+      <created>1543803907917</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1543803907918</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="257528000" />
+    <option name="totallyTimeSpent" value="261148000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-15" y="28" width="1920" height="977" extended-state="0" />
+    <frame x="86" y="4" width="1920" height="977" extended-state="0" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2819264" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2943723" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952183" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -803,9 +810,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="20180612 potem3-5-7" />
-    <MESSAGE value="20180615 cps2" />
-    <MESSAGE value="20180618 cps2" />
     <MESSAGE value="20180618 cost2" />
     <MESSAGE value="20180702 invoice" />
     <MESSAGE value="20180702 potem8" />
@@ -828,7 +832,10 @@
     <MESSAGE value="201801110" />
     <MESSAGE value="201801113 productp1" />
     <MESSAGE value="201801122 productp3-4" />
-    <option name="LAST_COMMIT_MESSAGE" value="201801122 productp3-4" />
+    <MESSAGE value="201801127" />
+    <MESSAGE value="201801128" />
+    <MESSAGE value="201801203 CC2" />
+    <option name="LAST_COMMIT_MESSAGE" value="201801203 CC2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1083,11 +1090,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/highable/potem30.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="37" selection-end-column="79" />
-          <folding>
-            <element signature="e#282#323#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="483">
+          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1120,16 +1125,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/highable/costp2.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="588">
+          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding>
+            <marker date="1543803710224" expanded="true" signature="300:301" ph="//..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../highable/costp2.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="777">
-          <caret line="40" column="18" lean-forward="true" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
+          <caret line="40" column="18" lean-forward="false" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
           <folding />
         </state>
       </provider>
@@ -1144,7 +1151,7 @@
     <entry file="file://$PROJECT_DIR$/highable/autoloadconfig.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
-          <caret line="15" column="42" lean-forward="true" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
+          <caret line="15" column="42" lean-forward="false" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
           <folding />
         </state>
       </provider>
@@ -1169,7 +1176,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/highable/productp4.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
+        <state relative-caret-position="105">
           <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
             <element signature="e#97#138#0#PHP" expanded="true" />

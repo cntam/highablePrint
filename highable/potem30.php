@@ -1,15 +1,8 @@
 <?php
 session_start();
-header("Content-type: text/html; charset=utf-8");
-
 require_once('autoloadconfig.php');  //判断是否在线
 
-if($online){
-    require_once '/home/pan/vendor/autoload.php';
-
-}else{
-    require_once '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
-}
+require_once ('img.php');
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -142,119 +135,154 @@ if(1 == $potem30["toaddr"]["a11"]){
     $um = 'U/Y';
 }
 $spreadsheet->getActiveSheet()->setCellValue('H25', $um);
-$spreadsheet->getActiveSheet()->setCellValue('B26', $potem30["toaddr"]["a12"]);
-$spreadsheet->getActiveSheet()->setCellValue('F26', $potem30["toaddr"]["a13"]);
-$spreadsheet->getActiveSheet()->setCellValue('G26', $potem30["toaddr"]["a14"]);
-$spreadsheet->getActiveSheet()->setCellValue('H26', $potem30["toaddr"]["a15"]);
+
 $spreadsheet->getActiveSheet()->setCellValue('G27', $potem30["toaddr"]["a16"]);
 $spreadsheet->getActiveSheet()->setCellValue('H27', $potem30["toaddr"]["a17"]);
 
 $spreadsheet->getActiveSheet()->setCellValue('A28', 'Total   Amount  ：'.$potem30["toaddr"]["a18"]);
 $spreadsheet->getActiveSheet()->setCellValue('C28', $potem30["toaddr"]["a19"]);
+$spreadsheet->getActiveSheet()->getStyle('C28')->getAlignment()->setWrapText(true);
+
 $spreadsheet->getActiveSheet()->setCellValue('A29', 'Payment  Terms：'.$potem30["toaddr"]["a20"]);
 $spreadsheet->getActiveSheet()->setCellValue('A30', 'Price   Terms    ：'.$potem30["toaddr"]["a21"]);
 
 
-$spreadsheet->getActiveSheet()->setCellValue('B32', 'AMOUNT&QUANTITY WITHIN THE TOLERANCE OF '.$potem30["remark"]["c1"].' MORE OR LESS IS ONLY ALLOWED.');
-$spreadsheet->getActiveSheet()->setCellValue('B36', 'YOU HAVE TO SUBMIT '.$potem30["remark"]["c2"].'SHIPMENT SAMPLE FOR OUR APPROVAL BEFORE'.$potem30["remark"]["c3"].'OF SHIPMENT.');
-//YOU HAVE TO SUBMIT 4YDS SHIPMENT SAMPLE FOR OUR APPROVAL BEFORE 7 DAYS OF SHIPMENT.
+/**
+ * 底部remark
+ */
+$spreadsheet->getActiveSheet()->setCellValue('A32', $potem30["remark"]["c2"][0]);
+$spreadsheet->getActiveSheet()->setCellValue('B32', 'AMOUNT&QUANTITY WITHIN THE TOLERANCE OF '.$potem30["remark"]["c2"][1].'MORE OR LESS IS ONLY ALLOWED.');
 
-if(1 == $potem30["remark"]["c4"]){
-    $spreadsheet->getActiveSheet()->setCellValue('A37', '6-');
-    if(1 == $potem30["remark"]["c5"]){
-        $c5 = 'EXCLUDING';
-    }elseif (2 == $potem30["remark"]["c5"]){
-        $c5 = 'INCLUDING';
+$spreadsheet->getActiveSheet()->setCellValue('A33', $potem30["remark"]["c3"][0]);
+$spreadsheet->getActiveSheet()->setCellValue('B33', 'YOUR PARTY MUST TAKE FULL RESPONSIBILITY FOR ANY DELAY OF SHIPMENT.');
+
+$spreadsheet->getActiveSheet()->setCellValue('A34', $potem30["remark"]["c4"][0]);
+$spreadsheet->getActiveSheet()->setCellValue('B34', 'AZO FREE');
+
+$spreadsheet->getActiveSheet()->setCellValue('A35', $potem30["remark"]["c5"][0]);
+$spreadsheet->getActiveSheet()->setCellValue('B35', 'ALL PERFORMANCES SHOULD MEET OUR REQUIREMENTS（AS PER ATTACHED）.');
+
+$spreadsheet->getActiveSheet()->setCellValue('A36', $potem30["remark"]["c6"][0]);
+$spreadsheet->getActiveSheet()->setCellValue('B36', 'YOU HAVE TO SUBMIT '.$potem30["remark"]["c6"][1].' SHIPMENT SAMPLE FOR OUR APPROVAL BEFORE '. $potem30["remark"]["c6"][2] .'OF SHIPMENT.');
+
+
+
+
+$c72 =  $potem30["remark"]["c7"][2] ? ' EXCLUDING' : ' INCLUDING ' ;
+$c73 =  $potem30["remark"]["c7"][3] ? ' TEST CHARGES ' : ' SURCHARGE ' ;
+
+
+if($potem30["remark"]["c7"][1]){
+    $c7value = $c72 . $c73;
+    $spreadsheet->getActiveSheet()->setCellValue('A37', $potem30["remark"]["c7"][0]);
+    $spreadsheet->getActiveSheet()->setCellValue('B37', $c7value);
+}else{
+    $c7value = '';
+}
+
+
+
+$spreadsheet->getActiveSheet()->setCellValue('B40', 'PLEASE CONFIRM AND COUNTER-SIGN BY RETURN. OTHERWISE, IF WE DO NOT RECEIVE ANY CONTRARY REPLIED WITHIN  '.$potem30["remark"]["c11"].',  THIS CONTRACT IS VALID.');
+$spreadsheet->getActiveSheet()->getStyle('B40')->getAlignment()->setWrapText(true);
+
+if($potem30["remark"]["c12"] == 1){
+    $c12 = 'EXCLUDING';
+}else{
+    $c12 = 'INCLUDING';
+}
+$spreadsheet->getActiveSheet()->setCellValue('B42', $c12.' VAT INVOICE');
+$spreadsheet->getActiveSheet()->setCellValue('B43', 'ORDER NO '.$potem30["remark"]["c13"]);
+
+$row = 44;
+if(count($potem30["remark"]["c14"]) > 1){
+    foreach ($potem30["remark"]["c14"] as $item=>$value){
+
+        if($item >1){
+            $spreadsheet->getActiveSheet()->insertNewRowBefore($row, 1);
+        }
+
+        $sheet->setCellValue('A'. $row, $value );
+        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($styleArray2);
+        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->getAlignment()->setWrapText(true);
+
+        $spreadsheet->getActiveSheet()->mergeCells("B{$row}:H{$row}");
+        $sheet->setCellValue('B'. $row, $potem30["remark"]["c15"][$item]);
+        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($styleArray2);
+        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->getAlignment()->setWrapText(true);
+
+        $row++;
     }
-    if(1 == $potem30["remark"]["c6"]){
-        $c6 = '  TEST CHARGES';
-    }elseif (2 == $potem30["remark"]["c6"]){
-        $c6 = '  SURCHARGE';
-    }
-    $spreadsheet->getActiveSheet()->setCellValue('B37', 'PRice '.$c5.$c6);
+
 
 }
 
-$spreadsheet->getActiveSheet()->setCellValue('B39', 'ANY CONTRARY REPLIED WITHIN '.$potem30["remark"]["c7"].', THIS CONTRACT IS VALID.');
+/**
+ *   remark中间增加行
+ */
+$row = 38;
+if(count($potem30["remark"]["c8"]) > 1){
+    foreach ($potem30["remark"]["c8"] as $item=>$value){
 
-if(1 == $potem30["remark"]["c8"]){
-    $c8 = 'EXCLUDING';
-}elseif (2 == $potem30["remark"]["c8"]){
-    $c8 = 'INCLUDING';
+        if($item >0){
+            $spreadsheet->getActiveSheet()->insertNewRowBefore($row, 1);
+        }
+
+        $sheet->setCellValue('A'. $row, $value );
+        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($styleArray2);
+
+
+        $spreadsheet->getActiveSheet()->mergeCells("B{$row}:H{$row}");
+        $sheet->setCellValue('B'. $row, $potem30["remark"]["c9"][$item]);
+        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($styleArray2);
+        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->getAlignment()->setWrapText(true);
+
+        $row++;
+    }
+
+
 }
-$spreadsheet->getActiveSheet()->setCellValue('B40', $c8.'VAT INVOICE');
-$spreadsheet->getActiveSheet()->setCellValue('B41', 'ORDER  NO（'.$potem30["remark"]["c9"].')');
+/**
+ *   remark中间增加行
+ */
 
-//$toaddr = array('Z9','B11','T11','B13','T13','F15','O15','Y15','B23','B34','U23','B41','K41','U41','Z41','AE41','J43','AC43');  //,'C12','D12','E12','F12','G12','H12','I12','J13','K12','K13','J5'
-//
-//for($i = 1,$y = 0; $i <= count($toaddr) ; $i++ ,$y++){
-//
-//    $sheet->setCellValue($toaddr[$y],  $potem30["toaddr"]["a".$i]);
-//
-//}
-//
-//
-////中部form
-//
-//$nowcol = 14;
-////////$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:F{$nowcol}");
-//$spreadsheet->getActiveSheet()->setCellValue('B'.$nowcol, $potem30["orderform"]["midpono"]);
-////////$spreadsheet->getActiveSheet()->setCellValue('I'.$nowcol, $potem30["invoiceform"]["amout"]);
-////
-////
-//for($x = 0 ,$c = 1; $c <= $potem30["orderform"]["formnum"]; $x++ ,$c++){
-//
-//    $f19 = 15 + 1 * $x;
-//
-//    $spreadsheet->getActiveSheet()->mergeCells("A{$f19}:B{$f19}");
-//    $spreadsheet->getActiveSheet()->mergeCells("C{$f19}:G{$f19}");
-//
-//
-//    $formarr = array('A'.$f19,'C'.$f19);
-//
-//    for($i = 1,$y = 0; $i <= $potem30["orderform"]["brrnum"] ; $i++ ,$y++){
-//
-//        $sheet->setCellValue($formarr[$y],  $potem30["orderform"]['b'.$i][$x]);
-//
-//    }
-//
-//    $nowcol = 15  +  1 * $c;
-//
-//
-//    if($x >4){
-//        $spreadsheet->getActiveSheet()->insertNewRowBefore($nowcol, 1);
-//    }
-//
-//}
-//$nowcol = $potem30["orderform"]["formnum"] > 4 ? ($nowcol + 1) : 21;
-//$spreadsheet->getActiveSheet()->setCellValue('C'.$nowcol, $potem30["toaddr"]["a5"]);
-//$nowcol++;
-//
-//$spreadsheet->getActiveSheet()->setCellValue('C'.$nowcol, $potem30["toaddr"]["a6"]);
-//$nowcol++;
-//$spreadsheet->getActiveSheet()->setCellValue('C'.$nowcol, $potem30["toaddr"]["a7"]);
-//$nowcol++;
-//$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, $potem30["toaddr"]["a8"]);
-//$nowcol++;
-//$nowcol++;
-//$nowcol++;
-//$nowcol++;
-//$nowcol++;
-//$nowcol++;
-//$nowcol++;
-//
-//$spreadsheet->getActiveSheet()->setCellValue('C'.$nowcol, $potem30["remark"]["c1"]);
-//$nowcol++;
-//$spreadsheet->getActiveSheet()->setCellValue('C'.$nowcol, $potem30["remark"]["c2"]);
+/**
+ * remark
+ */
 
-////
-////$spreadsheet->getActiveSheet()->setCellValue('B'.$nowcol, 'E-MAIL (電郵): '.$potem30["remark"]["c3"]);
-////$spreadsheet->getActiveSheet()->setCellValue('I'.$nowcol, $potem30["remark"]["c4"]);
-//////$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-//$spreadsheet->getActiveSheet()->setCellValue('O'.$nowcol, $potem30["remark"]["c3"]);
-//$nowcol++;
-//
-//$spreadsheet->getActiveSheet()->setCellValue('O'.$nowcol, $potem30["remark"]["c4"]);
+
+/**
+ * 中间报价表格
+ */
+$row = 26;
+if(count($potem30["toaddr"]["a12"]) > 1){
+    foreach ($potem30["toaddr"]["a12"] as $item=>$value){
+
+        if($item >0){
+            $spreadsheet->getActiveSheet()->insertNewRowBefore($row, 1);
+        }
+
+        $sheet->setCellValue('B'. $row, $value);
+        $sheet->setCellValue('F'. $row, $potem30["toaddr"]["a13"][$item]);
+        $sheet->setCellValue('G'. $row, $potem30["toaddr"]["a14"][$item]);
+        $sheet->setCellValue('H'. $row, $potem30["toaddr"]["a15"][$item]);
+
+        $row++;
+    }
+
+
+}
+
+/**
+ * 中间报价表格
+ */
+
+
+
+/**
+ *   以上为 主要内容
+ */
+
+
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 

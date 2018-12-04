@@ -118,12 +118,14 @@ for ($y = 0, $i = 1; $i <= $fabp1["alist"]['alistnum']; $i++, $y++) {
             $issel =  $fabp1["alist"]['a'.$n][$y] == '1' ?  "Y" :  "CM" ;
             $thisvalue .= '/'.$issel;
             $spreadsheet->getActiveSheet()->setCellValue($col.$row, $thisvalue);
+            $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
         }elseif ($u == 4){
             $thisvalue = $fabp1["alist"]['a'.$n][$y];
             $n++;
             $issel =  $fabp1["alist"]['a'.$n][$y] == '1' ?  "G/M2" :  "G/Y" ;
             $thisvalue .= '/'.$issel;
             $spreadsheet->getActiveSheet()->setCellValue($col.$row, $thisvalue);
+            $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
         }else{
             $spreadsheet->getActiveSheet()->setCellValue($col.$row, $fabp1["alist"]['a'.$n][$y]);
             $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
@@ -140,14 +142,17 @@ $row = $row>20 ? $row : 20;
  */
 $spreadsheet->getActiveSheet()->mergeCells("B{$row}:E{$row}");
 $spreadsheet->getActiveSheet()->setCellValue('B'.$row, $fabp1["alist"]['remarks']);
-$spreadsheet->getActiveSheet()->getStyle("B{$row}:E{$row}")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B{$row}:E{$row}")->applyFromArray($styleArray1);
 $row++;
-foreach ($fabp1["blist"]['b1'] as $value){
-    $spreadsheet->getActiveSheet()->mergeCells("B{$row}:E{$row}");
-    $spreadsheet->getActiveSheet()->setCellValue('B'.$row, $value);
-    $spreadsheet->getActiveSheet()->getStyle("B{$row}:E{$row}")->applyFromArray($styleArray);
-    $row++;
+if($fabp1["blist"]['blistnum'] > 0){
+    foreach ($fabp1["blist"]['b1'] as $value){
+        $spreadsheet->getActiveSheet()->mergeCells("B{$row}:E{$row}");
+        $spreadsheet->getActiveSheet()->setCellValue('B'.$row, $value);
+        $spreadsheet->getActiveSheet()->getStyle("B{$row}:E{$row}")->applyFromArray($styleArray1);
+        $row++;
+    }
 }
+
 
 
 //
@@ -157,7 +162,7 @@ $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作�
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
-//unset($_SESSION['samplep1'] ); //注销SESSION
+unset($_SESSION['fabricquotationp1'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。

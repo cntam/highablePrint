@@ -62,47 +62,7 @@ $sheet->setCellValue('N2',  $productp1['sampleno']);
 $sheet->setCellValue('O3',  $productp1['alist']['a2']);
 
 
-/**
- * 细数分配表
- */
-for($v=0,$ct = 15;$v<8;$v++,$ct++){
-    $col = chr(68 + $v); //D
 
-    $sheet->setCellValue($col.'5',  $productp1['ctlist']['ct'.$ct]);
-    $spreadsheet->getActiveSheet()->getStyle($col.'5')->applyFromArray($styleArray);
-    $spreadsheet->getActiveSheet()->getStyle($col.'5')->getAlignment()->setWrapText(true);
-}
-
-$row = 7;
-for($i=0;$i<=$productp1['allot']['formnum'];$i++){
-
-    if($i==$productp1['allot']['formnum']){
-        $row = 12;
-        for($h=3;$h<=11;$h++){
-            $col = chr(65 + $h); //B
-            $sheet->setCellValue($col.$row,  $productp1['allot']['b'.$h][$i]);
-            $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
-            $spreadsheet->getActiveSheet()->getStyle($col.$row)->getAlignment()->setWrapText(true);
-        }
-    }else{
-        for($h=1;$h<=11;$h++){
-            if($h == 1){
-                $col = chr(64 + $h); //A
-            }else{
-                $col = chr(65 + $h); //B
-            }
-
-            $sheet->setCellValue($col.$row,  $productp1['allot']['b'.$h][$i]);
-            $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
-            $spreadsheet->getActiveSheet()->getStyle($col.$row)->getAlignment()->setWrapText(true);
-        }
-        $row++;
-    }
-}
-
-/**
- *  //细数分配表
- */
 
 /**
  *  船头办数量
@@ -130,7 +90,7 @@ for($i=0,$ct=1;$i< 14;$i++,$ct++){
             if($ct == 1){
                 $col = chr(64 + $ct); //A
             }else{
-                $col = chr(65 + $ct); //B
+                $col = chr(64 + $ct); //B
             }
 
             $sheet->setCellValue($col.$row,  $productp1['ctlist']['ct'.$ct]);
@@ -294,6 +254,71 @@ $spreadsheet->getActiveSheet() ->setCellValue('M20', '针距：'.$richText);
 $spreadsheet->getActiveSheet()->getStyle('M20:R20')->getAlignment()->setWrapText(true);
 /**
  * //裁法
+ */
+
+/**
+ * 细数分配表
+ */
+for($v=0,$ct = 15;$v<8;$v++,$ct++){
+    $col = chr(68 + $v); //D
+
+    $sheet->setCellValue($col.'5',  $productp1['ctlist']['ct'.$ct]);
+    $spreadsheet->getActiveSheet()->getStyle($col.'5')->applyFromArray($styleArray);
+    $spreadsheet->getActiveSheet()->getStyle($col.'5')->getAlignment()->setWrapText(true);
+}
+/**
+ *
+ */
+$row = 12;
+$last = $productp1['allot']['formnum'];
+for($h=3;$h<=11;$h++){
+    $col = chr(65 + $h); //B
+    $sheet->setCellValue($col.$row,  $productp1['allot']['b'.$h][$last]);
+    $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+    $spreadsheet->getActiveSheet()->getStyle($col.$row)->getAlignment()->setWrapText(true);
+}
+/**
+ * 总数行
+ */
+
+$row = 7;
+for($i=0;$i<$productp1['allot']['formnum'];$i++){
+
+    //if($i==$productp1['allot']['formnum']){
+    if($i>4){
+        //$row--;
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($row, 1);
+
+        $spreadsheet->getActiveSheet()->mergeCells("A{$row}:B{$row}");
+        for($h=1;$h<=11;$h++) {
+            if($h == 1){
+                $col = chr(64 + $h); //A
+            }else{
+                $col = chr(65 + $h); //B
+            }
+            $sheet->setCellValue($col . $row, $productp1['allot']['b' . $h][$i]);
+            $spreadsheet->getActiveSheet()->getStyle($col . $row)->applyFromArray($styleArray);
+            $spreadsheet->getActiveSheet()->getStyle($col . $row)->getAlignment()->setWrapText(true);
+        }
+        $row++;
+    }else{
+        for($h=1;$h<=11;$h++){
+            if($h == 1){
+                $col = chr(64 + $h); //A
+            }else{
+                $col = chr(65 + $h); //B
+            }
+
+            $sheet->setCellValue($col.$row,  $productp1['allot']['b'.$h][$i]);
+            $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+            $spreadsheet->getActiveSheet()->getStyle($col.$row)->getAlignment()->setWrapText(true);
+        }
+        $row++;
+    }
+}
+
+/**
+ *  //细数分配表
  */
 //
 ///**
