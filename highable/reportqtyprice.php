@@ -85,6 +85,30 @@ $styleArray = [
    
 ];
 
+$styleArrayRight = [
+
+    'alignment' => [
+        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT,
+        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
+    ],
+
+    'borders' => [
+        'top' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+        'bottom' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+        'left' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+        'right' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+    ],
+
+];
+
 
 //$spreadsheet->getActiveSheet()->setCellValue('C4', $fabp1["alist"]['a1']);
 //$spreadsheet->getActiveSheet()->setCellValue('E1', 'DATE: '.$fabp1["date"]);
@@ -123,8 +147,17 @@ if (count($fabp1["cpsid"]) > 0) {
                     foreach ($recordarr as $vc){
                     $col = chr(65 + $t);
                     $record = $recordarr[$t];
-                    $spreadsheet->getActiveSheet()->setCellValue($col.$row, $client_record[$record]);
-                    $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+                    if($t == 4){
+                        $spreadsheet->getActiveSheet()->setCellValue($col.$row, $client_record['fobforex'].$client_record[$record]);
+                        $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+                    }elseif($t == 5){
+                        $spreadsheet->getActiveSheet()->setCellValue($col.$row, 'HKD '.$client_record[$record]);
+                        $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+                    }else{
+                        $spreadsheet->getActiveSheet()->setCellValue($col.$row, $client_record[$record]);
+                        $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+                    }
+
                     $t++;
              }
                     $row++;
@@ -152,11 +185,69 @@ foreach ($titlearr as $value2){
         $spreadsheet->getActiveSheet()->setCellValue($col.$row, $fabp1["total"]["total"]["totalQty"]);
     }
     if('TOTAL AMOUNT HKD' == $value2){
-        $spreadsheet->getActiveSheet()->setCellValue($col.$row, $fabp1["total"]["total"]["totalHKD"]);
+        $spreadsheet->getActiveSheet()->setCellValue($col.$row, 'HKD '.$fabp1["total"]["total"]["totalHKD"]);
     }
     $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
     $t++;
 }
+
+
+/**
+ * 外厂总数
+ */
+$row++;
+$row++;
+$row++;
+$row++;
+/**
+ * 标题 PHP_EOL
+ */
+$a = 0;
+$titlearr = array('外厂名称','QTY');
+foreach ($titlearr as $value){
+    $col = chr(73 + $a);
+    $colname = $col.$row;
+    $spreadsheet->getActiveSheet()->getStyle($col.$row)->getAlignment()->setWrapText(true);  //在单元格中写入换行符“\ n”（ALT +“Enter”）
+    $spreadsheet->getActiveSheet()->setCellValue($colname, $value);
+    $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+
+    $a++;
+}
+
+
+$row++;
+if (count($fabp1["cpsid"]) > 0) {
+    $ffproduct_array = $fabp1['ffproduct'];
+
+    foreach ($ffproduct_array as $clientid_obj) {
+
+                $a = 0;
+                $t = 0;
+                $recordarr = array('ffname','qty');
+
+                foreach ($recordarr as $vc){
+                    $col = chr(73 + $t);
+                    $record = $recordarr[$t];
+
+                    if($t == 1){
+                        $spreadsheet->getActiveSheet()->setCellValue($col.$row, $clientid_obj[$record].' pcs');
+                        $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArrayRight);
+                    }else{
+                        $spreadsheet->getActiveSheet()->setCellValue($col.$row, $clientid_obj[$record]);
+                        $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+                    }
+
+                    $t++;
+                }
+                $row++;
+
+    }
+    $spreadsheet->getActiveSheet()->setCellValue($col.$row, $fabp1["total"]["total"]["totalQty"].' pcs');
+    $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArrayRight);
+}
+/**
+ * 外厂总数
+ */
 
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
@@ -165,7 +256,7 @@ $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作�
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
-//unset($_SESSION['samplep1'] ); //注销SESSION
+unset($_SESSION['reportqtyprice'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。
