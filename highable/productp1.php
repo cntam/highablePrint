@@ -44,6 +44,30 @@ $styleArray = [
 
 ];
 
+$styleArraytop = [
+
+    'alignment' => [
+        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
+    ],
+
+    'borders' => [
+        'top' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+        'bottom' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+        'left' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+        'right' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+    ],
+
+];
+
 function isselect($value){
     if ( $value == 'on') {
         $output = '■  ';
@@ -67,6 +91,11 @@ $sheet->setCellValue('O3',  $productp1['alist']['a2']);
 /**
  *  船头办数量
  */
+//底部附加行 remark
+$sheet->setCellValue('D15',  $productp1['ctlist']['ct23']);
+$spreadsheet->getActiveSheet()->getStyle('D15:L15')->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle('D15:L15')->getAlignment()->setWrapText(true);
+
 for($i=0,$ct=1;$i< 14;$i++,$ct++){
     if($ct == 14){
             $sheet->setCellValue('A16',  '出船头办日期：'.$productp1['ctlist']['ct'.$ct]);
@@ -74,12 +103,12 @@ for($i=0,$ct=1;$i< 14;$i++,$ct++){
             $spreadsheet->getActiveSheet()->getStyle('A16')->getAlignment()->setWrapText(true);
     }elseif($ct == 12 or $ct == 13){
 
-        if($ct == 12){
-            $sheet->setCellValue('C15',  $productp1['ctlist']['ct'.$ct]);
+        if($ct == 12){ //净重：
+            $sheet->setCellValue('A15',  '净重：'.$productp1['ctlist']['ct'.$ct]);
             $spreadsheet->getActiveSheet()->getStyle('C15')->applyFromArray($styleArray);
             $spreadsheet->getActiveSheet()->getStyle('C15')->getAlignment()->setWrapText(true);
-        }else{
-            $sheet->setCellValue('F15',  $productp1['ctlist']['ct'.$ct]);
+        }else{  //毛重：
+            $sheet->setCellValue('C15',  '毛重：'.$productp1['ctlist']['ct'.$ct]);
             $spreadsheet->getActiveSheet()->getStyle('F15')->applyFromArray($styleArray);
             $spreadsheet->getActiveSheet()->getStyle('F15')->getAlignment()->setWrapText(true);
         }
@@ -106,23 +135,39 @@ for($i=0,$ct=1;$i< 14;$i++,$ct++){
 /**
  *  工艺
  */
-$wizard = new HtmlHelper();
-$html1 = str_replace('\"', "", $productp1['fablist']['fab5']) ;
-$richText = $wizard->toRichTextObject($html1);
-$spreadsheet->getActiveSheet() ->setCellValue('A22', $richText);
-$spreadsheet->getActiveSheet()->getStyle('A22')->getAlignment()->setWrapText(true);
+//工艺说明及注意事项
+//$wizard = new HtmlHelper();
+//$html1 = str_replace('\"', "", $productp1['fablist']['fab5']) ;
+//$richText = $wizard->toRichTextObject($html1);
+//$spreadsheet->getActiveSheet() ->setCellValue('A22', $richText);
+//$spreadsheet->getActiveSheet()->getStyle('A22')->getAlignment()->setWrapText(true);
 
-$wizard = new HtmlHelper();
-$html1 = str_replace('\"', "", $productp1['fablist']['fab6']) ;
-$richText = $wizard->toRichTextObject($html1);
-$spreadsheet->getActiveSheet() ->setCellValue('A30', $richText);
-$spreadsheet->getActiveSheet()->getStyle('A30')->getAlignment()->setWrapText(true);
+    //$spreadsheet->getActiveSheet()->mergeCells("B25:H48");
+    $spreadsheet->getActiveSheet()->getStyle('A22:R28')->getAlignment()->setWrapText(true);  //在单元格中写入换行符“\ n”（ALT +“Enter”）
+    $spreadsheet->getActiveSheet()->getStyle("A22:R28")->applyFromArray($styleArraytop);
+    $spreadsheet->getActiveSheet()->setCellValue('A22', $productp1['fablist']['fab5']);
 
-$wizard = new HtmlHelper();
-$html1 = str_replace('\"', "", $productp1['fablist']['fab7']) ;
-$richText = $wizard->toRichTextObject($html1);
-$spreadsheet->getActiveSheet() ->setCellValue('A54', $richText);
-$spreadsheet->getActiveSheet()->getStyle('A54')->getAlignment()->setWrapText(true);
+    //评语
+//$wizard = new HtmlHelper();
+//$html1 = str_replace('\"', "", $productp1['fablist']['fab6']) ;
+//$richText = $wizard->toRichTextObject($html1);
+//$spreadsheet->getActiveSheet() ->setCellValue('A30', $richText);
+//$spreadsheet->getActiveSheet()->getStyle('A30')->getAlignment()->setWrapText(true);
+
+$spreadsheet->getActiveSheet()->getStyle('A30:R53')->getAlignment()->setWrapText(true);  //在单元格中写入换行符“\ n”（ALT +“Enter”）
+$spreadsheet->getActiveSheet()->getStyle("A30:R53")->applyFromArray($styleArraytop);
+$spreadsheet->getActiveSheet()->setCellValue('A30', $productp1['fablist']['fab6']);
+
+//评语附加
+//$wizard = new HtmlHelper();
+//$html1 = str_replace('\"', "", $productp1['fablist']['fab7']) ;
+//$richText = $wizard->toRichTextObject($html1);
+//$spreadsheet->getActiveSheet() ->setCellValue('A54', $richText);
+//$spreadsheet->getActiveSheet()->getStyle('A54')->getAlignment()->setWrapText(true);
+
+$spreadsheet->getActiveSheet()->getStyle('A54:R59')->getAlignment()->setWrapText(true);  //在单元格中写入换行符“\ n”（ALT +“Enter”）
+$spreadsheet->getActiveSheet()->getStyle("A54:R59")->applyFromArray($styleArraytop);
+$spreadsheet->getActiveSheet()->setCellValue('A54', $productp1['fablist']['fab7']);
 
 
 $sheet->setCellValue('B60',  '制单人:  '.$productp1['alist']['a4']);
@@ -208,8 +253,9 @@ if ($haveimg) {
     $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
+    $drawing->setWidthAndHeight(170,250);  //设置图片最大宽度 高度
     //$drawing->setWidth($width>250 ? 250:$width);
-    $drawing->setHeight($height > 170 ? 170 : $height);
+    //$drawing->setHeight($height > 170 ? 170 : $height);
 //$drawing->setHeight(150);
 
     //$drawing->setCoordinates($cola.'2');

@@ -14,8 +14,8 @@ $productp3 = $_SESSION['productp3'];
 //$spreadsheet = new Spreadsheet();
 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/productp3.xlsx');
 $sheet = $spreadsheet->getActiveSheet();
-$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(15);
-$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(16);
+$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(1);
+$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(20);
 $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(52);
 
 $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(16);
@@ -63,7 +63,9 @@ for($j = 1;$j<count($productp3['a1']);$j++){
     $carray = $productp3['a1']['c'.$j];
     foreach ($carray as $key => $item ){
         //var_dump($formarr[$j-1].($key+$startarr)."----".$item."<br>");
+        $spreadsheet->getActiveSheet()->getStyle($formarr[$j-1].($key+$startarr))->applyFromArray($styleArray1);  //BC样式
         $sheet->setCellValue($formarr[$j-1].($key+$startarr),$item);
+
     }
 }
 

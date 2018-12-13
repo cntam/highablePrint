@@ -27,6 +27,16 @@ $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
 //$spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(50); //行默认高度
 $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(20);  //列宽度
 
+for($col=0;$col< count($cpsform['id']);$col++) {
+    $Brow = chr(66 + $col * 2);  //B
+    $Crow = chr(67 + $col * 2);  //C
+    $spreadsheet->getActiveSheet()->getColumnDimension($Brow)->setWidth(30);  //列宽度
+    $spreadsheet->getActiveSheet()->getColumnDimension($Crow)->setWidth(30);  //列宽度
+}
+
+$spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(36); //列高度
+$spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(36); //列高度
+$spreadsheet->getActiveSheet()->getRowDimension('3')->setRowHeight(160); //列高度
 
 $styleArray1 = [
     'alignment' => [
@@ -56,86 +66,49 @@ $styleArray1 = [
 
 
 $styleArray = [
-
+    
     'alignment' => [
         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+		'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
     ],
-
+	
     'borders' => [
         'top' => [
             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
         ],
-        'bottom' => [
+		'bottom' => [
             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
         ],
-        'left' => [
+		'left' => [
             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
         ],
-        'right' => [
+		'right' => [
             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
         ],
     ],
-
+   
 ];
-
-$styleArraylefttop = [
-
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
-    ],
-
-    'borders' => [
-        'top' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'left' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-    ],
-
-];
-
-for($col=0;$col< count($cpsform['id']);$col++) {
-    $Brow = chr(66 + $col * 2);  //B
-    $Crow = chr(67 + $col * 2);  //C
-    $spreadsheet->getActiveSheet()->getColumnDimension($Brow)->setWidth(30);  //列宽度
-    $spreadsheet->getActiveSheet()->getColumnDimension($Crow)->setWidth(30);  //列宽度
-}
-
-$spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(36); //列高度
-$spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(160); //列高度
-$spreadsheet->getActiveSheet()->getRowDimension('3')->setRowHeight(36); //列高度
-
-
 
 function getforexcate($forex) {
     switch ($forex){
         case 1:
-            $output = 'USD';
+            $output = 'USD$';
             break;
         case 2:
-            $output = 'HKD';
+            $output = 'HKD$';
             break;
         case 3:
-            $output = 'RMB';
+            $output = 'RMB￥';
             break;
         case 4:
-            $output = 'EUR';
+            $output = 'EUR€';
             break;
         case 5:
-            $output = 'JPY';
+            $output = 'JPY￥';
             break;
 
             default:
-                 $output = 'USD';
+                 $output = 'USD$';
             break;
     }
     return $output;
@@ -167,16 +140,16 @@ function isselect($value){
 /**
  * 头部
  */
-$spreadsheet->getActiveSheet()->setCellValue("A1", 'Sample order no.：');
-$spreadsheet->getActiveSheet()->getStyle("A1")->applyFromArray($styleArray);
-
-$spreadsheet->getActiveSheet()->setCellValue("A2", 'Sketch：');
-$spreadsheet->getActiveSheet()->getStyle("A2")->applyFromArray($styleArraylefttop);
-$spreadsheet->getActiveSheet()->getStyle("A3")->applyFromArray($styleArray);
-
 for($col=0;$col< count($cpsform['id']);$col++){
     $Brow = chr(66 + $col * 2);  //B
     $Crow = chr(67 + $col * 2);  //C
+
+    $spreadsheet->getActiveSheet()->setCellValue("A2", 'Sample order no.：');
+    $spreadsheet->getActiveSheet()->getStyle("A2")->applyFromArray($styleArray);
+
+    $spreadsheet->getActiveSheet()->setCellValue("A3", 'Sketch：');
+    $spreadsheet->getActiveSheet()->getStyle("A3")->applyFromArray($styleArray);
+
 
 
     $BC = "{$Brow}1:{$Crow}1";
@@ -185,28 +158,22 @@ for($col=0;$col< count($cpsform['id']);$col++){
     $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray);
     $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
 
-//    $BC = "{$Brow}2:{$Crow}2";
-//    $spreadsheet->getActiveSheet()->mergeCells($BC);
-//    $spreadsheet->getActiveSheet()->setCellValue($Brow.'2' , $cpsform['sampleorderno'][$col]);
-//    $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray);
-//    $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
-
-    /**
-     *  外厂 及大货是否完成
-     */
+    $BC = "{$Brow}2:{$Crow}2";
+    $spreadsheet->getActiveSheet()->mergeCells($BC);
+    $spreadsheet->getActiveSheet()->setCellValue($Brow.'2' , $cpsform['sampleorderno'][$col]);
+    $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray);
+    $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
 
     if ( $cpsform['alist'][$col]['a7'][0] == 'on') {
-        $completeIcon = '  completed';
+        $completeIcon = 'completed:已出货';
     } else {
-        $completeIcon = '';
+        $completeIcon = '未出货';
     }
-    //$BC = "{$Brow}2:{$Crow}2";
+    $BC = "{$Brow}2:{$Crow}2";
     //$spreadsheet->getActiveSheet()->mergeCells($BC);
-    $spreadsheet->getActiveSheet()->setCellValue($Brow.'3' , 'Factory:'.$cpsform['alist'][$col]['a1'][0].$completeIcon);
-    $spreadsheet->getActiveSheet()->getStyle($Brow.'3')->applyFromArray($styleArray);
-    $spreadsheet->getActiveSheet()->getStyle($Brow.'3')->getAlignment()->setWrapText(true);
-
-
+    $spreadsheet->getActiveSheet()->setCellValue($Crow.'2' , $completeIcon);
+    $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray);
+    $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
 
     $BC = "{$Brow}3:{$Crow}3";
     //$spreadsheet->getActiveSheet()->mergeCells($BC);
@@ -214,8 +181,8 @@ for($col=0;$col< count($cpsform['id']);$col++){
     $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray);
     $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
 
-    $headertitle = array('Job no.：','Style no：','Shipment date：','style type','weight (kg)');
-    $headerrow = 4;
+    $headertitle = array('Factory','Sample No.：','Job no.：','Style no：','Shipment date：','style type','weight (kg)');
+    $headerrow = 10;
     foreach ($headertitle as $value){
         $spreadsheet->getActiveSheet()->setCellValue('A'.$headerrow , $value);
         $spreadsheet->getActiveSheet()->getStyle('A'.$headerrow)->applyFromArray($styleArray);
@@ -223,49 +190,49 @@ for($col=0;$col< count($cpsform['id']);$col++){
         $headerrow++;
     }
 
-//    $BC = "{$Brow}10:{$Crow}10";
-//    $spreadsheet->getActiveSheet()->mergeCells($BC);
-//    $spreadsheet->getActiveSheet()->setCellValue($Brow.'10' , $cpsform['alist'][$col]['a1'][0]);
-//    $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray);
-//    $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
-
-//    $BC = "{$Brow}11:{$Crow}11";
-//    $spreadsheet->getActiveSheet()->mergeCells($BC);
-//    $spreadsheet->getActiveSheet()->setCellValue($Brow.'11' , $cpsform['sampleno'][$col]);
-//    $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray);
-//    $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
-
-    $BC = "{$Brow}4:{$Crow}4";
+    $BC = "{$Brow}10:{$Crow}10";
     $spreadsheet->getActiveSheet()->mergeCells($BC);
-    $spreadsheet->getActiveSheet()->setCellValue($Brow.'4' , $cpsform['jobno'][$col]);
+    $spreadsheet->getActiveSheet()->setCellValue($Brow.'10' , $cpsform['alist'][$col]['a1'][0]);
     $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray);
     $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
 
-    $BC = "{$Brow}5:{$Crow}5";
+    $BC = "{$Brow}11:{$Crow}11";
     $spreadsheet->getActiveSheet()->mergeCells($BC);
-    $spreadsheet->getActiveSheet()->setCellValue($Brow.'5' , $cpsform['styleno'][$col]);
+    $spreadsheet->getActiveSheet()->setCellValue($Brow.'11' , $cpsform['sampleno'][$col]);
     $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray);
     $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
 
-    $BC = "{$Brow}6:{$Crow}6";
+    $BC = "{$Brow}12:{$Crow}12";
     $spreadsheet->getActiveSheet()->mergeCells($BC);
-    $spreadsheet->getActiveSheet()->setCellValue($Brow.'6' , $cpsform['shipmentdate'][$col]);
+    $spreadsheet->getActiveSheet()->setCellValue($Brow.'12' , $cpsform['jobno'][$col]);
+    $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray);
+    $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
+
+    $BC = "{$Brow}13:{$Crow}13";
+    $spreadsheet->getActiveSheet()->mergeCells($BC);
+    $spreadsheet->getActiveSheet()->setCellValue($Brow.'13' , $cpsform['styleno'][$col]);
+    $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray);
+    $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
+
+    $BC = "{$Brow}14:{$Crow}14";
+    $spreadsheet->getActiveSheet()->mergeCells($BC);
+    $spreadsheet->getActiveSheet()->setCellValue($Brow.'14' , $cpsform['shipmentdate'][$col]);
     $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray);
     $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
 
 
 
-    $spreadsheet->getActiveSheet()->setCellValue($Brow.'7' , $cpsform['alist'][$col]['a3'][0]);
-    $spreadsheet->getActiveSheet()->getStyle($Brow.'7')->applyFromArray($styleArray);
-    $spreadsheet->getActiveSheet()->getStyle($Brow.'7')->getAlignment()->setWrapText(true);
+    $spreadsheet->getActiveSheet()->setCellValue($Brow.'15' , $cpsform['alist'][$col]['a3'][0]);
+    $spreadsheet->getActiveSheet()->getStyle($Brow.'15')->applyFromArray($styleArray);
+    $spreadsheet->getActiveSheet()->getStyle($Brow.'15')->getAlignment()->setWrapText(true);
 
-    $spreadsheet->getActiveSheet()->setCellValue($Brow.'8' , $cpsform['alist'][$col]['a5'][0]);
-    $spreadsheet->getActiveSheet()->getStyle($Brow.'8')->applyFromArray($styleArray);
-    $spreadsheet->getActiveSheet()->getStyle($Brow.'8')->getAlignment()->setWrapText(true);
+    $spreadsheet->getActiveSheet()->setCellValue($Brow.'16' , $cpsform['alist'][$col]['a5'][0]);
+    $spreadsheet->getActiveSheet()->getStyle($Brow.'16')->applyFromArray($styleArray);
+    $spreadsheet->getActiveSheet()->getStyle($Brow.'16')->getAlignment()->setWrapText(true);
 
-    $BC = "{$Crow}7:{$Crow}8";
+    $BC = "{$Crow}15:{$Crow}16";
     $spreadsheet->getActiveSheet()->mergeCells($BC);
-    $spreadsheet->getActiveSheet()->setCellValue($Crow.'7' , $cpsform['alist'][$col]['a4'][0]);
+    $spreadsheet->getActiveSheet()->setCellValue($Crow.'15' , $cpsform['alist'][$col]['a4'][0]);
     $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray);
     $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
 
@@ -280,7 +247,6 @@ for($col=0;$col< count($cpsform['id']);$col++){
  */
 for($col=0;$col< count($cpsform['id']);$col++) {
     $Brow = chr(66 + $col * 2);  //B
-    $Crow = chr(67 + $col * 2);  //C
     $img = $cpsform['alist'][$col]['a6'][0];
     if ($img == '') {
         $haveimg = false;  //没有图片
@@ -333,13 +299,12 @@ for($col=0;$col< count($cpsform['id']);$col++) {
         $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
 //$drawing->setHeight($width);
 
-        $drawing->setWidthAndHeight(250,200);  //设置图片最大宽度 高度
         //$drawing->setWidth($width>250 ? 250:$width);
-        //$drawing->setHeight($height > 130 ? 130 : $height);
+        $drawing->setHeight($height > 130 ? 130 : $height);
 //$drawing->setHeight(150);
 
         //$drawing->setCoordinates($cola.'2');
-        $drawing->setCoordinates($Crow.'2');
+        $drawing->setCoordinates($Brow.'3');
         $drawing->setOffsetX(5);
         $drawing->setOffsetY(5);
         $drawing->setWorksheet($spreadsheet->getActiveSheet());
@@ -355,42 +320,29 @@ for($col=0;$col< count($cpsform['id']);$col++) {
     $Brow = chr(66 + $col * 2);  //B
     $Crow = chr(67 + $col * 2);  //C
     if ($cpsform['shipmentlist'][$col][0] > 0) {
-        $thisrow = 2;
-
-        $smb = '';
+        $thisrow = 4;
         for ($u = 0,$i=1;$u < $cpsform['shipmentlist'][$col][0];  $u++,$i++) {
+            $pcstitle = array('UK', 'FR/UK', 'FR/HK', 'US', 'AUS', 'print');
 
 
 
-            if($cpsform['shipmentlist'][$col]['sma'.$i] == 'on'){
-                if($u>0){
-                    $smb .= '
-'; //输出换行
-                }
-                $smb .= isselect($cpsform['shipmentlist'][$col]['sma'.$i]);
+            $spreadsheet->getActiveSheet()->setCellValue("A".$thisrow, $pcstitle[$u]);
+            $spreadsheet->getActiveSheet()->getStyle("A" . $thisrow)->applyFromArray($styleArray);
+            $spreadsheet->getActiveSheet()->getStyle("A" . $thisrow)->getAlignment()->setWrapText(true);
 
-
-                foreach ($cpsform['shipmentlist'][$col]['smb'.$i] as $item => $value){
-
-                    if($item == 4){
-                        $smb .= ' '.gmdate("d/M", strtotime($value));
-                    }else{
-                        $smb .= ' '.$value;
-                    }
-                }
-                if($cpsform['shipmentlist'][$col]['smc'.$i] == 'on'){
-                    $smb .= '  已出货' ;
-                }
+            $smb = isselect($cpsform['shipmentlist'][$col]['sma'.$i]).$cpsform['shipmentlist'][$col]['smb'.$i][0].'  '.$cpsform['shipmentlist'][$col]['smb'.$i][1].' '.$cpsform['shipmentlist'][$col]['smb'.$i][2];
+            $spreadsheet->getActiveSheet()->setCellValue($Brow. $thisrow, $smb);
+            $spreadsheet->getActiveSheet()->getStyle($Brow. $thisrow)->applyFromArray($styleArray);
+            $spreadsheet->getActiveSheet()->getStyle($Brow. $thisrow)->getAlignment()->setWrapText(true);
+            $smc = ' ' ;
+            if($cpsform['shipmentlist'][$col]['smc'.$i] == 'on'){
+                $smc = '  已出货' ;
             }
-
-
-            //$smb .=$cpsform['shipmentlist'][$col]['smb'.$i][0].'  '.$cpsform['shipmentlist'][$col]['smb'.$i][1].' '.$cpsform['shipmentlist'][$col]['smb'.$i][2];
+            $spreadsheet->getActiveSheet()->setCellValue($Crow . $thisrow, $cpsform['shipmentlist'][$col]['smb'.$i][3].$smc);
+            $spreadsheet->getActiveSheet()->getStyle($Crow . $thisrow)->applyFromArray($styleArray);
+            $spreadsheet->getActiveSheet()->getStyle($Crow . $thisrow)->getAlignment()->setWrapText(true);
+            $thisrow++;
         }
-
-        $spreadsheet->getActiveSheet()->setCellValue($Brow. $thisrow, $smb);
-        $spreadsheet->getActiveSheet()->getStyle($Brow. $thisrow)->getAlignment()->setWrapText(true);
-        $spreadsheet->getActiveSheet()->getStyle($Brow. $thisrow)->applyFromArray($styleArray);
-
 
     }
 }
@@ -399,14 +351,14 @@ for($col=0;$col< count($cpsform['id']);$col++) {
  */
 
 /**
- * 底部remark
+ * remark
  */
 for($col=0;$col< count($cpsform['id']);$col++) {
     $Brow = chr(66 + $col * 2);  //B
     $Crow = chr(67 + $col * 2);  //C
 
     if($cpsform['elist'][$col]['fromnume'] >0){
-        $thisrow = 9;
+        $thisrow = 19;
         for ($u = 0,$i=1;$u < $cpsform['elist'][$col]['fromnume'];  $u++,$i++) {
 
             $spreadsheet->getActiveSheet()->setCellValue('A'.$thisrow , $cpsform['elist'][$col]['e1'][$u]);
@@ -440,11 +392,11 @@ for($col=0;$col< count($cpsform['id']);$col++) {
     if ($cpsform["blist"][$col][0] > 0) {
         $titlearr = array('物料 & 特殊工序', 'Production Booking date', 'Colour standard received', 'Lab dips submitted', 'Lab dips approved', 'Base test report', 'Bulk cloth submitted', 'Bulk cloth approved', 'Bulk test  report approved', 'Bulk fabric  ready in factory', '上布方式', 'Care label', '1st Proto submitted', '1st Proto approved', '2nd Proto submitted', '2nd proto approved  (sealed to red seal)', 'Black seal  sample submitted', 'Black seal  sample approved', '1st off sample  submitted/approved', 'Shipment Sample', '上开工辦日期');
 
-        $thisrow = 9;
+        $thisrow = 19;
         for ($u = 0,$i=1;$u < 21;  $u++,$i++) {
 
             if($col == 0){
-                $spreadsheet->getActiveSheet()->insertNewRowBefore($thisrow, 1);
+                $spreadsheet->getActiveSheet()->insertNewRowBefore(19, 1);
             }
 
 
@@ -454,7 +406,7 @@ for($col=0;$col< count($cpsform['id']);$col++) {
             $thisrow++;
         }
 
-        $thisrow = 9;
+        $thisrow = 19;
         for ($u = 0,$i=1;$u < 21;  $u++,$i++) {
 
             $spreadsheet->getActiveSheet()->setCellValue($Brow. $thisrow, $cpsform["blist"][$col]["b".$i][0]);
@@ -482,7 +434,7 @@ for($col=0;$col< count($cpsform['id']);$col++) {
 
     if($cpsform['falist'][$col]['fa2alist'][0] >0){
         $fab2titlearr = array('最新紙樣資料(Merchandise)', '訂布資料(單位: Y/件)');
-        $thisrow = 9;
+        $thisrow = 17;
         for ($u = 0,$i=1;$u < count($cpsform['falist'][$col]['fa2alist']['fa2a1']);  $u++,$i++) {
 
             $spreadsheet->getActiveSheet()->setCellValue('A'.$thisrow , $fab2titlearr[$u]);
@@ -515,14 +467,17 @@ for($col=0;$col< count($cpsform['id']);$col++) {
     if (isset($cpsform["falist"][$col]['falist']['fabrow']) && $cpsform["falist"][$col]['falist']['fabrow'] > 0) {
 
 
+
+
         for ($u = 0,$i=1;$u < $cpsform["falist"][$col]['falist']['fabrow'];  $u++,$i++) {
 
             if($col == 0){
-                $spreadsheet->getActiveSheet()->insertNewRowBefore(9, 1);
+                $spreadsheet->getActiveSheet()->insertNewRowBefore(17, 1);
             }
 
+
         }
-        $thisrow = 9;
+        $thisrow = 17;
         for ($u = 0,$i=1;$u < $cpsform["falist"][$col]['falist']['fabrow'];  $u++,$i++) {
 
 

@@ -90,23 +90,23 @@ $styleArray = [
 function getforexcate($forex) {
     switch ($forex){
         case 1:
-            $output = 'USD$';
+            $output = 'USD';
             break;
         case 2:
-            $output = 'HKD$';
+            $output = 'HKD';
             break;
         case 3:
-            $output = 'RMB￥';
+            $output = 'RMB';
             break;
         case 4:
-            $output = 'EUR€';
+            $output = 'EUR';
             break;
         case 5:
-            $output = 'JPY￥';
+            $output = 'JPY';
             break;
 
             default:
-                 $output = 'USD$';
+                 $output = 'USD';
             break;
     }
     return $output;
@@ -263,7 +263,8 @@ if ($haveimg){
 //$drawing->setHeight($width);
 
     //$drawing->setWidth($width>250 ? 250:$width);
-    $drawing->setHeight($height>130 ? 130:$height);
+    $drawing->setWidthAndHeight(300,130);  //设置图片最大宽度 高度
+    //$drawing->setHeight($height>130 ? 130:$height);
 //$drawing->setHeight(150);
 
 
@@ -279,23 +280,29 @@ if ($haveimg){
  * FABRIC COST
  */
 $spreadsheet->getActiveSheet()->setCellValue("A11", 'FABRIC COST');
-$spreadsheet->getActiveSheet()->getStyle("A11:A12")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("A11:A12")->getAlignment()->setWrapText(true);
+$spreadsheet->getActiveSheet()->getStyle("A11")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("A12")->applyFromArray($styleArray);
+//$spreadsheet->getActiveSheet()->getStyle("A11:A12")->getAlignment()->setWrapText(true);
 if($costp2["alist"]["a33"] == '1'){
-    $radioa = '■ 110%';
-    $radiob = '□ 121%';
+    $radioa = '110%';
+    //$radiob = '□ 121%';
+    $a31 = '   '.getforexcate($costp2["fixalist"]["fixa1"]).' '.$costp2["alist"]["a31"];
+    $radioa .=$a31;
 }else{
-    $radioa = '□ 110%';
-    $radiob = '■ 121%';
+    $radioa = '121%';
+    //$radiob = '■ 121%';
+    $a32 = '   '.getforexcate($costp2["fixalist"]["fixa1"]).' '.$costp2["alist"]["a32"];
+    $radioa .=$a32;
 }
 
-$a31 = '   '.getforexcate($costp2["fixalist"]["fixa1"]).' '.$costp2["alist"]["a31"];
-$radioa .=$a31;
-$a32 = '   '.getforexcate($costp2["fixalist"]["fixa1"]).' '.$costp2["alist"]["a32"];
-$radiob .=$a32;
+//$a31 = '   '.getforexcate($costp2["fixalist"]["fixa1"]).' '.$costp2["alist"]["a31"];
+//$radioa .=$a31;
+//
+//$a32 = '   '.getforexcate($costp2["fixalist"]["fixa1"]).' '.$costp2["alist"]["a32"];
+//$radiob .=$a32;
 
 $spreadsheet->getActiveSheet()->setCellValue("B11", $radioa);
-$spreadsheet->getActiveSheet()->setCellValue("B12", $radiob);
+//$spreadsheet->getActiveSheet()->setCellValue("B12", $radiob);
 $spreadsheet->getActiveSheet()->getStyle("B11")->applyFromArray($styleArray);
 $spreadsheet->getActiveSheet()->getStyle("B12")->applyFromArray($styleArray);
 
@@ -313,7 +320,7 @@ if($costp2["alist"]["a29"] == 0){    //如果 Fushing 为0 不打印
 }
 
 $spreadsheet->getActiveSheet()->getStyle("A13")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("B13")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B13")->applyFromArray($styleArray1);
 $spreadsheet->getActiveSheet()->getStyle("B13")->getAlignment()->setWrapText(true);
 
 $spreadsheet->getActiveSheet()->setCellValue("C13", $costp2["alist"]["a30"]);
@@ -362,9 +369,11 @@ $spreadsheet->getActiveSheet()->getStyle("A18")->applyFromArray($styleArray);
 
 $fixa4 = getforexcate($costp2["fixalist"]["fixa4"]).' '.$costp2["elist"]["fixedval"]["fixedval"][2];
 $spreadsheet->getActiveSheet()->setCellValue("B16", $fixa4);
-$fixedval3 = $costp2["elist"]["fixedval"]["fixedval"][3].' %';
+$fixedval3 = $costp2["elist"]["fixedval"]["fixedval"][3].'%';
 $spreadsheet->getActiveSheet()->setCellValue("B17", $fixedval3);
-$spreadsheet->getActiveSheet()->setCellValue("B18", $costp2["elist"]["fixedval"]["fixedval"][4]);
+
+$B18 = getforexcate($costp2["fixalist"]["fixa4"]).' '.$costp2["elist"]["fixedval"]["fixedval"][4];
+$spreadsheet->getActiveSheet()->setCellValue("B18", $B18);
 
 $spreadsheet->getActiveSheet()->getStyle("B16")->applyFromArray($styleArray);
 $spreadsheet->getActiveSheet()->getStyle("B17")->applyFromArray($styleArray);
@@ -393,9 +402,9 @@ if($costp2["glist"]["g1"] > 0){
 
     foreach ($costp2["glist"]["g2"] as $value){
         if($b == $costp2["glist"]["g1"]){
-            $g2 = '■  '.$value. '   '.$costp2["glist"]["g3"][$v] . ' %';
+            $g2 = '■  '.$value. '   '.$costp2["glist"]["g3"][$v] . '%';
         }else{
-            $g2 = '□  '.$value. '   '.$costp2["glist"]["g3"][$v] . ' %';
+            $g2 = '□  '.$value. '   '.$costp2["glist"]["g3"][$v] . '%';
         }
         $thisrow = 18 + $b ;
         $spreadsheet->getActiveSheet()->setCellValue("B".$thisrow , $g2);
@@ -444,11 +453,11 @@ if($costp2["dlist"]['fromnumf'] > 0){
 
 
         $spreadsheet->getActiveSheet()->setCellValue("B".$thisrow, $costp2["dlist"]["d1"][$u]);
-        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray1);
         $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
 
         $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow, $costp2["dlist"]["d2"][$u]);
-        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray1);
         $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
 
     }
@@ -475,11 +484,11 @@ if($costp2["clist"]['fromnume'] > 0){
 
 
         $spreadsheet->getActiveSheet()->setCellValue("B".$thisrow, $costp2["clist"]["c1"][$u]);
-        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray1);
         $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
 
         $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow, $costp2["clist"]["c2"][$u]);
-        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray1);
         $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
 
     }
@@ -514,7 +523,7 @@ if($costp2["alist"]["a10"] > 0){
         $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
         $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
 
-        $thisrow = 12;
+        $thisrow = 12;  //12
         $spreadsheet->getActiveSheet()->setCellValue("A12", $costp2["alist"]["a14"][$u]);
         $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->applyFromArray($styleArray);
         $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->getAlignment()->setWrapText(true);
@@ -533,7 +542,7 @@ if($costp2["alist"]["a10"] > 0){
         $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
         $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
 
-        $thisrow = 13;
+        $thisrow = 13; //13
         $spreadsheet->getActiveSheet()->setCellValue("A13", $costp2["alist"]["a19"][$u]);
         $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->applyFromArray($styleArray);
         $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->getAlignment()->setWrapText(true);
@@ -543,7 +552,7 @@ if($costp2["alist"]["a10"] > 0){
         }else{
             $A22 = ' y/PC';
         }
-        $B13 = $costp2["alist"]["a20"][$u].' X  '.$costp2["alist"]["a21"][$u].$A22;
+        $B13 = stripcslashes($costp2["alist"]["a20"][$u]).' X  '.$costp2["alist"]["a21"][$u].$A22;
         $spreadsheet->getActiveSheet()->setCellValue("B".$thisrow, $B13);
         $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
         $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
