@@ -28,7 +28,7 @@ $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
 //$spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(50);
 
 $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(15);  //列宽度
-$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(10);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(15);  //列宽度
 $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(15);  //列宽度
 $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(15);  //列宽度
 $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(15);  //列宽度
@@ -63,6 +63,8 @@ $styleArray = [
     'alignment' => [
         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
 		'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
+        'wrapText' => true,
+        'ShrinkToFit'=>true,
     ],
 	
 //    'borders' => [
@@ -205,6 +207,7 @@ for($i=1,$u=0;$i <= $samplep1['data']["dlist"]["dlistnum"] ;$i++,$u++){
 /**
  * 色码分配
  */
+
 $spreadsheet->getActiveSheet()->setCellValue('H43', $samplep1['data']["clist"]['clistresult']); //最后结果
 for($i=1,$u=0;$u <= $samplep1['data']["clist"]["clistrow"] ;$i++,$u++){
     $arownum = 40 + $u;
@@ -224,7 +227,7 @@ for($i=1,$u=0;$u <= $samplep1['data']["clist"]["clistrow"] ;$i++,$u++){
     $spreadsheet->getActiveSheet()->setCellValue('H'.$arownum, $samplep1['data']["clist"]['c8'][$u]);
 
 }
-
+$spreadsheet->getActiveSheet()->setCellValue('H40', '总计');
 /**
  * 色码分配
  */
