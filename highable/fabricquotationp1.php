@@ -87,6 +87,8 @@ $styleArray = [
 //$spreadsheet->getActiveSheet()->setCellValue('C4', $fabp1["alist"]['a1']);
 $spreadsheet->getActiveSheet()->setCellValue('E1', 'DATE: '.$fabp1["date"]);
 $spreadsheet->getActiveSheet()->setCellValue('A4', $fabp1["quotitle"]);
+
+$spreadsheet->getActiveSheet()->setCellValue('A1', $fabp1["alist"]["head"]);
 $row = 6;
 /**
  * 标题
@@ -162,7 +164,7 @@ $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作�
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
-unset($_SESSION['fabricquotationp1'] ); //注销SESSION
+//unset($_SESSION['fabricquotationp1'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。
