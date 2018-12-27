@@ -112,7 +112,7 @@ for($col=0;$col< count($cpsform['id']);$col++) {
 
 $spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(36); //列高度
 $spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(160); //列高度
-$spreadsheet->getActiveSheet()->getRowDimension('3')->setRowHeight(36); //列高度
+//$spreadsheet->getActiveSheet()->getRowDimension('3')->setRowHeight(20); //列高度
 
 
 
@@ -202,7 +202,7 @@ for($col=0;$col< count($cpsform['id']);$col++){
     }
     //$BC = "{$Brow}2:{$Crow}2";
     //$spreadsheet->getActiveSheet()->mergeCells($BC);
-    $spreadsheet->getActiveSheet()->setCellValue($Brow.'3' , 'Factory:'.$cpsform['alist'][$col]['a1'][0].$completeIcon);
+    $spreadsheet->getActiveSheet()->setCellValue($Brow.'3' , $cpsform['alist'][$col]['a1'][0].$completeIcon);
     $spreadsheet->getActiveSheet()->getStyle($Brow.'3')->applyFromArray($styleArray);
     $spreadsheet->getActiveSheet()->getStyle($Brow.'3')->getAlignment()->setWrapText(true);
 
@@ -367,7 +367,7 @@ for($col=0;$col< count($cpsform['id']);$col++) {
                     $smb .= '
 '; //输出换行
                 }
-                $smb .= isselect($cpsform['shipmentlist'][$col]['sma'.$i]);
+                //$smb .= isselect($cpsform['shipmentlist'][$col]['sma'.$i]);
 
 
                 foreach ($cpsform['shipmentlist'][$col]['smb'.$i] as $item => $value){

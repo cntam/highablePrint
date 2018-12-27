@@ -179,30 +179,30 @@ $spreadsheet->getActiveSheet()->getStyle("B10")->applyFromArray($styleArray);
 
 
 $spreadsheet->getActiveSheet()->setCellValue("B1", $costp2["clientname"]);
-$spreadsheet->getActiveSheet()->getStyle("B1")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B1")->applyFromArray($styleArray1);
 $spreadsheet->getActiveSheet()->getStyle("B1")->getAlignment()->setWrapText(true);
 
 $spreadsheet->getActiveSheet()->setCellValue("B2", $costp2['so']);
-$spreadsheet->getActiveSheet()->getStyle("B2")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B2")->applyFromArray($styleArray1);
 $spreadsheet->getActiveSheet()->getStyle("B2")->getAlignment()->setWrapText(true);
 
 $spreadsheet->getActiveSheet()->setCellValue("C1", $costp2["alist"]["a1"]);
-$spreadsheet->getActiveSheet()->getStyle("C1")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("C1")->applyFromArray($styleArray1);
 $spreadsheet->getActiveSheet()->getStyle("C1")->getAlignment()->setWrapText(true);
 
 $spreadsheet->getActiveSheet()->mergeCells("C3:C9");
 $spreadsheet->getActiveSheet()->setCellValue("C3", $costp2["alist"]["a3"]);
-$spreadsheet->getActiveSheet()->getStyle("C3:C9")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("C3:C9")->applyFromArray($styleArray1);
 $spreadsheet->getActiveSheet()->getStyle("C3:C9")->getAlignment()->setWrapText(true);
 
 
 $spreadsheet->getActiveSheet()->setCellValue("B10", $costp2["styleno"]);
-$spreadsheet->getActiveSheet()->getStyle("B10")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B10")->applyFromArray($styleArray1);
 $spreadsheet->getActiveSheet()->getStyle("B10")->getAlignment()->setWrapText(true);
 
 
-$spreadsheet->getActiveSheet()->getStyle("C2")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("C10")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("C2")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("C10")->applyFromArray($styleArray1);
 
 
 /**
@@ -281,33 +281,21 @@ if ($haveimg){
  */
 $spreadsheet->getActiveSheet()->setCellValue("A11", 'FABRIC COST');
 $spreadsheet->getActiveSheet()->getStyle("A11")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("A12")->applyFromArray($styleArray);
-//$spreadsheet->getActiveSheet()->getStyle("A11:A12")->getAlignment()->setWrapText(true);
-if($costp2["alist"]["a33"] == '1'){
-    $radioa = '110%';
-    //$radiob = '□ 121%';
-    $a31 = '   '.getforexcate($costp2["fixalist"]["fixa1"]).' '.$costp2["alist"]["a31"];
-    $radioa .=$a31;
-}else{
-    $radioa = '121%';
-    //$radiob = '■ 121%';
-    $a32 = '   '.getforexcate($costp2["fixalist"]["fixa1"]).' '.$costp2["alist"]["a32"];
-    $radioa .=$a32;
-}
 
-//$a31 = '   '.getforexcate($costp2["fixalist"]["fixa1"]).' '.$costp2["alist"]["a31"];
-//$radioa .=$a31;
+
+$fabricCost = getforexcate($costp2["fixalist"]["fixa1"]).'  '.$costp2["alist"]["a32"] .'%  ' .$costp2["alist"]["a31"];
+
 //
 //$a32 = '   '.getforexcate($costp2["fixalist"]["fixa1"]).' '.$costp2["alist"]["a32"];
 //$radiob .=$a32;
 
-$spreadsheet->getActiveSheet()->setCellValue("B11", $radioa);
-//$spreadsheet->getActiveSheet()->setCellValue("B12", $radiob);
-$spreadsheet->getActiveSheet()->getStyle("B11")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("B12")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->setCellValue("B11", $fabricCost);
+////$spreadsheet->getActiveSheet()->setCellValue("B12", $radiob);
+$spreadsheet->getActiveSheet()->getStyle("B11")->applyFromArray($styleArray1);
+//$spreadsheet->getActiveSheet()->getStyle("B12")->applyFromArray($styleArray1);
 
-$spreadsheet->getActiveSheet()->getStyle("C11")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("C12")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("C11")->applyFromArray($styleArray1);
+//$spreadsheet->getActiveSheet()->getStyle("C12")->applyFromArray($styleArray1);
 
 
 
@@ -315,17 +303,17 @@ $spreadsheet->getActiveSheet()->getStyle("C12")->applyFromArray($styleArray);
 if($costp2["alist"]["a29"] == 0){    //如果 Fushing 为0 不打印
 
 }else{
-    $spreadsheet->getActiveSheet()->setCellValue("A13", 'Fushing');
-    $spreadsheet->getActiveSheet()->setCellValue("B13", $costp2["alist"]["a29"]);
+    $spreadsheet->getActiveSheet()->setCellValue("A12", 'Fushing');
+    $spreadsheet->getActiveSheet()->setCellValue("B12", $costp2["alist"]["a29"]);
 }
 
-$spreadsheet->getActiveSheet()->getStyle("A13")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("B13")->applyFromArray($styleArray1);
-$spreadsheet->getActiveSheet()->getStyle("B13")->getAlignment()->setWrapText(true);
+$spreadsheet->getActiveSheet()->getStyle("A12")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B12")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("B12")->getAlignment()->setWrapText(true);
 
-$spreadsheet->getActiveSheet()->setCellValue("C13", $costp2["alist"]["a30"]);
-$spreadsheet->getActiveSheet()->getStyle("C13")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("C13")->getAlignment()->setWrapText(true);
+$spreadsheet->getActiveSheet()->setCellValue("C12", $costp2["alist"]["a30"]);
+$spreadsheet->getActiveSheet()->getStyle("C12")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("C12")->getAlignment()->setWrapText(true);
 /**
  *  //FABRIC COST
  */
@@ -333,25 +321,25 @@ $spreadsheet->getActiveSheet()->getStyle("C13")->getAlignment()->setWrapText(tru
 /**
  * Total Trim Cost
  */
-$spreadsheet->getActiveSheet()->setCellValue("A14", $costp2["elist"]["fixedval"]["fixedtitle"][0]);
+$spreadsheet->getActiveSheet()->setCellValue("A13", $costp2["elist"]["fixedval"]["fixedtitle"][0]);
+$spreadsheet->getActiveSheet()->getStyle("A13")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->setCellValue("A14", $costp2["elist"]["fixedval"]["fixedtitle"][1]);
 $spreadsheet->getActiveSheet()->getStyle("A14")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->setCellValue("A15", $costp2["elist"]["fixedval"]["fixedtitle"][1]);
-$spreadsheet->getActiveSheet()->getStyle("A15")->applyFromArray($styleArray);
 
 $fixa2 = getforexcate($costp2["fixalist"]["fixa2"]).' '.$costp2["elist"]["fixedval"]["fixedval"][0];
 
 $fixa3 = getforexcate($costp2["fixalist"]["fixa3"]).' '.$costp2["elist"]["fixedval"]["fixedval"][1];
 
 
-$spreadsheet->getActiveSheet()->setCellValue("B14", $fixa2);
-$spreadsheet->getActiveSheet()->setCellValue("B15", $fixa3);
-$spreadsheet->getActiveSheet()->getStyle("B14")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("B15")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->setCellValue("B13", $fixa2);
+$spreadsheet->getActiveSheet()->setCellValue("B14", $fixa3);
+$spreadsheet->getActiveSheet()->getStyle("B13")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("B14")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("B13")->getAlignment()->setWrapText(true);
 $spreadsheet->getActiveSheet()->getStyle("B14")->getAlignment()->setWrapText(true);
-$spreadsheet->getActiveSheet()->getStyle("B15")->getAlignment()->setWrapText(true);
 
-$spreadsheet->getActiveSheet()->getStyle("C14")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("C15")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("C13")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("C14")->applyFromArray($styleArray1);
 
 /**
  *  //Total Trim Cost
@@ -360,31 +348,31 @@ $spreadsheet->getActiveSheet()->getStyle("C15")->applyFromArray($styleArray);
 /**
  * Total Cost
  */
-$spreadsheet->getActiveSheet()->setCellValue("A16", $costp2["elist"]["fixedval"]["fixedtitle"][2]);
+$spreadsheet->getActiveSheet()->setCellValue("A15", $costp2["elist"]["fixedval"]["fixedtitle"][2]);
+$spreadsheet->getActiveSheet()->getStyle("A15")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->setCellValue("A16", $costp2["elist"]["fixedval"]["fixedtitle"][3]);
 $spreadsheet->getActiveSheet()->getStyle("A16")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->setCellValue("A17", $costp2["elist"]["fixedval"]["fixedtitle"][3]);
+$spreadsheet->getActiveSheet()->setCellValue("A17", $costp2["elist"]["fixedval"]["fixedtitle"][4]);
 $spreadsheet->getActiveSheet()->getStyle("A17")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->setCellValue("A18", $costp2["elist"]["fixedval"]["fixedtitle"][4]);
-$spreadsheet->getActiveSheet()->getStyle("A18")->applyFromArray($styleArray);
 
 $fixa4 = getforexcate($costp2["fixalist"]["fixa4"]).' '.$costp2["elist"]["fixedval"]["fixedval"][2];
-$spreadsheet->getActiveSheet()->setCellValue("B16", $fixa4);
+$spreadsheet->getActiveSheet()->setCellValue("B15", $fixa4);
 $fixedval3 = $costp2["elist"]["fixedval"]["fixedval"][3].'%';
-$spreadsheet->getActiveSheet()->setCellValue("B17", $fixedval3);
+$spreadsheet->getActiveSheet()->setCellValue("B16", $fixedval3);
 
 $B18 = getforexcate($costp2["fixalist"]["fixa4"]).' '.$costp2["elist"]["fixedval"]["fixedval"][4];
-$spreadsheet->getActiveSheet()->setCellValue("B18", $B18);
+$spreadsheet->getActiveSheet()->setCellValue("B17", $B18);
 
-$spreadsheet->getActiveSheet()->getStyle("B16")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("B17")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("B18")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B15")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("B16")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("B17")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("B15")->getAlignment()->setWrapText(true);
 $spreadsheet->getActiveSheet()->getStyle("B16")->getAlignment()->setWrapText(true);
 $spreadsheet->getActiveSheet()->getStyle("B17")->getAlignment()->setWrapText(true);
-$spreadsheet->getActiveSheet()->getStyle("B18")->getAlignment()->setWrapText(true);
 
-$spreadsheet->getActiveSheet()->getStyle("C16")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("C17")->applyFromArray($styleArray);
-$spreadsheet->getActiveSheet()->getStyle("C18")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("C15")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("C16")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("C17")->applyFromArray($styleArray1);
 
 /**
  *  //Total Cost
@@ -394,8 +382,8 @@ $spreadsheet->getActiveSheet()->getStyle("C18")->applyFromArray($styleArray);
  * Unit Price
  */
 if($costp2["glist"]["g1"] > 0){
-    $spreadsheet->getActiveSheet()->setCellValue("A19", $costp2["elist"]["fixedval"]["fixedtitle"][5]);
-    $spreadsheet->getActiveSheet()->getStyle("A19")->applyFromArray($styleArray);
+    $spreadsheet->getActiveSheet()->setCellValue("A18", $costp2["elist"]["fixedval"]["fixedtitle"][5]);
+    $spreadsheet->getActiveSheet()->getStyle("A18")->applyFromArray($styleArray);
 
 
     $b = 1;$v=0;
@@ -404,32 +392,32 @@ if($costp2["glist"]["g1"] > 0){
         if($b == $costp2["glist"]["g1"]){
             $g2 = '■  '.$value. '   '.$costp2["glist"]["g3"][$v] . '%';
         }else{
-            $g2 = '□  '.$value. '   '.$costp2["glist"]["g3"][$v] . '%';
+            $g2 = '   '.$value. '   '.$costp2["glist"]["g3"][$v] . '%';
         }
-        $thisrow = 18 + $b ;
+        $thisrow = 17 + $b ;
         $spreadsheet->getActiveSheet()->setCellValue("B".$thisrow , $g2);
-        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray1);
         $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
 
         $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->applyFromArray($styleArray);
 
         $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow , getforexcate($costp2["fixalist"]["fixa4"]).' '.$costp2["glist"]["g4"][$v]);
-        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray1);
         $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
         $b++;$v++;
     }
     /**
      *  Final Price
      */
-    $thisrow = 18 + $b ;
+    $thisrow = 17 + $b ;
     $spreadsheet->getActiveSheet()->setCellValue("A".$thisrow, $costp2["elist"]["fixedval"]["fixedtitle"][6]);
     $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->applyFromArray($styleArray);
 
     $spreadsheet->getActiveSheet()->setCellValue("B".$thisrow, getforexcate($costp2["fixalist"]["fixa4"]).' '.$costp2["elist"]["fixedval"]["fixedval"][5]);
-    $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
+    $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray1);
     $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
 
-    $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
+    $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray1);
 }
 
 
@@ -444,10 +432,10 @@ if($costp2["glist"]["g1"] > 0){
 if($costp2["dlist"]['fromnumf'] > 0){
 
     for ($u = ($costp2["dlist"]['fromnumf'] - 1);$u >= 0;$u-- ){
-        $thisrow = 16;
-        $spreadsheet->getActiveSheet()->insertNewRowBefore(16, 1);
+        $thisrow = 15;
+        $spreadsheet->getActiveSheet()->insertNewRowBefore(15, 1);
 
-        $spreadsheet->getActiveSheet()->setCellValue("A16", $costp2["dlist"]["titlef"][$u]);
+        $spreadsheet->getActiveSheet()->setCellValue("A15", $costp2["dlist"]["titlef"][$u]);
         $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->applyFromArray($styleArray);
         $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->getAlignment()->setWrapText(true);
 
@@ -475,10 +463,10 @@ if($costp2["dlist"]['fromnumf'] > 0){
 if($costp2["clist"]['fromnume'] > 0){
 
     for ($u = ($costp2["clist"]['fromnume'] - 1);$u >= 0;$u-- ){
-        $thisrow = 14;
-        $spreadsheet->getActiveSheet()->insertNewRowBefore(14, 1);
+        $thisrow = 13;
+        $spreadsheet->getActiveSheet()->insertNewRowBefore(13, 1);
 
-        $spreadsheet->getActiveSheet()->setCellValue("A14", $costp2["clist"]["titlee"][$u]);
+        $spreadsheet->getActiveSheet()->setCellValue("A13", $costp2["clist"]["titlee"][$u]);
         $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->applyFromArray($styleArray);
         $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->getAlignment()->setWrapText(true);
 
@@ -516,11 +504,11 @@ if($costp2["alist"]["a10"] > 0){
 
 
         $spreadsheet->getActiveSheet()->setCellValue("B11", $costp2["alist"]["a12"][$u]);
-        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray1);
         $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
 
         $spreadsheet->getActiveSheet()->setCellValue("C11", $costp2["alist"]["a13"][$u]);
-        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray1);
         $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
 
         $thisrow = 12;  //12
@@ -535,11 +523,11 @@ if($costp2["alist"]["a10"] > 0){
         }
         $B12 = getforexcate($costp2["alist"]["a15"][$u]).' '.$costp2["alist"]["a16"][$u].$A4.' '.$costp2["alist"]["a17"][$u];
         $spreadsheet->getActiveSheet()->setCellValue("B".$thisrow, $B12);
-        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray1);
         $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
 
         $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow, $costp2["alist"]["a18"][$u]);
-        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray1);
         $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
 
         $thisrow = 13; //13
@@ -554,7 +542,7 @@ if($costp2["alist"]["a10"] > 0){
         }
         $B13 = stripcslashes($costp2["alist"]["a20"][$u]).' X  '.$costp2["alist"]["a21"][$u].$A22;
         $spreadsheet->getActiveSheet()->setCellValue("B".$thisrow, $B13);
-        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray1);
         $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
 
         if(($costp2["alist"]["a22"][$u] == 2) and ($costp2["alist"]["a24"][$u] == 1) ){
@@ -566,7 +554,7 @@ if($costp2["alist"]["a10"] > 0){
                 $A24 = ' m/PC';
             }
             $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow, $costp2["alist"]["a23"][$u].$A24);
-            $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray);
+            $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray1);
             $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
         }
 
@@ -585,6 +573,10 @@ $spreadsheet->setActiveSheetIndex(0);
 
 unset($_SESSION['costp2'] ); //注销SESSION
 
+$spreadsheet->getActiveSheet()->getPageSetup()
+    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);  //横放置
+$spreadsheet->getActiveSheet()->getPageSetup()
+    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);  //A4
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。
