@@ -2,8 +2,8 @@
 session_start();
 
 
-$samplep1 =   $_SESSION['fabricquotationp1'];
-var_dump($samplep1);
+$samplep1 =   $_SESSION['cpsform'];
+print_r($samplep1);
 
 
 exit;

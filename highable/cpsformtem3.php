@@ -410,7 +410,7 @@ for($col=0;$col< count($cpsform['id']);$col++) {
         for ($u = 0,$i=1;$u < $cpsform['elist'][$col]['fromnume'];  $u++,$i++) {
 
             $spreadsheet->getActiveSheet()->setCellValue('A'.$thisrow , $cpsform['elist'][$col]['e1'][$u]);
-            $spreadsheet->getActiveSheet()->getStyle('A'.$thisrow )->applyFromArray($styleArray1);
+            $spreadsheet->getActiveSheet()->getStyle('A'.$thisrow )->applyFromArray($styleArray);
             $spreadsheet->getActiveSheet()->getStyle('A'.$thisrow )->getAlignment()->setWrapText(true);
 
             $spreadsheet->getActiveSheet()->setCellValue($Brow.$thisrow , $cpsform['elist'][$col]['e2'][$u]);
@@ -438,10 +438,13 @@ for($col=0;$col< count($cpsform['id']);$col++) {
     $Brow = chr(66 + $col * 2);  //B
     $Crow = chr(67 + $col * 2);  //C
     if ($cpsform["blist"][$col][0] > 0) {
-        $titlearr = array('物料 & 特殊工序', 'Production Booking date', 'Colour standard received', 'Lab dips submitted', 'Lab dips approved', 'Base test report', 'Bulk cloth submitted', 'Bulk cloth approved', 'Bulk test  report approved', 'Bulk fabric  ready in factory', '上布方式', 'Care label', '1st Proto submitted', '1st Proto approved', '2nd Proto submitted', '2nd proto approved  (sealed to red seal)', 'Black seal  sample submitted', 'Black seal  sample approved', '1st off sample  submitted/approved', 'Shipment Sample', '上开工辦日期');
+        //$titlearr = array('物料 & 特殊工序', 'Production Booking date', 'Colour standard received', 'Lab dips submitted', 'Lab dips approved', 'Base test report', 'Bulk cloth submitted', 'Bulk cloth approved', 'Bulk test  report approved', 'Bulk fabric  ready in factory', '上布方式', 'Care label', '1st Proto submitted', '1st Proto approved', '2nd Proto submitted', '2nd proto approved  (sealed to red seal)', 'Black seal  sample submitted', 'Black seal  sample approved', '1st off sample  submitted/approved', 'Shipment Sample', '上开工辦日期');
+
+        $titlearr = $cpsform['titlearr']['titlearr'];
+
 
         $thisrow = 9;
-        for ($u = 0,$i=1;$u < 21;  $u++,$i++) {
+        for ($u = 0,$i=1;$u < count($titlearr);  $u++,$i++) {
 
             if($col == 0){
                 $spreadsheet->getActiveSheet()->insertNewRowBefore($thisrow, 1);
@@ -455,7 +458,7 @@ for($col=0;$col< count($cpsform['id']);$col++) {
         }
 
         $thisrow = 9;
-        for ($u = 0,$i=1;$u < 21;  $u++,$i++) {
+        for ($u = 0,$i=1;$u < count($titlearr);  $u++,$i++) {
 
             $spreadsheet->getActiveSheet()->setCellValue($Brow. $thisrow, $cpsform["blist"][$col]["b".$i][0]);
             $spreadsheet->getActiveSheet()->getStyle($Brow. $thisrow)->applyFromArray($styleArray1);
@@ -481,7 +484,8 @@ for($col=0;$col< count($cpsform['id']);$col++) {
     $Crow = chr(67 + $col * 2);  //C
 
     if($cpsform['falist'][$col]['fa2alist'][0] >0){
-        $fab2titlearr = array('最新紙樣資料(Merchandise)', '訂布資料(單位: Y/件)');
+        //$fab2titlearr = array('最新紙樣資料(Merchandise)', '訂布資料(單位: Y/件)');
+        $fab2titlearr = $cpsform['titlearr']['fab2titlearr'];
         $thisrow = 9;
         for ($u = 0,$i=1;$u < count($cpsform['falist'][$col]['fa2alist']['fa2a1']);  $u++,$i++) {
 
@@ -553,8 +557,12 @@ for($col=0;$col< count($cpsform['id']);$col++) {
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
-unset($_SESSION['cpsform'] ); //注销SESSION
+//unset($_SESSION['cpsform'] ); //注销SESSION
 
+$spreadsheet->getActiveSheet()->getPageSetup()
+    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);  //横放置
+$spreadsheet->getActiveSheet()->getPageSetup()
+    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);  //A4
 //$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。
