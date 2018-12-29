@@ -504,7 +504,7 @@ for($col=0;$col< count($cpsform['id']);$col++) {
         $fab2titlearr = $cpsform['titlearr']['fab2titlearr'];
 
         $thisrow = 9;
-       
+
         for ($u = 0,$i=1;$u < count($cpsform['falist'][$col]['fa2alist']['fa2a1']);  $u++,$i++) {
 
 
