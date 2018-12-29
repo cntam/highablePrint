@@ -167,7 +167,9 @@ function isselect($value){
 /**
  * 头部
  */
-$spreadsheet->getActiveSheet()->setCellValue("A1", 'Sample order no.：');
+if($cpsform['titlearr']['temno'] == 3) {
+    $spreadsheet->getActiveSheet()->setCellValue("A1", 'Sample order no.：');
+}
 $spreadsheet->getActiveSheet()->getStyle("A1")->applyFromArray($styleArray);
 
 $spreadsheet->getActiveSheet()->setCellValue("A2", 'Sketch：');
@@ -214,7 +216,8 @@ for($col=0;$col< count($cpsform['id']);$col++){
     $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray1);
     $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
 
-    $headertitle = array('Job no.：','Style no：','Shipment date：','style type','weight (kg)');
+    //$headertitle = array('Job no.：','Style no：','Shipment date：','style type','weight (kg)');
+    $headertitle = $cpsform['titlearr']['headertitle'];
     $headerrow = 4;
     foreach ($headertitle as $value){
         $spreadsheet->getActiveSheet()->setCellValue('A'.$headerrow , $value);
@@ -235,39 +238,71 @@ for($col=0;$col< count($cpsform['id']);$col++){
 //    $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray);
 //    $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
 
-    $BC = "{$Brow}4:{$Crow}4";
-    $spreadsheet->getActiveSheet()->mergeCells($BC);
-    $spreadsheet->getActiveSheet()->setCellValue($Brow.'4' , $cpsform['jobno'][$col]);
-    $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
+    if($cpsform['titlearr']['temno'] == 3){
+        $BC = "{$Brow}4:{$Crow}4";
+        $spreadsheet->getActiveSheet()->mergeCells($BC);
+        $spreadsheet->getActiveSheet()->setCellValue($Brow.'4' , $cpsform['sampleorderno'][$col]);
+        $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
 
-    $BC = "{$Brow}5:{$Crow}5";
-    $spreadsheet->getActiveSheet()->mergeCells($BC);
-    $spreadsheet->getActiveSheet()->setCellValue($Brow.'5' , $cpsform['styleno'][$col]);
-    $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
+        $BC = "{$Brow}5:{$Crow}5";
+        $spreadsheet->getActiveSheet()->mergeCells($BC);
+        $spreadsheet->getActiveSheet()->setCellValue($Brow.'5' , $cpsform['jobno'][$col]);
+        $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
 
-    $BC = "{$Brow}6:{$Crow}6";
-    $spreadsheet->getActiveSheet()->mergeCells($BC);
-    $spreadsheet->getActiveSheet()->setCellValue($Brow.'6' , $cpsform['shipmentdate'][$col]);
-    $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
+        $BC = "{$Brow}6:{$Crow}6";
+        $spreadsheet->getActiveSheet()->mergeCells($BC);
+        $spreadsheet->getActiveSheet()->setCellValue($Brow.'6' , $cpsform['styleno'][$col]);
+        $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
 
 
 
-    $spreadsheet->getActiveSheet()->setCellValue($Brow.'7' , $cpsform['alist'][$col]['a3'][0]);
-    $spreadsheet->getActiveSheet()->getStyle($Brow.'7')->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle($Brow.'7')->getAlignment()->setWrapText(true);
+        $spreadsheet->getActiveSheet()->setCellValue($Brow.'7' , $cpsform['shipmentdate'][$col]);
+        $spreadsheet->getActiveSheet()->getStyle($Brow.'7')->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->getStyle($Brow.'7')->getAlignment()->setWrapText(true);
 
-    $spreadsheet->getActiveSheet()->setCellValue($Brow.'8' , $cpsform['alist'][$col]['a5'][0]);
-    $spreadsheet->getActiveSheet()->getStyle($Brow.'8')->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle($Brow.'8')->getAlignment()->setWrapText(true);
+        $spreadsheet->getActiveSheet()->setCellValue($Brow.'8' , $cpsform['alist'][$col]['a5'][0]);
+        $spreadsheet->getActiveSheet()->getStyle($Brow.'8')->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->getStyle($Brow.'8')->getAlignment()->setWrapText(true);
 
-    $BC = "{$Crow}7:{$Crow}8";
-    $spreadsheet->getActiveSheet()->mergeCells($BC);
-    $spreadsheet->getActiveSheet()->setCellValue($Crow.'7' , $cpsform['alist'][$col]['a4'][0]);
-    $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray1);
-    $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
+        $BC = "{$Crow}7:{$Crow}8";
+        $spreadsheet->getActiveSheet()->mergeCells($BC);
+        $spreadsheet->getActiveSheet()->setCellValue($Crow.'7' , $cpsform['alist'][$col]['a4'][0]);
+        $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
+    }elseif ($cpsform['titlearr']['temno'] == 4){
+        $row = 4;
+
+        $BC = "{$Brow}{$row}:{$Crow}{$row}";
+        $spreadsheet->getActiveSheet()->mergeCells($BC);
+        $spreadsheet->getActiveSheet()->setCellValue($Brow.$row , $cpsform['jobno'][$col]);
+        $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
+        $row++;
+
+        $BC = "{$Brow}{$row}:{$Crow}{$row}";
+        $spreadsheet->getActiveSheet()->mergeCells($BC);
+        $spreadsheet->getActiveSheet()->setCellValue($Brow.$row , $cpsform['styleno'][$col]);
+        $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
+        $row++;
+
+        $BC = "{$Brow}{$row}:{$Crow}{$row}";
+        $spreadsheet->getActiveSheet()->mergeCells($BC);
+        $spreadsheet->getActiveSheet()->setCellValue($Brow.$row , $cpsform['shipmentdate'][$col]);
+        $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
+        $row++;
+
+        $BC = "{$Brow}{$row}:{$Crow}{$row}";
+        $spreadsheet->getActiveSheet()->mergeCells($BC);
+        $spreadsheet->getActiveSheet()->setCellValue($Brow.$row , $cpsform['alist'][$col]['a5'][0]);
+        $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
+    }
+
 
 }
 
@@ -343,6 +378,8 @@ for($col=0;$col< count($cpsform['id']);$col++) {
         $drawing->setOffsetX(5);
         $drawing->setOffsetY(5);
         $drawing->setWorksheet($spreadsheet->getActiveSheet());
+
+        $spreadsheet->getActiveSheet()->getStyle($Crow.'2')->applyFromArray($styleArray);  //设置边框
     }
 }
 /* 图片模块 */
@@ -406,7 +443,13 @@ for($col=0;$col< count($cpsform['id']);$col++) {
     $Crow = chr(67 + $col * 2);  //C
 
     if($cpsform['elist'][$col]['fromnume'] >0){
-        $thisrow = 9;
+
+        if($cpsform['titlearr']['temno'] == 3){
+            $thisrow = 13;
+        }elseif ($cpsform['titlearr']['temno'] == 4){
+            $thisrow = 11;
+        }
+
         for ($u = 0,$i=1;$u < $cpsform['elist'][$col]['fromnume'];  $u++,$i++) {
 
             $spreadsheet->getActiveSheet()->setCellValue('A'.$thisrow , $cpsform['elist'][$col]['e1'][$u]);
@@ -442,8 +485,13 @@ for($col=0;$col< count($cpsform['id']);$col++) {
 
         $titlearr = $cpsform['titlearr']['titlearr'];
 
+        if($cpsform['titlearr']['temno'] == 3){
+            $thisrow = 13;
+        }elseif ($cpsform['titlearr']['temno'] == 4){
+            $thisrow = 11;
+        }
 
-        $thisrow = 9;
+
         for ($u = 0,$i=1;$u < count($titlearr);  $u++,$i++) {
 
             if($col == 0){
@@ -457,7 +505,11 @@ for($col=0;$col< count($cpsform['id']);$col++) {
             $thisrow++;
         }
 
-        $thisrow = 9;
+        if($cpsform['titlearr']['temno'] == 3){
+            $thisrow = 13;
+        }elseif ($cpsform['titlearr']['temno'] == 4){
+            $thisrow = 11;
+        }
         for ($u = 0,$i=1;$u < count($titlearr);  $u++,$i++) {
 
             $spreadsheet->getActiveSheet()->setCellValue($Brow. $thisrow, $cpsform["blist"][$col]["b".$i][0]);
@@ -486,7 +538,13 @@ for($col=0;$col< count($cpsform['id']);$col++) {
     if($cpsform['falist'][$col]['fa2alist'][0] >0){
         //$fab2titlearr = array('最新紙樣資料(Merchandise)', '訂布資料(單位: Y/件)');
         $fab2titlearr = $cpsform['titlearr']['fab2titlearr'];
-        $thisrow = 9;
+
+
+        if($cpsform['titlearr']['temno'] == 3){
+            $thisrow = 9;
+        }elseif ($cpsform['titlearr']['temno'] == 4){
+            $thisrow = 8;
+        }
         for ($u = 0,$i=1;$u < count($cpsform['falist'][$col]['fa2alist']['fa2a1']);  $u++,$i++) {
 
             $spreadsheet->getActiveSheet()->setCellValue('A'.$thisrow , $fab2titlearr[$u]);
@@ -511,7 +569,7 @@ for($col=0;$col< count($cpsform['id']);$col++) {
  */
 
 /**
- * shell
+ * shell 主布料
  */
 for($col=0;$col< count($cpsform['id']);$col++) {
     $Brow = chr(66 + $col * 2);  //B
@@ -522,15 +580,30 @@ for($col=0;$col< count($cpsform['id']);$col++) {
         for ($u = 0,$i=1;$u < $cpsform["falist"][$col]['falist']['fabrow'];  $u++,$i++) {
 
             if($col == 0){
-                $spreadsheet->getActiveSheet()->insertNewRowBefore(9, 1);
+                if($cpsform['titlearr']['temno'] == 3){
+                    $spreadsheet->getActiveSheet()->insertNewRowBefore(9, 1);
+                }elseif ($cpsform['titlearr']['temno'] == 4){
+                    $spreadsheet->getActiveSheet()->insertNewRowBefore(8, 1);
+                }
             }
 
         }
-        $thisrow = 9;
+
+        /**
+         * 主布料
+         */
+        if($cpsform['titlearr']['temno'] == 3){
+            $thisrow = 9;
+        }elseif ($cpsform['titlearr']['temno'] == 4){
+            $thisrow = 8;
+        }
         for ($u = 0,$i=1;$u < $cpsform["falist"][$col]['falist']['fabrow'];  $u++,$i++) {
 
+            $fabtitlearr = $cpsform['titlearr']['fabtitlearr'];
 
-            $spreadsheet->getActiveSheet()->setCellValue('A'.$thisrow , $cpsform["falist"][$col]['falist']['title'][$u]);
+            //$spreadsheet->getActiveSheet()->setCellValue('A'.$thisrow , $cpsform["falist"][$col]['falist']['title'][$u]);
+            $spreadsheet->getActiveSheet()->setCellValue('A'.$thisrow , $fabtitlearr[$u]);
+            $spreadsheet->getActiveSheet()->getStyle('A'.$thisrow)->applyFromArray($styleArray);
             $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->getAlignment()->setWrapText(true);
 
 
@@ -551,13 +624,80 @@ for($col=0;$col< count($cpsform['id']);$col++) {
  *  //shell
  */
 
+/**
+ *  头部2栏 信息
+ */
+//$spreadsheet->getActiveSheet()->insertNewRowBefore(1, 2);
+if($cpsform['titlearr']['temno'] == 3){
 
+    $spreadsheet->getActiveSheet()->setCellValue('A1' , 'LAUK CPS');
+
+    for($col=0;$col< count($cpsform['id']) ;$col++){
+        $row = 1;
+        $spreadsheet->getActiveSheet()->getStyle('A'.$row)->applyFromArray($styleArray1);
+
+        $Brow = chr(66 + $col * 2);  //B
+        $Crow = chr(67 + $col * 2);  //C
+        $a = 8 ;
+        for($y=1;$y<=2;$y++){
+
+            $spreadsheet->getActiveSheet()->setCellValue($Brow.$row , $cpsform['alist'][$col]['a'.$a][0]);
+            $spreadsheet->getActiveSheet()->getStyle($Brow.$row)->applyFromArray($styleArray1);
+            $spreadsheet->getActiveSheet()->getStyle($Brow.$row)->getAlignment()->setWrapText(true);
+            $a++;
+
+
+            $spreadsheet->getActiveSheet()->setCellValue($Crow.$row , $cpsform['alist'][$col]['a'.$a][0]);
+            $spreadsheet->getActiveSheet()->getStyle($Crow.$row)->applyFromArray($styleArray1);
+            $spreadsheet->getActiveSheet()->getStyle($Crow.$row)->getAlignment()->setWrapText(true);
+            $a++;
+            $row++;
+        }
+
+
+    }
+
+}elseif ($cpsform['titlearr']['temno'] == 4){ //4
+    $spreadsheet->getActiveSheet()->setCellValue('A1' , 'LAJ');
+
+    for($col=0;$col< count($cpsform['id']) ;$col++){
+        $row = 1;
+        $spreadsheet->getActiveSheet()->getStyle('A'.$row)->applyFromArray($styleArray1);
+
+        $Brow = chr(66 + $col * 2);  //B
+        $Crow = chr(67 + $col * 2);  //C
+        $a = 8 ;
+
+        $spreadsheet->getActiveSheet()->setCellValue($Brow.$row , $cpsform['alist'][$col]['a'.$a][0]);
+        $spreadsheet->getActiveSheet()->getStyle($Brow.$row)->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->getStyle($Brow.$row)->getAlignment()->setWrapText(true);
+        $a++;
+
+        $spreadsheet->getActiveSheet()->setCellValue($Crow.$row , $cpsform['alist'][$col]['a'.$a][0]);
+        $spreadsheet->getActiveSheet()->getStyle($Crow.$row)->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->getStyle($Crow.$row)->getAlignment()->setWrapText(true);
+        $a++;
+        $row++;
+
+
+        $BC = "{$Brow}{$row}:{$Crow}{$row}";
+        $spreadsheet->getActiveSheet()->mergeCells($BC);
+        $spreadsheet->getActiveSheet()->setCellValue($Brow.$row,$cpsform['alist'][$col]['a'.$a][0]);
+        $spreadsheet->getActiveSheet()->getStyle($BC)->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->getStyle($BC)->getAlignment()->setWrapText(true);
+
+    }
+}
+
+/**
+ *  //头部2栏 信息
+ */
 
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
-//unset($_SESSION['cpsform'] ); //注销SESSION
+unset($_SESSION['cpsform'] ); //注销SESSION
 
 $spreadsheet->getActiveSheet()->getPageSetup()
     ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);  //横放置
