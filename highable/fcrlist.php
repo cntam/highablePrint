@@ -142,12 +142,20 @@ for ($y = 0, $i = 1; $i <= count($fabp1["content"]); $i++, $y++) {
 
     $tdHTML = '';
 
-    for($u = 0,$n = 1;$n<= count($fabp1['title']);$u++,$n++){
-        $col = chr(65 + $u);
+    for($u = 0,$prt = 0,$n = 1;$n<= count($fabp1['title']);$u++,$prt++,$n++){
+        $col = chr(65 + $prt);
 
         if($u == 1){
 
             $thisvalue = $fabp1["shortname"].'-'.$fabp1["content"][$y][$u];
+
+            $spreadsheet->getActiveSheet()->setCellValue($col.$row, $thisvalue);
+            $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+        }elseif($u == 6){
+
+            $thisvalue = $fabp1["content"][$y][$u];
+            $u++;
+            $thisvalue .= $fabp1["content"][$y][$u];
 
             $spreadsheet->getActiveSheet()->setCellValue($col.$row, $thisvalue);
             $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);

@@ -124,7 +124,8 @@ for ($y = 0, $i = 1; $i <= $fabp1["alist"]['alistnum']; $i++, $y++) {
         }elseif ($u == 4){
             $thisvalue = $fabp1["alist"]['a'.$n][$y];
             $n++;
-            $issel =  $fabp1["alist"]['a'.$n][$y] == '1' ?  "G/M2" :  "G/Y" ;
+            //$issel =  $fabp1["alist"]['a'.$n][$y] == '1' ?  "G/M2" :  "G/Y" ;
+            $issel =  $fabp1["alist"]['a'.$n][$y];
             $thisvalue .= '/'.$issel;
             $spreadsheet->getActiveSheet()->setCellValue($col.$row, $thisvalue);
             $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
@@ -164,7 +165,7 @@ $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作�
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
-//unset($_SESSION['fabricquotationp1'] ); //注销SESSION
+unset($_SESSION['fabricquotationp1'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。
