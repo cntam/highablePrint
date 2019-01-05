@@ -254,7 +254,7 @@ if(count($potem30["remark"]["c8"]) > 1){
  * 中间报价表格
  */
 $row = 26;
-if(count($potem30["toaddr"]["a12"]) > 1){
+if(count($potem30["toaddr"]["a12"]) > 0){
     foreach ($potem30["toaddr"]["a12"] as $item=>$value){
 
         if($item >0){
@@ -268,14 +268,29 @@ if(count($potem30["toaddr"]["a12"]) > 1){
 
         $row++;
     }
-
-
 }
 
 /**
  * 中间报价表格
  */
 
+/**
+ * PO详情 附加
+ */
+$row = 24;
+if($potem30["orderform"]["elist"]['elistrow'] > 1){
+    foreach ($potem30["orderform"]["elist"]['e1'] as $item=>$value){
+
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($row, 1);
+        $spreadsheet->getActiveSheet()->mergeCells("B{$row}:F{$row}");
+        $sheet->setCellValue('B'. $row, $value);
+        $row++;
+    }
+}
+
+/**
+ * PO详情 附加
+ */
 
 
 /**
