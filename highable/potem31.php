@@ -85,15 +85,16 @@ $styleArrayr = [
 
 ];
 
-$styleArraybu = [
-
-    'borders' => [
-
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
+$styleArray3 = [
+    'alignment' => [
+        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+        'wrapText' => true,
+        'ShrinkToFit'=>true,
     ],
+    'font' => [
+        'Size' => '5',
+    ]
 
 ];
 
@@ -136,12 +137,9 @@ if(1 == $potem31["toaddr"]["a11"]){
     $um = 'U/Y';
 }
 $spreadsheet->getActiveSheet()->setCellValue('H25', $um);
-//$spreadsheet->getActiveSheet()->setCellValue('B26', $potem31["toaddr"]["a12"]);
-//$spreadsheet->getActiveSheet()->setCellValue('F26', $potem31["toaddr"]["a13"]);
-//$spreadsheet->getActiveSheet()->setCellValue('G26', $potem31["toaddr"]["a14"]);
-//$spreadsheet->getActiveSheet()->setCellValue('H26', $potem31["toaddr"]["a15"]);
-//$spreadsheet->getActiveSheet()->setCellValue('G27', $potem31["toaddr"]["a16"]);
-//$spreadsheet->getActiveSheet()->setCellValue('H27', $potem31["toaddr"]["a17"]);
+
+$spreadsheet->getActiveSheet()->setCellValue('G27', $potem31["toaddr"]["a16"]);
+$spreadsheet->getActiveSheet()->setCellValue('H27', $potem31["toaddr"]["a17"]);
 
 $spreadsheet->getActiveSheet()->setCellValue('A28', 'Total   Amount  ：'.$potem31["toaddr"]["a18"]);
 $spreadsheet->getActiveSheet()->setCellValue('C28', $potem31["toaddr"]["a19"]);
@@ -156,35 +154,68 @@ $spreadsheet->getActiveSheet()->setCellValue('B32', 'AMOUNT & QUANTITY WITHIN TH
 
 $spreadsheet->getActiveSheet()->setCellValue('A33', $pop1["remark"]["c3"][0]);
 $spreadsheet->getActiveSheet()->setCellValue('B33', 'YOUR PARTY MUST TAKE FULL RESPONSIBILITY FOR ANY DELAY OF SHIPMENT.');
-//$spreadsheet->getActiveSheet()->setCellValue('B36', 'YOU HAVE TO SUBMIT '.$potem31["remark"]["c2"].'SHIPMENT SAMPLE FOR OUR APPROVAL BEFORE'.$potem31["remark"]["c3"].'OF SHIPMENT.');
-//YOU HAVE TO SUBMIT 4YDS SHIPMENT SAMPLE FOR OUR APPROVAL BEFORE 7 DAYS OF SHIPMENT.
 
-//if(1 == $potem31["remark"]["c4"]){
-//    $spreadsheet->getActiveSheet()->setCellValue('A37', '6-');
-//    if(1 == $potem31["remark"]["c5"]){
-//        $c5 = 'EXCLUDING';
-//    }elseif (2 == $potem31["remark"]["c5"]){
-//        $c5 = 'INCLUDING';
-//    }
-//    if(1 == $potem31["remark"]["c6"]){
-//        $c6 = '  TEST CHARGES';
-//    }elseif (2 == $potem31["remark"]["c6"]){
-//        $c6 = '  SURCHARGE';
-//    }
-//    $spreadsheet->getActiveSheet()->setCellValue('B37', 'PRice '.$c5.$c6);
-//
-//}
+$spreadsheet->getActiveSheet()->setCellValue('A34', $pop1["remark"]["c4"][0]);
+$spreadsheet->getActiveSheet()->setCellValue('B34', 'AZO  FREE');
+
+$spreadsheet->getActiveSheet()->setCellValue('A35', $pop1["remark"]["c5"][0]);
+$spreadsheet->getActiveSheet()->setCellValue('B35', 'ALL  PERFORMANCES SHOULD MEET OUR REQUIREMENTS（AS PER ATTACHED）.');
+
+$spreadsheet->getActiveSheet()->setCellValue('A36', $pop1["remark"]["c6"][0]);
+$spreadsheet->getActiveSheet()->setCellValue('B36', 'YOU HAVE TO SUBMIT '.$pop1["remark"]["c6"][1].'  SHIPMENT SAMPLE FOR OUR APPROVAL BEFORE '.$pop1["remark"]["c6"][2].' OF SHIPMENT.');
+
+
+if(1 == $potem31["remark"]["c7"][1]){
+    $spreadsheet->getActiveSheet()->setCellValue('A37', $pop1["remark"]["c7"][0]);
+    if(1 == $pop1["remark"]["c7"][2]){
+        $c5 = 'EXCLUDING';
+    }elseif (2 == $pop1["remark"]["c7"][2]){
+        $c5 = 'INCLUDING';
+    }
+    if(1 == $pop1["remark"]["c7"][3]){
+        $c6 = '  TEST CHARGES';
+    }elseif (2 == $pop1["remark"]["c7"][3]){
+        $c6 = '  SURCHARGE';
+    }
+    $spreadsheet->getActiveSheet()->setCellValue('B37', 'Price '.$c5.$c6);
+}
 
 //$spreadsheet->getActiveSheet()->setCellValue('B39', 'ANY CONTRARY REPLIED WITHIN '.$potem31["remark"]["c7"].', THIS CONTRACT IS VALID.');
 
-//if(1 == $potem31["remark"]["c8"]){
-//    $c8 = 'EXCLUDING';
-//}elseif (2 == $potem31["remark"]["c8"]){
-//    $c8 = 'INCLUDING';
-//}
-//$spreadsheet->getActiveSheet()->setCellValue('B40', $c8.'VAT INVOICE');
-//$spreadsheet->getActiveSheet()->setCellValue('B41', 'ORDER  NO（'.$potem31["remark"]["c9"].')');
-$spreadsheet->getActiveSheet()->setCellValue('B42', 'COUNTRY OF ORIGIN:'.$potem31["remark"]["c10"].'.');
+$spreadsheet->getActiveSheet()->setCellValue('B40', 'PLEASE  CONFIRM  AND  COUNTER-SIGN  BY  RETURN.OTHERWISE,IF WE DO NOT RECEIVE ANY CONTRARY REPLIED WITHIN '.$potem31["remark"]["c11"].',THIS CONTRACT IS VALID.');
+$spreadsheet->getActiveSheet()->getStyle('B40')->applyFromArray($styleArray2);
+
+if(1 == $potem31["remark"]["c12"]){
+    $c8 = 'EXCLUDING';
+}elseif (2 == $potem31["remark"]["c12"]){
+    $c8 = 'INCLUDING';
+}
+$spreadsheet->getActiveSheet()->setCellValue('B42', $c8.'  VAT INVOICE');
+
+//$spreadsheet->getActiveSheet()->setCellValue('B42', $potem31["remark"]["c10"].'VAT INVOICE');
+$spreadsheet->getActiveSheet()->setCellValue('B43', 'ORDER  NO: '.$potem31["remark"]["c13"]);
+
+$row = 44;
+if(count($potem31["remark"]["c14"]) > 1){
+    foreach ($potem31["remark"]["c14"] as $item=>$value){
+
+        if($item >1){
+            $spreadsheet->getActiveSheet()->insertNewRowBefore($row, 1);
+        }
+
+        $sheet->setCellValue('A'. $row, $value );
+        $spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($styleArray3);
+        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($styleArray2);
+        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->getAlignment()->setWrapText(true);
+
+        $spreadsheet->getActiveSheet()->mergeCells("B{$row}:H{$row}");
+        $sheet->setCellValue('B'. $row, $potem31["remark"]["c15"][$item]);
+        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($styleArray2);
+        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->getAlignment()->setWrapText(true);
+
+        $row++;
+    }
+}
 
 /**
  *   remark中间增加行
@@ -198,6 +229,7 @@ if(count($pop1["remark"]["c8"]) > 1){
         }
 
         $sheet->setCellValue('A'. $row, $value );
+        $spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($styleArray3);
         //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($styleArray2);
 
 
