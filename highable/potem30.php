@@ -151,7 +151,7 @@ $spreadsheet->getActiveSheet()->setCellValue('A30', 'Price   Terms    ：'.$pote
  * 底部remark
  */
 $spreadsheet->getActiveSheet()->setCellValue('A32', $potem30["remark"]["c2"][0]);
-$spreadsheet->getActiveSheet()->setCellValue('B32', 'AMOUNT&QUANTITY WITHIN THE TOLERANCE OF '.$potem30["remark"]["c2"][1].'MORE OR LESS IS ONLY ALLOWED.');
+$spreadsheet->getActiveSheet()->setCellValue('B32', 'AMOUNT & QUANTITY WITHIN THE TOLERANCE OF '.$potem30["remark"]["c2"][1].'MORE OR LESS IS ONLY ALLOWED.');
 
 $spreadsheet->getActiveSheet()->setCellValue('A33', $potem30["remark"]["c3"][0]);
 $spreadsheet->getActiveSheet()->setCellValue('B33', 'YOUR PARTY MUST TAKE FULL RESPONSIBILITY FOR ANY DELAY OF SHIPMENT.');
