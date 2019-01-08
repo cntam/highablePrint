@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="22dbb095-b711-45ef-80b3-db8d08d0c22f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/highable/potem31.php" afterPath="$PROJECT_DIR$/highable/potem31.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -97,7 +96,7 @@
       <file leaf-file-name="potem31.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/highable/potem31.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="930">
+            <state relative-caret-position="719">
               <caret line="231" column="51" lean-forward="false" selection-start-line="231" selection-start-column="51" selection-end-line="231" selection-end-column="51" />
               <folding>
                 <element signature="e#97#138#0#PHP" expanded="true" />
@@ -109,7 +108,7 @@
       <file leaf-file-name="potem30.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/highable/potem30.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-180">
+            <state relative-caret-position="3990">
               <caret line="195" column="0" lean-forward="false" selection-start-line="195" selection-start-column="0" selection-end-line="216" selection-end-column="1" />
               <folding />
             </state>
@@ -272,8 +271,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="125" />
-    <option name="y" value="18" />
+    <option name="x" value="21" />
+    <option name="y" value="19" />
     <option name="width" value="1827" />
     <option name="height" value="976" />
   </component>
@@ -292,8 +291,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -421,14 +420,8 @@
       <workItem from="1546048884310" duration="18948000" />
       <workItem from="1546410327030" duration="2831000" />
       <workItem from="1546677674330" duration="3481000" />
-      <workItem from="1546822821708" duration="11325000" />
-    </task>
-    <task id="LOCAL-00016" summary="20180606 bug fix">
-      <created>1528278791761</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1528278791761</updated>
+      <workItem from="1546822821708" duration="11381000" />
+      <workItem from="1546909287321" duration="704000" />
     </task>
     <task id="LOCAL-00017" summary="20180607 potem2">
       <created>1528364814695</created>
@@ -766,16 +759,24 @@
       <option name="project" value="LOCAL" />
       <updated>1546831098901</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="20190107">
+      <created>1546855628397</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1546855628397</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="320380000" />
+    <option name="totallyTimeSpent" value="321140000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="125" y="18" width="1827" height="976" extended-state="0" />
+    <frame x="21" y="19" width="1827" height="976" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22564103" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22905983" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952183" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -1178,7 +1179,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/highable/potem30.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-180">
+        <state relative-caret-position="3990">
           <caret line="195" column="0" lean-forward="false" selection-start-line="195" selection-start-column="0" selection-end-line="216" selection-end-column="1" />
           <folding />
         </state>
@@ -1186,7 +1187,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/highable/potem31.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="930">
+        <state relative-caret-position="719">
           <caret line="231" column="51" lean-forward="false" selection-start-line="231" selection-start-column="51" selection-end-line="231" selection-end-column="51" />
           <folding>
             <element signature="e#97#138#0#PHP" expanded="true" />
