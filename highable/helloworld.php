@@ -5,8 +5,8 @@
  * Date: 2018/5/28
  * Time: 上午11:19
  */
-
-require '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
+require_once('autoloadconfig.php');  //判断是否在线
+//require '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
 //require 'vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
