@@ -2,14 +2,10 @@
 session_start();
 header("Content-type: text/html; charset=utf-8");
 /*港源行國際有限公司*/
+
 require_once('autoloadconfig.php');  //判断是否在线
 
-if($online){
-    require_once '/home/pan/vendor/autoload.php';
-
-}else{
-    require_once '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';
-}
+require_once ('img.php');
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -94,23 +90,35 @@ $styleArraybu = [
 
 ];
 
-//填数据
-$spreadsheet->getActiveSheet()->setCellValue('E5', $potem1["toaddr"]["a8"]);
-$spreadsheet->getActiveSheet()->setCellValue('B9', $potem1["tosb"]);
+////填数据
+//$spreadsheet->getActiveSheet()->setCellValue('E5', $potem1["toaddr"]["a8"]);
+$spreadsheet->getActiveSheet()->mergeCells("A9:E9");
+$spreadsheet->getActiveSheet()->mergeCells("A10:C10");
+$spreadsheet->getActiveSheet()->mergeCells("A14:B14");
+$spreadsheet->getActiveSheet()->mergeCells("A15:D15");
+$spreadsheet->getActiveSheet()->mergeCells("A19:G19");
+
+
+$spreadsheet->getActiveSheet()->setCellValue('A5', 'Attn : '.$potem1["toaddr"]["a7"]);
+$spreadsheet->getActiveSheet()->setCellValue('A9', 'TO: '.$potem1["toaddr"]["a8"]);
 $spreadsheet->getActiveSheet()->setCellValue('I9', $potem1["podate"]);
+$spreadsheet->getActiveSheet()->setCellValue('A10', $potem1["tosb"]);
 $spreadsheet->getActiveSheet()->setCellValue('A11', $potem1["toaddr"]["a1"]);
 $spreadsheet->getActiveSheet()->setCellValue('A13', 'TEL: '.$potem1["toaddr"]["a2"].'  FAX: '.$potem1["toaddr"]["a3"].'  e-mail：'.$potem1["toaddr"]["a4"]);
-$spreadsheet->getActiveSheet()->setCellValue('B14', $potem1["toaddr"]["a5"]);
+$spreadsheet->getActiveSheet()->setCellValue('A14', 'ATTN：'.$potem1["toaddr"]["a5"]);
 
-$spreadsheet->getActiveSheet()->setCellValue('B15', $potem1["toaddr"]["a6"]);
+$spreadsheet->getActiveSheet()->setCellValue('A15', 'Email：'.$potem1["toaddr"]["a6"]);
 $spreadsheet->getActiveSheet()->setCellValue('I15', $potem1["toaddr"]["a7"]);
+$spreadsheet->getActiveSheet()->setCellValue('A19', 'PO NO:'.$potem1["orderform"]["midpono"].'(注:請在開發票時把“PO NO”寫上,不可重復,并且寫上OUR REF)');
+$spreadsheet->getActiveSheet()->setCellValue('C27', '送货地址：'.$potem1["remark"][c1].PHP_EOL.$potem1["remark"][c2].'收件人'.PHP_EOL.$potem1["remark"][c3]);
 
+// Remark
+$spreadsheet->getActiveSheet()->setCellValue('B30', $potem1["remark"]["c4"]);
 
-//中部form
-//$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, '(PO NO:  '.$potem1["orderform"]["midpono"].' 注：請在開發票時把"PO NO"寫上，不可重複)');
-$spreadsheet->getActiveSheet()->setCellValue('B19', $potem1["orderform"]["midpono"]);
-//$spreadsheet->getActiveSheet()->setCellValue('I'.$nowcol, $potem1["invoiceform"]["amout"]);
-//
+//中间表格
+
+$spreadsheet->getActiveSheet()->setCellValue('I21', 'unit price'.PHP_EOL.'('.$potem1["orderform"]['b7'].')');
+$spreadsheet->getActiveSheet()->setCellValue('F21', 'QTY'.$potem1["orderform"]['b6']);
 $nowcol = 22;
 
 
@@ -124,44 +132,18 @@ $spreadsheet->getActiveSheet()->mergeCells("F{$f19}:G{$f19}");
 
 $formarr = array('A'.$f19,'C'.$f19,'E'.$f19,'F'.$f19,'I'.$f19);
 
-    for($i = 1,$y = 0; $i <= $potem1["orderform"]["brrnum"] ; $i++ ,$y++){
-
-        $sheet->setCellValue($formarr[$y],  $potem1["orderform"]['b'.$i][$x]);
+//    for($i = 1,$y = 0; $i <= $potem1["orderform"]["brrnum"] ; $i++ ,$y++){
+    for($i = 1,$y = 0; $i <= count($formarr) ; $i++ ,$y++){
+        $sheet->setCellValue($formarr[$y], $potem1["orderform"]['b' . $i][$x]);
 
     }
-
-
     $nowcol = 22  +   1 * $c;
-
-//    $spreadsheet->getActiveSheet()->getStyle('A'.$f19)->applyFromArray($styleArray1);
-//    $spreadsheet->getActiveSheet()->getStyle("B{$f19}:E{$f19}")->applyFromArray($styleArray1);
-//    $spreadsheet->getActiveSheet()->getStyle('F'.$f19)->applyFromArray($styleArray1);
-//    $spreadsheet->getActiveSheet()->getStyle('G'.$f19)->applyFromArray($styleArray1);
 
     if($x >3){
         $spreadsheet->getActiveSheet()->insertNewRowBefore($nowcol, 1);
     }
 
 }
-$nowcol = $potem1["orderform"]["formnum"] > 3 ? ($nowcol + 1) : 27;
-//$spreadsheet->getActiveSheet()->getCell('A1')->setValue($nowcol);
-//$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-//$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, '貨送以下地址');
-//$nowcol++;
-
-//$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-$spreadsheet->getActiveSheet()->setCellValue('C'.$nowcol, $potem1["remark"]["c1"].PHP_EOL.$potem1["remark"]["c2"].PHP_EOL.$potem1["remark"]["c3"]);
-$nowcol++;
-$nowcol++;
-$nowcol++;
-$spreadsheet->getActiveSheet()->mergeCells("C{$nowcol}:G{$nowcol}");
-$spreadsheet->getActiveSheet()->setCellValue('C'.$nowcol, $potem1["remark"]["c4"]);
-$nowcol++;
-$nowcol++;
-$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:B{$nowcol}");
-$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, $potem1["toaddr"]["a8"]);
-
-
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
@@ -186,13 +168,15 @@ if($output){
 
     $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
     $writer->save('php://output');
-}else{
-    $writer = new Xlsx($spreadsheet);
-    $writer->save('../output/'.$filenameout);
-
-    $FILEURL = 'http://allinone321.com/highable/output/'.$filenameout;
-    $MSFILEURL = 'http://view.officeapps.live.com/op/view.aspx?src='. urlencode($FILEURL);
-    //echo "<a href= 'http://view.officeapps.live.com/op/view.aspx?src=". urlencode($FILEURL)."' target='_blank' >跳轉--{$filename}</a>";
-    Header("Location:{$MSFILEURL}");
 };
+
+//else{
+//    $writer = new Xlsx($spreadsheet);
+//    $writer->save('../output/'.$filenameout);
+//
+//    $FILEURL = 'http://allinone321.com/highable/output/'.$filenameout;
+//    $MSFILEURL = 'http://view.officeapps.live.com/op/view.aspx?src='. urlencode($FILEURL);
+//    //echo "<a href= 'http://view.officeapps.live.com/op/view.aspx?src=". urlencode($FILEURL)."' target='_blank' >跳轉--{$filename}</a>";
+//    Header("Location:{$MSFILEURL}");
+//};
 
