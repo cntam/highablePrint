@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-require_once('autoloadconfig.php');  //判断是否在线
-
-require_once ('img.php');
+// header
+$xlsxName = 'product2all';
+require_once 'common-header.php';
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -214,6 +214,8 @@ if (count($fabp1['total']["Qtypercent"]) > 0) {
         $col = chr(66 + $t);
         $spreadsheet->getActiveSheet()->setCellValue($col.$row, $obj_value);
         $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+        $sheet->getStyle($col.$row)->getNumberFormat()->setFormatCode('0.00%');
+        //$spreadsheet->getActiveSheet()->getStyle($col.$row)->getNumberFormat()->applyFromArray( [ 'formatCode' => NumberFormat::FORMAT_PERCENTAGE_00 ] );
         $t++;
     }
     $row++;
@@ -257,12 +259,14 @@ if (count($fabp1['data']) > 0) {
                 $spreadsheet->getActiveSheet()->setCellValue($col.$row, $client_record["HKD"]);
             };
             $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+            $sheet->getStyle($col.$row)->getNumberFormat()->setFormatCode('"HK$"#,##0.00_-');
             $t++;
 
         }
         $col = chr(66 + $t);
         $spreadsheet->getActiveSheet()->setCellValue($col.$row, $fabp1['total']['monthHKD'][$obj_key]);
         $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+        $sheet->getStyle($col.$row)->getNumberFormat()->setFormatCode('"HK$"#,##0.00_-');
         $row++;
     }
 }
@@ -284,52 +288,29 @@ if (count($fabp1['total']) > 0) {
         $col = chr(66 + $t);
         $spreadsheet->getActiveSheet()->setCellValue($col.$row, $obj_value);
         $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+        $sheet->getStyle($col.$row)->getNumberFormat()->setFormatCode('"HK$"#,##0.00_-');
         $t++;
     }
     $col = chr(66 + $t);
     $spreadsheet->getActiveSheet()->setCellValue($col.$row, $fabp1["total"]["totalAllHKD"]);
     $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
-
+    $sheet->getStyle($col.$row)->getNumberFormat()->setFormatCode('"HK$"#,##0.00_-');
     $row++;
 }
 
-
+//$sheet->getStyle('A1')
+//    ->getNumberFormat()
+//    ->setFormatCode('"HK$"#,##0.00_-');
 
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
+//unset($_SESSION['reportupdateorderqty'] ); //注销SESSION
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$spreadsheet->setActiveSheetIndex(0);
+//$spreadsheet->setActiveSheetIndex(0);
 
 //unset($_SESSION['samplep1'] ); //注销SESSION
 
-$output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'reportupdateorderqtyout'.$nt.'.xlsx';
-if($output){
-    // Redirect output to a client’s web browser (Xlsx)
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename='."$filenameout");
-    header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
-    header('Cache-Control: max-age=1');
+set_writer();
 
-// If you're serving to IE over SSL, then the following may be needed
-    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
-    header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-    header('Pragma: public'); // HTTP/1.0
-
-    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-    $writer->save('php://output');
-}else{
-    $writer = new Xlsx($spreadsheet);
-    $writer->save('../output/'.$filenameout);
-	
-    $FILEURL = PRINTURL.$filenameout;
-    $MSFILEURL = MSFILEURL. urlencode($FILEURL);
-
-    Header("Location:{$MSFILEURL}");
-}
-exit;

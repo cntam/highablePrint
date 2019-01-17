@@ -231,11 +231,11 @@ function set_writer()
     global $spreadsheet;
     global $productall;
 
-    $form_type    = isset($productall['type']) ? $productall['type'] . "_" : "";
-    $form_client  = isset($productall['client']) ? $productall['client'] . "_" : "";
-    $modification = isset($productall['modification']) ? date("YmdHis", $productall['modification']) : "";
-    $outputName   = str_replace(",", "", $form_type . $form_client . $modification);
-
+//    $form_type    = isset($productall['type']) ? $productall['type'] . "_" : "";
+//    $form_client  = isset($productall['client']) ? $productall['client'] . "_" : "";
+//    $modification = isset($productall['modification']) ? date("YmdHis", $productall['modification']) : "";
+//    $outputName   = str_replace(",", "", $form_type . $form_client . $modification);
+    $outputName = 'qty';
     $spreadsheet->setActiveSheetIndex(0);
 
     $output = ($_GET['action'] == 'formdown') ? 1 : 0;
@@ -269,6 +269,7 @@ function set_writer()
 
         Header("Location:{$MSFILEURL}");
     }
+    exit;
 }
 function set_p3()
 {
