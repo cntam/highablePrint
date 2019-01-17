@@ -305,12 +305,12 @@ if (count($fabp1['total']) > 0) {
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-//unset($_SESSION['reportupdateorderqty'] ); //注销SESSION
+
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 //$spreadsheet->setActiveSheetIndex(0);
 
-//unset($_SESSION['samplep1'] ); //注销SESSION
+unset($_SESSION['reportupdateorderqty'] ); //注销SESSION
 
 set_writer();
 
