@@ -312,5 +312,6 @@ $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作�
 
 unset($_SESSION['reportupdateorderqty'] ); //注销SESSION
 
-set_writer();
+$nt          = date("YmdHis", time());
+set_writer(null,'Order Quantity per Year'.$nt);
 

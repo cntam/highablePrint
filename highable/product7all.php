@@ -1,5 +1,6 @@
 <?php
 
+$type = 'HA';
 // header
 $xlsxName = 'product7all';
 require_once 'common-header.php';
@@ -179,13 +180,13 @@ set_horizontal(false);
 /**
  * Page 3
  */
-set_p3();
+set_ha_p3();
 
 /**
  * Page 4
  */
-set_p4();
+set_ha_p4();
 
 // footer
 // unset($_SESSION['productall']); //注销SESSION
-set_writer();
+set_writer($type);

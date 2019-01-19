@@ -26,8 +26,8 @@ $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 $sheet->setCellValue('A1', 'Hello World !');
 $sheet->setCellValue('B2', '123456');
-
-$sheet->getStyle('B2')->getNumberFormat()->applyFromArray( [ 'formatCode' => NumberFormat::FORMAT_CURRENCY_EUR_SIMPLE ] );
+$sheet->getStyle('B2')->getNumberFormat()->
+//$sheet->getStyle('B2')->getNumberFormat()->applyFromArray( [ 'formatCode' => NumberFormat::FORMAT_CURRENCY_EUR_SIMPLE ] );
 
 $writer = new Xlsx($spreadsheet);
 $writer->save('hello world.xlsx');

@@ -1,5 +1,5 @@
 <?php
-
+$type = 'HA';
 // header
 $xlsxName = 'product2all';
 require_once 'common-header.php';
@@ -61,26 +61,26 @@ fill_cell($styleArraytop, 'A30:R53', 'A30', $productp1['fablist']['fab6']);
 //  评语附加
 fill_cell($styleArraytop, 'A54:R59', 'A54', $productp1['fablist']['fab7']);
 //  制单人
-fill_cell($styleArray, $col . $row, 'B60', '制单人:  ' . $productp1['alist']['a4']);
+fill_cell(null, $col . $row, 'B60', '制单人:  ' . $productp1['alist']['a4']);
 
 //  特殊工艺
 if ($productp1['alist']['a5value'] != null) {
     $teshu = join(",", $productp1['alist']['a5value']);
-    fill_cell($styleArray, 'O5:P5', 'O5', $teshu);
+    fill_cell(null, 'O5:P5', 'O5', $teshu);
 }
 
 fill_cell(null, 'Q4:R14', 'Q4', $productp1['fablist']['fab2']);
 
 //  裁法
 $M16 = '单方向：' . isselect($productp1['alist']['a6']) . '倒插：' . isselect($productp1['alist']['a7']) . '女装：' . isselect($productp1['alist']['a8']);
-fill_cell($styleArray, 'M16:R16', 'M16', $M16);
+fill_cell(null, 'M16:R16', 'M16', $M16);
 
-fill_cell($styleArray, 'M17:R19', 'M17', $productp1['fablist']['fab3']);
+fill_cell(null, 'M17:R19', 'M17', $productp1['fablist']['fab3']);
 
 $a9Yes = ($productp1['alist']['a9'] != null && $productp1['alist']['a9'] == "1") ? isselect('on') : isselect("off");
 $a9No  = ($productp1['alist']['a9'] != null && $productp1['alist']['a9'] == "2") ? isselect('on') : isselect("off");
 $M19   = '过粘朴机 ：' . '是：' . $a9Yes . ' 否：' . $a9No;
-fill_cell($styleArray, 'M19:R19', 'M19', $M19);
+fill_cell(null, 'M19:R19', 'M19', $M19);
 fill_cell(null, 'M20:R20', 'M20', '针距：' . $productp1['fablist']['fab4']);
 
 //  图片模块
@@ -159,13 +159,13 @@ set_horizontal(false);
 /**
  * Page 3
  */
-set_p3();
+set_ha_p3();
 
 /**
  * Page 4
  */
-set_p4();
+set_ha_p4();
 
 // footer
 // unset($_SESSION['productall']); //注销SESSION
-set_writer();
+set_writer($type);

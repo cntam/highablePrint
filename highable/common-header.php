@@ -1,127 +1,86 @@
 <?php
 session_start();
+error_reporting(0);
 require_once 'autoloadconfig.php'; //判断是否在线
 require_once 'img.php';
 
-//$spreadsheet = new Spreadsheet();
-$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/' . $xlsxName . '.xlsx');
-// $sheet       = $spreadsheet->getActiveSheet();
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+
+switch ($type) {
+    case 'HA':
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/' . $xlsxName . '.xlsx');
+        break;
+    case 'CPS':
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->getActiveSheet()->setTitle("CPS");
+        $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(20); //列宽度
+        break;
+    default:
+        $spreadsheet = new Spreadsheet();
+        break;
+}
+
 $spreadsheet->setActiveSheetIndex(0);
 $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft Yahei');
 $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
 
-$styleArray = [
+$styleArray = get_style(Alignment::HORIZONTAL_LEFT, Alignment::VERTICAL_CENTER, 1);
 
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-        'vertical'   => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-    ],
-
-    'borders'   => [
-        'top'    => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'left'   => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'right'  => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-    ],
-
-];
-
-$styleArraytop = [
-
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-        'vertical'   => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
-    ],
-
-    'borders'   => [
-        'top'    => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'left'   => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'right'  => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-    ],
-
-];
-
-$styleArray1 = [
-    'alignment' => [
-        'horizontal'  => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-        'vertical'    => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
-        'wrapText'    => true,
-        'ShrinkToFit' => true,
-    ],
-    'font'      => [
-        'Size' => '10',
-    ],
-
-    'borders'   => [
-        'top'    => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'left'   => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'right'  => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ],
-
-];
-
-$styleArray2 = [
-    'alignment' => [
-        'horizontal'  => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-        'vertical'    => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-        'wrapText'    => true,
-        'ShrinkToFit' => true,
-    ],
-    'font'      => [
-        'Size' => '10',
+$borders = [
+    'top' => [
+        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
     ],
 ];
+$styleArraytop = get_style(Alignment::HORIZONTAL_LEFT, Alignment::VERTICAL_TOP, $borders);
 
-$styleArray3 = [
-    'alignment' => [
-        'horizontal'  => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT,
-        'vertical'    => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-        'wrapText'    => true,
-        'ShrinkToFit' => true,
-    ],
-    'font'      => [
-        'Size' => '10',
-    ],
-];
+$styleArrayLefttop = get_style(Alignment::HORIZONTAL_LEFT, Alignment::VERTICAL_TOP, 1);
 
-$styleArray4 = [
-    'alignment' => [
-        'horizontal'  => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-        'vertical'    => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-        'wrapText'    => true,
-        'ShrinkToFit' => true,
-    ],
-    'font'      => [
-        'Size' => '10',
-    ],
-];
+$styleArray1 = get_style(Alignment::HORIZONTAL_LEFT, Alignment::VERTICAL_TOP, 1);
+
+$styleArray2 = get_style(Alignment::HORIZONTAL_CENTER, Alignment::VERTICAL_CENTER);
+
+$styleArray3 = get_style(Alignment::HORIZONTAL_RIGHT, Alignment::VERTICAL_CENTER);
+
+$styleArray4 = get_style(Alignment::HORIZONTAL_LEFT, Alignment::VERTICAL_CENTER);
+
+$styleArray5 = get_style(Alignment::HORIZONTAL_CENTER, Alignment::VERTICAL_CENTER, 1);
+
+$styleArray6 = get_style(Alignment::HORIZONTAL_RIGHT, Alignment::VERTICAL_CENTER, 1);
+
+// 新建styleArray
+function get_style($horizontal, $vertical, $borders = null)
+{
+    $styleArray = [
+        'alignment' => [
+            'horizontal' => $horizontal,
+            'vertical'   => $vertical,
+        ],
+    ];
+    if (is_array($borders)) {
+        $styleArray['borders'] = $borders;
+    } else if ($borders == null) {
+
+    } else {
+        $styleArray['borders'] = [
+            'top'    => [
+                'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+            ],
+            'bottom' => [
+                'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+            ],
+            'left'   => [
+                'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+            ],
+            'right'  => [
+                'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+            ],
+        ];
+    }
+    return $styleArray;
+}
 
 function isselect($value)
 {
@@ -133,6 +92,7 @@ function isselect($value)
     return $output;
 }
 
+// 填充单元格
 function fill_cell($style, $part, $cell, $val, $merge = null)
 {
     global $spreadsheet;
@@ -147,7 +107,8 @@ function fill_cell($style, $part, $cell, $val, $merge = null)
     $spreadsheet->getActiveSheet()->setCellValue($cell, $val);
 }
 
-function set_horizontal($isHorizontal = true)
+// 设置横向纵向
+function set_horizontal($isHorizontal = true, $isFit = true)
 {
     global $spreadsheet;
     if ($isHorizontal) {
@@ -159,9 +120,52 @@ function set_horizontal($isHorizontal = true)
     }
     $spreadsheet->getActiveSheet()->getPageSetup()
         ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
-    $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true);
+    $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage($isFit);
 }
 
+// 冻结窗格
+function set_freeze($cell)
+{
+    global $spreadsheet;
+    $spreadsheet->getActiveSheet()->freezePane($cell);
+}
+
+// 重复打印某一列
+function set_repeatAtLeft($startAndEndColumn)
+{
+    global $spreadsheet;
+    $spreadsheet->getActiveSheet()->getPageSetup()->setColumnsToRepeatAtLeft($startAndEndColumn);
+}
+
+// 设置适应宽度
+function set_fitToWidth($w)
+{
+    global $spreadsheet;
+    $spreadsheet->getActiveSheet()->getPageSetup()->setFitToWidth($w);
+}
+
+// 设置列宽度
+function setColumnWidth($column, $w)
+{
+    global $spreadsheet;
+    $spreadsheet->getActiveSheet()->getColumnDimension($column)->setWidth($w);
+}
+
+// 设置行高度
+function setRowHeight($row, $h)
+{
+    global $spreadsheet;
+    $spreadsheet->getActiveSheet()->getRowDimension($row)->setRowHeight($h);
+}
+
+// 设置字体粗细
+function setBold($column, $isBold = true)
+{
+    global $spreadsheet;
+    $spreadsheet->getActiveSheet()->getStyle($column)->getFont()->setBold($isBold);
+}
+
+// 填充图片
 function fill_img($img, $cell, $w, $h)
 {
     global $spreadsheet;
@@ -196,27 +200,26 @@ function fill_img($img, $cell, $w, $h)
                 $img = imagecreatefrompng($img);
                 break;
         }
-        $width  = imagesx($img);
-        $height = imagesy($img);
-
-        // Add a drawing to the worksheet
-        $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
-        $drawing->setName('img');
-        $drawing->setDescription('img');
-        $drawing->setImageResource($img);
-        $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
-        $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
-        $drawing->setResizeProportional(true);
-        $drawing->setWidthAndHeight($w, $h); //设置图片最大宽度 高度
-        // $drawing->setWidth($width);
-        $drawing->setCoordinates($cell);
-        $drawing->setOffsetX(5);
-        $drawing->setOffsetY(5);
-        $drawing->setWorksheet($spreadsheet->getActiveSheet());
-        // return $drawing->getHeight();
+        if ($img) {
+            // Add a drawing to the worksheet
+            $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing();
+            $drawing->setName('img');
+            $drawing->setDescription('img');
+            $drawing->setImageResource($img);
+            $drawing->setRenderingFunction(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::RENDERING_JPEG);
+            $drawing->setMimeType(\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing::MIMETYPE_DEFAULT);
+            $drawing->setResizeProportional(true);
+            $drawing->setWidthAndHeight($w, $h); //设置图片最大宽度 高度
+            // $drawing->setWidth($width);
+            $drawing->setCoordinates($cell);
+            $drawing->setOffsetX(5);
+            $drawing->setOffsetY(5);
+            $drawing->setWorksheet($spreadsheet->getActiveSheet());
+        }
     }
 }
 
+// 加页
 function add_sheet($index, $name)
 {
     global $spreadsheet;
@@ -224,23 +227,37 @@ function add_sheet($index, $name)
     $spreadsheet->addSheet($myWorkSheet, $index);
 }
 
-function set_writer()
+// 输出
+function set_writer($type = null, $outputName = null)
 {
-
     // Set active sheet index to the first sheet, so Excel opens this as the first sheet
     global $spreadsheet;
     global $productall;
+    global $cpsform;
+    if ($type != null) {
+        switch ($type) {
+            case 'HA':
+                $form_client = isset($productall['client']) ? $productall['client'] . "_" : "";
+                $nt          = date("YmdHis", time());
+                $outputName  = str_replace(",", "", $type . "_" . $form_client . $nt);
+                break;
+            case 'CPS':
+                $nt         = date("YmdHis", time());
+                $outputName = $type . "_" . $cpsform['client'] . "_" . $nt;
+                break;
+            default:
+                $outputName = ($outputName != null && $outputName != "") ? $outputName : "untitled";
+                break;
+        }
+    } else if ($type == null && $outputName != null && strlen($outputName) > 0) {
+        $outputName = $outputName;
+    } else {
+        $outputName = ($outputName != null && $outputName != "") ? $outputName : "untitled";
+    }
 
-//    $form_type    = isset($productall['type']) ? $productall['type'] . "_" : "";
-//    $form_client  = isset($productall['client']) ? $productall['client'] . "_" : "";
-//    $modification = isset($productall['modification']) ? date("YmdHis", $productall['modification']) : "";
-//    $outputName   = str_replace(",", "", $form_type . $form_client . $modification);
-    $outputName = 'qty';
     $spreadsheet->setActiveSheetIndex(0);
 
-    $output = ($_GET['action'] == 'formdown') ? 1 : 0;
-    // $nt          = date("YmdHis", time()); //转换为日期。
-    // $filenameout = $outputName . $nt . '.xlsx';
+    $output      = ($_GET['action'] == 'formdown') ? 1 : 0;
     $filenameout = $outputName . '.xlsx';
 
     if ($output) {
@@ -250,14 +267,12 @@ function set_writer()
         header('Cache-Control: max-age=0');
         // If you're serving to IE 9, then the following may be needed
         header('Cache-Control: max-age=1');
-
         // If you're serving to IE over SSL, then the following may be needed
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
         header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
         header('Pragma: public'); // HTTP/1.0
 
-        // $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer = PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save('php://output');
     } else {
@@ -271,7 +286,9 @@ function set_writer()
     }
     exit;
 }
-function set_p3()
+
+// HA第3页
+function set_ha_p3()
 {
     global $spreadsheet;
     global $styleArray1;
@@ -295,6 +312,8 @@ function set_p3()
     }
     set_horizontal(true);
 }
+
+// 格式化表格
 function format_form($style, $row)
 {
     global $spreadsheet;
@@ -304,7 +323,9 @@ function format_form($style, $row)
         $spreadsheet->getActiveSheet()->getStyle($col . $row)->applyFromArray($style);
     }
 }
-function set_p4()
+
+// HA第4页
+function set_ha_p4()
 {
     global $spreadsheet;
     global $styleArray1;
@@ -434,4 +455,42 @@ function set_p4()
         }
         set_horizontal(true); //打印橫向 A4
     }
+}
+
+function getforexcate($forex)
+{
+    switch ($forex) {
+        case 1:
+            $output = 'USD';
+            break;
+        case 2:
+            $output = 'HKD';
+            break;
+        case 3:
+            $output = 'RMB';
+            break;
+        case 4:
+            $output = 'EUR';
+            break;
+        case 5:
+            $output = 'JPY';
+            break;
+
+        default:
+            $output = 'USD';
+            break;
+    }
+    return $output;
+}
+
+// PCS页面打印适应
+function set_print_pcs($freeze)
+{
+    set_freeze($freeze);
+    // 重复左侧
+    set_repeatAtLeft(array('A', 'A'));
+    // 横向不缩放
+    set_horizontal(true, false);
+    // 所有行打印在一页
+    set_fitToWidth(0);
 }
