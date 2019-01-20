@@ -1,4 +1,6 @@
 <?php
+session_start();
+error_reporting(0);
 if('localhost' ==  $_SERVER['SERVER_NAME']){
     $online = false;  //判断是否在线
 }elseif ('www.a.cn' ==  $_SERVER['SERVER_NAME']){
