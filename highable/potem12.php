@@ -4,7 +4,7 @@ header("Content-type: text/html; charset=utf-8");
 
 require_once('autoloadconfig.php');  //判断是否在线
 
-
+require_once ('img.php');
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;

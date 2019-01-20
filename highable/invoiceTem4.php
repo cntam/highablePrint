@@ -1,6 +1,11 @@
+<!--Template Name: invoiceTem5  -->
+<!--PS-->
+<!--Modified by 俊伟-->
+<!--(Updated by Lau at 2018-11-21)-->
 <?php
 session_start();
 header("Content-type: text/html; charset=utf-8");
+
 
 require_once('autoloadconfig.php');  //判断是否在线
 
@@ -13,23 +18,23 @@ use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper; // html 解析器
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-$potem10 =  $_SESSION['potem10'];
+$invoiceTem4 =  $_SESSION['invoice'];
 
 
 //$spreadsheet = new Spreadsheet();
-$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/potem10.xlsx');
+$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/invoiceTem4.xlsx');
 
 $sheet = $spreadsheet->getActiveSheet();
-$spreadsheet->getActiveSheet()->setTitle("sheet1");
+$sheet->setTitle("sheet1");
 $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft YaHei');
 //$spreadsheet->getActiveSheet()->getDefaultColumnDimension()->setWidth(20);  //设置默认列宽
-$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(25);  //列宽度
-$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(20);  //列宽度
-$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(20);  //列宽度
-$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(20);  //列宽度
+//$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(16);  //列宽度
+//$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(16);  //列宽度
+//$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(16);  //列宽度
+//$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(16);  //列宽度
 $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(20);  //列宽度
 $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(20);  //列宽度
-$spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(20);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(40);  //列宽度
 $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(20);  //列宽度
 $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(20);  //列宽度
 $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(20);  //列宽度
@@ -44,7 +49,7 @@ $styleArray1 = [
         'ShrinkToFit'=>true,
     ],
     'font' => [
-        'Size' => '6',
+        'Size' => '8',
     ],
 
     'borders' => [
@@ -61,19 +66,10 @@ $styleArray1 = [
             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
         ],
 
-    ]
-
-];
-$styleArray2 = [
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
     ],
     'font' => [
-        'Size' => '5',
-    ]
+        'Size' => '8',
+    ],
 
 ];
 $styleArrayr = [
@@ -101,76 +97,91 @@ $styleArraybu = [
 ];
 
 //填数据
-$spreadsheet->getActiveSheet()->setCellValue('B7', $potem10["tosb"]);
-//$spreadsheet->getActiveSheet()->setCellValue('F7', $potem10["podate"]);
+$sheet->mergeCells("H21:K21");
 
+$sheet->setCellValue('A6', 'INVOICE NO.'.$invoiceTem4["invoiceno"]);
+$sheet->setCellValue('C7', $invoiceTem4["tosb"]);
 
-$toaddr = array('B6','J5','A10','B10','E10','F10','H10','I10','J10','K10','B12','C12','D12','E12','F12','G12','H12','I12','J13','K12','K13');
-
-    for($i = 1,$y = 0; $i <= count($toaddr) ; $i++ ,$y++){
-
-        $sheet->setCellValue($toaddr[$y],  $potem10["toaddr"]["a".$i]);
-
+$row = 8;
+$a = 0;
+if ($invoiceTem4["invoicedata"]["arrnum"] > 0) {
+    for ($x = 1; $x <= $invoiceTem4["invoicedata"]["arrnum"]; $x++) {
+        $col = chr(67 + $a); // C
+        $sheet->setCellValue($col.$row, $invoiceTem4["invoicedata"]['a'.$x]);
+        $row++;
     }
+}
+
+$sheet->setCellValue('L11', $invoiceTem4["invoicedate"]);
+
+//中间表格固定内容
+$sheet->setCellValue('E14', $invoiceTem4["invoiceform"]["ba1"]["0"]);
+$sheet->setCellValue('J14', $invoiceTem4["invoiceform"]["ba1"]["1"]);
+$sheet->setCellValue('K14', $invoiceTem4["invoiceform"]["ba1"]["2"]);
+$sheet->setCellValue('L14', $invoiceTem4["invoiceform"]["ba1"]["3"]);
+$sheet->setCellValue('M15', $invoiceTem4["invoiceform"]["ba1"]["4"]);
+$sheet->setCellValue('E20', $invoiceTem4["invoiceform"]["ba1"]["4"]);
+$sheet->setCellValue('H21', 'Less'.$invoiceTem4["invoiceform"]["ba1"]["5"].'%DOWN PAYMENT AND CQ COST  BEFORE SHIPMENT');
+$sheet->setCellValue('L21', $invoiceTem4["invoiceform"]["ba1"]["6"]);
+$sheet->setCellValue('L22', $invoiceTem4["invoiceform"]["ba1"]["7"]);
+
+//底部注释及银行信息
+$sheet->setCellValue('E24', $invoiceTem4["invoiceform"]["formremark"]);
+$sheet->setCellValue('E27', $invoiceTem4["remark"]["bottomremark"]["0"]);
+$sheet->setCellValue('E28', $invoiceTem4["remark"]["bottomremark"]["1"]);
+$sheet->setCellValue('G30', $invoiceTem4["remark"]["bottomremark"]["2"]);
+$sheet->setCellValue('G31', $invoiceTem4["remark"]["bottomremark"]["3"]);
+
+$sheet->setCellValue('F33', $invoiceTem4["remark"]["c1"]);
+$sheet->setCellValue('F34', $invoiceTem4["remark"]["c2"]);
+$sheet->setCellValue('F35', $invoiceTem4["remark"]["c3"]);
+$sheet->setCellValue('F36', $invoiceTem4["remark"]["c4"]);
 
 
-//中部form
-
-$nowcol = 13;
-//$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:F{$nowcol}");
-//$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, 'PO NO: '.$potem10["orderform"]["midpono"].'   注：請在開發票時把“PONO”寫上，不可重復，并且寫上制單號）');
-//$spreadsheet->getActiveSheet()->setCellValue('I'.$nowcol, $potem10["invoiceform"]["amout"]);
-
-
-for($x = 0 ,$c = 1; $c <= $potem10["orderform"]["formnum"]; $x++ ,$c++){
-
-$f19 = 13 + 1 * $x;
-
-//$spreadsheet->getActiveSheet()->mergeCells("B{$f19}:E{$f19}");
-
-$formarr = array('A'.$f19,'B'.$f19,'C'.$f19,'D'.$f19,'E'.$f19,'F'.$f19,'G'.$f19,'H'.$f19,'I'.$f19);
-
-    for($i = 1,$y = 0; $i <= $potem10["orderform"]["brrnum"] ; $i++ ,$y++){
-
-        $sheet->setCellValue($formarr[$y],  $potem10["orderform"]['b'.$i][$x]);
-
+//中部表格动态
+$row = 17;
+foreach ($invoiceTem4["invoiceform"]["b4"] as $item => $value) {
+    if ($item > 0) {
+        $sheet->insertNewRowBefore($row, 2);
     }
-
-    $nowcol = 13  +   1 * $c;
-
-
-    if($c >3){
-        $spreadsheet->getActiveSheet()->insertNewRowBefore($nowcol, 1);
+    $sheet->setCellValue('E'.$row, $value);
+    $row += 2;
+}
+//18行BCD列
+if ($invoiceTem4["invoiceform"]["brrnum"] > 0) {
+    for ($a = 1; $a <= 3 ; $a++) {
+        $row = 18;
+        $col = chr(65 + $a); // B
+        foreach ($invoiceTem4["invoiceform"]['b'.$a] as $value) {
+            $sheet->setCellValue($col.$row, $value);
+            $row += 2;
+        }
     }
 
 }
-$nowcol = $potem10["orderform"]["formnum"] > 3 ? ($nowcol + 2) : 18;
-//$spreadsheet->getActiveSheet()->getCell('A1')->setValue($nowcol); 貨送以下地址
-//$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-//$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, '貨送以下地址');
-//$nowcol++;
 
-//$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, '送货地址：'.$potem10["remark"]["c1"]);
+//18行剩下的列
+if ($invoiceTem4["invoiceform"]["brrnum"] > 0) {
+    for ($a = 1, $b = 5; $a <= 9 ; $a++, $b++) {
+        $row = 18;
+        $col = chr(68 + $a); // B
+        foreach ($invoiceTem4["invoiceform"]['b'.$b] as $value) {
+            $sheet->setCellValue($col.$row, $value);
+            $row += 2;
+        }
+    }
+
+}
 
 
-//$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-$spreadsheet->getActiveSheet()->setCellValue('F'.$nowcol, $potem10["remark"]["c2"]);
 
-//$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-$spreadsheet->getActiveSheet()->setCellValue('J'.$nowcol, $potem10["remark"]["c3"]);
-$nowcol++;
-$nowcol++;
-$spreadsheet->getActiveSheet()->setCellValue('B'.$nowcol, $potem10["remark"]["c4"]);
-$spreadsheet->getActiveSheet()->setCellValue('J'.$nowcol, $potem10["remark"]["c5"]);
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
-
-unset($_SESSION['potem10'] ); //注销SESSION
+// unset($_SESSION['invoice'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'potem10out'.$nt.'.xlsx';
+$filenameout = 'invoiceTem4out'.$nt.'.xlsx';
 if($output){
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
