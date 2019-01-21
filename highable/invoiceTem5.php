@@ -1,11 +1,7 @@
-<!--Template Name: invoiceTem5  -->
-<!--PS-->
-<!--Modified by 俊伟-->
-<!--(Updated by Lau at 2018-11-21)-->
 <?php
 session_start();
 header("Content-type: text/html; charset=utf-8");
-
+// PS
 
 require_once('autoloadconfig.php');  //判断是否在线
 
@@ -145,7 +141,7 @@ $sheet->setCellValue('F56', $invoiceTem5["remark"]["c4"]);
 $row = 20;
 foreach ($invoiceTem5["invoiceform"]["b1"] as $item => $value) {
     if ($item > 4) {
-        $sheet->insertNewRowBefore($row , 3);
+        $sheet->insertNewRowBefore($row , 4);
     }
     $sheet->setCellValue('E'.$row, $value);
     $row += 4;
@@ -177,20 +173,12 @@ if (count($invoiceTem5["invoiceform"]["formnum"]) > 0) {
 }
 
 
-
-
-//$sheet->setCellValue('E21', stripcslashes($invoiceTem5["invoiceform"]["b1"]["0"]));
-
-
-
-
-
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
-// unset($_SESSION['invoice'] ); //注销SESSION
+unset($_SESSION['invoice'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'invoiceTem5out'.$nt.'.xlsx';
+$nt = date("md",time()); //转换为日期。
+$filenameout = 'Invoice_PS_'.$nt.'.xlsx';
 if($output){
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

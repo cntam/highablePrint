@@ -180,8 +180,8 @@ $spreadsheet->setActiveSheetIndex(0);
 unset($_SESSION['fcrlist'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'fcrlist'.$nt.'.xlsx';
+$nt = date("md",time()); //转换为日期。
+$filenameout = 'Fcrlist_'.$nt.'.xlsx';
 if($output){
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

@@ -98,8 +98,8 @@ function add_row($data,$i,$j)
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 //unset($_SESSION['invoiceTem7'] ); //注销SESSION
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'intem1out'.$nt.'.xlsx';
+$nt = date("md",time()); //转换为日期。
+$filenameout = 'Invoice_GIVENCHY_'.$nt.'.xlsx';
 if($output){
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

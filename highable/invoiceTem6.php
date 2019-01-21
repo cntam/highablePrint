@@ -178,7 +178,7 @@ $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作�
 unset($_SESSION['invoiceTem6'] ); //注销SESSION
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'intem1out'.$nt.'.xlsx';
+$filenameout = 'Invoice_GB_'.$nt.'.xlsx';
 if($output){
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

@@ -161,12 +161,12 @@ $spreadsheet->setActiveSheetIndex(0);
 unset($_SESSION['stocklist'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("mdHis",time()); //转换为日期。
+$nt = date("md",time()); //转换为日期。
 // 修改 根据不同action
 if ($fabp1['action'] == 'material') {
-    $filenameout = 'Material_Stock_List'.$nt.'.xlsx';
+    $filenameout = 'Material_Stock_List_'.$nt.'.xlsx';
 } else if ($fabp1['action'] == 'fabric') {
-    $filenameout = 'Fabric_Stock_List'.$nt.'.xlsx';
+    $filenameout = 'Fabric_Stock_List_'.$nt.'.xlsx';
 }
 
 if($output){

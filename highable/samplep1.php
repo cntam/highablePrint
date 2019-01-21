@@ -416,7 +416,7 @@ $output=  ($_GET['action'] == 'formdown' )? 1:0;
 //$nt = date("YmdHis",time()); //转换为日期。
 $nt = date("md",time()); //转换为日期。
 //$filenameout = 'samplep1out'.$nt.'.xlsx';
-$filenameout = "SO_{$samplep1['clientname']}_".$nt.'.xlsx';
+$filenameout = "SampleOrder_{$samplep1['clientname']}_".$nt.'.xlsx';
 
 if($output){
     // Redirect output to a client’s web browser (Xlsx)

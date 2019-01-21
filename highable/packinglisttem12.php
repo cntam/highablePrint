@@ -83,7 +83,7 @@ $spreadsheet->getActiveSheet()->getPageSetup()
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 $nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'YSL_packlingList_'.$nt.'.xlsx';
+$filenameout = 'packlingList_YSL_'.$nt.'.xlsx';
 
 outExcel($spreadsheet,$filenameout);
 

@@ -24,7 +24,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 
-$spreadsheet->getActiveSheet()->setTitle("COST CHART sheet1");
+$spreadsheet->getActiveSheet()->setTitle("sheet1");
 //$sheet->setCellValue('A1', 'Hello World !');
 $spreadsheet->getDefaultStyle()->getFont()->setName('微软雅黑');
 $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
@@ -571,7 +571,7 @@ if($costp2["alist"]["a10"] > 0){
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
-unset($_SESSION['costp2'] ); //注销SESSION
+//unset($_SESSION['costp2'] ); //注销SESSION
 
 $spreadsheet->getActiveSheet()->getPageSetup()
     ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);  //横放置
@@ -579,8 +579,11 @@ $spreadsheet->getActiveSheet()->getPageSetup()
     ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);  //A4
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'CC'.$nt.'.xlsx';
+//$nt = date("YmdHis",time()); //转换为日期。
+//$filenameout = 'CC'.$nt.'.xlsx';
+$nt = date("md",time()); //转换为日期。
+$filenameout = "CostChart_{$costp2['shortname']}_".$nt.'.xlsx';
+
 if($output){
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

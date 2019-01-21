@@ -111,31 +111,14 @@ function add_row($data,$i,$j)
 
 
 }
-//    //quantity
-//    $sheet->setCellValue("A18", "**");
-//    $sheet->setCellValue("B18", $data['b1'][$j]);
-//    $sheet->setCellValue("C18", "**PCS");
-//    //Po No.
-//    $sheet->setCellValue("D18", "PO No.:  ".$data['b4'][$j]);
-//    //Color
-//    $sheet->setCellValue("E18", "COLOUR:  ".$data['b5'][$j]);
-//    //our job No.
-//    $sheet->setCellValue("F18", "OUR JOB NO.:  ".$data['b6'][$j]);
-//    //description
-//    $sheet->setCellValue("G18", "DESCRIPTION:  ".$data['b7'][$j]);
-//    //unit price
-//    $sheet->setCellValue("I18", $data['b8'][$j]);
-//    //amount
-//    $sheet->setCellValue("J18", $data['b9'][$j]);
-//    //precent of amount
-//    $sheet->setCellValue("K18", $data['b3'][$j]);
+
 
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 unset($_SESSION['invoiceTem3'] ); //注销SESSION
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'intem1out'.$nt.'.xlsx';
+$nt = date("md",time()); //转换为日期。
+$filenameout = "Invoice_{$invoiceTem4['shortname']}_".$nt.'.xlsx';
 if($output){
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

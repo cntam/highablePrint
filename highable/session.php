@@ -2,7 +2,7 @@
 session_start();
 
 
-$samplep1 =   $_SESSION['samplep1'];
+$samplep1 =   $_SESSION['invoice'];
 print_r($samplep1);
 
 

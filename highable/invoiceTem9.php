@@ -1,11 +1,7 @@
-<!--Template Name: invoiceTem5  -->
-<!--PS-->
-<!--Modified by 俊伟-->
-<!--(Updated by Lau at 2018-11-21)-->
 <?php
 session_start();
 header("Content-type: text/html; charset=utf-8");
-
+//KM  && NEXT
 
 require_once('autoloadconfig.php');  //判断是否在线
 
@@ -216,8 +212,8 @@ $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作�
 // unset($_SESSION['invoice'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'invoiceTem9out'.$nt.'.xlsx';
+$nt = date("md",time()); //转换为日期。
+$filenameout = "Invoice_{$invoiceTem9['shortname']}_".$nt.'.xlsx';
 if($output){
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
