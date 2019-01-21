@@ -287,14 +287,6 @@ $spreadsheet->getDefaultStyle()->getFont()->setName('微软雅黑');
 $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
 //$spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(50);
 
-//$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(10);  //列宽度
-//$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(5);  //列宽度
-//$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(10);  //列宽度
-//$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(10);  //列宽度
-//$spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(10);  //列宽度
-//$spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(10);  //列宽度
-//$spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(5);  //列宽度
-//$spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(15);  //列宽度
 
 for($i=1,$u=0;$i <= 6 ;$i++,$u++){
     $arownum = 3 + $i;
@@ -421,8 +413,11 @@ $spreadsheet->setActiveSheetIndex(0);
 unset($_SESSION['samplep1'] ); //注销SESSION
 
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'samplep1out'.$nt.'.xlsx';
+//$nt = date("YmdHis",time()); //转换为日期。
+$nt = date("md",time()); //转换为日期。
+//$filenameout = 'samplep1out'.$nt.'.xlsx';
+$filenameout = "SO_{$samplep1['clientname']}_".$nt.'.xlsx';
+
 if($output){
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
