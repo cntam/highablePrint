@@ -238,11 +238,11 @@ function set_writer($type = null, $outputName = null)
         switch ($type) {
             case 'HA':
                 $form_client = isset($productall['client']) ? $productall['client'] . "_" : "";
-                $nt          = date("YmdHis", time());
+                $nt          = date("md", time());
                 $outputName  = str_replace(",", "", $type . "_" . $form_client . $nt);
                 break;
             case 'CPS':
-                $nt         = date("YmdHis", time());
+                $nt         = date("md", time());
                 $outputName = $type . "_" . $cpsform['client'] . "_" . $nt;
                 break;
             default:

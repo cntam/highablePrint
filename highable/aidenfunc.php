@@ -106,6 +106,9 @@ function setMergeCells($sheet,$merge,$cell,$cellValue,$styleArr){
 
 function outExcel($spreadsheet,$filenameout)
 {
+    $nt = date("md",time()); //转换为日期。
+    $filenameout .= '_'.$nt.'.xlsx';
+
     // Redirect output to a client’s web browser (Xlsx)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header('Content-Disposition: attachment;filename='."$filenameout");

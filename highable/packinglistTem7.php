@@ -85,8 +85,8 @@ $spreadsheet->getActiveSheet()->getPageSetup()
     ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);  //A4
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-$nt = date("md",time()); //转换为日期。
-$filenameout = 'Packlinglist_GIVENCHY_'.$nt.'.xlsx';
+
+$filenameout = 'Packlinglist_GIVENCHY_';
 
 outExcel($spreadsheet,$filenameout);
 

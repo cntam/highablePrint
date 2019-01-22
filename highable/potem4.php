@@ -96,9 +96,9 @@ $spreadsheet->getActiveSheet()->setCellValue('D6', $potem4 ["podate"]);
 $spreadsheet->getActiveSheet()->setCellValue('B6', $potem4["toaddr"]["a1"]);
 $spreadsheet->getActiveSheet()->setCellValue('B7', $potem4["toaddr"]["a2"]);
 $spreadsheet->getActiveSheet()->setCellValue('B8', $potem4["toaddr"]["a3"]);
-$spreadsheet->getActiveSheet()->setCellValue('D8', $potem4["toaddr"]["a6"]);
-$spreadsheet->getActiveSheet()->setCellValue('B9', $potem4["toaddr"]["a4"]);
-$spreadsheet->getActiveSheet()->setCellValue('D9', $potem4["toaddr"]["a5"]);
+$spreadsheet->getActiveSheet()->setCellValue('D8', $potem4["toaddr"]["a4"]);
+$spreadsheet->getActiveSheet()->setCellValue('B9', $potem4["toaddr"]["a5"]);
+$spreadsheet->getActiveSheet()->setCellValue('D9', $potem4["toaddr"]["a6"]);
 
 
 //中部form
@@ -169,32 +169,8 @@ $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作�
 
 unset($_SESSION['potem4'] ); //注销SESSION
 
-$output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'potem4out'.$nt.'.xlsx';
-if($output){
-    // Redirect output to a client’s web browser (Xlsx)
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename='."$filenameout");
-    header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
-    header('Cache-Control: max-age=1');
+require_once 'aidenfunc.php';
 
-// If you're serving to IE over SSL, then the following may be needed
-    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
-    header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-    header('Pragma: public'); // HTTP/1.0
-
-    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-    $writer->save('php://output');
-}else{
-    $writer = new Xlsx($spreadsheet);
-    $writer->save('../output/'.$filenameout);
-
-    $FILEURL = 'http://allinone321.com/highable/output/'.$filenameout;
-    $MSFILEURL = 'http://view.officeapps.live.com/op/view.aspx?src='. urlencode($FILEURL);
-    //echo "<a href= 'http://view.officeapps.live.com/op/view.aspx?src=". urlencode($FILEURL)."' target='_blank' >跳轉--{$filename}</a>";
-    Header("Location:{$MSFILEURL}");
-};
+$filenameout = 'PO_'.$potem4['shortName'];
+outExcel($spreadsheet,$filenameout);
 
