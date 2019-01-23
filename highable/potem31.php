@@ -1,15 +1,7 @@
 <?php
-session_start();
+
 require_once('autoloadconfig.php');  //判断是否在线
-
-require_once ('img.php');
-
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper; // html 解析器
-
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
+require_once 'aidenfunc.php';
 
 $potem31 =  $_SESSION['potem31'];
 $pop1 =  $_SESSION['potem31'];
@@ -32,58 +24,6 @@ for($j=0;$j<=8;$j++){
 //$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(15);  //列宽度
 
 $spreadsheet->getDefaultStyle()->getFont()->setSize(7);
-
-$styleArray1 = [
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-    'font' => [
-        'Size' => '6',
-    ],
-
-    'borders' => [
-        'top' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'left' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ]
-
-];
-$styleArray2 = [
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-    'font' => [
-        'Size' => '5',
-    ]
-
-];
-$styleArrayr = [
-
-    'borders' => [
-
-        'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ],
-
-];
 
 $styleArray3 = [
     'alignment' => [
@@ -183,7 +123,7 @@ if(1 == $potem31["remark"]["c7"][1]){
 //$spreadsheet->getActiveSheet()->setCellValue('B39', 'ANY CONTRARY REPLIED WITHIN '.$potem31["remark"]["c7"].', THIS CONTRACT IS VALID.');
 
 $spreadsheet->getActiveSheet()->setCellValue('B40', 'PLEASE  CONFIRM  AND  COUNTER-SIGN  BY  RETURN.OTHERWISE,IF WE DO NOT RECEIVE ANY CONTRARY REPLIED WITHIN '.$potem31["remark"]["c11"].',THIS CONTRACT IS VALID.');
-$spreadsheet->getActiveSheet()->getStyle('B40')->applyFromArray($styleArray2);
+$spreadsheet->getActiveSheet()->getStyle('B40')->applyFromArray($noborderLeft);
 
 if(1 == $potem31["remark"]["c12"]){
     $c8 = 'EXCLUDING';
@@ -205,12 +145,12 @@ if(count($potem31["remark"]["c14"]) > 1){
 
         $sheet->setCellValue('A'. $row, $value );
         $spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($styleArray3);
-        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($styleArray2);
+        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($noborderLeft);
         //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->getAlignment()->setWrapText(true);
 
         $spreadsheet->getActiveSheet()->mergeCells("B{$row}:H{$row}");
         $sheet->setCellValue('B'. $row, $potem31["remark"]["c15"][$item]);
-        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($styleArray2);
+        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($noborderLeft);
         $spreadsheet->getActiveSheet()->getStyle('B'. $row)->getAlignment()->setWrapText(true);
 
         $row++;
@@ -230,12 +170,12 @@ if(count($pop1["remark"]["c8"]) > 1){
 
         $sheet->setCellValue('A'. $row, $value );
         $spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($styleArray3);
-        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($styleArray2);
+        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($noborderLeft);
 
 
         $spreadsheet->getActiveSheet()->mergeCells("B{$row}:H{$row}");
         $sheet->setCellValue('B'. $row, $pop1["remark"]["c9"][$item]);
-        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($styleArray2);
+        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($noborderLeft);
         $spreadsheet->getActiveSheet()->getStyle('B'. $row)->getAlignment()->setWrapText(true);
 
         $row++;
@@ -296,13 +236,11 @@ if($pop1["orderform"]["elist"]['elistrow'] > 1){
 
 
 
-
-
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 unset($_SESSION['potem31'] ); //注销SESSION
 
-require_once 'aidenfunc.php';
+
 
 $filenameout = 'PO_'.$pop1['shortName'];
 outExcel($spreadsheet,$filenameout);

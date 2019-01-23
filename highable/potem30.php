@@ -1,18 +1,9 @@
 <?php
-session_start();
+
 require_once('autoloadconfig.php');  //判断是否在线
-
-require_once ('img.php');
-
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper; // html 解析器
-
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
+require_once 'aidenfunc.php';
 
 $potem30 =  $_SESSION['potem30'];
-
 
 //$spreadsheet = new Spreadsheet();
 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/potem30.xlsx');
@@ -32,69 +23,6 @@ for($j=0;$j<=8;$j++){
 
 $spreadsheet->getDefaultStyle()->getFont()->setSize(7);
 
-$styleArray1 = [
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-    'font' => [
-        'Size' => '6',
-    ],
-
-    'borders' => [
-        'top' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'left' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ]
-
-];
-$styleArray2 = [
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-    'font' => [
-        'Size' => '5',
-    ]
-
-];
-$styleArrayr = [
-
-    'borders' => [
-
-        'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ],
-
-];
-
-$styleArraybu = [
-
-    'borders' => [
-
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ],
-
-];
 
 //填数据
 $spreadsheet->getActiveSheet()->setCellValue('A9', $potem30["tosb"]);
@@ -202,12 +130,12 @@ if(count($potem30["remark"]["c14"]) > 1){
         }
 
         $sheet->setCellValue('A'. $row, $value );
-        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($styleArray2);
+        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($noborderLeft);
         //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->getAlignment()->setWrapText(true);
 
         $spreadsheet->getActiveSheet()->mergeCells("B{$row}:H{$row}");
         $sheet->setCellValue('B'. $row, $potem30["remark"]["c15"][$item]);
-        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($styleArray2);
+        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($noborderLeft);
         $spreadsheet->getActiveSheet()->getStyle('B'. $row)->getAlignment()->setWrapText(true);
 
         $row++;
@@ -228,12 +156,12 @@ if(count($potem30["remark"]["c8"]) > 1){
         }
 
         $sheet->setCellValue('A'. $row, $value );
-        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($styleArray2);
+        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($noborderLeft);
 
 
         $spreadsheet->getActiveSheet()->mergeCells("B{$row}:H{$row}");
         $sheet->setCellValue('B'. $row, $potem30["remark"]["c9"][$item]);
-        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($styleArray2);
+        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($noborderLeft);
         $spreadsheet->getActiveSheet()->getStyle('B'. $row)->getAlignment()->setWrapText(true);
 
         $row++;
@@ -302,8 +230,6 @@ if($potem30["orderform"]["elist"]['elistrow'] > 1){
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 unset($_SESSION['potem30'] ); //注销SESSION
-
-require_once 'aidenfunc.php';
 
 $filenameout = 'PO_'.$potem30['shortName'];
 outExcel($spreadsheet,$filenameout);
