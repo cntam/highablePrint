@@ -1,6 +1,5 @@
 <?php
 
-require_once('autoloadconfig.php');  //判断是否在线
 require_once 'aidenfunc.php';
 
 $potem30 =  $_SESSION['potem30'];
