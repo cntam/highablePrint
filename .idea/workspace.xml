@@ -264,8 +264,7 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="646" />
-    <option name="y" value="69" />
+    <option name="x" value="295" />
     <option name="width" value="1626" />
     <option name="height" value="976" />
   </component>
@@ -423,14 +422,7 @@
       <workItem from="1547687491877" duration="11710000" />
       <workItem from="1547946702218" duration="18187000" />
       <workItem from="1548032189645" duration="18552000" />
-      <workItem from="1548205750218" duration="6455000" />
-    </task>
-    <task id="LOCAL-00029" summary="20180703 potem8-9">
-      <created>1530588620463</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1530588620463</updated>
+      <workItem from="1548205750218" duration="6468000" />
     </task>
     <task id="LOCAL-00030" summary="20180703 potem11">
       <created>1530697628689</created>
@@ -768,14 +760,21 @@
       <option name="project" value="LOCAL" />
       <updated>1548209934800</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="20190123">
+      <created>1548231089460</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1548231089460</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="387865000" />
+    <option name="totallyTimeSpent" value="387878000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="646" y="69" width="1626" height="976" extended-state="0" />
+    <frame x="295" y="0" width="1626" height="976" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18339768" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
