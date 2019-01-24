@@ -1,8 +1,7 @@
 <?php
-session_start();
+require_once 'aidenfunc.php';
 $cpsform =  $_SESSION['SampleChart'];
-require_once('autoloadconfig.php');  //判断是否在线
-require_once ('img.php');
+
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -259,7 +258,7 @@ function fill_img($sheet, $img, $cell, $w, $h)
 }
 $sheet_data_array = array_chunk($cpsform['info'],5);
 foreach ($sheet_data_array as $index => $item){
-    $myWorkSheet = new \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet($spreadsheet, 'CSP'.($index+1));
+    $myWorkSheet = new \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet($spreadsheet, 'sheet'.($index+1));
     $spreadsheet->addSheet($myWorkSheet, $index);
     $sheet = $spreadsheet->getSheet($index);
     add_sheet_header($sheet);
@@ -277,28 +276,8 @@ foreach ($sheet_data_array as $index => $item){
 $spreadsheet->setActiveSheetIndex(0);
 unset($_SESSION['samplechart'] ); //注销SESSION
 //$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
-$output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("md",time()); //转换为日期。
-$filenameout = 'SampleChart_'.$nt.'.xlsx';
-if($output){
-    // Redirect output to a client’s web browser (Xlsx)
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename='."$filenameout");
-    header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
-    header('Cache-Control: max-age=1');
-// If you're serving to IE over SSL, then the following may be needed
-    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
-    header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-    header('Pragma: public'); // HTTP/1.0
-    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-    $writer->save('php://output');
-}else{
-    $writer = new Xlsx($spreadsheet);
-    $writer->save('../output/'.$filenameout);
-    $FILEURL = 'http://allinone321.com/highable/output/'.$filenameout;
-    $MSFILEURL = 'http://view.officeapps.live.com/op/view.aspx?src='. urlencode($FILEURL);
-    Header("Location:{$MSFILEURL}");
-}
-exit;
+
+
+$filenameout = 'SampleChart_';
+
+outExcel($spreadsheet,$filenameout);
