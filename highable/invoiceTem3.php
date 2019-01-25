@@ -1,8 +1,7 @@
 <?php
-session_start();
+
 header("Content-type: text/html; charset=utf-8");
-require_once('autoloadconfig.php');  //判断是否在线
-require_once ('img.php');
+require_once 'aidenfunc.php';
 // modified by fa at 2019.01.16
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -11,7 +10,7 @@ use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper; // html 解析器
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-$intem1 =  $_SESSION['invoiceTem3'];
+$intem1 =  $_SESSION['invoice'];
 
 
 //$spreadsheet = new Spreadsheet();
@@ -115,7 +114,7 @@ function add_row($data,$i,$j)
 
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
-unset($_SESSION['invoiceTem3'] ); //注销SESSION
+//unset($_SESSION['invoiceTem3'] ); //注销SESSION
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("md",time()); //转换为日期。
 $filenameout = "Invoice_{$invoiceTem4['shortname']}_".$nt.'.xlsx';
