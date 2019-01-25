@@ -25,60 +25,13 @@ $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(20);  //列宽
 $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(20);  //列宽度
 $spreadsheet->getDefaultStyle()->getFont()->setSize(7);
 
-$styleArray1 = [
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-    'font' => [
-        'Size' => '8',
-    ],
 
-    'borders' => [
-        'top' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'left' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
 
-    ],
-    'font' => [
-        'Size' => '8',
-    ],
-
-];
-$styleArrayr = [
-
-    'borders' => [
-
-        'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ],
-
-];
-
-$styleArraybu = [
-
-    'borders' => [
-
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ],
-
-];
+setCell($sheet,"A1",$potem1["remark"]['poheader']['poheada1'],$noborderCenter);
+setCell($sheet,"A2",$potem1["remark"]['poheader']['poheada2'],$noborderCenter);
+setCell($sheet,"A3",$potem1["remark"]['poheader']['poheada3'],$noborderCenter);
+setCell($sheet,"A4",'Tel:'.$potem1["remark"]['poheader']['poheada5'].'Fax:'.$potem1["remark"]['poheader']['poheada5'],$noborderCenter);
+setCell($sheet,"A5",'Attn :'.$potem1["toaddr"]["a9"],$noborderCenter);
 
 ////填数据
 //$spreadsheet->getActiveSheet()->setCellValue('E5', $potem1["toaddr"]["a8"]);
@@ -89,7 +42,7 @@ $spreadsheet->getActiveSheet()->mergeCells("A15:D15");
 $spreadsheet->getActiveSheet()->mergeCells("A19:G19");
 
 
-$spreadsheet->getActiveSheet()->setCellValue('A5', 'Attn : '.$potem1["toaddr"]["a7"]);
+//$spreadsheet->getActiveSheet()->setCellValue('A5', 'Attn : '.$potem1["toaddr"]["a7"]);
 $spreadsheet->getActiveSheet()->setCellValue('A9', 'TO: '.$potem1["toaddr"]["a8"]);
 $spreadsheet->getActiveSheet()->setCellValue('I9', $potem1["podate"]);
 $spreadsheet->getActiveSheet()->setCellValue('A10', $potem1["tosb"]);
@@ -99,8 +52,10 @@ $spreadsheet->getActiveSheet()->setCellValue('A14', 'ATTN：'.$potem1["toaddr"][
 
 $spreadsheet->getActiveSheet()->setCellValue('A15', 'Email：'.$potem1["toaddr"]["a6"]);
 $spreadsheet->getActiveSheet()->setCellValue('I15', $potem1["toaddr"]["a7"]);
-$spreadsheet->getActiveSheet()->setCellValue('A19', 'PO NO:'.$potem1["orderform"]["midpono"].'(注:請在開發票時把“PO NO”寫上,不可重復,并且寫上OUR REF)');
-$spreadsheet->getActiveSheet()->setCellValue('C27', '送货地址：'.$potem1["remark"][c1].PHP_EOL.$potem1["remark"][c2].'收件人'.PHP_EOL.$potem1["remark"][c3]);
+$spreadsheet->getActiveSheet()->setCellValue('A19', 'PO NO:'.$potem1["orderform"]["midpono"].'  (注:請在開發票時把“PO NO”寫上,不可重復,并且寫上OUR REF)');
+//$spreadsheet->getActiveSheet()->setCellValue('C27', '送货地址：'.$potem1["remark"][c1].PHP_EOL.$potem1["remark"][c2].'收件人'.PHP_EOL.$potem1["remark"][c3]);
+$send = '送货地址：'.$potem1["remark"]['c1'].PHP_EOL.$potem1["remark"]['c2'].PHP_EOL.'收件人: '.$potem1["remark"]['c3'];
+setCell($sheet,"C27",$send,$noborderCenter);
 
 // Remark
 $spreadsheet->getActiveSheet()->setCellValue('B30', $potem1["remark"]["c4"]);
