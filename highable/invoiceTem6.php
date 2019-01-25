@@ -175,7 +175,7 @@ function add_row($data,$i,$j){
 }
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
-unset($_SESSION['invoiceTem6'] ); //注销SESSION
+unset($_SESSION['invoice'] ); //注销SESSION
 $output=  ($_GET['action'] == 'formdown' )? 1:0;
 $nt = date("YmdHis",time()); //转换为日期。
 $filenameout = 'Invoice_GB_'.$nt.'.xlsx';

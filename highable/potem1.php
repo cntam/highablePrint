@@ -92,7 +92,7 @@ $formarr = array('A'.$f19,'C'.$f19,'E'.$f19,'F'.$f19,'I'.$f19);
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-//unset($_SESSION['potem1'] ); //注销SESSION
+unset($_SESSION['potem1'] ); //注销SESSION
 
 $filenameout = 'PO_'.$potem1['shortName'];
 outExcel($spreadsheet,$filenameout);

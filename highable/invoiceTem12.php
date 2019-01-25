@@ -13,7 +13,7 @@ use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper; // html 解析器
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-$intem1 = $_SESSION['invoiceTem12'];
+$intem1 = $_SESSION['invoice'];
 
 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/invoiceTem12.xlsx');
 $sheet = $spreadsheet->getActiveSheet();
@@ -99,7 +99,7 @@ function add_row($data,$i,$j)
 }
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
-//unset($_SESSION['invoiceTem12'] ); //注销SESSION
+unset($_SESSION['invoice'] ); //注销SESSION
 $output = ($_GET['action'] == 'formdown') ? 1 : 0;
 $nt = date("md", time()); //转换为日期。
 $filenameout = 'Invoice_YSL_' . $nt . '.xlsx';

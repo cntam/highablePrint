@@ -1,19 +1,6 @@
 <?php
-session_start();
-header("Content-type: text/html; charset=utf-8");
 /* 樂友膠袋廠*/
-
-require_once('autoloadconfig.php');  //判断是否在线
-
-require_once ('img.php');
-
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper; // html 解析器
-
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-
+require_once 'aidenfunc.php';
 $potem4 =  $_SESSION['potem4'];
 
 
@@ -21,18 +8,18 @@ $potem4 =  $_SESSION['potem4'];
 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/potem4.xlsx');
 
 $sheet = $spreadsheet->getActiveSheet();
-$spreadsheet->getActiveSheet()->setTitle("sheet1");
+$sheet->setTitle("sheet1");
 $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft YaHei');
-//$spreadsheet->getActiveSheet()->getDefaultColumnDimension()->setWidth(20);  //设置默认列宽
-$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(20);  //列宽度
-$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(40);  //列宽度
-$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(25);  //列宽度
-$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(35);  //列宽度
-$spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(16);  //列宽度
-$spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(16);  //列宽度
+//$sheet->getDefaultColumnDimension()->setWidth(20);  //设置默认列宽
+$sheet->getColumnDimension('A')->setWidth(20);  //列宽度
+$sheet->getColumnDimension('B')->setWidth(40);  //列宽度
+$sheet->getColumnDimension('C')->setWidth(25);  //列宽度
+$sheet->getColumnDimension('D')->setWidth(35);  //列宽度
+$sheet->getColumnDimension('E')->setWidth(16);  //列宽度
+$sheet->getColumnDimension('F')->setWidth(16);  //列宽度
 
-//$spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(15);  //列宽度
-//$spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(15);  //列宽度
+//$sheet->getColumnDimension('H')->setWidth(15);  //列宽度
+//$sheet->getColumnDimension('I')->setWidth(15);  //列宽度
 $spreadsheet->getDefaultStyle()->getFont()->setSize(7);
 
 $styleArray1 = [
@@ -91,19 +78,19 @@ $styleArraybu = [
 ];
 
 //填数据
-$spreadsheet->getActiveSheet()->setCellValue('B5', $potem4["tosb"]);
-$spreadsheet->getActiveSheet()->setCellValue('D6', $potem4 ["podate"]);
-$spreadsheet->getActiveSheet()->setCellValue('B6', $potem4["toaddr"]["a1"]);
-$spreadsheet->getActiveSheet()->setCellValue('B7', $potem4["toaddr"]["a2"]);
-$spreadsheet->getActiveSheet()->setCellValue('B8', $potem4["toaddr"]["a3"]);
-$spreadsheet->getActiveSheet()->setCellValue('D8', $potem4["toaddr"]["a4"]);
-$spreadsheet->getActiveSheet()->setCellValue('B9', $potem4["toaddr"]["a5"]);
-$spreadsheet->getActiveSheet()->setCellValue('D9', $potem4["toaddr"]["a6"]);
+$sheet->setCellValue('B5', $potem4["tosb"]);
+$sheet->setCellValue('D6', $potem4 ["podate"]);
+$sheet->setCellValue('B6', $potem4["toaddr"]["a1"]);
+$sheet->setCellValue('B7', $potem4["toaddr"]["a2"]);
+$sheet->setCellValue('B8', $potem4["toaddr"]["a3"]);
+$sheet->setCellValue('D8', $potem4["toaddr"]["a4"]);
+$sheet->setCellValue('B9', $potem4["toaddr"]["a5"]);
+$sheet->setCellValue('D9', $potem4["toaddr"]["a6"]);
 
 
 //中部form
-$spreadsheet->getActiveSheet()->setCellValue('B11', $potem4["toaddr"]["a7"]);
-$spreadsheet->getActiveSheet()->setCellValue('B12', $potem4["orderform"]["midpono"]);
+$sheet->setCellValue('B11', $potem4["toaddr"]["a7"]);
+$sheet->setCellValue('B12', $potem4["orderform"]["midpono"]);
 
 $nowcol = 14;
 //$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:F{$nowcol}");
@@ -136,7 +123,7 @@ $formarr = array('A'.$f19,'B'.$f19,'C'.$f19,'D'.$f19);
 //    $spreadsheet->getActiveSheet()->getStyle('G'.$f19)->applyFromArray($styleArray1);
 
     if($x >12){
-        $spreadsheet->getActiveSheet()->insertNewRowBefore($nowcol, 1);
+        $sheet->insertNewRowBefore($nowcol, 1);
     }
 
 }
@@ -145,31 +132,29 @@ $formarr = array('A'.$f19,'B'.$f19,'C'.$f19,'D'.$f19);
 
 //底部REMARK
 $nowcol = $potem4["orderform"]["formnum"] > 12 ? ($nowcol + 2) : 29;
-//$spreadsheet->getActiveSheet()->getCell('A1')->setValue($nowcol); 貨送以下地址
-//$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-//$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, '貨送以下地址');
+//$sheet->getCell('A1')->setValue($nowcol); 貨送以下地址
+//$sheet->mergeCells("A{$nowcol}:E{$nowcol}");
+//$sheet->setCellValue('A'.$nowcol, '貨送以下地址');
 //$nowcol++;
 //
-//$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-$spreadsheet->getActiveSheet()->setCellValue('B'.$nowcol, $potem4["remark"]["c1"]);
+//$sheet->mergeCells("A{$nowcol}:E{$nowcol}");
+$sheet->setCellValue('B'.$nowcol, $potem4["remark"]["c1"]);
 $nowcol++;
 
 //
-//$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-$spreadsheet->getActiveSheet()->setCellValue('B'.$nowcol, $potem4["remark"]["c2"]);
+//$sheet->mergeCells("A{$nowcol}:E{$nowcol}");
+$sheet->setCellValue('B'.$nowcol, $potem4["remark"]["c2"]);
 $nowcol++;
 
-//$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, $potem4["remark"]["c3"]);
+//$sheet->mergeCells("A{$nowcol}:E{$nowcol}");
+$sheet->setCellValue('A'.$nowcol, $potem4["remark"]["c3"]);
 $nowcol++;
-$spreadsheet->getActiveSheet()->setCellValue('B'.$nowcol, $potem4["remark"]["c4"]);
+$sheet->setCellValue('B'.$nowcol, $potem4["remark"]["c4"]);
 $nowcol++;
 
-$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
+$sheet->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 unset($_SESSION['potem4'] ); //注销SESSION
-
-require_once 'aidenfunc.php';
 
 $filenameout = 'PO_'.$potem4['shortName'];
 outExcel($spreadsheet,$filenameout);
