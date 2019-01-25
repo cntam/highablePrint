@@ -5,6 +5,8 @@
  * Date: 2019/1/20
  * Time: 11:32 PM
  */
+session_start();
+error_reporting(0);
 require_once('autoloadconfig.php');  //判断是否在线
 require_once ('img.php');
 
