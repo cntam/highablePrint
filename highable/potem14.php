@@ -1,18 +1,5 @@
 <?php
-session_start();
-header("Content-type: text/html; charset=utf-8");
-
-require_once('autoloadconfig.php');  //判断是否在线
-
-require_once ('img.php');
-
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper; // html 解析器
-
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-
+require_once 'aidenfunc.php';
 $potem14 =  $_SESSION['potem14'];
 
 
@@ -20,12 +7,12 @@ $potem14 =  $_SESSION['potem14'];
 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/potem14.xlsx');
 
 $sheet = $spreadsheet->getActiveSheet();
-$spreadsheet->getActiveSheet()->setTitle("sheet1");
+$sheet->setTitle("sheet1");
 $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft YaHei');
-//$spreadsheet->getActiveSheet()->getDefaultColumnDimension()->setWidth(30);  //设置默认列宽
+//$sheet->getDefaultColumnDimension()->setWidth(30);  //设置默认列宽
 for($j=0;$j<=6;$j++){
     $col = chr(65 + $j);
-    $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth(20);  //列宽度
+    $sheet->getColumnDimension($col)->setWidth(20);  //列宽度
 }
 
 //$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(25);  //列宽度
@@ -99,13 +86,13 @@ $styleArraybu = [
 ];
 
 //填数据
-$spreadsheet->getActiveSheet()->setCellValue('B8', 'TO: '.$potem14["tosb"]);
-$spreadsheet->getActiveSheet()->setCellValue('B10', 'DATE: '.$potem14["podate"]);
+$sheet->setCellValue('B8', $potem14["tosb"]);
+$sheet->setCellValue('B10', $potem14["podate"]);
 ////
-$spreadsheet->getActiveSheet()->setCellValue('G8', $potem14["toaddr"]["a1"]);
-$spreadsheet->getActiveSheet()->setCellValue('B9', $potem14["toaddr"]["a2"]);
-$spreadsheet->getActiveSheet()->setCellValue('B11', $potem14["toaddr"]["a3"]);
-$spreadsheet->getActiveSheet()->setCellValue('B12', $potem14["toaddr"]["a4"]);
+$sheet->setCellValue('G8', $potem14["toaddr"]["a1"]);
+$sheet->setCellValue('B9', $potem14["toaddr"]["a2"]);
+$sheet->setCellValue('B11', $potem14["toaddr"]["a3"]);
+$sheet->setCellValue('B12', $potem14["toaddr"]["a4"]);
 //$toaddr = array('Z9','B11','T11','B13','T13','F15','O15','Y15','B23','B34','U23','B41','K41','U41','Z41','AE41','J43','AC43');  //,'C12','D12','E12','F12','G12','H12','I12','J13','K12','K13','J5'
 //
 //for($i = 1,$y = 0; $i <= count($toaddr) ; $i++ ,$y++){
@@ -118,17 +105,17 @@ $spreadsheet->getActiveSheet()->setCellValue('B12', $potem14["toaddr"]["a4"]);
 ////中部form
 //
 $nowcol = 14;
-//////$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:F{$nowcol}");
-$spreadsheet->getActiveSheet()->setCellValue('B'.$nowcol, $potem14["orderform"]["midpono"]);
-//////$spreadsheet->getActiveSheet()->setCellValue('I'.$nowcol, $potem14["invoiceform"]["amout"]);
+//////$sheet->mergeCells("A{$nowcol}:F{$nowcol}");
+$sheet->setCellValue('B'.$nowcol, $potem14["toaddr"]["a9"]);
+//////$sheet->setCellValue('I'.$nowcol, $potem14["invoiceform"]["amout"]);
 //
 //
 for($x = 0 ,$c = 1; $c <= $potem14["orderform"]["formnum"]; $x++ ,$c++){
 
 $f19 = 15 + 1 * $x;
 
-    $spreadsheet->getActiveSheet()->mergeCells("A{$f19}:B{$f19}");
-    $spreadsheet->getActiveSheet()->mergeCells("C{$f19}:G{$f19}");
+    $sheet->mergeCells("A{$f19}:B{$f19}");
+    $sheet->mergeCells("C{$f19}:G{$f19}");
 
 
 $formarr = array('A'.$f19,'C'.$f19);
@@ -143,19 +130,19 @@ $formarr = array('A'.$f19,'C'.$f19);
 
 
     if($x >4){
-        $spreadsheet->getActiveSheet()->insertNewRowBefore($nowcol, 1);
+        $sheet->insertNewRowBefore($nowcol, 1);
     }
 
 }
 $nowcol = $potem14["orderform"]["formnum"] > 4 ? ($nowcol + 1) : 21;
-$spreadsheet->getActiveSheet()->setCellValue('C'.$nowcol, $potem14["toaddr"]["a5"]);
+$sheet->setCellValue('C'.$nowcol, $potem14["toaddr"]["a5"]);
 $nowcol++;
 
-$spreadsheet->getActiveSheet()->setCellValue('C'.$nowcol, $potem14["toaddr"]["a6"]);
+$sheet->setCellValue('C'.$nowcol, $potem14["toaddr"]["a6"]);
 $nowcol++;
-$spreadsheet->getActiveSheet()->setCellValue('C'.$nowcol, $potem14["toaddr"]["a7"]);
+$sheet->setCellValue('C'.$nowcol, $potem14["toaddr"]["a7"]);
 $nowcol++;
-$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, $potem14["toaddr"]["a8"]);
+$sheet->setCellValue('A'.$nowcol, $potem14["toaddr"]["a8"]);
 $nowcol++;
 $nowcol++;
 $nowcol++;
@@ -164,9 +151,9 @@ $nowcol++;
 $nowcol++;
 $nowcol++;
 
-$spreadsheet->getActiveSheet()->setCellValue('C'.$nowcol, $potem14["remark"]["c1"]);
+$sheet->setCellValue('C'.$nowcol, $potem14["remark"]["c1"]);
 $nowcol++;
-$spreadsheet->getActiveSheet()->setCellValue('C'.$nowcol, $potem14["remark"]["c2"]);
+$sheet->setCellValue('C'.$nowcol, $potem14["remark"]["c2"]);
 
 ////
 ////$spreadsheet->getActiveSheet()->setCellValue('B'.$nowcol, 'E-MAIL (電郵): '.$potem14["remark"]["c3"]);
@@ -175,38 +162,11 @@ $spreadsheet->getActiveSheet()->setCellValue('C'.$nowcol, $potem14["remark"]["c2
 //$spreadsheet->getActiveSheet()->setCellValue('O'.$nowcol, $potem14["remark"]["c3"]);
 //$nowcol++;
 //
-//$spreadsheet->getActiveSheet()->setCellValue('O'.$nowcol, $potem14["remark"]["c4"]);
+//$sheet->setCellValue('O'.$nowcol, $potem14["remark"]["c4"]);
 
-$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
+$sheet->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 unset($_SESSION['potem14'] ); //注销SESSION
 
-$output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'potem14out'.$nt.'.xlsx';
-if($output){
-    // Redirect output to a client’s web browser (Xlsx)
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename='."$filenameout");
-    header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
-    header('Cache-Control: max-age=1');
-
-// If you're serving to IE over SSL, then the following may be needed
-    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
-    header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-    header('Pragma: public'); // HTTP/1.0
-
-    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-    $writer->save('php://output');
-}else{
-    $writer = new Xlsx($spreadsheet);
-    $writer->save('../output/'.$filenameout);
-
-    $FILEURL = 'http://allinone321.com/highable/output/'.$filenameout;
-    $MSFILEURL = 'http://view.officeapps.live.com/op/view.aspx?src='. urlencode($FILEURL);
-    //echo "<a href= 'http://view.officeapps.live.com/op/view.aspx?src=". urlencode($FILEURL)."' target='_blank' >跳轉--{$filename}</a>";
-    Header("Location:{$MSFILEURL}");
-};
-
+$filenameout = 'PO_'.$potem14['shortName'];
+outExcel($spreadsheet,$filenameout);
