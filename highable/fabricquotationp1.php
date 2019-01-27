@@ -99,7 +99,7 @@ for ($y = 0, $i = 1; $i <= $fabp1["alist"]['alistnum']; $i++, $y++) {
             $thisvalue = $fabp1["alist"]['a'.$n][$y];
             $n++;
             $issel =  $fabp1["alist"]['a'.$n][$y] == '1' ?  "Y" :  "CM" ;
-            $thisvalue .= '/'.$issel;
+            $thisvalue .= ' '.$issel;
             $spreadsheet->getActiveSheet()->setCellValue($col.$row, $thisvalue);
             $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
         }elseif ($u == 4){
@@ -107,7 +107,7 @@ for ($y = 0, $i = 1; $i <= $fabp1["alist"]['alistnum']; $i++, $y++) {
             $n++;
             //$issel =  $fabp1["alist"]['a'.$n][$y] == '1' ?  "G/M2" :  "G/Y" ;
             $issel =  $fabp1["alist"]['a'.$n][$y];
-            $thisvalue .= '/'.$issel;
+            $thisvalue .= ' '.$issel;
             $spreadsheet->getActiveSheet()->setCellValue($col.$row, $thisvalue);
             $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
         }else{
