@@ -1,9 +1,5 @@
 <?php
-session_start();
-
-require_once('autoloadconfig.php');  //判断是否在线
-
-require_once ('img.php');
+require_once 'aidenfunc.php';
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -41,22 +37,6 @@ for($k=0;$k<count($fabp1['title']['a1']);$k++){
 $spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.1);
 $spreadsheet->getActiveSheet()->getPageMargins()->setLeft(0.1); //页边距
 
-$styleArray1 = [
- 'alignment' => [
-//        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-//		'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-     'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-     'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
-    ],
-    
-//    'borders' => [
-//        'top' => [
-//            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-//        ],
-//
-//    ],
-   
-];
 
 
 $styleArray = [
@@ -86,7 +66,8 @@ $styleArray = [
 
 //$spreadsheet->getActiveSheet()->setCellValue('C4', $fabp1["alist"]['a1']);
 $spreadsheet->getActiveSheet()->setCellValue('E1', 'DATE: '.$fabp1["date"]);
-$spreadsheet->getActiveSheet()->setCellValue('A4', $fabp1["quotitle"]);
+//$spreadsheet->getActiveSheet()->setCellValue('A4', $fabp1["quotitle"]);
+setCell($sheet,'A4',$fabp1["quotitle"],$boldfontbordersLeft);
 
 $spreadsheet->getActiveSheet()->setCellValue('A1', $fabp1["alist"]["head"]);
 $row = 6;
@@ -99,7 +80,7 @@ foreach ($fabp1['title']['a1'] as $value){
     $col = chr(65 + $a);
     $colname = $col.$row;
     $spreadsheet->getActiveSheet()->setCellValue($colname, $value);
-    $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+    $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($boldfontbordersLeft);
     $a++;
 }
 
@@ -145,13 +126,13 @@ $row = $row>20 ? $row : 20;
  */
 $spreadsheet->getActiveSheet()->mergeCells("B{$row}:E{$row}");
 $spreadsheet->getActiveSheet()->setCellValue('B'.$row, $fabp1["alist"]['remarks']);
-$spreadsheet->getActiveSheet()->getStyle("B{$row}:E{$row}")->applyFromArray($styleArray1);
+$spreadsheet->getActiveSheet()->getStyle("B{$row}:E{$row}")->applyFromArray($noborderLeft);
 $row++;
 if($fabp1["blist"]['blistnum'] > 0){
     foreach ($fabp1["blist"]['b1'] as $value){
         $spreadsheet->getActiveSheet()->mergeCells("B{$row}:E{$row}");
         $spreadsheet->getActiveSheet()->setCellValue('B'.$row, $value);
-        $spreadsheet->getActiveSheet()->getStyle("B{$row}:E{$row}")->applyFromArray($styleArray1);
+        $spreadsheet->getActiveSheet()->getStyle("B{$row}:E{$row}")->applyFromArray($noborderLeft);
         $row++;
     }
 }
@@ -167,32 +148,6 @@ $spreadsheet->setActiveSheetIndex(0);
 
 unset($_SESSION['fabricquotationp1'] ); //注销SESSION
 
-$output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'fabricquotationp1out'.$nt.'.xlsx';
-if($output){
-    // Redirect output to a client’s web browser (Xlsx)
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename='."$filenameout");
-    header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
-    header('Cache-Control: max-age=1');
+$filenameout = "Fabric_Quotation_Template_";
+outExcel($spreadsheet,$filenameout);
 
-// If you're serving to IE over SSL, then the following may be needed
-    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
-    header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-    header('Pragma: public'); // HTTP/1.0
-
-    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-    $writer->save('php://output');
-}else{
-    $writer = new Xlsx($spreadsheet);
-    $writer->save('../output/'.$filenameout);
-	
-    $FILEURL = PRINTURL.$filenameout;
-    $MSFILEURL = MSFILEURL. urlencode($FILEURL);
-
-    Header("Location:{$MSFILEURL}");
-}
-exit;

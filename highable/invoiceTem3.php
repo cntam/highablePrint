@@ -114,7 +114,9 @@ function add_row($data,$i,$j)
 
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
-//unset($_SESSION['invoiceTem3'] ); //注销SESSION
+//
+//
+unset($_SESSION['invoiceTem3'] ); //注销SESSION
 $filenameout = "Invoice_".$intem1['shortname'];
 outExcel($spreadsheet,$filenameout);
 

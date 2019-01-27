@@ -1,17 +1,11 @@
 <?php
-session_start();
-
-require_once('autoloadconfig.php');  //判断是否在线
-
-require_once ('img.php');
+require_once 'aidenfunc.php';
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper; // html 解析器
-
-
 
 
 $fabp1 =   $_SESSION['fcrlist'];
@@ -21,7 +15,7 @@ $spreadsheet = new Spreadsheet();
 //$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/fabricquotationp1.xlsx');
 $sheet = $spreadsheet->getActiveSheet();
 
-$spreadsheet->getActiveSheet()->setTitle("第一页");
+$spreadsheet->getActiveSheet()->setTitle("sheet");
 
 $spreadsheet->getDefaultStyle()->getFont()->setName('微软雅黑');
 $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
@@ -41,79 +35,6 @@ for($k=0;$k<count($fabp1['title']);$k++){
 $spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.1);
 $spreadsheet->getActiveSheet()->getPageMargins()->setLeft(0.1); //页边距
 
-$styleArray1 = [
- 'alignment' => [
-//        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-//		'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-     'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-     'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
-    ],
-    
-//    'borders' => [
-//        'top' => [
-//            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-//        ],
-//
-//    ],
-   
-];
-
-
-$styleArray = [
-    
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-		'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-	
-    'borders' => [
-        'top' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-		'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-		'left' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-		'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-    ],
-   
-];
-
-$styleArray2 = [
-
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-    'font' => [
-        'bold' => true,
-    ],
-
-    'borders' => [
-        'top' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-        ],
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-        ],
-        'left' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-        ],
-        'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-        ],
-    ],
-
-];
-
 
 //$spreadsheet->getActiveSheet()->setCellValue('C4', $fabp1["alist"]['a1']);
 $spreadsheet->getActiveSheet()->setCellValue('G1', 'BRAND:');
@@ -128,7 +49,7 @@ foreach ($fabp1['title'] as $value){
     $col = chr(65 + $a);
     $colname = $col.$row;
     $spreadsheet->getActiveSheet()->setCellValue($colname, $value);
-    $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray2);
+    $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($bordersLeft);
     $a++;
 }
 
@@ -136,8 +57,6 @@ foreach ($fabp1['title'] as $value){
  * content
  */
 $row = 4;
-//$spreadsheet->getActiveSheet()->setCellValue('A1', count($fabp1["content"]));
-//$spreadsheet->getActiveSheet()->setCellValue('A2', count($fabp1['title']));
 for ($y = 0, $i = 1; $i <= count($fabp1["content"]); $i++, $y++) {
 
     $tdHTML = '';
@@ -146,22 +65,22 @@ for ($y = 0, $i = 1; $i <= count($fabp1["content"]); $i++, $y++) {
         $col = chr(65 + $prt);
 
         if($u == 1){
+            setCell($sheet,$col.$row,$fabp1["content"][$y][$u],$bordersLeft);
+//            $thisvalue = $fabp1["shortname"].'-'.$fabp1["content"][$y][$u];
+//            $spreadsheet->getActiveSheet()->setCellValue($col.$row, $thisvalue);
+//            $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($bordersLeft);
+        }elseif($u == 5){
 
-            $thisvalue = $fabp1["shortname"].'-'.$fabp1["content"][$y][$u];
-
-            $spreadsheet->getActiveSheet()->setCellValue($col.$row, $thisvalue);
-            $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
-        }elseif($u == 6){
-
-            $thisvalue = $fabp1["content"][$y][$u];
+            $thisvalue = $fabp1["content"][$y][$u].' ';
             $u++;
             $thisvalue .= $fabp1["content"][$y][$u];
 
-            $spreadsheet->getActiveSheet()->setCellValue($col.$row, $thisvalue);
-            $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+            setCell($sheet,$col.$row,$thisvalue,$bordersLeft);
+//            $spreadsheet->getActiveSheet()->setCellValue($col.$row, $thisvalue);
+//            $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($bordersLeft);
         }else{
-            $spreadsheet->getActiveSheet()->setCellValue($col.$row, $fabp1["content"][$y][$u]);
-            $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+            $spreadsheet->getActiveSheet()->setCellValue($col.$row, stripcslashes($fabp1["content"][$y][$u]));
+            $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($bordersLeft);
         }
 
     }
@@ -177,34 +96,7 @@ $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作�
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
-//unset($_SESSION['fcrlist'] ); //注销SESSION
+unset($_SESSION['fcrlist'] ); //注销SESSION
 
-$output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("md",time()); //转换为日期。
-$filenameout = 'Fcrlist_'.$nt.'.xlsx';
-if($output){
-    // Redirect output to a client’s web browser (Xlsx)
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename='."$filenameout");
-    header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
-    header('Cache-Control: max-age=1');
-
-// If you're serving to IE over SSL, then the following may be needed
-    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
-    header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-    header('Pragma: public'); // HTTP/1.0
-
-    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-    $writer->save('php://output');
-}else{
-    $writer = new Xlsx($spreadsheet);
-    $writer->save('../output/'.$filenameout);
-	
-    $FILEURL = PRINTURL.$filenameout;
-    $MSFILEURL = MSFILEURL. urlencode($FILEURL);
-
-    Header("Location:{$MSFILEURL}");
-}
-exit;
+$filenameout = "Fcrlist_";
+outExcel($spreadsheet,$filenameout);
