@@ -21,6 +21,7 @@ if($online){
     if($mac){
          require_once '/Users/hongfeitam/vendor/autoload.php';  //macbookPro
     }else{
+        //require '../../../vendor/autoload.php'; //window10
         require '../../../vendor/autoload.php'; //window10
     }
 
