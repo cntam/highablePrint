@@ -1,8 +1,8 @@
 <?php
 session_start();
 header("Content-type: text/html; charset=utf-8");
-//Modified by 俊伟
-/*港源行國際有限公司*/
+//Modified by 俊伟  /*港源行國際有限公司*/
+
 
 require_once('autoloadconfig.php');  //判断是否在线
 
@@ -20,6 +20,7 @@ $packinglistTem4 =  $_SESSION['packinglist'];
 
 //$spreadsheet = new Spreadsheet();
 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/packinglistTem4.xlsx');
+$spreadsheet->getActiveSheet()->setTitle("sheet1");
 $sheet = $spreadsheet->getActiveSheet();
 //样式，下框细边
 $styleArray1 = [

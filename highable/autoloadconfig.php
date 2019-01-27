@@ -17,6 +17,7 @@ if($online){
     require_once '/home/pan/vendor/autoload.php';
 }else{
     //require_once '/Applications/XAMPP/xamppfiles/htdocs/composer/vendor/autoload.php';  //mac mini
+    //require_once '/Users/hongfeitam/vendor/autoload.php';  //macbookPro
     if($mac){
          require_once '/Users/hongfeitam/vendor/autoload.php';  //macbookPro
     }else{
