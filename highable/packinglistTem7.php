@@ -1,5 +1,4 @@
 <?php
-//Modified by 俊伟
 require_once('autoloadconfig.php');  //判断是否在线
 $pl =  $_SESSION['packinglist'];
 

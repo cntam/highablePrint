@@ -1,13 +1,6 @@
 <?php
-session_start();
 header("Content-type: text/html; charset=utf-8");
-//Modified by 俊伟  /*港源行國際有限公司*/
-
-
-require_once('autoloadconfig.php');  //判断是否在线
-
-require_once ('img.php');
-
+require_once 'aidenfunc.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper; // html 解析器
@@ -128,17 +121,43 @@ if ($packinglistTem4["invoiceform"]["brownum"] > 0) {
     $sheet->mergeCells("$contextArr[8]:$contextArr[9]");
     $sheet->mergeCells("$contextArr[10]:$contextArr[11]");
     $sheet->mergeCells("$contextArr[12]:$contextArr[13]");
-    $row = 30;
-    $sheet->setCellValue('I'.$row, $packinglistTem4["invoiceform"]["b21"][0]);
-    for ($a = 0, $b = 22; $a < count($arr) ; $a++, $b++) {
-        $sheet->setCellValue($arr[$a].$row, $packinglistTem4["invoiceform"]['b'.$b][0]);
 
+    if(is_array($packinglistTem4["invoiceform"]["b21"]) && !empty($packinglistTem4["invoiceform"]["b21"])){
+
+        $row = 30;
+        foreach($packinglistTem4["invoiceform"]["b21"] as $item=>$value){
+            if($item > 1){
+                $spreadsheet->getActiveSheet()->insertNewRowBefore($row, 1);
+            }
+
+            $avalue = $packinglistTem4["invoiceform"]["b21"][$item];
+            setMergeCells($sheet,"I{$row}:O{$row}",'I'.$row,$avalue,$noborderCenter);
+
+
+            for ($a = 0, $b = 22; $a < count($arr) ; $a++, $b++) {
+               $b22val = $packinglistTem4["invoiceform"]['b'.$b][$item];
+            if($arr[$a] == 'AD'){
+                setMergeCells($sheet,"AD{$row}:AE{$row}",'AD'.$row,$b22val,$noborderCenter);
+            }else{
+                    setCell($sheet, $arr[$a].$row, $b22val, $noborderCenter);
+                }
+            }
+
+            $row++;
+        }
+
+//        $row = 30;
+//        $sheet->setCellValue('I'.$row, $packinglistTem4["invoiceform"]["b21"][0]);
+//        for ($a = 0, $b = 22; $a < count($arr) ; $a++, $b++) {
+//            $sheet->setCellValue($arr[$a].$row, $packinglistTem4["invoiceform"]['b'.$b][0]);
+//        }
+//        $row = 31;
+//        $sheet->setCellValue('I'.$row, $packinglistTem4["invoiceform"]["b21"][1]);
+//        for ($a = 0, $b = 22; $a < count($arr) ; $a++, $b++) {
+//            $sheet->setCellValue($arr[$a].$row, $packinglistTem4["invoiceform"]['b'.$b][1]);
+//        }
     }
-    $row = 31;
-    $sheet->setCellValue('I'.$row, $packinglistTem4["invoiceform"]["b21"][1]);
-    for ($a = 0, $b = 22; $a < count($arr) ; $a++, $b++) {
-        $sheet->setCellValue($arr[$a].$row, $packinglistTem4["invoiceform"]['b'.$b][1]);
-    }
+
 
 }
 
@@ -170,34 +189,8 @@ if ($packinglistTem4["invoiceform"]["brownum"] > 0) {
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-//unset($_SESSION['potem1'] ); //注销SESSION
+//unset($_SESSION['packinglist'] ); //注销SESSION
 
-$output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("md",time()); //转换为日期。
-$filenameout = 'Packinglist_MCQ_'.$nt.'.xlsx';
-if($output){
-    // Redirect output to a client’s web browser (Xlsx)
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename='."$filenameout");
-    header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
-    header('Cache-Control: max-age=1');
-
-// If you're serving to IE over SSL, then the following may be needed
-    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
-    header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-    header('Pragma: public'); // HTTP/1.0
-
-    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-    $writer->save('php://output');
-}else{
-    $writer = new Xlsx($spreadsheet);
-    $writer->save('../output/'.$filenameout);
-
-    $FILEURL = 'http://allinone321.com/highable/output/'.$filenameout;
-    $MSFILEURL = 'http://view.officeapps.live.com/op/view.aspx?src='. urlencode($FILEURL);
-    //echo "<a href= 'http://view.officeapps.live.com/op/view.aspx?src=". urlencode($FILEURL)."' target='_blank' >跳轉--{$filename}</a>";
-    Header("Location:{$MSFILEURL}");
-};
+$filenameout = "PackingList_".$packinglistTem4['shortname'];
+outExcel($spreadsheet,$filenameout);
 
