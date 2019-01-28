@@ -1,9 +1,5 @@
 <?php
-session_start();
-
-require_once('autoloadconfig.php');  //判断是否在线
-
-require_once ('img.php');
+require_once 'aidenfunc.php';
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -11,17 +7,13 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper; // html 解析器
 
-
-
-
 $samplep1 =   $_SESSION['samplep1'];
-//var_dump($samplep1);
 
 //$spreadsheet = new Spreadsheet();
 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/samplep1.xlsx');
 $sheet = $spreadsheet->getActiveSheet();
 
-$spreadsheet->getActiveSheet()->setTitle("第一页");
+$spreadsheet->getActiveSheet()->setTitle("sheet1");
 
 $spreadsheet->getDefaultStyle()->getFont()->setName('微软雅黑');
 $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
@@ -39,50 +31,6 @@ $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(15);  //列宽
 
 $spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.1);
 $spreadsheet->getActiveSheet()->getPageMargins()->setLeft(0.1); //页边距
-
-$styleArray1 = [
- 'alignment' => [
-//        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-//		'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-     'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-     'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
-    ],
-    
-//    'borders' => [
-//        'top' => [
-//            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-//        ],
-//
-//    ],
-   
-];
-
-
-$styleArray = [
-    
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-		'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-	
-//    'borders' => [
-//        'top' => [
-//            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-//        ],
-//		'bottom' => [
-//            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-//        ],
-//		'left' => [
-//            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-//        ],
-//		'right' => [
-//            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-//        ],
-//    ],
-   
-];
 
 
 //$spreadsheet->getActiveSheet()->setCellValue('C4', $samplep1["alist"]['a1']);
@@ -183,11 +131,11 @@ if(is_array($samplep1['b10name']) && (count($samplep1['b10name']) >0 )){
 }
 
 $spreadsheet->getActiveSheet()->setCellValue('B33', $b10);
-$spreadsheet->getActiveSheet()->getStyle("B33:D33")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B33:D33")->applyFromArray($noborderTopLeft);
 $spreadsheet->getActiveSheet()->setCellValue('B35', $samplep1['data']["blist"]['b11']);
-$spreadsheet->getActiveSheet()->getStyle("B35:D35")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B35:D35")->applyFromArray($noborderTopLeft);
 $spreadsheet->getActiveSheet()->setCellValue('B37', $samplep1['data']["blist"]['b12']);
-$spreadsheet->getActiveSheet()->getStyle("B37:D37")->applyFromArray($styleArray);
+$spreadsheet->getActiveSheet()->getStyle("B37:D37")->applyFromArray($noborderTopLeft);
 
 
 
@@ -246,7 +194,7 @@ for($r=0;$r<=6;$r++){
     if('on' == $b1){
         $spreadsheet->getActiveSheet()->setCellValue('B'.$browrow, $titlearr[$r]);
         $spreadsheet->getActiveSheet()->setCellValue('C'.$browrow, $samplep1['data']["blist"]["b1v"][$r]);
-        $spreadsheet->getActiveSheet()->getStyle("C{$browrow}:H{$browrow}")->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("C{$browrow}:H{$browrow}")->applyFromArray($noborderTopLeft);
         $browrow++;
         $f++;
     }
@@ -257,16 +205,16 @@ if($samplep1['data']["blist"]["formnumb"] > 0){
 
             $spreadsheet->getActiveSheet()->setCellValue('B'.$browrow, $samplep1['data']["blist"]["b8"][$r]);
             $spreadsheet->getActiveSheet()->setCellValue('C'.$browrow, $samplep1['data']["blist"]["b9"][$r]);
-        $spreadsheet->getActiveSheet()->getStyle("B{$browrow}")->applyFromArray($styleArray);
-        $spreadsheet->getActiveSheet()->getStyle("C{$browrow}:H{$browrow}")->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("B{$browrow}")->applyFromArray($noborderTopLeft);
+        $spreadsheet->getActiveSheet()->getStyle("C{$browrow}:H{$browrow}")->applyFromArray($noborderTopLeft);
             $browrow++;
             $f++;
 
 if($f>7){
     $spreadsheet->getActiveSheet()->insertNewRowBefore($browrow, 1);
     $spreadsheet->getActiveSheet()->mergeCells("C{$browrow}:H{$browrow}");
-    $spreadsheet->getActiveSheet()->getStyle("B{$browrow}")->applyFromArray($styleArray);
-    $spreadsheet->getActiveSheet()->getStyle("C{$browrow}:H{$browrow}")->applyFromArray($styleArray);
+    $spreadsheet->getActiveSheet()->getStyle("B{$browrow}")->applyFromArray($noborderTopLeft);
+    $spreadsheet->getActiveSheet()->getStyle("C{$browrow}:H{$browrow}")->applyFromArray($noborderTopLeft);
 }
     }
 }
@@ -283,6 +231,21 @@ $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作�
 $spreadsheet->setActiveSheetIndex(1);  //設置當前活動表
 $sheet = $spreadsheet->getActiveSheet();
 
+
+$sheet->getColumnDimension('A')->setWidth(15);  //列宽度
+$sheet->getColumnDimension('B')->setWidth(15);  //列宽度
+$sheet->getColumnDimension('C')->setWidth(15);  //列宽度
+$sheet->getColumnDimension('D')->setWidth(15);  //列宽度
+$sheet->getColumnDimension('E')->setWidth(15);  //列宽度
+$sheet->getColumnDimension('F')->setWidth(15);  //列宽度
+$sheet->getColumnDimension('G')->setWidth(10);  //列宽度
+$sheet->getColumnDimension('H')->setWidth(15);  //列宽度
+
+
+$sheet->getPageMargins()->setRight(0.1);
+$sheet->getPageMargins()->setLeft(0.1); //页边距
+
+$spreadsheet->getActiveSheet()->setTitle("sheet2");
 $spreadsheet->getDefaultStyle()->getFont()->setName('微软雅黑');
 $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
 //$spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(50);
@@ -391,7 +354,7 @@ $spreadsheet->getActiveSheet()->setCellValue('H9', '2');
     foreach ($samplep1["samplep2"]['commentarr'] as $item => $value){
     $spreadsheet->getActiveSheet()->mergeCells("C{$row}:H{$row}");
     $spreadsheet->getActiveSheet()->getStyle("C{$row}:H{$row}")->getAlignment()->setWrapText(true);  //在单元格中写入换行符“\ n”（ALT +“Enter”）
-    $spreadsheet->getActiveSheet()->getStyle("C{$row}:H{$row}")->applyFromArray($styleArray);
+    $spreadsheet->getActiveSheet()->getStyle("C{$row}:H{$row}")->applyFromArray($noborderTopLeft);
     $spreadsheet->getActiveSheet()->setCellValue('C'.$row, $value);
     $row++;
     }
@@ -399,12 +362,12 @@ $spreadsheet->getActiveSheet()->setCellValue('H9', '2');
 
 //    $spreadsheet->getActiveSheet()->mergeCells("B25:H48");
 //    $spreadsheet->getActiveSheet()->getStyle('B25:H48')->getAlignment()->setWrapText(true);  //在单元格中写入换行符“\ n”（ALT +“Enter”）
-//    $spreadsheet->getActiveSheet()->getStyle("B25:H48")->applyFromArray($styleArray);
+//    $spreadsheet->getActiveSheet()->getStyle("B25:H48")->applyFromArray($noborderTopLeft);
 //    $spreadsheet->getActiveSheet()->setCellValue('B25', $samplep1["samplep2"]['comment']);
     /**
      * p2 评语
      */
-
+$sheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);//打印纸张 A4
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
@@ -412,35 +375,5 @@ $spreadsheet->setActiveSheetIndex(0);
 
 unset($_SESSION['samplep1'] ); //注销SESSION
 
-$output=  ($_GET['action'] == 'formdown' )? 1:0;
-//$nt = date("YmdHis",time()); //转换为日期。
-$nt = date("md",time()); //转换为日期。
-//$filenameout = 'samplep1out'.$nt.'.xlsx';
-$filenameout = "SampleOrder_{$samplep1['clientname']}_".$nt.'.xlsx';
-
-if($output){
-    // Redirect output to a client’s web browser (Xlsx)
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename='."$filenameout");
-    header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
-    header('Cache-Control: max-age=1');
-
-// If you're serving to IE over SSL, then the following may be needed
-    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
-    header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-    header('Pragma: public'); // HTTP/1.0
-
-    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-    $writer->save('php://output');
-}else{
-    $writer = new Xlsx($spreadsheet);
-    $writer->save('../output/'.$filenameout);
-	
-	 $FILEURL = 'http://allinone321.com/highable/output/'.$filenameout;
-    $MSFILEURL = 'http://view.officeapps.live.com/op/view.aspx?src='. urlencode($FILEURL);
-
-    Header("Location:{$MSFILEURL}");
-}
-exit;
+$filenameout = "SampleOrder_{$samplep1['clientname']}_{$samplep1['orderno']}_";
+outExcel($spreadsheet,$filenameout);

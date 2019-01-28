@@ -28,6 +28,17 @@ $noborderLeft = [
 
 ];
 
+$noborderTopLeft = [
+
+    'alignment' => [
+        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
+        'wrapText' => true,
+        'ShrinkToFit'=>true,
+    ],
+
+];
+
 $noborderCenter = [
     'alignment' => [
         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
