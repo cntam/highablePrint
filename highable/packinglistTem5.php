@@ -1,6 +1,6 @@
 <?php
-//Modified by 俊伟
-require_once('autoloadconfig.php');  //判断是否在线
+//PS
+require_once ('aidenfunc.php');
 $pl =  $_SESSION['packinglist'];
 
 
@@ -48,7 +48,7 @@ $styleArray1 = [
 //$spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(36); //列高度
 //$spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(50); //列高度
 
-require_once ('aidenfunc.php');
+
 
 
 

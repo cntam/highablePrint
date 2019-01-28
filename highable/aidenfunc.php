@@ -6,7 +6,7 @@
  * Time: 11:32 PM
  */
 session_start();
-error_reporting(0);
+//error_reporting(0);
 require_once('autoloadconfig.php');  //判断是否在线
 require_once ('img.php');
 
@@ -28,12 +28,49 @@ $noborderLeft = [
 
 ];
 
+$noborderTopLeft = [
+
+    'alignment' => [
+        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
+        'wrapText' => true,
+        'ShrinkToFit'=>true,
+    ],
+
+];
+
 $noborderCenter = [
     'alignment' => [
         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
         'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
         'wrapText' => true,
         'ShrinkToFit'=>true,
+    ],
+
+];
+
+$noborderboldfontCenter = [
+    'alignment' => [
+        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+        'wrapText' => true,
+        'ShrinkToFit'=>true,
+    ],
+    'font' => [
+        'bold' => true,
+    ],
+
+];
+
+$noborderboldfontLeft = [
+    'alignment' => [
+        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+        'wrapText' => true,
+        'ShrinkToFit'=>true,
+    ],
+    'font' => [
+        'bold' => true,
     ],
 
 ];
