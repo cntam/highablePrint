@@ -270,7 +270,7 @@ $spreadsheet->getActiveSheet()->setCellValue('H9', '2');
      * p2 评语
      */
     if(empty($samplep1["samplep2"]['blist']['b2'])){
-        $row = 11;
+        $row = 12;
         $ishaveimg = false;
     }else{
         $row = 25;
@@ -349,24 +349,19 @@ $spreadsheet->getActiveSheet()->setCellValue('H9', '2');
     }
 
 
-
+    /**
+     * 评语 文字
+     */
 
     foreach ($samplep1["samplep2"]['commentarr'] as $item => $value){
-    $spreadsheet->getActiveSheet()->mergeCells("C{$row}:H{$row}");
-    $spreadsheet->getActiveSheet()->getStyle("C{$row}:H{$row}")->getAlignment()->setWrapText(true);  //在单元格中写入换行符“\ n”（ALT +“Enter”）
-    $spreadsheet->getActiveSheet()->getStyle("C{$row}:H{$row}")->applyFromArray($noborderTopLeft);
-    $spreadsheet->getActiveSheet()->setCellValue('C'.$row, $value);
+    setMergeCells($sheet,"A{$row}:H{$row}",'A'.$row,$value,$noborderTopLeft);
     $row++;
     }
 
-
-//    $spreadsheet->getActiveSheet()->mergeCells("B25:H48");
-//    $spreadsheet->getActiveSheet()->getStyle('B25:H48')->getAlignment()->setWrapText(true);  //在单元格中写入换行符“\ n”（ALT +“Enter”）
-//    $spreadsheet->getActiveSheet()->getStyle("B25:H48")->applyFromArray($noborderTopLeft);
-//    $spreadsheet->getActiveSheet()->setCellValue('B25', $samplep1["samplep2"]['comment']);
     /**
-     * p2 评语
+     * //p2 评语
      */
+
 $sheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);//打印纸张 A4
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 

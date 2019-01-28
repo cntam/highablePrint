@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="22dbb095-b711-45ef-80b3-db8d08d0c22f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/highable/aidenfunc.php" afterPath="$PROJECT_DIR$/highable/aidenfunc.php" />
-      <change beforePath="$PROJECT_DIR$/highable/potem3.php" afterPath="$PROJECT_DIR$/highable/potem3.php" />
       <change beforePath="$PROJECT_DIR$/highable/samplep1.php" afterPath="$PROJECT_DIR$/highable/samplep1.php" />
-      <change beforePath="$PROJECT_DIR$/highable/session.php" afterPath="$PROJECT_DIR$/highable/session.php" />
       <change beforePath="$PROJECT_DIR$/template/samplep1.xlsx" afterPath="$PROJECT_DIR$/template/samplep1.xlsx" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -75,8 +72,8 @@
       <file leaf-file-name="samplep1.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/highable/samplep1.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="375" column="0" lean-forward="false" selection-start-line="375" selection-start-column="0" selection-end-line="375" selection-end-column="0" />
+            <state relative-caret-position="594">
+              <caret line="359" column="0" lean-forward="true" selection-start-line="359" selection-start-column="0" selection-end-line="359" selection-end-column="0" />
               <folding>
                 <element signature="e#37#80#0#PHP" expanded="true" />
               </folding>
@@ -272,8 +269,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="371" />
-    <option name="y" value="27" />
+    <option name="x" value="346" />
+    <option name="y" value="81" />
     <option name="width" value="1626" />
     <option name="height" value="976" />
   </component>
@@ -437,13 +434,6 @@
       <workItem from="1548462875775" duration="3347000" />
       <workItem from="1548513158958" duration="4701000" />
       <workItem from="1548562506212" duration="1658000" />
-    </task>
-    <task id="LOCAL-00034" summary="20180710 potem10">
-      <created>1531212752303</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1531212752303</updated>
     </task>
     <task id="LOCAL-00035" summary="20180711 productp4">
       <created>1531278786494</created>
@@ -781,14 +771,21 @@
       <option name="project" value="LOCAL" />
       <updated>1548467772797</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="20190128">
+      <created>1548643196591</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1548643196591</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="415630000" />
+    <option name="totallyTimeSpent" value="417574000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="371" y="27" width="1626" height="976" extended-state="0" />
+    <frame x="346" y="81" width="1626" height="976" extended-state="0" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -850,7 +847,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="201801109" />
     <MESSAGE value="201801110" />
     <MESSAGE value="201801113 productp1" />
     <MESSAGE value="201801122 productp3-4" />
@@ -875,7 +871,8 @@
     <MESSAGE value="20190124" />
     <MESSAGE value="20190125" />
     <MESSAGE value="20190126" />
-    <option name="LAST_COMMIT_MESSAGE" value="20190126" />
+    <MESSAGE value="20190128" />
+    <option name="LAST_COMMIT_MESSAGE" value="20190128" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1251,8 +1248,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/highable/samplep1.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="375" column="0" lean-forward="false" selection-start-line="375" selection-start-column="0" selection-end-line="375" selection-end-column="0" />
+        <state relative-caret-position="594">
+          <caret line="359" column="0" lean-forward="true" selection-start-line="359" selection-start-column="0" selection-end-line="359" selection-end-column="0" />
           <folding>
             <element signature="e#37#80#0#PHP" expanded="true" />
           </folding>
