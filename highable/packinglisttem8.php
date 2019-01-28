@@ -1,5 +1,5 @@
 <?php
-require_once('autoloadconfig.php');  //判断是否在线
+require_once ('aidenfunc.php');
 $pl =  $_SESSION['packinglist'];
 
 
@@ -33,7 +33,6 @@ $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
 //$spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(36); //列高度
 //$spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(50); //列高度
 
-require_once ('aidenfunc.php');
 
 
 
@@ -164,9 +163,7 @@ $spreadsheet->getActiveSheet()->getPageSetup()
     ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);  //A4
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-
-$filenameout = 'packlingList_JIGSAW_';
-
+$filenameout = "PackingList_{$pl['shortname']}";
 outExcel($spreadsheet,$filenameout);
 
 

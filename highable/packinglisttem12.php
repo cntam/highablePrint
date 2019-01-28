@@ -1,5 +1,5 @@
 <?php
-require_once('autoloadconfig.php');  //判断是否在线
+require_once ('aidenfunc.php');
 $pl =  $_SESSION['packinglist'];
 
 
@@ -30,7 +30,6 @@ $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(10);  //列宽
 //$spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(36); //列高度
 //$spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(50); //列高度
 
-require_once ('aidenfunc.php');
 
 
 setCell($sheet,"B3",$pl["invoicedata"]['invoiceNumber'],$noborderLeft);
@@ -83,8 +82,7 @@ $spreadsheet->getActiveSheet()->getPageSetup()
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 
-$filenameout = 'packlingList_YSL_';
-
+$filenameout = "PackingList_{$pl['shortname']}";
 outExcel($spreadsheet,$filenameout);
 
 

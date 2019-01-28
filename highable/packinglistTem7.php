@@ -1,6 +1,5 @@
 <?php
-//Modified by 俊伟
-require_once('autoloadconfig.php');  //判断是否在线
+require_once ('aidenfunc.php');
 $pl =  $_SESSION['packinglist'];
 
 
@@ -41,7 +40,7 @@ $styleArray1 = [
     ],
 ];
 
-require_once ('aidenfunc.php');
+
 
 // 填数据
 // header
@@ -77,7 +76,7 @@ if ($pl["invoiceform"]["brownum"] > 0) {
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
-//unset($_SESSION['packinglist'] ); //注销SESSION
+unset($_SESSION['packinglist'] ); //注销SESSION
 
 //$spreadsheet->getActiveSheet()->getPageSetup()
 //    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);  //横放置
@@ -86,8 +85,7 @@ $spreadsheet->getActiveSheet()->getPageSetup()
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 
-$filenameout = 'Packlinglist_GIVENCHY_';
-
+$filenameout = "PackingList_{$pl['shortname']}";
 outExcel($spreadsheet,$filenameout);
 
 

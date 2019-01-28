@@ -11,7 +11,7 @@ use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper; // html 解析器
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-$intem1 =  $_SESSION['invoiceTem6'];
+$intem1 =  $_SESSION['invoice'];
 
 
 //$spreadsheet = new Spreadsheet();

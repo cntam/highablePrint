@@ -1,12 +1,5 @@
-<!--// Modified by 俊伟-->
 <?php
-session_start();
-header("Content-type: text/html; charset=utf-8");
-/*港源行國際有限公司*/
-
-require_once('autoloadconfig.php');  //判断是否在线
-
-require_once ('img.php');
+require_once ('aidenfunc.php');
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -34,12 +27,14 @@ $styleArray1 = [
 $row = 3;
 if ($packinglistTem1["invoicedata"]["acolnum"] > 0) {
     for ($x = 1; $x <= 6; $x++) {
-        $sheet->setCellValue('G'.$row, $packinglistTem1["invoicedata"]['a'.$x]);
+        //$sheet->setCellValue('G'.$row, $packinglistTem1["invoicedata"]['a'.$x]);
+        setMergeCells($sheet,"G{$row}:Q{$row}","G{$row}",$packinglistTem1["invoicedata"]['a'.$x],$noborderLeft);
         $row++;
     }
     $row = 3;
     for ($x = 7; $x <= 12; $x++) {
         $sheet->setCellValue('Z'.$row, $packinglistTem1["invoicedata"]['a'.$x]);
+        //setMergeCells($sheet,"Z3{$row}:AK2{$row}","Z3{$row}",$packinglistTem1["invoicedata"]['a'.$x],$noborderLeft);
         $row++;
     }
 }
@@ -155,31 +150,5 @@ $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作�
 
 //unset($_SESSION['packinglist'] ); //注销SESSION
 
-$output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("md",time()); //转换为日期。
-$filenameout = 'Packinglist_KM_'.$nt.'.xlsx';
-if($output){
-    // Redirect output to a client’s web browser (Xlsx)
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename='."$filenameout");
-    header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
-    header('Cache-Control: max-age=1');
-
-// If you're serving to IE over SSL, then the following may be needed
-    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
-    header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-    header('Pragma: public'); // HTTP/1.0
-
-    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-    $writer->save('php://output');
-}else{
-    $writer = new Xlsx($spreadsheet);
-    $writer->save('../output/'.$filenameout);
-
-    $FILEURL = 'http://allinone321.com/highable/output/'.$filenameout;
-    $MSFILEURL = 'http://view.officeapps.live.com/op/view.aspx?src='. urlencode($FILEURL);
-    //echo "<a href= 'http://view.officeapps.live.com/op/view.aspx?src=". urlencode($FILEURL)."' target='_blank' >跳轉--{$filename}</a>";
-    Header("Location:{$MSFILEURL}");
-};
+$filenameout = "PackingList_{$packinglistTem1['shortname']}";
+outExcel($spreadsheet,$filenameout);
