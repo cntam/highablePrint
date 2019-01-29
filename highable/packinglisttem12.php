@@ -27,7 +27,7 @@ $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(10);  //列宽
 $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(10);  //列宽度
 //$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(50);  //列宽度
 //
-//$spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(36); //列高度
+$spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(40); //列高度
 //$spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(50); //列高度
 
 

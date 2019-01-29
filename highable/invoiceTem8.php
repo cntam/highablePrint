@@ -11,6 +11,7 @@ $intem1 =  $_SESSION['invoice'];
 
 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/invoiceTem8.xlsx');
 $sheet = $spreadsheet->getActiveSheet();
+$spreadsheet->getActiveSheet()->setTitle("sheet1");
 $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft YaHei');
 $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
 $sheet = $spreadsheet->getActiveSheet();
