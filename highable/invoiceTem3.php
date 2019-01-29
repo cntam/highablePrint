@@ -20,14 +20,25 @@ $sheet = $spreadsheet->getActiveSheet();
 $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft YaHei');
 $spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(50); //行默认高度
 $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(20);  //列宽度
+//$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(10);  //列宽度
 $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
 $sheet = $spreadsheet->getActiveSheet();
 
-for ($i=0;$i<100;$i++){
+$sheet->getRowDimension(2)->setRowHeight(30); //列高度
+
+for ($i=3;$i<100;$i++){
     $sheet->getRowDimension($i)->setRowHeight(15); //列高度
 }
 //
 ////fill header
+///
+$sheet->setCellValue("A2",$intem1['remark']['poheader']['poheada1']);
+setCell($sheet,'A3',$intem1['remark']['poheader']['poheada2'],$noborderCenter);
+setCell($sheet,'A4',$intem1['remark']['poheader']['poheada3'],$noborderCenter);
+setCell($sheet,'A5',$intem1['remark']['poheader']['poheada4'],$noborderCenter);
+setCell($sheet,'A6',$intem1['remark']['poheader']['poheada5'],$noborderCenter);
+
+
 $sheet->setCellValue("F8", 'INVOICE NO.'.$intem1['invoicedata']['invoiceNumber']);
 $sheet->setCellValue("C9", $intem1['tosb']);
 $sheet->setCellValue("C10", $intem1['invoicedata']['a1']);
@@ -72,6 +83,12 @@ $sheet->setCellValue("J10",$intem1['invoicedate']);
         $sheet->setCellValue('E40', $intem1['remark']['c5']);
         $sheet->setCellValue('E41', $intem1['remark']['c6']);
         $sheet->setCellValue('D42', $intem1['remark']['c7']);
+
+
+        setMergeCells($sheet,'D32:H32','D32',$intem1['invoiceform']['formremark'],$noborderLeft);
+
+        setCell($sheet,'F51',$intem1['remark']['c8'],$noborderCenter);
+        //$sheet->setCellValue('D42', $intem1['remark']['c7']);
     }
     //form data
     {
@@ -115,8 +132,8 @@ function add_row($data,$i,$j)
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 //
-//
-unset($_SESSION['invoiceTem3'] ); //注销SESSION
+
+//unset($_SESSION['invoice'] ); //注销SESSION
 $filenameout = "Invoice_".$intem1['shortname'];
 outExcel($spreadsheet,$filenameout);
 
