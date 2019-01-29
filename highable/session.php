@@ -2,7 +2,7 @@
 session_start();
 
 
-$samplep1 =   $_SESSION['fabricquotationp1'];
+$samplep1 =   $_SESSION['reportqtyprice'];
 print_r($samplep1);
 
 

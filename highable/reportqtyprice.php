@@ -1,9 +1,5 @@
 <?php
-session_start();
-
-require_once('autoloadconfig.php');  //判断是否在线
-
-require_once ('img.php');
+require_once 'aidenfunc.php';
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -142,7 +138,7 @@ if (count($fabp1["cpsid"]) > 0) {
                 foreach ($client_date as $client_record) {
                     $a = 0;
                     $t = 0;
-                    $recordarr = array('clientname','jobno','styleno','qty','fobprice','total','shippingdate','ffname','ff','sewing');
+                    $recordarr = array('clientname','jobno','styleno','qty','fobprice','total','shippingdate','ffname','flower','sewing');
 
                     foreach ($recordarr as $vc){
                     $col = chr(65 + $t);
@@ -258,32 +254,5 @@ $spreadsheet->setActiveSheetIndex(0);
 
 unset($_SESSION['reportqtyprice'] ); //注销SESSION
 
-$output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'reportqtypriceout'.$nt.'.xlsx';
-if($output){
-    // Redirect output to a client’s web browser (Xlsx)
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename='."$filenameout");
-    header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
-    header('Cache-Control: max-age=1');
-
-// If you're serving to IE over SSL, then the following may be needed
-    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
-    header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-    header('Pragma: public'); // HTTP/1.0
-
-    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-    $writer->save('php://output');
-}else{
-    $writer = new Xlsx($spreadsheet);
-    $writer->save('../output/'.$filenameout);
-	
-    $FILEURL = PRINTURL.$filenameout;
-    $MSFILEURL = MSFILEURL. urlencode($FILEURL);
-
-    Header("Location:{$MSFILEURL}");
-}
-exit;
+$filenameout = "Order Quantity per Month_";
+outExcel($spreadsheet,$filenameout);
