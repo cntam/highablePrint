@@ -1,9 +1,5 @@
 <?php
-session_start();
-
-// header
-$xlsxName = 'product2all';
-require_once 'common-header.php';
+require_once 'aidenfunc.php';
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -17,9 +13,6 @@ use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper; // html 解析器
 $fabp1 =   $_SESSION['reportupdateorderqty'];
 //var_dump($fabp1);
 
-//$spreadsheet = new Spreadsheet();
-//$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/fabricquotationp1.xlsx');
-//$sheet = $spreadsheet->getActiveSheet();
 
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
@@ -308,10 +301,11 @@ $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作�
 
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-//$spreadsheet->setActiveSheetIndex(0);
+$spreadsheet->setActiveSheetIndex(0);
 
 unset($_SESSION['reportupdateorderqty'] ); //注销SESSION
 
-$nt          = date("YmdHis", time());
-set_writer(null,'Order Quantity per Year'.$nt);
+
+$filenameout = "Order Quantity per Year";
+outExcel($spreadsheet,$filenameout);
 
