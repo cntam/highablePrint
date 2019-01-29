@@ -98,7 +98,7 @@ for ($y = 0, $i = 1; $i <= $fabp1["alist"]['alistnum']; $i++, $y++) {
 
             $thisvalue = $fabp1["alist"]['a'.$n][$y];
             $n++;
-            $issel =  $fabp1["alist"]['a'.$n][$y] == '1' ?  "Y" :  "CM" ;
+            $issel =  $fabp1["alist"]['a'.$n][$y] == '1' ?  "IN" :  "CM" ;
             $thisvalue .= ' '.$issel;
             $spreadsheet->getActiveSheet()->setCellValue($col.$row, $thisvalue);
             $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
@@ -146,8 +146,8 @@ $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作�
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
-unset($_SESSION['fabricquotationp1'] ); //注销SESSION
+//unset($_SESSION['fabricquotationp1'] ); //注销SESSION
 
-$filenameout = "Fabric_Quotation_Template_";
+$filenameout = "Fabric_Quotation_{$fabp1["alist"]['head']}_";
 outExcel($spreadsheet,$filenameout);
 
