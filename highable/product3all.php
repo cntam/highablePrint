@@ -12,6 +12,11 @@ $productp2  = $productall['productp2'];
 /**
  * Page 1
  */
+$col = 'A';
+for ($i=0 ;$i<=17;$i++){
+    $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth(6);  //列宽度
+    $col++;
+}
 // 客户
 fill_cell(null, 'C2', 'C2', $productp1['guest']);
 // 开单日期
@@ -29,7 +34,7 @@ fill_cell(null, 'Q2', 'Q2', $productp1['alist']['a11']);
 
 //  船头办数量
 //  底部附加行 remark
-fill_cell($styleArray, 'D15:L15', 'D15', $productp1['ctlist']['ct23']);
+fill_cell($styleArray, 'E15:L15', 'E15', $productp1['ctlist']['ct23']);
 
 for ($i = 0, $ct = 1; $i < 14; $i++, $ct++) {
     if ($ct == 14) {
@@ -137,6 +142,11 @@ set_horizontal(false);
  * Page 2
  */
 $spreadsheet->setActiveSheetIndex(1);
+$col = 'A';
+for ($i=0 ;$i<=17;$i++){
+    $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth(6);  //列宽度
+    $col++;
+}
 fill_cell(null, 'C2', 'C2', $productp2['guest']);
 fill_cell(null, 'C3', 'C3', $productp2['alist']['a1']);
 fill_cell(null, 'K2', 'K2', $productp2['alist']['a12']);

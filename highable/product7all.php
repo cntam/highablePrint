@@ -13,6 +13,14 @@ $productp2  = $productall['productp2'];
 /**
  * Page 1
  */
+$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(8);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('T')->setWidth(10);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('U')->setWidth(10);  //列宽度
+$col = 'B';
+for ($i=0 ;$i<=18;$i++){
+    $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth(5);  //列宽度
+    $col++;
+}
 // 客户
 fill_cell(null, 'B2', 'B2', $productp1['guest']);
 // 开单日期
@@ -129,11 +137,18 @@ for ($i = 0; $i < $productp1['allot']['formnum']; $i++) {
     $row++;
 }
 set_horizontal(false);
+$spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.1); //设置打印边距
+$spreadsheet->getActiveSheet()->getPageMargins()->setLeft(0.1); //*/
 
 /**
  * Page 2
  */
 $spreadsheet->setActiveSheetIndex(1);
+$col = 'A';
+for ($i=0 ;$i<=20;$i++){
+    $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth(6);  //列宽度
+    $col++;
+}
 fill_cell(null, 'C2', 'C2', $productp2['guest']);
 fill_cell(null, 'C3', 'C3', $productp2['alist']['a1']);
 fill_cell(null, 'J2', 'J2', $productp1['jobno'], 'J2:M2');
