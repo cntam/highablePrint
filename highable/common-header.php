@@ -237,7 +237,7 @@ function set_writer($type = null, $outputName = null)
     if ($type != null) {
         switch ($type) {
             case 'HA':
-                $form_client = isset($productall['client']) ? $productall['client'] . "_" : "";
+                $form_client = isset($productall['client']) ? $productall['client'] . "_".$productall['ha'] ."_" : "";
                 $nt          = date("md", time());
                 $outputName  = str_replace(",", "", $type . "_" . $form_client . $nt);
                 break;
@@ -297,6 +297,13 @@ function set_ha_p3()
     $productp3 = $productall['productp3'];
 
     $spreadsheet->setActiveSheetIndex(2);
+
+    $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(25);  //列宽度
+    $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(80);  //列宽度
+    $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(10);  //列宽度
+    $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(10);  //列宽度
+    $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(20);  //列宽度
+
     fill_cell(null, 'E2', 'E2', $productp3['guest']);
     fill_cell(null, 'C2', 'C2', $productp3['styleno']);
     $startarr = 4;
@@ -493,4 +500,5 @@ function set_print_pcs($freeze)
     set_horizontal(true, false);
     // 所有行打印在一页
     set_fitToWidth(0);
+
 }

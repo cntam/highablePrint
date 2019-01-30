@@ -12,6 +12,12 @@ $productp2  = $productall['productp2'];
 /**
  * Page 1
  */
+$col = 'A';
+for ($i=0 ;$i<=17;$i++){
+    $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth(6);  //列宽度
+    $col++;
+}
+//
 // 客户
 fill_cell(null, 'C2', 'C2', $productp1['guest']);
 // 开单日期
@@ -27,7 +33,7 @@ fill_cell(null, 'O3', 'O3', $productp1['alist']['a2']);
 
 //  船头办数量
 //  底部附加行 remark
-fill_cell($styleArray, 'D15:L15', 'D15', $productp1['ctlist']['ct23']);
+fill_cell($styleArray, 'E15:L15', 'E15', $productp1['ctlist']['ct23']);
 
 for ($i = 0, $ct = 1; $i < 14; $i++, $ct++) {
     if ($ct == 14) {
@@ -127,12 +133,21 @@ for ($i = 0; $i < $productp1['allot']['formnum']; $i++) {
         $row++;
     }
 }
-set_horizontal(false);
+//set_horizontal(false);
+
+set_horizontal(false, true);
+//// 所有行打印在一页
+//set_fitToWidth(0);
 
 /**
  * Page 2
  */
 $spreadsheet->setActiveSheetIndex(1);
+$col = 'A';
+for ($i=0 ;$i<=17;$i++){
+    $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth(6);  //列宽度
+    $col++;
+}
 fill_cell(null, 'C2', 'C2', $productp2['guest']);
 fill_cell(null, 'C3', 'C3', $productp2['alist']['a1']);
 fill_cell(null, 'I2', 'I2', $productp2['jobno']);

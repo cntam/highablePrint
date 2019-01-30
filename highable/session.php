@@ -2,7 +2,7 @@
 session_start();
 
 
-$samplep1 =   $_SESSION['invoice'];
+$samplep1 =   $_SESSION['productall'];
 print_r($samplep1);
 
 

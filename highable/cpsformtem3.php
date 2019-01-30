@@ -280,5 +280,6 @@ if ($cpsform['titlearr']['temno'] == 3) {
 }
 
 set_print_pcs('B8');
-
+$spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.1); //设置打印边距
+$spreadsheet->getActiveSheet()->getPageMargins()->setLeft(0.1); //*/
 set_writer($type);
