@@ -128,6 +128,8 @@ if(is_array($samplep1['b10name']) && (count($samplep1['b10name']) >0 )){
         $b10 .= '  '.$value;
     }
 
+}else{
+    $b10 = '';
 }
 
 $spreadsheet->getActiveSheet()->setCellValue('B33', $b10);

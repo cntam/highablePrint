@@ -33,6 +33,9 @@ if(1 == $potem30["toaddr"]["a1"]){
     $titlecon = 'IRONDALE FASHION INTERNATIONAL LIMITED';
 }
 $spreadsheet->getActiveSheet()->setCellValue('A1', $titlecon);
+
+
+
 $spreadsheet->getActiveSheet()->setCellValue('G9', $potem30["toaddr"]["a2"]);
 $spreadsheet->getActiveSheet()->setCellValue('A10', $potem30["toaddr"]["a3"]);
 $spreadsheet->getActiveSheet()->setCellValue('A11', $potem30["toaddr"]["a4"]);
