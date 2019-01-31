@@ -244,7 +244,12 @@ if (count($fabp1["cpsid"]) > 0) {
 /**
  * 外厂总数
  */
-
+$col = 'A';
+//range('A','Z')
+//$titlearr
+foreach (range('A','J') as $item){
+    $spreadsheet->getActiveSheet()->getColumnDimension($item)->setAutoSize(true);  //自动列宽度
+}
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 

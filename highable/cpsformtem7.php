@@ -4,6 +4,8 @@ $type = 'CPS';
 require_once 'common-header.php';
 $cpsform = $_SESSION['cpsform'];
 
+
+
 for ($col = 0; $col < count($cpsform['id']); $col++) {
     $Brow = chr(66 + $col * 2); //B
     $Crow = chr(67 + $col * 2); //C
@@ -87,13 +89,16 @@ for ($col = 0; $col < count($cpsform['id']); $col++) {
         for ($u = 0, $i = 1; $u < $cpsform['shipmentlist'][$col][0]; $u++, $i++) {
             if ($cpsform['shipmentlist'][$col]['sma' . $i] == 'on') {
                 if ($u > 0) {
-                    $smb .= '
-    '; //输出换行
+//                    $smb .= '
+//    '; //输出换行
+                    $smb .= PHP_EOL; //输出换行
                 }
                 foreach ($cpsform['shipmentlist'][$col]['smb' . $i] as $item => $value) {
                     if ($item == 4) {
                         $smb .= ' ' . gmdate("d/M", strtotime($value));
-                    } else {
+                    } elseif($item == 0) {
+                        $smb .= $value;
+                    }else{
                         $smb .= ' ' . $value;
                     }
                 }
@@ -219,7 +224,15 @@ for ($col = 0; $col < count($cpsform['id']); $col++) {
     }
 }
 
+//$spreadsheet->getActiveSheet()->getStyle("A".$listrow)->getFont()->setSize(8);
+foreach (range('B','M') as $item){
+    for($i=1;$i<=100;$i++){
+        $spreadsheet->getActiveSheet()->getStyle($item.$i)->getFont()->setSize(10);  //自动列宽度
+    }
+
+}
+
 set_print_pcs('B6');
-//$spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.1); //设置打印边距
-//$spreadsheet->getActiveSheet()->getPageMargins()->setLeft(0.1); //*/
+$spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.1); //设置打印边距
+$spreadsheet->getActiveSheet()->getPageMargins()->setLeft(0.1); //*/
 set_writer($type);

@@ -38,15 +38,20 @@ $styleArray3 = [
 ];
 
 //填数据
+setCell($sheet,"A1",$potem31["remark"]['poheader']['poheada1'],$noborderCenter);
+setCell($sheet,"A2",$potem31["remark"]['poheader']['poheada2'],$noborderCenter);
+setCell($sheet,"A3",$potem31["remark"]['poheader']['poheada3'],$noborderCenter);
+setCell($sheet,"A4",'Tel:'.$potem31["remark"]['poheader']['poheada5'].'Fax:'.$potem31["remark"]['poheader']['poheada5'],$noborderCenter);
+
 $spreadsheet->getActiveSheet()->setCellValue('A9', $potem31["tosb"]);
 $spreadsheet->getActiveSheet()->setCellValue('B18', $potem31["podate"]);
 
-if(1 == $potem31["toaddr"]["a1"]){
-  $titlecon = 'HIGH ABLE INVESTMENT LIMITED';
-}elseif (2 == $potem31["toaddr"]["a1"]){
-    $titlecon = 'IRONDALE FASHION INTERNATIONAL LIMITED';
-}
-$spreadsheet->getActiveSheet()->setCellValue('A1', $titlecon);
+//if(1 == $potem31["toaddr"]["a1"]){
+//  $titlecon = 'HIGH ABLE INVESTMENT LIMITED';
+//}elseif (2 == $potem31["toaddr"]["a1"]){
+//    $titlecon = 'IRONDALE FASHION INTERNATIONAL LIMITED';
+//}
+//$spreadsheet->getActiveSheet()->setCellValue('A1', $titlecon);
 $spreadsheet->getActiveSheet()->setCellValue('G9', $potem31["toaddr"]["a2"]);
 $spreadsheet->getActiveSheet()->setCellValue('A10', $potem31["toaddr"]["a3"]);
 $spreadsheet->getActiveSheet()->setCellValue('A11', $potem31["toaddr"]["a4"]);
@@ -135,53 +140,59 @@ $spreadsheet->getActiveSheet()->setCellValue('B42', $c8.'  VAT INVOICE');
 $spreadsheet->getActiveSheet()->setCellValue('B43', 'ORDER  NO: '.$potem31["remark"]["c13"]);
 
 $row = 44;
-if(count($potem31["remark"]["c14"]) > 1){
-    foreach ($potem31["remark"]["c14"] as $item=>$value){
+if(is_array($potem31["remark"]["c14"])){
+    if(count($potem31["remark"]["c14"]) > 1){
+        foreach ($potem31["remark"]["c14"] as $item=>$value){
 
-        if($item >1){
-            $spreadsheet->getActiveSheet()->insertNewRowBefore($row, 1);
+            if($item >1){
+                $spreadsheet->getActiveSheet()->insertNewRowBefore($row, 1);
+            }
+
+            $sheet->setCellValue('A'. $row, $value );
+            $spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($styleArray3);
+            //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($noborderLeft);
+            //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->getAlignment()->setWrapText(true);
+
+            $spreadsheet->getActiveSheet()->mergeCells("B{$row}:H{$row}");
+            $sheet->setCellValue('B'. $row, $potem31["remark"]["c15"][$item]);
+            $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($noborderLeft);
+            $spreadsheet->getActiveSheet()->getStyle('B'. $row)->getAlignment()->setWrapText(true);
+
+            $row++;
         }
-
-        $sheet->setCellValue('A'. $row, $value );
-        $spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($styleArray3);
-        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($noborderLeft);
-        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->getAlignment()->setWrapText(true);
-
-        $spreadsheet->getActiveSheet()->mergeCells("B{$row}:H{$row}");
-        $sheet->setCellValue('B'. $row, $potem31["remark"]["c15"][$item]);
-        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($noborderLeft);
-        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->getAlignment()->setWrapText(true);
-
-        $row++;
     }
 }
+
 
 /**
  *   remark中间增加行
  */
 $row = 38;
-if(count($pop1["remark"]["c8"]) > 1){
-    foreach ($pop1["remark"]["c8"] as $item=>$value){
+if(is_array($pop1["remark"]["c8"])){
+    if(count($pop1["remark"]["c8"]) > 1){
+        foreach ($pop1["remark"]["c8"] as $item=>$value){
 
-        if($item >0){
-            $spreadsheet->getActiveSheet()->insertNewRowBefore($row, 1);
+            if($item >0){
+                $spreadsheet->getActiveSheet()->insertNewRowBefore($row, 1);
+            }
+
+            $sheet->setCellValue('A'. $row, $value );
+            $spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($styleArray3);
+            //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($noborderLeft);
+
+
+            $spreadsheet->getActiveSheet()->mergeCells("B{$row}:H{$row}");
+            $sheet->setCellValue('B'. $row, $pop1["remark"]["c9"][$item]);
+            $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($noborderLeft);
+            $spreadsheet->getActiveSheet()->getStyle('B'. $row)->getAlignment()->setWrapText(true);
+
+            $row++;
         }
 
-        $sheet->setCellValue('A'. $row, $value );
-        $spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($styleArray3);
-        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($noborderLeft);
 
-
-        $spreadsheet->getActiveSheet()->mergeCells("B{$row}:H{$row}");
-        $sheet->setCellValue('B'. $row, $pop1["remark"]["c9"][$item]);
-        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($noborderLeft);
-        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->getAlignment()->setWrapText(true);
-
-        $row++;
     }
-
-
 }
+
 /**
  *   remark中间增加行
  */

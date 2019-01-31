@@ -18,7 +18,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 //print_r($titlearr);
 
 //$spreadsheet = new Spreadsheet();
-$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/packinglisttem8.xlsx');
+$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/packinglistTem8.xlsx');
 $sheet = $spreadsheet->getActiveSheet();
 
 $spreadsheet->getActiveSheet()->setTitle("sheet1");
@@ -36,10 +36,10 @@ $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
 
 
 
-setMergeCells($sheet,"B8:C8","B8",$pl["invoicedata"]['a1'],$noborderLeft);
-setMergeCells($sheet,"B9:C9","B9",$pl["invoicedata"]['a2'],$noborderLeft);
-setMergeCells($sheet,"B10:C10","B10",$pl["invoicedata"]['a3'],$noborderLeft);
-setMergeCells($sheet,"B11:C11","B11",$pl["invoicedata"]['a4'],$noborderLeft);
+setMergeCells($sheet,"B8:G8","B8",$pl["invoicedata"]['a1'],$noborderLeft);
+setMergeCells($sheet,"B9:G9","B9",$pl["invoicedata"]['a2'],$noborderLeft);
+setMergeCells($sheet,"B10:G10","B10",$pl["invoicedata"]['a3'],$noborderLeft);
+setMergeCells($sheet,"B11:G11","B11",$pl["invoicedata"]['a4'],$noborderLeft);
 
 setCell($sheet,"O6",$pl["invoicedata"]['a8'],$noborderLeft);
 
@@ -155,7 +155,7 @@ if ($pl["invoiceform"]["brownum"] > 0) {
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
-unset($_SESSION['packinglist'] ); //注销SESSION
+//unset($_SESSION['packinglist'] ); //注销SESSION
 
 //$spreadsheet->getActiveSheet()->getPageSetup()
 //    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);  //横放置

@@ -27,12 +27,17 @@ $spreadsheet->getDefaultStyle()->getFont()->setSize(7);
 $spreadsheet->getActiveSheet()->setCellValue('A9', $potem30["tosb"]);
 $spreadsheet->getActiveSheet()->setCellValue('B18', $potem30["podate"]);
 
-if(1 == $potem30["toaddr"]["a1"]){
-  $titlecon = 'HIGH ABLE INVESTMENT LIMITED';
-}elseif (2 == $potem30["toaddr"]["a1"]){
-    $titlecon = 'IRONDALE FASHION INTERNATIONAL LIMITED';
-}
-$spreadsheet->getActiveSheet()->setCellValue('A1', $titlecon);
+//if(1 == $potem30["toaddr"]["a1"]){
+//  $titlecon = 'HIGH ABLE INVESTMENT LIMITED';
+//}elseif (2 == $potem30["toaddr"]["a1"]){
+//    $titlecon = 'IRONDALE FASHION INTERNATIONAL LIMITED';
+//}
+//$spreadsheet->getActiveSheet()->setCellValue('A1', $titlecon);
+setCell($sheet,"A1",$potem30["remark"]['poheader']['poheada1'],$noborderCenter);
+setCell($sheet,"A2",$potem30["remark"]['poheader']['poheada2'],$noborderCenter);
+setCell($sheet,"A3",$potem30["remark"]['poheader']['poheada3'],$noborderCenter);
+setCell($sheet,"A4",'Tel:'.$potem30["remark"]['poheader']['poheada5'].'Fax:'.$potem30["remark"]['poheader']['poheada5'],$noborderCenter);
+//setCell($sheet,"A5",'Attn :'.$potem1["toaddr"]["a9"],$noborderCenter);
 
 
 
@@ -124,53 +129,59 @@ $spreadsheet->getActiveSheet()->setCellValue('B42', $c12.' VAT INVOICE');
 $spreadsheet->getActiveSheet()->setCellValue('B43', 'ORDER NO '.$potem30["remark"]["c13"]);
 
 $row = 44;
-if(count($potem30["remark"]["c14"]) > 1){
-    foreach ($potem30["remark"]["c14"] as $item=>$value){
+if(is_array($potem30["remark"]["c14"])){
+    if(count($potem30["remark"]["c14"]) > 1){
+        foreach ($potem30["remark"]["c14"] as $item=>$value){
 
-        if($item >1){
-            $spreadsheet->getActiveSheet()->insertNewRowBefore($row, 1);
+            if($item >1){
+                $spreadsheet->getActiveSheet()->insertNewRowBefore($row, 1);
+            }
+
+            $sheet->setCellValue('A'. $row, $value );
+            //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($noborderLeft);
+            //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->getAlignment()->setWrapText(true);
+
+            $spreadsheet->getActiveSheet()->mergeCells("B{$row}:H{$row}");
+            $sheet->setCellValue('B'. $row, $potem30["remark"]["c15"][$item]);
+            $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($noborderLeft);
+            $spreadsheet->getActiveSheet()->getStyle('B'. $row)->getAlignment()->setWrapText(true);
+
+            $row++;
         }
 
-        $sheet->setCellValue('A'. $row, $value );
-        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($noborderLeft);
-        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->getAlignment()->setWrapText(true);
 
-        $spreadsheet->getActiveSheet()->mergeCells("B{$row}:H{$row}");
-        $sheet->setCellValue('B'. $row, $potem30["remark"]["c15"][$item]);
-        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($noborderLeft);
-        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->getAlignment()->setWrapText(true);
-
-        $row++;
     }
-
-
 }
+
 
 /**
  *   remark中间增加行
  */
 $row = 38;
-if(count($potem30["remark"]["c8"]) > 1){
-    foreach ($potem30["remark"]["c8"] as $item=>$value){
+if(is_array($potem30["remark"]["c8"])){
+    if(count($potem30["remark"]["c8"]) > 1){
+        foreach ($potem30["remark"]["c8"] as $item=>$value){
 
-        if($item >0){
-            $spreadsheet->getActiveSheet()->insertNewRowBefore($row, 1);
+            if($item >0){
+                $spreadsheet->getActiveSheet()->insertNewRowBefore($row, 1);
+            }
+
+            $sheet->setCellValue('A'. $row, $value );
+            //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($noborderLeft);
+
+
+            $spreadsheet->getActiveSheet()->mergeCells("B{$row}:H{$row}");
+            $sheet->setCellValue('B'. $row, $potem30["remark"]["c9"][$item]);
+            $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($noborderLeft);
+            $spreadsheet->getActiveSheet()->getStyle('B'. $row)->getAlignment()->setWrapText(true);
+
+            $row++;
         }
 
-        $sheet->setCellValue('A'. $row, $value );
-        //$spreadsheet->getActiveSheet()->getStyle('A'. $row)->applyFromArray($noborderLeft);
 
-
-        $spreadsheet->getActiveSheet()->mergeCells("B{$row}:H{$row}");
-        $sheet->setCellValue('B'. $row, $potem30["remark"]["c9"][$item]);
-        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->applyFromArray($noborderLeft);
-        $spreadsheet->getActiveSheet()->getStyle('B'. $row)->getAlignment()->setWrapText(true);
-
-        $row++;
     }
-
-
 }
+
 /**
  *   remark中间增加行
  */
@@ -231,7 +242,7 @@ if($potem30["orderform"]["elist"]['elistrow'] > 1){
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-unset($_SESSION['potem30'] ); //注销SESSION
+//unset($_SESSION['potem30'] ); //注销SESSION
 
 $filenameout = 'PO_'.$potem30['shortName'];
 outExcel($spreadsheet,$filenameout);

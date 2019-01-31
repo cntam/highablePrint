@@ -92,9 +92,9 @@ for ($i=0;$i<100;$i++){
 
 //fill header
 $sheet->setCellValue("F5", 'INVOICE NO.'.$intem1['invoicedata']['invoiceNumber']);
-$sheet->setCellValue("C6", $intem1['invoicedata']['a1']);
-$sheet->setCellValue("C7", $intem1['invoicedata']['a2']);
-$sheet->setCellValue("C8", "");
+$sheet->setCellValue("C6", $intem1['tosb']);
+$sheet->setCellValue("C7", $intem1['invoicedata']['a1']);
+$sheet->setCellValue("C8", $intem1['invoicedata']['a2']);
 $sheet->setCellValue("C9", 'Attn'.$intem1['invoicedata']['a3']);
 $sheet->setCellValue("J7",$intem1['invoicedate']);
 
@@ -172,7 +172,7 @@ function add_row($data,$i,$j){
 }
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
-unset($_SESSION['invoice'] ); //注销SESSION
+//unset($_SESSION['invoice'] ); //注销SESSION
 
-$filenameout = 'Invoice_GB_';
+$filenameout = "Invoice_GB_{$intem1['invoiceno']}";
 outExcel($spreadsheet,$filenameout);

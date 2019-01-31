@@ -12,6 +12,7 @@ $intem1 = $_SESSION['invoice'];
 
 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/invoiceTem12.xlsx');
 $sheet = $spreadsheet->getActiveSheet();
+$spreadsheet->getActiveSheet()->setTitle("sheet1");
 $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft YaHei');
 $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(20);  //列宽度
 $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(20);  //列宽度

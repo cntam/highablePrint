@@ -1,12 +1,5 @@
 <?php
-session_start();
-
-header("Content-type: text/html; charset=utf-8");
-//Modified by 俊伟
-/*港源行國際有限公司*/
-
-require_once('autoloadconfig.php');  //判断是否在线
-require_once ('img.php');
+require_once 'aidenfunc.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -20,6 +13,7 @@ $packinglistTem6 =  $_SESSION['packinglist'];
 //$spreadsheet = new Spreadsheet();
 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/packinglistTem6.xlsx');
 $sheet = $spreadsheet->getActiveSheet();
+$spreadsheet->getActiveSheet()->setTitle("sheet1");
 //样式，下框细边
 $styleArray1 = [
         'alignment' => [
@@ -126,8 +120,8 @@ if ($packinglistTem6["invoiceform"]["brownum"] > 0) {
 
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-unset($_SESSION['potem1'] ); //注销SESSION
+unset($_SESSION['packinglist'] ); //注销SESSION
 
-$filenameout = "PackingList_{$pl['shortname']}";
+$filenameout = "PackingList_{$packinglistTem6['shortname']}_{$packinglistTem6['invoiceno']}";
 outExcel($spreadsheet,$filenameout);
 
