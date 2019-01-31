@@ -207,6 +207,9 @@ function setMergeCells($sheet,$merge,$cell,$cellValue,$styleArr){
 
 function outExcel($spreadsheet,$filenameout)
 {
+    $spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.1); //设置打印边距
+    $spreadsheet->getActiveSheet()->getPageMargins()->setLeft(0.1); //*/
+
     $nt = date("md",time()); //转换为日期。
     $filenameout .= '_'.$nt.'.xlsx';
 

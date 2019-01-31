@@ -1,11 +1,5 @@
 <?php
-session_start();
-header("Content-type: text/html; charset=utf-8");
-//MCQ 70_ INVOICE  invoice 默认模板
-
-require_once('autoloadconfig.php');  //判断是否在线
-
-require_once ('img.php');
+require_once 'aidenfunc.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -14,7 +8,7 @@ use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper; // html 解析器
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-$invoiceTem4 =  $_SESSION['invoice'];
+$invoice =  $_SESSION['invoice'];
 
 
 //$spreadsheet = new Spreadsheet();
@@ -93,50 +87,60 @@ $styleArraybu = [
 ];
 
 //填数据
+$sheet->setCellValue("A1",$invoice['remark']['poheader']['poheada1']);
+setCell($sheet,"A2",$invoice["remark"]['poheader']['poheada2'],$noborderCenter);
+setCell($sheet,"A3",$invoice["remark"]['poheader']['poheada3'],$noborderCenter);
+setCell($sheet,"A4",'Tel:'.$invoice["remark"]['poheader']['poheada5'].'Fax:'.$invoice["remark"]['poheader']['poheada5'],$noborderCenter);
+
+
 $sheet->mergeCells("H21:K21");
 
-$sheet->setCellValue('A6', 'INVOICE NO.'.$invoiceTem4["invoiceno"]);
-$sheet->setCellValue('C7', $invoiceTem4["tosb"]);
+$sheet->setCellValue('A6', 'INVOICE NO.'.$invoice["invoiceno"]);
+$sheet->setCellValue('C7', $invoice["tosb"]);
 
 $row = 8;
 $a = 0;
-if ($invoiceTem4["invoicedata"]["arrnum"] > 0) {
-    for ($x = 1; $x <= $invoiceTem4["invoicedata"]["arrnum"]; $x++) {
+if ($invoice["invoicedata"]["arrnum"] > 0) {
+    for ($x = 1; $x <= $invoice["invoicedata"]["arrnum"]; $x++) {
         $col = chr(67 + $a); // C
-        $sheet->setCellValue($col.$row, $invoiceTem4["invoicedata"]['a'.$x]);
+        $sheet->setCellValue($col.$row, $invoice["invoicedata"]['a'.$x]);
         $row++;
     }
 }
 
-$sheet->setCellValue('L11', $invoiceTem4["invoicedate"]);
+$sheet->setCellValue('L11', $invoice["invoicedate"]);
 
 //中间表格固定内容
-$sheet->setCellValue('E14', $invoiceTem4["invoiceform"]["ba1"]["0"]);
-$sheet->setCellValue('J14', $invoiceTem4["invoiceform"]["ba1"]["1"]);
-$sheet->setCellValue('K14', $invoiceTem4["invoiceform"]["ba1"]["2"]);
-$sheet->setCellValue('L14', $invoiceTem4["invoiceform"]["ba1"]["3"]);
-$sheet->setCellValue('M15', $invoiceTem4["invoiceform"]["ba1"]["4"]);
-$sheet->setCellValue('E20', $invoiceTem4["invoiceform"]["ba1"]["4"]);
-$sheet->setCellValue('H21', 'Less'.$invoiceTem4["invoiceform"]["ba1"]["5"].'%DOWN PAYMENT AND CQ COST  BEFORE SHIPMENT');
-$sheet->setCellValue('L21', $invoiceTem4["invoiceform"]["ba1"]["6"]);
-$sheet->setCellValue('L22', $invoiceTem4["invoiceform"]["ba1"]["7"]);
+$sheet->setCellValue('E14', $invoice["invoiceform"]["ba1"]["0"]);
+$sheet->setCellValue('J14', $invoice["invoiceform"]['b16']);
+$sheet->setCellValue('K14', $invoice["invoiceform"]['b17']);
+$sheet->setCellValue('L14', $invoice["invoiceform"]['b18']);
+
+$m15 = $invoice["invoiceform"]["ba1"]["2"] / 100 ;
+$sheet->setCellValue('M15', $m15);
+$sheet->setCellValue('E20', $invoice["invoiceform"]["ba1"]["1"]);
+$sheet->setCellValue('H21', 'Less'.$invoice["invoiceform"]["ba1"]["2"].'%DOWN PAYMENT AND CQ COST  BEFORE SHIPMENT');
+$sheet->setCellValue('L21', $invoice["invoiceform"]["ba1"]["3"]);
+$sheet->setCellValue('L22', $invoice["invoiceform"]["ba1"]["4"]);
 
 //底部注释及银行信息
-$sheet->setCellValue('E24', $invoiceTem4["invoiceform"]["formremark"]);
-$sheet->setCellValue('E27', $invoiceTem4["remark"]["bottomremark"]["0"]);
-$sheet->setCellValue('E28', $invoiceTem4["remark"]["bottomremark"]["1"]);
-$sheet->setCellValue('G30', $invoiceTem4["remark"]["bottomremark"]["2"]);
-$sheet->setCellValue('G31', $invoiceTem4["remark"]["bottomremark"]["3"]);
+$sheet->setCellValue('E24', $invoice["invoiceform"]["formremark"]);
+$sheet->setCellValue('E27', $invoice["remark"]["bottomremark"]["0"]);
+$sheet->setCellValue('E28', $invoice["remark"]["bottomremark"]["1"]);
+$sheet->setCellValue('G30', $invoice["remark"]["bottomremark"]["2"]);
+$sheet->setCellValue('G31', $invoice["remark"]["bottomremark"]["3"]);
 
-$sheet->setCellValue('F33', $invoiceTem4["remark"]["c1"]);
-$sheet->setCellValue('F34', $invoiceTem4["remark"]["c2"]);
-$sheet->setCellValue('F35', $invoiceTem4["remark"]["c3"]);
-$sheet->setCellValue('F36', $invoiceTem4["remark"]["c4"]);
+
+$sheet->setCellValue('F33', $invoice["remark"]["c1"]);
+$sheet->setCellValue('F34', $invoice["remark"]["c2"]);
+$sheet->setCellValue('F35', $invoice["remark"]["c3"]);
+$sheet->setCellValue('F36', $invoice["remark"]["c4"]);
+$sheet->setCellValue('G38', $invoice["remark"]["c5"]);
 
 
 //中部表格动态
 $row = 17;
-foreach ($invoiceTem4["invoiceform"]["b4"] as $item => $value) {
+foreach ($invoice["invoiceform"]["b4"] as $item => $value) {
     if ($item > 0) {
         $sheet->insertNewRowBefore($row, 2);
     }
@@ -144,11 +148,11 @@ foreach ($invoiceTem4["invoiceform"]["b4"] as $item => $value) {
     $row += 2;
 }
 //18行BCD列
-if ($invoiceTem4["invoiceform"]["brrnum"] > 0) {
+if ($invoice["invoiceform"]["brrnum"] > 0) {
     for ($a = 1; $a <= 3 ; $a++) {
         $row = 18;
         $col = chr(65 + $a); // B
-        foreach ($invoiceTem4["invoiceform"]['b'.$a] as $value) {
+        foreach ($invoice["invoiceform"]['b'.$a] as $value) {
             $sheet->setCellValue($col.$row, $value);
             $row += 2;
         }
@@ -157,11 +161,11 @@ if ($invoiceTem4["invoiceform"]["brrnum"] > 0) {
 }
 
 //18行剩下的列
-if ($invoiceTem4["invoiceform"]["brrnum"] > 0) {
+if ($invoice["invoiceform"]["brrnum"] > 0) {
     for ($a = 1, $b = 5; $a <= 9 ; $a++, $b++) {
         $row = 18;
         $col = chr(68 + $a); // B
-        foreach ($invoiceTem4["invoiceform"]['b'.$b] as $value) {
+        foreach ($invoice["invoiceform"]['b'.$b] as $value) {
             $sheet->setCellValue($col.$row, $value);
             $row += 2;
         }
@@ -170,36 +174,13 @@ if ($invoiceTem4["invoiceform"]["brrnum"] > 0) {
 }
 
 
+$spreadsheet->getActiveSheet()->getPageSetup()
+    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE); //打印橫向
+$spreadsheet->getActiveSheet()->getPageSetup()
+    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);//打印橫向 A4
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-unset($_SESSION['invoice'] ); //注销SESSION
+//unset($_SESSION['invoice'] ); //注销SESSION
 
-$output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("md",time()); //转换为日期。
-$filenameout = "Invoice_{$invoiceTem4['shortname']}_".$nt.'.xlsx';
-if($output){
-    // Redirect output to a client’s web browser (Xlsx)
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename='."$filenameout");
-    header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
-    header('Cache-Control: max-age=1');
-
-// If you're serving to IE over SSL, then the following may be needed
-    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
-    header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-    header('Pragma: public'); // HTTP/1.0
-
-    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-    $writer->save('php://output');
-}else{
-    $writer = new Xlsx($spreadsheet);
-    $writer->save('../output/'.$filenameout);
-
-    $FILEURL = 'http://allinone321.com/highable/output/'.$filenameout;
-    $MSFILEURL = 'http://view.officeapps.live.com/op/view.aspx?src='. urlencode($FILEURL);
-    //echo "<a href= 'http://view.officeapps.live.com/op/view.aspx?src=". urlencode($FILEURL)."' target='_blank' >跳轉--{$filename}</a>";
-    Header("Location:{$MSFILEURL}");
-};
-
+$filenameout = "Invoice_".$invoice['shortname'];
+outExcel($spreadsheet,$filenameout);

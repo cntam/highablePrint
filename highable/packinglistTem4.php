@@ -186,10 +186,11 @@ if ($packinglistTem4["invoiceform"]["brownum"] > 0) {
 
 }
 
-
+$spreadsheet->getActiveSheet()->getPageSetup()
+    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);// A4
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-//unset($_SESSION['packinglist'] ); //注销SESSION
+unset($_SESSION['packinglist'] ); //注销SESSION
 
 $filenameout = "PackingList_".$packinglistTem4['shortname'];
 outExcel($spreadsheet,$filenameout);

@@ -268,6 +268,11 @@ foreach ($sheet_data_array as $index => $item){
             add_sheet_data($sheet, $col_index[$i], $item[$i]);
         }
     }
+    $spreadsheet->getActiveSheet()->getPageSetup()
+        ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE); //打印橫向
+    $spreadsheet->getActiveSheet()->getPageSetup()
+        ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);//打印橫向 A4
+    $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 }
 
 
@@ -275,8 +280,6 @@ foreach ($sheet_data_array as $index => $item){
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 unset($_SESSION['samplechart'] ); //注销SESSION
-//$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
-
 
 $filenameout = 'SampleChart_';
 
