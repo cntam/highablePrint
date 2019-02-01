@@ -146,6 +146,8 @@ if ($packinglistTem1["remark"]["clist"]["cnum"] > 0) {
 
 }
 
+$spreadsheet->getActiveSheet()->getPageSetup()
+    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);// A4
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 //unset($_SESSION['packinglist'] ); //注销SESSION
