@@ -41,14 +41,22 @@ $styleArray1 = [
     ],
 ];
 //$spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(50); //行默认高度
-//$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(20);  //列宽度
-//$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(50);  //列宽度
-//$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(50);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(1);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(8);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(11);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(10);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(30);  //列宽度
 //
 //$spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(36); //列高度
-//$spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(50); //列高度
 
+$rowarr = range('F','V');
+foreach ($rowarr as $value){
+    $sheet->getColumnDimension($value)->setWidth(5);  //列宽度
+}
 
+$sheet->setCellValue("A1",$pl['remark']['poheader']['poheada1']);
+setCell($sheet,'A2',$pl['remark']['poheader']['poheada2'] . $pl['remark']['poheader']['poheada3'],$noborderCenter);
+setCell($sheet,'A3',$pl['remark']['poheader']['poheada4'].$pl['remark']['poheader']['poheada5'],$noborderCenter);
 
 
 
@@ -62,7 +70,7 @@ setCell($sheet,"W13", $pl["invoicedata"]['a1'],$noborderLeft);
 setMergeCells($sheet,"B14:E14","B14",$pl["invoicedata"]['a6'],$noborderLeft);
 
 //TOTAL
-setMergeCells($sheet,"B40:J40","B40",$pl["invoicedata"]['a23'],$noborderLeft);
+setMergeCells($sheet,"C40:L40","C40",'**'.$pl["invoicedata"]['a23'].'**',$noborderLeft);
 
 //SUMMARY OF TOTAL BREAKDOWN表格固定
 $col = 'G';
@@ -154,8 +162,7 @@ $spreadsheet->getActiveSheet()->getPageSetup()
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 
-$filenameout = 'packlinglist_PS_';
-
+$filenameout = "PackingList_{$packinglistTem1['shortname']}";
 outExcel($spreadsheet,$filenameout);
 
 

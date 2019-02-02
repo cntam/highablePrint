@@ -3,13 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="22dbb095-b711-45ef-80b3-db8d08d0c22f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/highable/costp2.php" afterPath="$PROJECT_DIR$/highable/costp2.php" />
-      <change beforePath="$PROJECT_DIR$/highable/invoiceTem5.php" afterPath="$PROJECT_DIR$/highable/invoiceTem5.php" />
-      <change beforePath="$PROJECT_DIR$/highable/invoiceTem9.php" afterPath="$PROJECT_DIR$/highable/invoiceTem9.php" />
-      <change beforePath="$PROJECT_DIR$/highable/session.php" afterPath="$PROJECT_DIR$/highable/session.php" />
-      <change beforePath="$PROJECT_DIR$/template/invoiceTem5.xlsx" afterPath="$PROJECT_DIR$/template/invoiceTem5.xlsx" />
-      <change beforePath="$PROJECT_DIR$/template/invoiceTem9.xlsx" afterPath="$PROJECT_DIR$/template/invoiceTem9.xlsx" />
-      <change beforePath="$PROJECT_DIR$/template/packinglistTem1old.xlsx" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/highable/packinglistTem5.php" afterPath="$PROJECT_DIR$/highable/packinglistTem5.php" />
+      <change beforePath="$PROJECT_DIR$/template/packinglistTem5.xlsx" afterPath="$PROJECT_DIR$/template/packinglistTem5.xlsx" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -35,8 +30,8 @@
       <file leaf-file-name="packinglistTem1.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/highable/packinglistTem1.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2919">
-              <caret line="162" column="6" lean-forward="false" selection-start-line="162" selection-start-column="6" selection-end-line="162" selection-end-column="6" />
+            <state relative-caret-position="593">
+              <caret line="161" column="0" lean-forward="false" selection-start-line="161" selection-start-column="0" selection-end-line="162" selection-end-column="36" />
               <folding>
                 <element signature="e#39#80#0#PHP" expanded="true" />
               </folding>
@@ -64,16 +59,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="invoiceTem12.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/highable/invoiceTem12.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="572">
-              <caret line="99" column="0" lean-forward="false" selection-start-line="99" selection-start-column="0" selection-end-line="100" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="packinglistTem12.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/highable/packinglistTem12.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -94,16 +79,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="packinglistTem6.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/highable/packinglistTem6.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="572">
-              <caret line="124" column="0" lean-forward="false" selection-start-line="124" selection-start-column="0" selection-end-line="125" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="session.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/highable/session.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -114,11 +89,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="invoiceTem5.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="invoiceTem5.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/highable/invoiceTem5.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+            <state relative-caret-position="399">
+              <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="27" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="costp2.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/highable/costp2.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="514">
+              <caret line="571" column="0" lean-forward="false" selection-start-line="571" selection-start-column="0" selection-end-line="574" selection-end-column="86" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="packinglistTem5.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/highable/packinglistTem5.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="378">
+              <caret line="72" column="72" lean-forward="false" selection-start-line="72" selection-start-column="72" selection-end-line="72" selection-end-column="72" />
               <folding />
             </state>
           </provider>
@@ -166,8 +161,8 @@
       <find>invoiceNumber</find>
       <find>$invoiceTem5</find>
       <find>$styleArraybu</find>
-      <find>$styleArray1</find>
       <find>i7</find>
+      <find>$styleArray1</find>
     </findStrings>
     <replaceStrings>
       <replace>4</replace>
@@ -218,7 +213,6 @@
         <option value="$PROJECT_DIR$/highable/potem14.php" />
         <option value="$PROJECT_DIR$/highable/potem15.php" />
         <option value="$PROJECT_DIR$/highable/stocklist.php" />
-        <option value="$PROJECT_DIR$/highable/packinglistTem5.php" />
         <option value="$PROJECT_DIR$/highable/potem4.php" />
         <option value="$PROJECT_DIR$/highable/potem1.php" />
         <option value="$PROJECT_DIR$/highable/potem13.php" />
@@ -259,6 +253,7 @@
         <option value="$PROJECT_DIR$/highable/costp2.php" />
         <option value="$PROJECT_DIR$/highable/session.php" />
         <option value="$PROJECT_DIR$/highable/invoiceTem5.php" />
+        <option value="$PROJECT_DIR$/highable/packinglistTem5.php" />
       </list>
     </option>
   </component>
@@ -270,8 +265,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="414" />
-    <option name="y" value="15" />
+    <option name="x" value="276" />
+    <option name="y" value="51" />
     <option name="width" value="1626" />
     <option name="height" value="976" />
   </component>
@@ -440,14 +435,7 @@
       <workItem from="1548859401327" duration="6417000" />
       <workItem from="1548987261833" duration="609000" />
       <workItem from="1549007773490" duration="6149000" />
-      <workItem from="1549069399571" duration="9356000" />
-    </task>
-    <task id="LOCAL-00044" summary="201801023 report">
-      <created>1540366221947</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1540366221947</updated>
+      <workItem from="1549069399571" duration="12812000" />
     </task>
     <task id="LOCAL-00045" summary="201801108">
       <created>1541671618516</created>
@@ -785,14 +773,21 @@
       <option name="project" value="LOCAL" />
       <updated>1549074807633</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="20190202">
+      <created>1549094777002</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1549094777002</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="480338000" />
+    <option name="totallyTimeSpent" value="483794000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="414" y="15" width="1626" height="976" extended-state="0" />
+    <frame x="276" y="51" width="1626" height="976" extended-state="0" />
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21492921" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1068,14 +1063,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/highable/packinglistTem5.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3213">
-          <caret line="156" column="0" lean-forward="false" selection-start-line="156" selection-start-column="0" selection-end-line="158" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/highable/packinglistTem3.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -1163,14 +1150,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/highable/costp2.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="488">
-          <caret line="571" column="0" lean-forward="false" selection-start-line="571" selection-start-column="0" selection-end-line="574" selection-end-column="86" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/highable/invoiceTem12.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="572">
@@ -1192,16 +1171,6 @@
         <state relative-caret-position="1323">
           <caret line="75" column="2" lean-forward="false" selection-start-line="75" selection-start-column="2" selection-end-line="75" selection-end-column="2" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/highable/packinglistTem1.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2919">
-          <caret line="162" column="6" lean-forward="false" selection-start-line="162" selection-start-column="6" selection-end-line="162" selection-end-column="6" />
-          <folding>
-            <element signature="e#39#80#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1229,14 +1198,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/highable/invoiceTem3.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="38" selection-end-column="79" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/highable/invoiceTem9.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -1245,10 +1206,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/highable/costp2.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="514">
+          <caret line="571" column="0" lean-forward="false" selection-start-line="571" selection-start-column="0" selection-end-line="574" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/highable/packinglistTem1.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="593">
+          <caret line="161" column="0" lean-forward="false" selection-start-line="161" selection-start-column="0" selection-end-line="162" selection-end-column="36" />
+          <folding>
+            <element signature="e#39#80#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/highable/invoiceTem5.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+        <state relative-caret-position="399">
+          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="27" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/highable/invoiceTem3.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="38" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/highable/packinglistTem5.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="72" column="72" lean-forward="false" selection-start-line="72" selection-start-column="72" selection-end-line="72" selection-end-column="72" />
           <folding />
         </state>
       </provider>
