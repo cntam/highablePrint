@@ -28,7 +28,7 @@ $row = 3;
 if ($packinglistTem1["invoicedata"]["acolnum"] > 0) {
     for ($x = 1; $x <= 6; $x++) {
         //$sheet->setCellValue('G'.$row, $packinglistTem1["invoicedata"]['a'.$x]);
-        setMergeCells($sheet,"G{$row}:Q{$row}","G{$row}",$packinglistTem1["invoicedata"]['a'.$x],$noborderLeft);
+        setMergeCells($sheet,"G{$row}:T{$row}","G{$row}",$packinglistTem1["invoicedata"]['a'.$x],$Size8noborderLeft);
         $row++;
     }
     $row = 3;
@@ -107,13 +107,20 @@ if ($packinglistTem1["remark"]["dlist"]["dnum"] > 0) {
     }
 }
 if ($packinglistTem1["remark"]["elist"]["enum"] > 0) {
+
     $arr = array('Y', 'AA', 'AD', 'AG', 'AH');
 
     for ($a = 0, $b = 1; $a < count($arr); $a++, $b++) {
         $row = 19;
         foreach ($packinglistTem1["remark"]["elist"]['e'.$b] as $item=>$value) {
-            $sheet->setCellValue($arr[$a].$row, $value);
+            if($item == 4){
+                $sheet->setCellValue($arr[$a].$row, $value);
+            }else{
+                setMergeCells($sheet,"AH{$row}:AM{$row}",$arr[$a].$row,$value,$Size8noborderLeft);
+            }
+
             $row++;
+
         }
     }
 }
