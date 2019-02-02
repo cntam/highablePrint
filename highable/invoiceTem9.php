@@ -49,7 +49,8 @@ setCell($sheet,'A4',$tel,$noborderCenter);
 
 $sheet->setCellValue('A8', $inv["invoicedata"]["a13"]);
 $spreadsheet->getActiveSheet()->setCellValue('E8', $inv["invoicedata"]["a14"]);
-$spreadsheet->getActiveSheet()->setCellValue('I7', 'Invoice No.'.$inv["invoicedata"]["a10"]);
+$spreadsheet->getActiveSheet()->setCellValue('I7', 'Invoice No.'.$inv["invoicedata"]["invoiceNumber"]);
+$spreadsheet->getActiveSheet()->setCellValue('I13', 'Page: '.$inv["invoicedata"]["a1"]);
 
 $spreadsheet->getActiveSheet()->setCellValue('J11', $inv["invoicedate"]);
 
