@@ -34,7 +34,11 @@ $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
 //$spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(50); //列高度
 
 
-
+$sheet->setCellValue("A1",$pl['remark']['poheader']['poheada1']);
+setCell($sheet,'A2',$pl['remark']['poheader']['poheada2'],$noborderCenter);
+setCell($sheet,'A3',$pl['remark']['poheader']['poheada3'],$noborderCenter);
+$tel = $pl['remark']['poheader']['poheada4'].'  '.$pl['remark']['poheader']['poheada5'];
+setCell($sheet,'A4',$tel,$noborderCenter);
 
 setMergeCells($sheet,"B8:G8","B8",$pl["invoicedata"]['a1'],$noborderLeft);
 setMergeCells($sheet,"B9:G9","B9",$pl["invoicedata"]['a2'],$noborderLeft);

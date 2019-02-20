@@ -7,7 +7,7 @@ use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper; // html 解析器
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-$intem1 =  $_SESSION['invoice'];
+$inv =  $_SESSION['invoice'];
 
 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/invoiceTem7.xlsx');
 $sheet = $spreadsheet->getActiveSheet();
@@ -15,26 +15,35 @@ $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft YaHei');
 $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
 $sheet = $spreadsheet->getActiveSheet();
 
-for ($i=0;$i<100;$i++){
+for ($i=2;$i<100;$i++){
     $sheet->getRowDimension($i)->setRowHeight(20); //列高度
 }
 
+$sheet->setCellValue("A1",$inv['remark']['poheader']['poheada1']);
+setCell($sheet,'A2',$inv['remark']['poheader']['poheada2'],$noborderCenter);
+setCell($sheet,'A3',$inv['remark']['poheader']['poheada3'],$noborderCenter);
+$tel = $inv['remark']['poheader']['poheada4'];
+setCell($sheet,'A4',$tel,$noborderCenter);
+//setCell($sheet,'A6',$inv['remark']['poheader']['poheada5'],$noborderCenter);
+
 //fill header
-$sheet->setCellValue("A6", 'Invoice NO.'.$intem1['invoicedata']['invoiceNumber']);
-$sheet->setCellValue("C8",  $intem1['tosb']);
-$sheet->setCellValue("C9",  $intem1['invoicedata']['a1']);
-$sheet->setCellValue("C10", $intem1['invoicedata']['a2']);
-$sheet->setCellValue("C11", $intem1['invoicedata']['a3']);
-$sheet->setCellValue("M8",$intem1['invoicedate']);
+$sheet->setCellValue("A6", 'Invoice NO.'.$inv['invoicedata']['invoiceNumber']);
+$sheet->setCellValue("B8",  $inv['tosb']);
+$sheet->setCellValue("B9",  $inv['invoicedata']['a1']);
+$sheet->setCellValue("B10", $inv['invoicedata']['a2']);
+$sheet->setCellValue("B11", $inv['invoicedata']['a3']);
+$sheet->setCellValue("L8",$inv['invoicedate']);
 
 //fill bottom
-$sheet->setCellValue('G18','COUNTRY OF ORIGIN:  '.$intem1['remark']['bottomremark'][0]);
-$sheet->setCellValue('G20',$intem1['remark']['bottomremark'][1]);
-$sheet->setCellValue('H25',$intem1['remark']['c1']);
-$sheet->setCellValue('H26',$intem1['remark']['c2']);
-$sheet->setCellValue('H27',$intem1['remark']['c3']);
-$sheet->setCellValue('H28',$intem1['remark']['c4']);
+$sheet->setCellValue('F18','COUNTRY OF ORIGIN:  '.$inv['remark']['bottomremark'][0]);
+setCell($sheet,'F22','Remark:',$noborderLeft);
+setCell($sheet,'G22',$inv['remark']['bottomremark'][1],$noborderLeft);
 
+$sheet->setCellValue('G24',$inv['remark']['c1']);
+$sheet->setCellValue('G25',$inv['remark']['c2']);
+$sheet->setCellValue('G26',$inv['remark']['c3']);
+$sheet->setCellValue('G27',$inv['remark']['c4']);
+setCell($sheet,'G28',$inv['remark']['c5'],$noborderLeft);
 
 //fill main content
 {
@@ -42,10 +51,10 @@ $sheet->setCellValue('H28',$intem1['remark']['c4']);
     {
         //Unit Price , total Ammount ,total carton
         {
-            $sheet->setCellValue("L13", $intem1['invoiceform']['ba1'][0]);
-            $sheet->setCellValue("M13", $intem1['invoiceform']['ba1'][1]);
-            $sheet->setCellValue("M15", $intem1['invoiceform']['coltc']);
-            $sheet->setCellValue("B15", $intem1['invoiceform']['coltb']);
+            $sheet->setCellValue("L13", $inv['invoiceform']['ba1'][0]);
+            $sheet->setCellValue("L13", $inv['invoiceform']['ba1'][1]);
+            $sheet->setCellValue("L15", $inv['invoiceform']['coltc']);
+            $sheet->setCellValue("B15", $inv['invoiceform']['coltb']);
             $sheet->setCellValue("C15", 'Carton');
         }
     }
@@ -53,19 +62,19 @@ $sheet->setCellValue('H28',$intem1['remark']['c4']);
     //form footer
     {
         //total pcs and package
-        $sheet->setCellValue("G15", $intem1['invoiceform']['formremark']);
+        $sheet->setCellValue("F19", $inv['invoiceform']['formremark']);
     }
 
     //form data
     {
-        for ($i=$intem1['invoiceform']['brrnum']-1,$j=$intem1['invoiceform']['formnum']-1;$j>=0&&$i>=0;$j--,$i--){
-            add_row($intem1['invoiceform'],$i,$j);
+        for ($i=$inv['invoiceform']['brrnum']-1,$j=$inv['invoiceform']['formnum']-1;$j>=0&&$i>=0;$j--,$i--){
+            add_row($inv['invoiceform'],$i,$j,$noborderLeft);
         }
     }
 
 }
 
-function add_row($data,$i,$j)
+function add_row($data,$i,$j,$sheetstyle)
 {
     global $sheet;
     $sheet->insertNewRowBefore(14, 1);
@@ -76,23 +85,25 @@ function add_row($data,$i,$j)
     $sheet->setCellValue("D14", $data['b3'][$j]);
     $sheet->setCellValue("E14", '**mts');
     //description
-    $sheet->setCellValue("G14", $data['b5'][$j]);
+    //$sheet->setCellValue("G14", $data['b5'][$j]);
+    setMergeCells($sheet,'F14:H14','F14',$data['b5'][$j],$sheetstyle);
     //color
-    $sheet->setCellValue("J14", $data['b6'][$j]);
+    $sheet->setCellValue("I14", $data['b6'][$j]);
     //color No.
-    $sheet->setCellValue("K14", $data['b7'][$j]);
+    $sheet->setCellValue("J14", $data['b7'][$j]);
     //unit price
-    $sheet->setCellValue("L14", $data['b8'][$j]);
+    $sheet->setCellValue("K14", $data['b8'][$j]);
     //amount
-    $sheet->setCellValue("M14", $data['b9'][$j]);
-
-
+    $sheet->setCellValue("L14", $data['b9'][$j]);
 
 }
 
+$spreadsheet->getActiveSheet()->getPageSetup()
+    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);  //A4
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
-unset($_SESSION['invoiceTem7'] ); //注销SESSION
 
-$filenameout = "Invoice_".$intem1['shortname'];
+unset($_SESSION['invoice'] ); //注销SESSION
+
+$filenameout = "Invoice_".$inv['shortname'];
 outExcel($spreadsheet,$filenameout);
 
