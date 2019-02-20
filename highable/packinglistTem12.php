@@ -30,7 +30,7 @@ $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(10);  //列宽
 $spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(40); //列高度
 //$spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(50); //列高度
 
-
+$sheet->setCellValue("A2",$pl['remark']['poheader']['poheada1']);
 
 setCell($sheet,"B3",$pl["invoicedata"]['invoiceNumber'],$noborderLeft);
 setCell($sheet,"B6",$pl["invoicedata"]['a1'],$noborderLeft);

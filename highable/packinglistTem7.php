@@ -18,29 +18,16 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 //print_r($titlearr);
 
 //$spreadsheet = new Spreadsheet();
-$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/packinglistTem7.xlsx');
+//$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/packinglistTem7.xlsx');
+$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/packinglistTem12.xlsx');
 $sheet = $spreadsheet->getActiveSheet();
 
 $spreadsheet->getActiveSheet()->setTitle("sheet1");
 //$sheet->setCellValue('A1', 'Hello World !');
 $spreadsheet->getDefaultStyle()->getFont()->setName('微软雅黑');
 $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
-//样式，下框细边
-$styleArray1 = [
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-    'borders' => [
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-    ],
-];
 
-
+$sheet->setCellValue("A2",$pl['remark']['poheader']['poheada1']);
 
 // 填数据
 // header
