@@ -91,11 +91,15 @@ $nowcol++;
 
 $sheet->setCellValue('O'.$nowcol, $potem["remark"]["c4"]);
 
+$sheet->getPageSetup()
+    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_PORTRAIT);  //竖放置
+$sheet->getPageSetup()
+    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);  //A4
 $sheet->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-//unset($_SESSION['potem30'] ); //注销SESSION
+unset($_SESSION['potem30'] ); //注销SESSION
 
-$filenameout = 'PO_' . $potem['toaddr']['supshortname'];
+$filenameout = 'PO_'.$potem['shortName'].'_'.$potem['pono'];
 outExcel($spreadsheet, $filenameout);
 
 

@@ -22,70 +22,6 @@ $sheet->getColumnDimension('H')->setWidth(20);  //列宽度
 $sheet->getColumnDimension('I')->setWidth(30);  //列宽度
 $spreadsheet->getDefaultStyle()->getFont()->setSize(7);
 
-$styleArray1 = [
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-    'font' => [
-        'Size' => '6',
-    ],
-
-    'borders' => [
-        'top' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'left' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ]
-
-];
-$styleArray2 = [
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-    'font' => [
-        'Size' => '5',
-    ]
-
-];
-$styleArrayr = [
-
-    'borders' => [
-
-        'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ],
-
-];
-
-$styleArraybu = [
-
-    'borders' => [
-
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ],
-
-];
-
 //填数据
 $sheet->setCellValue('B11', 'TO: '.$potem11["tosb"]);
 $sheet->setCellValue('G11', 'DATE: '.$potem11["podate"]);
@@ -178,9 +114,13 @@ $sheet->setCellValue('I'.$nowcol, $potem11["remark"]["c4"]);
 //
 //$sheet->setCellValue('A'.$nowcol, $potem11["remark"]["c4"]);
 //
+$sheet->getPageSetup()
+    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_PORTRAIT);  //竖放置
+$sheet->getPageSetup()
+    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);  //A4
 $sheet->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 //
 unset($_SESSION['potem11'] ); //注销SESSION
 
-$filenameout = 'PO_'.$potem11['shortName'];
+$filenameout = 'PO_'.$potem11['shortName'].'_'.$potem11['pono'];
 outExcel($spreadsheet,$filenameout);

@@ -113,6 +113,9 @@ $row = 1;
 /**
  * 标题 PHP_EOL
  */
+$total = chr(count($fabp1['title']) + 66);
+$spreadsheet->getActiveSheet()->setCellValue($total.$row, 'Total');
+
 $a = 0;
 $spreadsheet->getActiveSheet()->getStyle('A'.$row)->applyFromArray($bordersLeft);
 foreach ($fabp1['title'] as $value){

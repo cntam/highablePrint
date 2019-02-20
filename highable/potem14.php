@@ -12,7 +12,7 @@ $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft YaHei');
 //$sheet->getDefaultColumnDimension()->setWidth(30);  //设置默认列宽
 for($j=0;$j<=6;$j++){
     $col = chr(65 + $j);
-    $sheet->getColumnDimension($col)->setWidth(20);  //列宽度
+    $sheet->getColumnDimension($col)->setWidth(22);  //列宽度
 }
 
 //$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(25);  //列宽度
@@ -21,71 +21,15 @@ for($j=0;$j<=6;$j++){
 
 $spreadsheet->getDefaultStyle()->getFont()->setSize(7);
 
-$styleArray1 = [
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-    'font' => [
-        'Size' => '6',
-    ],
-
-    'borders' => [
-        'top' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'left' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ]
-
-];
-$styleArray2 = [
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-    'font' => [
-        'Size' => '5',
-    ]
-
-];
-$styleArrayr = [
-
-    'borders' => [
-
-        'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ],
-
-];
-
-$styleArraybu = [
-
-    'borders' => [
-
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ],
-
-];
-
 //填数据
+//poheader
+setCell($sheet, "B2", $potem14["remark"]["poheader"]["poheada1"],$Size20noborderCenter);
+setCell($sheet, "C3", $potem14["remark"]["poheader"]["poheada2"], $noborderCenter);
+setCell($sheet, "C4", $potem14["remark"]["poheader"]["poheada3"], $noborderCenter);
+setCell($sheet, "C5", $potem14["remark"]["poheader"]["poheada4"].' '.$potem14["remark"]["poheader"]["poheada5"], $noborderCenter);
+setCell($sheet, "C6", ' ', $noborderCenter);
+//setCell($sheet, "A5", $potem2["remark"]["poheader"]["poheada6"], $noborderCenter);
+
 $sheet->setCellValue('B8', $potem14["tosb"]);
 $sheet->setCellValue('B10', $potem14["podate"]);
 ////
@@ -164,9 +108,13 @@ $sheet->setCellValue('C'.$nowcol, $potem14["remark"]["c2"]);
 //
 //$sheet->setCellValue('O'.$nowcol, $potem14["remark"]["c4"]);
 
+$sheet->getPageSetup()
+    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_PORTRAIT);  //竖放置
+$sheet->getPageSetup()
+    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);  //A4
 $sheet->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 unset($_SESSION['potem14'] ); //注销SESSION
 
-$filenameout = 'PO_'.$potem14['shortName'];
+$filenameout = 'PO_'.$potem14['shortName'].'_'.$potem14['pono'];
 outExcel($spreadsheet,$filenameout);

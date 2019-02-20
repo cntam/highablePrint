@@ -1,10 +1,5 @@
 <?php
-session_start();
-header("Content-type: text/html; charset=utf-8");
-
-require_once('autoloadconfig.php');  //判断是否在线
-
-require_once ('img.php');
+require_once 'aidenfunc.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -20,70 +15,48 @@ $potem5 =  $_SESSION['potem5'];
 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../template/potem5.xlsx');
 
 $sheet = $spreadsheet->getActiveSheet();
-$spreadsheet->getActiveSheet()->setTitle("sheet1");
+$sheet->setTitle("sheet1");
 $spreadsheet->getDefaultStyle()->getFont()->setName('Microsoft YaHei');
-//$spreadsheet->getActiveSheet()->getDefaultColumnDimension()->setWidth(20);  //设置默认列宽
-$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(25);  //列宽度
-$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(25);  //列宽度
-$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(25);  //列宽度
-$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(25);  //列宽度
-$spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(25);  //列宽度
-$spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(25);  //列宽度
-//$spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(16);  //列宽度
-//$spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(15);  //列宽度
-//$spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(15);  //列宽度
+//$sheet->getDefaultColumnDimension()->setWidth(20);  //设置默认列宽
+$sheet->getColumnDimension('A')->setWidth(25);  //列宽度
+$sheet->getColumnDimension('B')->setWidth(25);  //列宽度
+$sheet->getColumnDimension('C')->setWidth(25);  //列宽度
+$sheet->getColumnDimension('D')->setWidth(30);  //列宽度
+$sheet->getColumnDimension('E')->setWidth(25);  //列宽度
+$sheet->getColumnDimension('F')->setWidth(25);  //列宽度
+//$sheet->getColumnDimension('G')->setWidth(16);  //列宽度
+//$sheet->getColumnDimension('H')->setWidth(15);  //列宽度
+//$sheet->getColumnDimension('I')->setWidth(15);  //列宽度
 $spreadsheet->getDefaultStyle()->getFont()->setSize(7);
 
-$styleArray1 = [
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-    'font' => [
-        'Size' => '8',
-    ],
-
-    'borders' => [
-        'top' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'left' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ],
-    'font' => [
-        'Size' => '8',
-    ],
-
-];
-
+//foreach (range('A','E') as $item){
+//    $spreadsheet->getActiveSheet()->getColumnDimension($item)->setAutoSize(true);  //自动列宽度
+//}
 
 //填数据
-$spreadsheet->getActiveSheet()->setCellValue('A6', 'TO:'.$potem5["tosb"]);
-$spreadsheet->getActiveSheet()->setCellValue('E9', $potem5 ["podate"]);
-$spreadsheet->getActiveSheet()->setCellValue('A7', $potem5["toaddr"]["a1"]);
-$spreadsheet->getActiveSheet()->setCellValue('A8', 'TEL:'.$potem5["toaddr"]["a2"].'  FAX:'.$potem5["toaddr"]["a3"]);
+//header
+setCell($sheet, "A1", $potem5["remark"]["poheader"]["poheada1"], $noborderCenter);
+setCell($sheet, "A2", $potem5["remark"]["poheader"]["poheada2"].' '.$potem5["remark"]["poheader"]["poheada3"], $Size12noborderCenter);
+//setCell($sheet, "A4", $potem6["remark"]["poheader"]["poheada3"], $noborderCenter);
+setCell($sheet, "A3", $potem5["remark"]["poheader"]["poheada4"], $noborderCenter);
+//setCell($sheet, "A6", $potem6["remark"]["poheader"]["poheada6"], $noborderCenter);
 
-$spreadsheet->getActiveSheet()->setCellValue('A9', 'E-mail:'.$potem5["toaddr"]["a4"]);
-$spreadsheet->getActiveSheet()->setCellValue('A10', 'ATTN:'.$potem5["toaddr"]["a5"]);
-$spreadsheet->getActiveSheet()->setCellValue('E10', $potem5["toaddr"]["a6"]);
+$sheet->setCellValue('A6', 'TO:'.$potem5["tosb"]);
+$sheet->setCellValue('E9', $potem5 ["podate"]);
+$sheet->setCellValue('A7', $potem5["toaddr"]["a1"]);
+$sheet->setCellValue('A8', 'TEL:'.$potem5["toaddr"]["a2"].'  FAX:'.$potem5["toaddr"]["a3"]);
+
+$sheet->setCellValue('A9', 'E-mail:'.$potem5["toaddr"]["a4"]);
+$sheet->setCellValue('A10', 'ATTN:'.$potem5["toaddr"]["a5"]);
+$sheet->setCellValue('E10', $potem5["toaddr"]["a6"]);
 
 
 //中部form
 
 $nowcol = 14;
-//$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:F{$nowcol}");
-$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, '(PO NO:  '.$potem5["orderform"]["midpono"].' (注：請在送貨單和發票上注明PO NO.和OUR REF NO,不可重復,謝!)');
-//$spreadsheet->getActiveSheet()->setCellValue('I'.$nowcol, $potem5["invoiceform"]["amout"]);
+//$sheet->mergeCells("A{$nowcol}:F{$nowcol}");
+$sheet->setCellValue('A'.$nowcol, '(PO NO:  '.$potem5["orderform"]["midpono"].' (注：請在送貨單和發票上注明PO NO.和OUR REF NO,不可重復,謝!)');
+//$sheet->setCellValue('I'.$nowcol, $potem5["invoiceform"]["amout"]);
 //
 //$nowcol++;
 //$nowcol++;
@@ -92,7 +65,7 @@ for($x = 0 ,$c = 1; $x <= $potem5["orderform"]["formnum"]; $x++ ,$c++){
 
 $f19 = 17 + 1 * $x;
 
-    $spreadsheet->getActiveSheet()->mergeCells("B{$f19}:C{$f19}");
+    $sheet->mergeCells("B{$f19}:C{$f19}");
 
 
 $formarr = array('A'.$f19,'B'.$f19,'D'.$f19,'E'.$f19);
@@ -110,63 +83,40 @@ $formarr = array('A'.$f19,'B'.$f19,'D'.$f19,'E'.$f19);
 
     if($x >4){
 
-        $spreadsheet->getActiveSheet()->insertNewRowBefore($nowcol, 1);
+        $sheet->insertNewRowBefore($nowcol, 1);
 
     }
 
 }
 $nowcol = $potem5["orderform"]["formnum"] > 4 ? ($nowcol + 2) : 24;
-//$spreadsheet->getActiveSheet()->getCell('A1')->setValue($nowcol);
-////$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-////$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, '貨送以下地址');
+//$sheet->getCell('A1')->setValue($nowcol);
+////$sheet->mergeCells("A{$nowcol}:E{$nowcol}");
+////$sheet->setCellValue('A'.$nowcol, '貨送以下地址');
 ////$nowcol++;
 //
-////$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-$spreadsheet->getActiveSheet()->setCellValue('B'.$nowcol, $potem5["remark"]["c1"]);
+////$sheet->mergeCells("A{$nowcol}:E{$nowcol}");
+$sheet->setCellValue('B'.$nowcol, $potem5["remark"]["c1"]);
 //$nowcol++;
 //$nowcol++;
 //$nowcol++;
 //$nowcol++;
 //
-////$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-//$spreadsheet->getActiveSheet()->setCellValue('D'.$nowcol, $potem5["remark"]["c2"]);
+////$sheet->mergeCells("A{$nowcol}:E{$nowcol}");
+//$sheet->setCellValue('D'.$nowcol, $potem5["remark"]["c2"]);
 //$nowcol++;
 //
-////$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-//$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, $potem5["remark"]["c3"]);
+////$sheet->mergeCells("A{$nowcol}:E{$nowcol}");
+//$sheet->setCellValue('A'.$nowcol, $potem5["remark"]["c3"]);
 //
 
 
-$spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
+$sheet->getPageSetup()
+    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_PORTRAIT);  //竖放置
+$sheet->getPageSetup()
+    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);  //A4
+$sheet->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 unset($_SESSION['potem5'] ); //注销SESSION
 
-$output=  ($_GET['action'] == 'formdown' )? 1:0;
-$nt = date("YmdHis",time()); //转换为日期。
-$filenameout = 'potem5out'.$nt.'.xlsx';
-if($output){
-    // Redirect output to a client’s web browser (Xlsx)
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename='."$filenameout");
-    header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
-    header('Cache-Control: max-age=1');
-
-// If you're serving to IE over SSL, then the following may be needed
-    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
-    header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-    header('Pragma: public'); // HTTP/1.0
-
-    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-    $writer->save('php://output');
-}else{
-    $writer = new Xlsx($spreadsheet);
-    $writer->save('../output/'.$filenameout);
-
-    $FILEURL = 'http://allinone321.com/highable/output/'.$filenameout;
-    $MSFILEURL = 'http://view.officeapps.live.com/op/view.aspx?src='. urlencode($FILEURL);
-    //echo "<a href= 'http://view.officeapps.live.com/op/view.aspx?src=". urlencode($FILEURL)."' target='_blank' >跳轉--{$filename}</a>";
-    Header("Location:{$MSFILEURL}");
-};
-
+$filenameout = 'PO_' . $potem5['shortName'].'_'.$potem5['pono'];
+outExcel($spreadsheet, $filenameout);

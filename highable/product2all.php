@@ -47,13 +47,13 @@ for ($i = 0, $ct = 1; $i < 14; $i++, $ct++) {
             fill_cell($styleArray, 'F15', 'C15', '毛重：' . $productp1['ctlist']['ct' . $ct]);
         }
     } else {
-        $row = 14;
-        if ($ct == 1) {
-            $col = chr(64 + $ct); //A
-        } else {
-            $col = chr(64 + $ct); //B
-        }
-        fill_cell($styleArray, $col . $row, $col . $row, $productp1['ctlist']['ct' . $ct]);
+//        $row = 14;
+//        if ($ct == 1) {
+//            $col = chr(64 + $ct); //A
+//        } else {
+//            $col = chr(64 + $ct); //B
+//        }
+//        fill_cell($styleArray, $col . $row, $col . $row, $productp1['ctlist']['ct' . $ct]);
     }
 }
 
@@ -92,6 +92,33 @@ fill_cell(null, 'M20:R20', 'M20', '针距：' . $productp1['fablist']['fab4']);
 //  图片模块
 $img = $productp1["alist"]["a3"];
 fill_img($img, 'M7', 180, 300);
+
+//  船头办数量
+$row = 14;
+for ($i = 0; $i < $productp1["ctlist"]["ctcolorarr"]["ctcolorlistrow"]; $i++) {
+    if ($i > 0) {
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($row, 1);
+        for ($h = 1; $h <= 10; $h++) {
+            if ($h == 1) {
+                $col = chr(64 + $h); //A
+            } else {
+                $col = chr(65 + $h); //B
+            }
+            fill_cell($styleArray, $col . $row, $col . $row, $productp1["ctlist"]["ctcolorarr"]['ctcolor' . $h][$i], 'A' . $row . ":" . 'B' . $row);
+        }
+        $row++;
+    } else {
+        for ($h = 1; $h <= 10; $h++) {
+            if ($h == 1) {
+                $col = chr(64 + $h); //A
+            } else {
+                $col = chr(65 + $h); //B
+            }
+            fill_cell($styleArray, $col . $row, $col . $row, $productp1["ctlist"]["ctcolorarr"]['ctcolor' . $h][$i]);
+        }
+        $row++;
+    }
+}
 
 //  细数分配表
 for ($v = 0, $ct = 15; $v < 8; $v++, $ct++) {

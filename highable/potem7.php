@@ -21,66 +21,15 @@ $sheet->getColumnDimension('F')->setWidth(25);  //列宽度
 //$sheet->getColumnDimension('I')->setWidth(15);  //列宽度
 $spreadsheet->getDefaultStyle()->getFont()->setSize(7);
 
-$styleArray1 = [
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-        'wrapText' => true,
-        'ShrinkToFit'=>true,
-    ],
-    'font' => [
-        'Size' => '8',
-    ],
-
-    'borders' => [
-        'top' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'left' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-        'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ],
-    'font' => [
-        'Size' => '8',
-    ],
-
-];
-$styleArrayr = [
-
-    'borders' => [
-
-        'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ],
-
-];
-
-$styleArraybu = [
-
-    'borders' => [
-
-        'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-
-    ],
-
-];
-
 //填数据
+// poheader
+setCell($sheet, "A1", $potem7["remark"]["poheader"]["poheada1"], $noborderCenter);
+
 $sheet->setCellValue('B3', $potem7["tosb"]);
 $sheet->setCellValue('E3', $potem7 ["podate"]);
 $sheet->setCellValue('B4', $potem7["toaddr"]["a1"]);
-$sheet->setCellValue('E4', $potem7["toaddr"]["a2"]);
+//$sheet->setCellValue('E4', $potem7["toaddr"]["a2"]);
+setCell($sheet, "E4", $potem7["toaddr"]["a2"], $noborderLeft);
 $sheet->setCellValue('B5', $potem7["toaddr"]["a3"]);
 $sheet->setCellValue('E5', $potem7["toaddr"]["a4"]);
 $sheet->setCellValue('B6', $potem7["toaddr"]["a5"]);
@@ -101,7 +50,7 @@ for($x = 0 ,$c = 1; $x <= $potem7["orderform"]["formnum"]; $x++ ,$c++){
 
 $f19 = 10 + 1 * $x;
 
-//$spreadsheet->getActiveSheet()->mergeCells("B{$f19}:E{$f19}");
+//$sheet->mergeCells("B{$f19}:E{$f19}");
 
 $formarr = array('A'.$f19,'B'.$f19,'C'.$f19,'D'.$f19,'E'.$f19,'F'.$f19);
 
@@ -122,9 +71,9 @@ $formarr = array('A'.$f19,'B'.$f19,'C'.$f19,'D'.$f19,'E'.$f19,'F'.$f19);
 
 }
 $nowcol = $potem7["orderform"]["formnum"] > 14 ? ($nowcol + 1) : 26;
-//$spreadsheet->getActiveSheet()->getCell('A1')->setValue($nowcol); 貨送以下地址
-//$spreadsheet->getActiveSheet()->mergeCells("A{$nowcol}:E{$nowcol}");
-//$spreadsheet->getActiveSheet()->setCellValue('A'.$nowcol, '貨送以下地址');
+//$sheet->getCell('A1')->setValue($nowcol); 貨送以下地址
+//$sheet->mergeCells("A{$nowcol}:E{$nowcol}");
+//$sheet->setCellValue('A'.$nowcol, '貨送以下地址');
 //$nowcol++;
 
 //$sheet->mergeCells("A{$nowcol}:E{$nowcol}");
@@ -143,10 +92,14 @@ $sheet->setCellValue('A'.$nowcol, $potem7["remark"]["c3"]);
 
 
 
+$sheet->getPageSetup()
+    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_PORTRAIT);  //竖放置
+$sheet->getPageSetup()
+    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);  //A4
 $sheet->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 unset($_SESSION['potem7'] ); //注销SESSION
 
-$filenameout = 'PO_'.$potem7['shortName'];
+$filenameout = 'PO_'.$potem7['shortName'].'_'.$potem7['pono'];
 outExcel($spreadsheet,$filenameout);
 
