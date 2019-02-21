@@ -53,7 +53,8 @@ setCell($sheet, "F12", $potem["toaddr"]['a5'], $noborderLeft);
 
 setCell($sheet, "G16", 'Unit Price'.'('.$potem["orderform"]['b7'].')', $noborderCenter);
 
-
+$sheet->setCellValue('A8', 'TO：');
+$sheet->setCellValue('A12', 'ATTN ：');
 //表格动态
 if ($potem["orderform"]["brrnum"] > 0) {
 //    $col = 'A';

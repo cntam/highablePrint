@@ -23,6 +23,13 @@ $spreadsheet->getDefaultStyle()->getFont()->setSize(7);
 
 
 //填数据
+$sheet->setCellValue('A7', 'TO：');
+$sheet->setCellValue('A8', 'ATTN：');
+$sheet->setCellValue('A9', 'FROM：');
+$sheet->setCellValue('A10', 'RE：');
+$sheet->setCellValue('E7', 'DATE：');
+$sheet->setCellValue('E9', 'FAX NO：');
+$sheet->setCellValue('E10', 'TEL NO：');
 //poheader
 setCell($sheet, "A1", $potem9["remark"]["poheader"]["poheada1"], $noborderCenter);
 setCell($sheet, "A2", $potem9["remark"]["poheader"]["poheada2"], $noborderCenter);

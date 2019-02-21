@@ -31,7 +31,9 @@ $sheet->getColumnDimension('I')->setWidth(30);  //列宽度
 $spreadsheet->getDefaultStyle()->getFont()->setSize(7);
 
 //填数据
-$sheet->setCellValue('B6', $potem15["tosb"]);
+//$sheet->setCellValue('B6', $potem15["tosb"]);
+$sheet->setCellValue('D3', 'LABEL ORDER FORM     (Label Supplier - SML)');
+$sheet->setCellValue('B6', $potem15["toaddr"]["a25"]);
 $sheet->setCellValue('B8', $potem15["podate"]);
 ////
 //$sheet->setCellValue('G8', $potem15["toaddr"]["a1"]);

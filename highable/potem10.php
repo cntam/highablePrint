@@ -24,6 +24,12 @@ $sheet->getColumnDimension('K')->setWidth(20);  //列宽度
 $spreadsheet->getDefaultStyle()->getFont()->setSize(7);
 
 //填数据
+$sheet->setCellValue('K3', '共    1   页');
+$sheet->setCellValue('K4', '第   1  页');
+
+$sheet->setCellValue('A11', '色号');
+$sheet->setCellValue('B11', '色号');
+
 $sheet->setCellValue('B7', $potem10["tosb"]);
 //$sheet->setCellValue('F7', $potem10["podate"]);
 

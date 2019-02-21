@@ -72,6 +72,8 @@ setCell($sheet, "A4", $potem2["remark"]["poheader"]["poheada4"].' '.$potem2["rem
 setCell($sheet, "A5", '', $noborderCenter);
 //setCell($sheet, "A5", $potem2["remark"]["poheader"]["poheada6"], $noborderCenter);
 
+$sheet->setCellValue('A10', 'FM:');
+
 $sheet->setCellValue('B7', $potem2["tosb"]);
 $sheet->setCellValue('G7', $potem2 ["podate"]);
 $sheet->setCellValue('B8', $potem2["toaddr"]["a1"]);

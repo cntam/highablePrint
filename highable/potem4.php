@@ -23,12 +23,16 @@ $sheet->getColumnDimension('F')->setWidth(20);  //列宽度
 $spreadsheet->getDefaultStyle()->getFont()->setSize(7);
 
 //填数据
+$sheet->setCellValue('A6', 'ATTN：');
+$sheet->setCellValue('C6', 'DATE：');
+$sheet->setCellValue('A9', 'FM：');
+$sheet->setCellValue('A11', 'RE：');
 //header
 $sheet->mergeCells("A1:F1");
 $sheet->mergeCells("A2:F2");
 $sheet->mergeCells("A3:F3");
 setCell($sheet, "A1", $potem4["remark"]["poheader"]["poheada1"], $noborderCenter);
-setCell($sheet, "A2", 'Address:'.$potem4["remark"]["poheader"]["poheada2"].' '.$potem4["remark"]["poheader"]["poheada3"], $noborderCenter);
+setCell($sheet, "A2", $potem4["remark"]["poheader"]["poheada2"].' '.$potem4["remark"]["poheader"]["poheada3"], $noborderCenter);
 //setCell($sheet, "A4", $potem6["remark"]["poheader"]["poheada3"], $noborderCenter);
 setCell($sheet, "A3", $potem4["remark"]["poheader"]["poheada4"], $noborderCenter);
 //setCell($sheet, "A6", $potem6["remark"]["poheader"]["poheada6"], $noborderCenter);
