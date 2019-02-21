@@ -134,10 +134,13 @@ if(is_array($samplep1['b10name']) && (count($samplep1['b10name']) >0 )){
 
 $spreadsheet->getActiveSheet()->setCellValue('B33', $b10);
 $spreadsheet->getActiveSheet()->getStyle("B33:D33")->applyFromArray($noborderTopLeft);
-$spreadsheet->getActiveSheet()->setCellValue('B35', $samplep1['data']["blist"]['b11']);
-$spreadsheet->getActiveSheet()->getStyle("B35:D35")->applyFromArray($noborderTopLeft);
-$spreadsheet->getActiveSheet()->setCellValue('B37', $samplep1['data']["blist"]['b12']);
-$spreadsheet->getActiveSheet()->getStyle("B37:D37")->applyFromArray($noborderTopLeft);
+
+//$spreadsheet->getActiveSheet()->setCellValue('B35', $samplep1['data']["blist"]['b11']);
+//$spreadsheet->getActiveSheet()->getStyle("B35:D36")->applyFromArray($noborderTopLeft);
+setMergeCells($sheet,'B35:D36','B35',stripcslashes($samplep1['data']["blist"]['b11']),$Size12noborderLeft);
+//$spreadsheet->getActiveSheet()->setCellValue('B37', $samplep1['data']["blist"]['b12']);
+//$spreadsheet->getActiveSheet()->getStyle("B37:D38")->applyFromArray($noborderTopLeft);
+setMergeCells($sheet,'B37:D38','B37',stripcslashes($samplep1['data']["blist"]['b12']),$Size12noborderLeft);
 
 
 
@@ -195,7 +198,7 @@ for($r=0;$r<=6;$r++){
     $b1 = $samplep1['data']["blist"][$b1];
     if('on' == $b1){
         $spreadsheet->getActiveSheet()->setCellValue('B'.$browrow, $titlearr[$r]);
-        $spreadsheet->getActiveSheet()->setCellValue('C'.$browrow, $samplep1['data']["blist"]["b1v"][$r]);
+        $spreadsheet->getActiveSheet()->setCellValue('C'.$browrow, stripcslashes($samplep1['data']["blist"]["b1v"][$r]));
         $spreadsheet->getActiveSheet()->getStyle("C{$browrow}:H{$browrow}")->applyFromArray($noborderTopLeft);
         $browrow++;
         $f++;

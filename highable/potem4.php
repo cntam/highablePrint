@@ -114,6 +114,6 @@ $sheet->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 unset($_SESSION['potem4'] ); //注销SESSION
 
-$filenameout = 'PO_'.$potem4['shortName'].'_'.$potem4['pono'];
+$filenameout = 'PO_'.$potem4['pono'];
 outExcel($spreadsheet,$filenameout);
 

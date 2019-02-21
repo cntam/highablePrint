@@ -254,6 +254,6 @@ unset($_SESSION['potem31'] ); //注销SESSION
 
 
 
-$filenameout = 'PO_'.$pop1['shortName'].'_'.$potem31['pono'];
+$filenameout = 'PO_'.$potem31['pono'];
 outExcel($spreadsheet,$filenameout);
 

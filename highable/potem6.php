@@ -109,8 +109,8 @@ $sheet->getPageSetup()
     ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);  //A4
 $sheet->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-//unset($_SESSION['potem6'] ); //注销SESSION
+unset($_SESSION['potem6'] ); //注销SESSION
 
-$filenameout = 'PO_'.$potem6['shortName'].'_'.$potem6['pono'];
+$filenameout = 'PO_'.$potem6['pono'];
 outExcel($spreadsheet, $filenameout);
 

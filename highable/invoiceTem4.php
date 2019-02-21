@@ -116,12 +116,12 @@ $sheet->setCellValue('J14', $invoice["invoiceform"]['b16']);
 $sheet->setCellValue('K14', $invoice["invoiceform"]['b17']);
 $sheet->setCellValue('L14', $invoice["invoiceform"]['b18']);
 
-$m15 = $invoice["invoiceform"]["ba1"]["2"] / 100 ;
+$m15 = $invoice["invoiceform"]['b20'][0] / 100 ;
 $sheet->setCellValue('M15', $m15);
-$sheet->setCellValue('E20', $invoice["invoiceform"]["ba1"]["1"]);
-$sheet->setCellValue('H21', 'Less'.$invoice["invoiceform"]["ba1"]["2"].'%DOWN PAYMENT AND CQ COST  BEFORE SHIPMENT');
-$sheet->setCellValue('L21', $invoice["invoiceform"]["ba1"]["3"]);
-$sheet->setCellValue('L22', $invoice["invoiceform"]["ba1"]["4"]);
+$sheet->setCellValue('E20', $invoice["invoiceform"]['b19'][0]);
+$sheet->setCellValue('H21', 'Less '.$invoice["invoiceform"]['b20'][0].'%DOWN PAYMENT AND CQ COST  BEFORE SHIPMENT');
+$sheet->setCellValue('L21', $invoice["invoiceform"]['b21'][0]);
+$sheet->setCellValue('L22', $invoice["invoiceform"]['b22'][0]);
 
 //底部注释及银行信息
 $sheet->setCellValue('E24', $invoice["invoiceform"]["formremark"]);
@@ -174,8 +174,8 @@ if ($invoice["invoiceform"]["brrnum"] > 0) {
 }
 
 
-$spreadsheet->getActiveSheet()->getPageSetup()
-    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE); //打印橫向
+//$spreadsheet->getActiveSheet()->getPageSetup()
+//    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE); //打印橫向
 $spreadsheet->getActiveSheet()->getPageSetup()
     ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);//打印橫向 A4
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
