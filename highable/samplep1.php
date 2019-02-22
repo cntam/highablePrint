@@ -21,7 +21,7 @@ $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
 
 $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(15);  //列宽度
 $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(15);  //列宽度
-$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(15);  //列宽度
+$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(36);  //列宽度
 $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(15);  //列宽度
 $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(15);  //列宽度
 $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(15);  //列宽度
