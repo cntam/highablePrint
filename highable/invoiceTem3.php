@@ -57,7 +57,8 @@ $sheet->setCellValue("J10",$intem1['invoicedate']);
             $sheet->setCellValue("D19", $intem1['invoiceform']['ba1'][3]);
             $sheet->setCellValue("H19", $intem1['invoiceform']['ba1'][4]);
             //$sheet->setCellValue("D21", $intem1['invoiceform']['ba1'][5]);
-            setCell($sheet,"D21" , outputstr($intem1['invoiceform']['ba1'][5]) ,$Size8noborderCenter);
+            //setCell($sheet,"D21" , outputstr($intem1['invoiceform']['ba1'][5]) ,$Size8noborderCenter);
+            setMergeCells($sheet,'D21:F21','D21',outputstr($intem1['invoiceform']['ba1'][5]),$Size8noborderLeft);
         }
 
         //Unit Price , Ammount

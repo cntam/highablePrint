@@ -94,7 +94,7 @@ fill_cell(null, 'M21:R21', 'M21', '针距：' . $productp1['fablist']['fab4']);
 
 //  图片模块
 $img = $productp1["alist"]["a3"];
-fill_img($img, 'M7', 180, 300);
+fill_img($img, 'M7', 180, 180);
 
 //  船头办数量
 $row = 14;
@@ -188,8 +188,8 @@ fill_img($productp2['blist']['b3'], 'F8', 250, 170);
 // 洗水唛位置
 fill_cell(null, 'F38', 'F38', $productp2['blist']['b5']);
 fill_cell(null, 'F39', 'F39', $productp2['blist']['b6']);
-fill_img($productp2['blist']['b4'], 'C26', 250, 300);
-fill_img($productp2['blist']['b10'], 'J26', 250, 300);
+fill_img($productp2['blist']['b4'], 'C26', 450, 500);
+//fill_img($productp2['blist']['b10'], 'J26', 250, 300);
 
 // 挂牌位置
 fill_cell(null, 'A43', 'A43', $productp2['blist']['b8']);

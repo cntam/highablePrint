@@ -231,7 +231,7 @@ for ($col = 0; $col < count($cpsform['id']); $col++) {
             $fabtitlearr = $cpsform['titlearr']['fabtitlearr'];
             fill_cell($styleArray, 'A' . $thisrow, 'A' . $thisrow, $fabtitlearr[$u]);
             $BC = "{$Brow}{$thisrow}:{$Crow}{$thisrow}";
-            fill_cell($styleArray5, $BC, $Brow . $thisrow, $cpsform["falist"][$col]['falist']["fa" . $i], $BC);
+            fill_cell($styleArray5, $BC, $Brow . $thisrow, stripcslashes($cpsform["falist"][$col]['falist']["fa" . $i]), $BC);
             $thisrow++;
         }
     }
