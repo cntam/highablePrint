@@ -187,6 +187,35 @@ $Size8bordersLeft = [
 
 ];
 
+$Size8borderscenter = [
+    'alignment' => [
+        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+        'wrapText' => true,
+        'ShrinkToFit'=>true,
+    ],
+    'font' => [
+        'size' => '8',
+    ],
+
+    'borders' => [
+        'top' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+        'bottom' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+        'left' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+        'right' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+
+    ],
+
+];
+
 $Size8noborderLeft = [
     'alignment' => [
         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
@@ -250,6 +279,35 @@ $Size20noborderCenter = [
     ],
 
 ];
+
+$Size12borderscenter = [
+    'alignment' => [
+        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+        'wrapText' => true,
+        'ShrinkToFit'=>true,
+    ],
+    'font' => [
+        'size' => '12',
+    ],
+
+    'borders' => [
+        'top' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+        'bottom' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+        'left' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+        'right' => [
+            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        ],
+
+    ],
+
+];
 $Size5noborderCenter = [
     'alignment' => [
         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
@@ -308,7 +366,11 @@ function setMergeCells($sheet,$merge,$cell,$cellValue,$styleArr){
     $sheet->getStyle($merge)->getAlignment()->setWrapText(true);
 }
 
-
+//輸出符號處理 输出符号处理
+function outputstr($str, $default = ''){
+    $outputstr =  (isset($str) and !empty($str)) ? htmlspecialchars(stripcslashes($str)) : (!empty($default) ? $default : false);
+    return $outputstr;
+}
 
 function outExcel($spreadsheet,$filenameout)
 {

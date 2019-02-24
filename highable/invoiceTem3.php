@@ -56,7 +56,8 @@ $sheet->setCellValue("J10",$intem1['invoicedate']);
             $sheet->setCellValue("D17", $intem1['invoiceform']['ba1'][0]);
             $sheet->setCellValue("D19", $intem1['invoiceform']['ba1'][3]);
             $sheet->setCellValue("H19", $intem1['invoiceform']['ba1'][4]);
-            $sheet->setCellValue("D21", $intem1['invoiceform']['ba1'][5]);
+            //$sheet->setCellValue("D21", $intem1['invoiceform']['ba1'][5]);
+            setCell($sheet,"D21" , outputstr($intem1['invoiceform']['ba1'][5]) ,$Size8noborderCenter);
         }
 
         //Unit Price , Ammount
@@ -93,17 +94,18 @@ $sheet->setCellValue("J10",$intem1['invoicedate']);
     //form data
     {
         for ($i=$intem1['invoiceform']['brrnum']-1,$j=$intem1['invoiceform']['formnum']-1;$j>=0&&$i>=0;$j--,$i--){
-            add_row($intem1['invoiceform'],$i,$j);
+            add_row($intem1['invoiceform'],$i,$j,$Size8noborderCenter);
         }
     }
 
 }
-function add_row($data,$i,$j)
+function add_row($data,$i,$j,$sytle='')
 {
     global $sheet;
     $sheet->insertNewRowBefore(26,5);
 
-    $sheet->setCellValue("D26", $data['b3'][$j]);
+    $sheet->setCellValue("D26", outputstr($data['b3'][$j]));
+    //setCell($sheet,"D26" , outputstr($data['b3'][$j]) ,$sytle);
     //quantity
     $sheet->setCellValue("A27", "**");
     $sheet->setCellValue("B27", $data['b1'][$j]);

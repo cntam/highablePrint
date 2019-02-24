@@ -60,27 +60,27 @@ $styleArray1 = [
 
 
 $styleArray = [
-    
+
     'alignment' => [
         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-		'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
     ],
-	
+
     'borders' => [
         'top' => [
             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
         ],
-		'bottom' => [
+        'bottom' => [
             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
         ],
-		'left' => [
+        'left' => [
             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
         ],
-		'right' => [
+        'right' => [
             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
         ],
     ],
-   
+
 ];
 
 function getforexcate($forex) {
@@ -101,12 +101,12 @@ function getforexcate($forex) {
             $output = 'JPY';
             break;
 
-            default:
-                 $output = 'USD';
+        default:
+            $output = 'USD';
             break;
     }
     return $output;
-    }
+}
 
 function fabricname($cate) {
     switch ($cate){
@@ -307,9 +307,10 @@ $spreadsheet->getActiveSheet()->getStyle("A12")->applyFromArray($styleArray);
 $spreadsheet->getActiveSheet()->getStyle("B12")->applyFromArray($styleArray1);
 $spreadsheet->getActiveSheet()->getStyle("B12")->getAlignment()->setWrapText(true);
 
-$spreadsheet->getActiveSheet()->setCellValue("C12", $costp2["alist"]["a30"]);
-$spreadsheet->getActiveSheet()->getStyle("C12")->applyFromArray($styleArray1);
-$spreadsheet->getActiveSheet()->getStyle("C12")->getAlignment()->setWrapText(true);
+//$spreadsheet->getActiveSheet()->setCellValue("C12", $costp2["alist"]["a30"]);
+//$spreadsheet->getActiveSheet()->getStyle("C12")->applyFromArray($styleArray1);
+//$spreadsheet->getActiveSheet()->getStyle("C12")->getAlignment()->setWrapText(true);
+setCell($sheet,"C12",stripcslashes($costp2["alist"]["a30"]),$Size12borderscenter);
 /**
  *  //FABRIC COST
  */
@@ -471,10 +472,10 @@ if($costp2["clist"]['fromnume'] > 0){
         $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray1);
         $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
 
-        $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow, $costp2["clist"]["c2"][$u]);
-        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
-
+//        $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow, $costp2["clist"]["c2"][$u]);
+//        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray1);
+//        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
+        setCell($sheet,"C13",stripcslashes($costp2["clist"]["c2"][$u]),$Size12borderscenter);
     }
 
 }
@@ -499,13 +500,16 @@ if($costp2["alist"]["a10"] > 0){
         $spreadsheet->getActiveSheet()->getStyle("A".$thisrow)->getAlignment()->setWrapText(true);
 
 
-        $spreadsheet->getActiveSheet()->setCellValue("B11", $costp2["alist"]["a12"][$u]);
-        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
+//        $spreadsheet->getActiveSheet()->setCellValue("B11", $costp2["alist"]["a12"][$u]);
+//        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->applyFromArray($styleArray1);
+//        $spreadsheet->getActiveSheet()->getStyle("B".$thisrow)->getAlignment()->setWrapText(true);
 
-        $spreadsheet->getActiveSheet()->setCellValue("C11", $costp2["alist"]["a13"][$u]);
-        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray1);
-        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
+        setCell($sheet,"B11",stripcslashes($costp2["alist"]["a12"][$u]),$Size12borderscenter);
+
+//        $spreadsheet->getActiveSheet()->setCellValue("C11", $costp2["alist"]["a13"][$u]);
+//        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray1);
+//        $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
+        setCell($sheet,"C11",stripcslashes($costp2["alist"]["a13"][$u]),$Size12borderscenter);
 
         $thisrow = 12;  //12
         $spreadsheet->getActiveSheet()->setCellValue("A12", $costp2["alist"]["a14"][$u]);
@@ -549,9 +553,10 @@ if($costp2["alist"]["a10"] > 0){
             }else{
                 $A24 = ' m/PC';
             }
-            $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow, $costp2["alist"]["a23"][$u].$A24);
-            $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray1);
-            $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
+//            $spreadsheet->getActiveSheet()->setCellValue("C".$thisrow, $costp2["alist"]["a23"][$u].$A24);
+//            $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->applyFromArray($styleArray1);
+//            $spreadsheet->getActiveSheet()->getStyle("C".$thisrow)->getAlignment()->setWrapText(true);
+            setCell($sheet,"C".$thisrow,$costp2["alist"]["a23"][$u].$A24,$Size12borderscenter);
         }
 
 
@@ -567,7 +572,7 @@ if($costp2["alist"]["a10"] > 0){
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
-//unset($_SESSION['costp2'] ); //注销SESSION
+unset($_SESSION['costp2'] ); //注销SESSION
 
 $spreadsheet->getActiveSheet()->getPageSetup()
     ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);  //横放置
@@ -575,5 +580,7 @@ $spreadsheet->getActiveSheet()->getPageSetup()
     ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);  //A4
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
-$filenameout = "CostChart_{$costp2['shortname']}_{$costp2['so']}-CC{$costp2['relate']}";
+
+$filenameout = "CostChart_{$costp2['shortname']}_";
 outExcel($spreadsheet,$filenameout);
+

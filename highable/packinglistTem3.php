@@ -35,9 +35,14 @@ $sheet->setCellValue('A17', $pl["invoicedata"]["a10"]);
 $sheet->setCellValue('A18', $pl["invoicedata"]["a11"]);
 
 $sheet->setCellValue('D13', $pl["invoicedata"]["a2"]);
-$sheet->setCellValue('D14', $pl["invoicedata"]["a5"]);
-$sheet->setCellValue('D15', $pl["invoicedata"]["a7"]);
-$sheet->setCellValue('D16', $pl["invoicedata"]["a9"]);
+//$sheet->setCellValue('D14', $pl["invoicedata"]["a5"]);
+//$sheet->setCellValue('D15', $pl["invoicedata"]["a7"]);
+//$sheet->setCellValue('D16', $pl["invoicedata"]["a9"]);
+//setCell($sheet,'D14',outputstr($pl["invoicedata"]["a5"]),$Size8noborderCenter);
+setMergeCells($sheet,'D14:G14','D14',stripcslashes($pl["invoicedata"]["a5"]),$Size8noborderLeft);
+setMergeCells($sheet,'D15:G15','D15',stripcslashes($pl["invoicedata"]["a7"]),$Size8noborderLeft);
+setMergeCells($sheet,'D16:G16','D16',stripcslashes($pl["invoicedata"]["a9"]),$Size8noborderLeft);
+
 
 
 $sheet->setCellValue('E13', $pl["invoicedata"]["a3"]);
