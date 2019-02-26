@@ -38,36 +38,17 @@ $spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.1);
 $spreadsheet->getActiveSheet()->getPageMargins()->setLeft(0.1); //页边距
 
 
-
-$styleArray = [
-    
-    'alignment' => [
-        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-		'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
-    ],
-	
-    'borders' => [
-        'top' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-		'bottom' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-		'left' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-		'right' => [
-            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        ],
-    ],
-   
-];
-
-
 //$spreadsheet->getActiveSheet()->setCellValue('C4', $fabp1["alist"]['a1']);
 $spreadsheet->getActiveSheet()->setCellValue('E1', 'DATE: '.$fabp1["date"]);
 //$spreadsheet->getActiveSheet()->setCellValue('A4', $fabp1["quotitle"]);
-setCell($sheet,'A4',$fabp1["quotitle"],$boldfontbordersLeft);
+
+/**
+ *  title
+ */
+//setCell($sheet,'A4',$fabp1["quotitle"],$boldfontbordersLeft);
+
+$col = chr(65 + count($fabp1['title']['a1']) - 1 );
+setMergeCells($sheet,"A4:{$col}4",'A4',$fabp1["quotitle"],$boldfontbordersLeft);
 
 $spreadsheet->getActiveSheet()->setCellValue('A1', $fabp1["alist"]["head"]);
 $row = 6;
@@ -101,7 +82,7 @@ for ($y = 0, $i = 1; $i <= $fabp1["alist"]['alistnum']; $i++, $y++) {
             $issel =  $fabp1["alist"]['a'.$n][$y] == '1' ?  "IN" :  "CM" ;
             $thisvalue .= ' '.$issel;
             $spreadsheet->getActiveSheet()->setCellValue($col.$row, $thisvalue);
-            $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+            $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($bordersLeft);
         }elseif ($u == 4){
             $thisvalue = $fabp1["alist"]['a'.$n][$y];
             $n++;
@@ -109,10 +90,10 @@ for ($y = 0, $i = 1; $i <= $fabp1["alist"]['alistnum']; $i++, $y++) {
             $issel =  $fabp1["alist"]['a'.$n][$y];
             $thisvalue .= ' '.$issel;
             $spreadsheet->getActiveSheet()->setCellValue($col.$row, $thisvalue);
-            $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+            $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($bordersLeft);
         }else{
             $spreadsheet->getActiveSheet()->setCellValue($col.$row, $fabp1["alist"]['a'.$n][$y]);
-            $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($styleArray);
+            $spreadsheet->getActiveSheet()->getStyle($col.$row)->applyFromArray($bordersLeft);
         }
 
     }
@@ -139,14 +120,15 @@ if($fabp1["blist"]['blistnum'] > 0){
 
 
 
-//
+$spreadsheet->getActiveSheet()->getPageSetup()
+    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);//打印 A4
 $spreadsheet->getActiveSheet()->getPageSetup()->setFitToPage(true); //将工作表调整为一页
 
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
-//unset($_SESSION['fabricquotationp1'] ); //注销SESSION
+unset($_SESSION['fabricquotationp1'] ); //注销SESSION
 
 $filenameout = "Fabric_Quotation_{$fabp1["alist"]['head']}_";
 outExcel($spreadsheet,$filenameout);
