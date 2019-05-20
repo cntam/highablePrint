@@ -459,7 +459,8 @@ if($costp2["dlist"]['fromnumf'] > 0){
 
 if($costp2["clist"]['fromnume'] > 0){
 
-    for ($u = ($costp2["clist"]['fromnume'] - 1);$u >= 0;$u-- ){
+//    for ($u = ($costp2["clist"]['fromnume'] - 1);$u >= 0;$u-- ){
+    for ($u = ($costp2["clist"]['fromnume']);$u >= 0;$u-- ){
         $thisrow = 13;
         $spreadsheet->getActiveSheet()->insertNewRowBefore(13, 1);
 
